@@ -14,4 +14,4 @@ Parlami in italiano, con domande semplici: cosa chiedi, perché conta, cosa comp
 
 Frontiera al 15/11/2026, in ordine: «Regole all'arrivo: carico normale e merce venduta (VEND)», «Percorso di
 identificazione e lettura della quantità», «App nativa o web app», «Piano della prova di accuratezza visiva», «Nome
-del prodotto». Si possono lavorare in parallelo in sessioni diverse.
+del prodotto», «Fonti degli ordini e collegamento ai gestionali esistenti» (le sue due ricerche sono chiuse). Si possono lavorare in parallelo in sessioni diverse.
