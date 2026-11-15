@@ -3,7 +3,7 @@
 Type: grilling
 Label: wayfinder:grilling
 Status: open
-Blocked by: 03
+Blocked by: 03, 18
 
 ## Question
 
@@ -19,6 +19,11 @@ esistenti. Come?
   E l'evasione? (Vedi la ricerca del ticket
   [Shopify: ordini, evasione e giacenze viste da un gestionale esterno](03-ricerca-shopify.md).)
 - Ogni quanto si scambiano i dati e cosa succede se lo scambio fallisce?
-- Come si chiamano i due gestionali esistenti (informazione, serve per una ricerca futura)?
+- I due gestionali esistenti sono Ad Hoc Revolution e ARS Logistica: vedi la ricerca del ticket
+  [Ad Hoc Revolution e ARS Logistica: come si scambiano i dati](18-ricerca-adhoc-revolution-ars-logistica.md).
 
 Risultato atteso: la parte su fonti e scambi in `docs/architettura.md`, più l'elenco dei connettori previsti.
+
+## Comments
+
+- 15/11/2026, dall'utente: i due gestionali del primo magazzino si chiamano «ad hoc Revolution» e «ARS Logistica».

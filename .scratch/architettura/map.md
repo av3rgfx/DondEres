@@ -33,7 +33,7 @@ percorso delle schermate e aspetto grafico, compresi nome e brand kit (decisioni
 - Anche nome e brand kit sono scelte di gusto dell'utente (decisione 20). La skill logo-design si installa nel
   progetto, in `.claude/skills` e `.agents/skills` uguali, dopo averne letto il contenuto; mai a livello globale.
 - Due magazzini reali fanno da banco di prova per la base, senza diventarne la specializzazione: uno affianca due
-  gestionali esistenti e usa solo il carico normale; l'altro usa solo Shopify e anche la giacenza «VEND»
+  gestionali esistenti (Ad Hoc Revolution e ARS Logistica) e usa solo il carico normale; l'altro usa solo Shopify e anche la giacenza «VEND»
   (decisioni 15 e 19).
 
 ## Decisions so far
@@ -47,9 +47,6 @@ tre livelli di conferma, quantità letta dalla scatola, ubicazioni facoltative, 
 
 ## Not yet specified
 
-- **Collegamento ai due gestionali esistenti.** Una ricerca sulle loro interfacce di scambio serve solo dopo
-  [Fonti degli ordini e collegamento ai gestionali esistenti](issues/02-fonti-ordini-e-collegamenti.md) e quando se
-  ne conoscono i nomi; forse finisce nella specializzazione.
 - **Server in sede: requisiti minimi.** Scheda grafica sì o no, memoria, sistema operativo: si chiarisce con i
   risultati della prova e la divisione tra le macchine.
 - **Adattamento del modello visivo** (metric learning) sulle foto del magazzino: solo se i numeri della prova lo
