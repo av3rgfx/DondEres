@@ -20,6 +20,9 @@ esistenti. Come?
   [Shopify: ordini, evasione e giacenze viste da un gestionale esterno](03-ricerca-shopify.md).)
 - Chi crea l'app Shopify: la stessa organizzazione del negozio o un'altra (vedi la risposta del ticket di
   ricerca su Shopify)?
+- Nel primo magazzino ARS Logistica fa già ricevimento, prelievo e inventario da telefono: cosa fa il nostro
+  prodotto e cosa resta ad ARS, così da non registrare due volte la stessa merce? Il rivenditore va interpellato
+  (domande nella ricerca del ticket 18, §7)?
 - Ogni quanto si scambiano i dati e cosa succede se lo scambio fallisce?
 - I due gestionali esistenti sono Ad Hoc Revolution e ARS Logistica: vedi la ricerca del ticket
   [Ad Hoc Revolution e ARS Logistica: come si scambiano i dati](18-ricerca-adhoc-revolution-ars-logistica.md).

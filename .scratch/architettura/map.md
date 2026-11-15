@@ -43,6 +43,9 @@ percorso delle schermate e aspetto grafico, compresi nome e brand kit (decisioni
 - [Shopify: ordini, evasione e giacenze viste da un gestionale esterno](issues/03-ricerca-shopify.md): API GraphQL
   da aggiornare ogni anno; assegnazione e «evaso» restano nostri; niente webhook verso un server in sede, si
   interroga Shopify a intervalli; connettore come modulo dietro un punto di estensione «canale di vendita».
+- [Ad Hoc Revolution e ARS Logistica: come si scambiano i dati](issues/18-ricerca-adhoc-revolution-ars-logistica.md):
+  nessuna interfaccia pubblica, tutto passa dal rivenditore; ARS fa già ricevimento e prelievo da telefono, quindi
+  va decisa la divisione del lavoro; scambio a file come via generale.
 
 Prese prima della mappa, nel secondo giro di domande del 15/11/2026: decisioni 15–28 in
 [`docs/decisioni.md`](../../docs/decisioni.md) (assegnazione parziale, codice stampato come tipo di articolo,
