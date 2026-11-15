@@ -39,3 +39,12 @@ Risultato atteso: la parte su fonti e scambi in `docs/architettura.md`, più l'e
   cliente da considerare. Il ricevimento parte sempre dal DDT (40): da capire se il DDT arriva dai gestionali.
 - 15/11/2026, primo giro di domande (pagina https://claude.ai/artifact/G5XtbLq6KFxqngFxXMXsVd): l'utente ha accettato
   tutte le proposte consigliate, senza note. Registrate come decisioni 49–57.
+- 15/11/2026, secondo giro (stessa pagina): accettate le proposte consigliate; decisioni 58–64. La domanda «dove nasce
+  la vendita al banco in UFP» resta aperta: l'utente aveva scelto «in Ad Hoc, letta subito dal programma», ma la sua
+  nota descrive un'altra pratica (sotto). Si richiede nel terzo giro.
+- 15/11/2026, fatti riferiti dall'utente su UFP: oggi la vendita assistita al banco si fa con ARS Logistica da
+  telefono. Si sceglie prima il cliente: un cliente preciso (per esempio i clienti chiamati «OP»), il codice cliente
+  generico delle vendite al banco ai privati, oppure nessuno. Poi si scansionano uno o più articoli e l'ubicazione da
+  cui si prendono, perché lo stesso articolo può stare in più ubicazioni (per le scorte). Alla conferma l'ordine compare
+  da solo nelle vendite di Ad Hoc, dove si fanno i documenti di vendita. Serve anche ai ticket «Modello dei dati»
+  (un articolo in più ubicazioni) e «Percorso delle schermate».
