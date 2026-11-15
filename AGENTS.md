@@ -3,9 +3,12 @@
 Valgono per Claude Code e Codex. Leggere questo file a inizio lavoro.
 
 ## Progetto
-- Cosa fa: [da definire]
-- Per chi: [da definire]
-- Piattaforma e stack: [da definire; non sceglierli prima di avere i requisiti]
+- Cosa fa: gestionale di magazzino. Assegna le scorte agli ordini non ancora evasi o spediti, dal più vecchio al
+  più recente, e identifica gli articoli in arrivo da barcode, codice stampato sull'etichetta o immagine.
+- Per chi: prima una base valida per qualsiasi magazzino, poi una specializzazione per un magazzino specifico.
+- Piattaforma: soprattutto telefono, in locale sulla rete aziendale; anche computer con telecamera integrata.
+- Stack: [da definire; non sceglierlo prima di avere i requisiti]
+- Decisioni dell'utente: docs/decisioni.md. Analisi: docs/analisi-progetto.md. Ricerche: docs/research/.
 - Lingua delle risposte e dei documenti: italiano
 
 ## Ordine delle decisioni
