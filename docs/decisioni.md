@@ -49,6 +49,8 @@ Le decisioni tecniche ancora aperte non stanno qui: stanno in `docs/analisi-prog
 | 41 | 15/11/2026 | Se dopo un annullamento restano pezzi di un articolo che non si tiene a magazzino, decide il responsabile se renderli al fornitore o ubicarli. | Non indicato (proposta accettata). |
 | 42 | 15/11/2026 | Il magazzino UFP è quello che affianca Ad Hoc Revolution e ARS Logistica: lì si usa VEND, con ordini fornitore che portano il riferimento del cliente, insieme al carico normale per gli ordini di magazzino. Corregge la decisione 15, che indicava VEND nel magazzino con solo Shopify. | Fatto riferito dall'utente. |
 | 43 | 15/11/2026 | Il nome «UFP» si può scrivere nei documenti del progetto. | Non indicato. |
+| 44 | 15/11/2026 | VEND nasce solo dal riferimento del cliente scritto sull'ordine fornitore: il programma non collega da solo un ordine cliente alla merce in arrivo. Se il riferimento manca, la merce segue il carico normale e si assegna dal più vecchio. Corregge la decisione 29. | In UFP gli ordini dei clienti arrivano per telefono o email; se chiedono un articolo che non è a magazzino o non è a catalogo, chi ordina al fornitore scrive il riferimento del cliente. |
+| 45 | 15/11/2026 | La merce che nessun ordine fornitore prevede si carica, ma non si ubica (né in VEND né sugli scaffali) finché il responsabile non decide se tenerla o renderla al fornitore. Precisa la decisione 31, che resta valida per la registrazione da parte dell'operatore. | «Si deve prima decidere se tenerlo o rimandarlo indietro.» |
 
 ## Note di lettura
 

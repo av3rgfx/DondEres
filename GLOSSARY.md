@@ -35,6 +35,10 @@ Chi spedisce la merce al magazzino.
 La merce chiesta a un fornitore e attesa in magazzino, divisa in righe con quantità ordinata, ricevuta e residua.
 _Evitare_: ordine d'acquisto, ordine (da solo)
 
+**Riferimento cliente**:
+L'indicazione, su un ordine fornitore o su una sua riga, del cliente per cui la merce è ordinata.
+_Evitare_: commessa, rif.
+
 **Ordine cliente**:
 La merce da consegnare a un cliente, divisa in righe; è aperto finché non è evaso.
 _Evitare_: ordine di vendita, ordine (da solo)

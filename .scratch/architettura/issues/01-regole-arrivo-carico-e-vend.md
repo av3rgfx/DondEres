@@ -40,3 +40,9 @@ carico, residuo) in `GLOSSARY.md`.
   il DDT arriva di carta dal corriere, viene scansionato e caricato; gli uffici spesso hanno la versione digitale, non
   usata in magazzino. La domanda «da dove nasce VEND» non era chiara all'utente: si ripete nel quarto giro, insieme al
   rapporto tra «sempre dal DDT» (40) e merce senza ordine (31) e all'uso di VEND nel magazzino Shopify.
+- 15/11/2026, quarto giro: decisioni 44 (corregge la 29) e 45 (precisa la 31). Fatti: in UFP gli ordini dei clienti
+  arrivano per telefono o email, e VEND oggi è un tavolo con gli articoli venduti pronti per la spedizione. Nel
+  magazzino Shopify VEND non c'è formalmente: la merce venduta si carica senza ubicarla e si mette su un tavolo con un
+  biglietto che dice di chi è. Proposte dell'utente, da confermare nel riepilogo finale: nel magazzino Shopify il
+  riferimento va preso in automatico dall'ordine del sito; VEND diventa un'ubicazione con posti numerati (VEND1,
+  VEND2…) e il palmare dice in quale posto si trova ogni articolo venduto, anche in UFP.
