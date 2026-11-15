@@ -49,6 +49,10 @@ _Evitare_: consegnato
 
 ## Merce e scorte
 
+**DDT**:
+Il documento di trasporto che accompagna una consegna del fornitore e rimanda agli ordini fornitore a cui appartiene.
+_Evitare_: bolla
+
 **Ricevimento**:
 L'arrivo di una consegna in magazzino, con le identificazioni fatte sulla merce.
 _Evitare_: accettazione, entrata
@@ -78,8 +82,8 @@ Merce ricevuta che nessun ordine fornitore aperto prevede.
 _Evitare_: merce fuori ordine, omaggio (è solo uno dei casi)
 
 **VEND**:
-La merce già venduta a una riga d'ordine cliente quando è arrivata: è giunta con l'ordine fornitore a cui la riga era
-collegata e resta da parte per quella riga, anche se il magazzino non ha un'area fisica apposita.
+La merce arrivata con un ordine fornitore fatto per un cliente preciso: resta da parte per la sua riga d'ordine
+cliente fino al prelievo, anche se il magazzino non ha un'area fisica apposita.
 _Evitare_: venduto (da solo), impegnato
 
 **Movimento**:

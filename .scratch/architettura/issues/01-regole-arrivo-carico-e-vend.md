@@ -31,3 +31,8 @@ carico, residuo) in `GLOSSARY.md`.
 
 - 15/11/2026, primo giro (pagina interattiva «Merce in arrivo»): confermate tutte le proposte. Decisioni 29–33 in
   `docs/decisioni.md`; termini Carico, Residuo, Eccedenza, Merce senza ordine e VEND in `GLOSSARY.md`.
+- 15/11/2026, secondo giro: decisioni 34–38. Le note dell'utente cambiano il modello di VEND: il collegamento tra
+  ordine cliente e ordine fornitore non lo fa il programma quando manca giacenza, ma nasce dal **riferimento del
+  cliente scritto sull'ordine fornitore**; al ricevimento si carica il DDT, che rimanda all'ordine, e si scansiona la
+  merce per controllarla. Le risposte a «quale ordine fornitore» e «nessun ordine aperto» (collegamento automatico)
+  restano sospese, e la decisione 29 va rivista: si chiarisce nel terzo giro.
