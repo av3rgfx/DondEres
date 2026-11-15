@@ -16,6 +16,10 @@ Le decisioni tecniche ancora aperte non stanno qui: stanno in `docs/analisi-prog
 | 8 | 15/11/2026 | Un articolo nuovo si aggiunge al catalogo fotografandolo, con codice e descrizione, e finisce da solo nel database. | Non indicato. |
 | 9 | 15/11/2026 | L'applicazione si usa soprattutto da telefono, in locale e collegata alla rete aziendale; deve funzionare anche su computer con telecamera integrata. | «Deve funzionare in locale» (non è stato detto perché). |
 | 10 | 15/11/2026 | L'architettura si approfondisce in una nuova sessione con Wayfinder, dopo l'analisi. | Non indicato. |
+| 11 | 15/11/2026 | Destinazione della mappa di architettura: un unico documento `docs/architettura.md` con la specifica della base generica, più `GLOSSARY.md` alla radice per il glossario. Mappa e ticket stanno in `.scratch/architettura/`. | Non indicato (proposta accettata). |
+| 12 | 15/11/2026 | La prova di accuratezza visiva con foto reali si progetta e si esegue dentro la mappa, non dopo. Il modello visivo si sceglie in base ai suoi risultati. | Non indicato. |
+| 13 | 15/11/2026 | La specifica comprende anche lo stack (linguaggi, database, programmi per il modello visivo). | Non indicato. |
+| 14 | 15/11/2026 | La specifica comprende anche la grafica: sia il percorso delle schermate, sia l'aspetto (colori, caratteri, disposizione, stile). | Non indicato. |
 
 ## Note di lettura
 
