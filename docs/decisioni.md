@@ -44,6 +44,11 @@ Le decisioni tecniche ancora aperte non stanno qui: stanno in `docs/analisi-prog
 | 36 | 15/11/2026 | I pezzi escono da VEND con il prelievo, confermato dall'operatore sul dispositivo. | «Una volta prelevati risultano già presi, così tutti i preparatori vedono le giacenze aggiornate e sanno cosa possono prelevare e cosa no.» |
 | 37 | 15/11/2026 | Se un ordine cliente con pezzi in VEND viene annullato, i pezzi tornano liberi e si assegnano dal più vecchio. Fisicamente vanno nella loro ubicazione, se l'articolo si tiene a magazzino e ne ha una; se l'articolo non si tiene a magazzino e non ha ubicazione, si decide se renderlo al fornitore o se ubicarlo e tenerlo. | Note dell'utente. |
 | 38 | 15/11/2026 | Le due regole stanno nella base. VEND è spento di serie e si accende per magazzino, alla configurazione. | Non indicato (proposta accettata); l'utente nota che la regola «cambia in base al magazzino». |
+| 39 | 15/11/2026 | Il riferimento del cliente si scrive di solito sull'ordine fornitore intero (un ordine per riferimento). Alla configurazione il magazzino può scegliere se scriverlo sull'ordine intero o su ogni riga. | «Di solito si fa un ordine per riferimento. Ma può variare dal tipo di magazzino.» |
+| 40 | 15/11/2026 | Il ricevimento parte sempre dal DDT: senza DDT la merce non si riceve. | Non indicato. |
+| 41 | 15/11/2026 | Se dopo un annullamento restano pezzi di un articolo che non si tiene a magazzino, decide il responsabile se renderli al fornitore o ubicarli. | Non indicato (proposta accettata). |
+| 42 | 15/11/2026 | Il magazzino UFP è quello che affianca Ad Hoc Revolution e ARS Logistica: lì si usa VEND, con ordini fornitore che portano il riferimento del cliente, insieme al carico normale per gli ordini di magazzino. Corregge la decisione 15, che indicava VEND nel magazzino con solo Shopify. | Fatto riferito dall'utente. |
+| 43 | 15/11/2026 | Il nome «UFP» si può scrivere nei documenti del progetto. | Non indicato. |
 
 ## Note di lettura
 

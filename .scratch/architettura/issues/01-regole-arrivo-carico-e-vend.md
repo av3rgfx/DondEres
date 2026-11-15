@@ -36,3 +36,7 @@ carico, residuo) in `GLOSSARY.md`.
   cliente scritto sull'ordine fornitore**; al ricevimento si carica il DDT, che rimanda all'ordine, e si scansiona la
   merce per controllarla. Le risposte a «quale ordine fornitore» e «nessun ordine aperto» (collegamento automatico)
   restano sospese, e la decisione 29 va rivista: si chiarisce nel terzo giro.
+- 15/11/2026, terzo giro: decisioni 39–43. UFP è il magazzino con Ad Hoc + ARS e usa VEND (corregge la 15). Fatto:
+  il DDT arriva di carta dal corriere, viene scansionato e caricato; gli uffici spesso hanno la versione digitale, non
+  usata in magazzino. La domanda «da dove nasce VEND» non era chiara all'utente: si ripete nel quarto giro, insieme al
+  rapporto tra «sempre dal DDT» (40) e merce senza ordine (31) e all'uso di VEND nel magazzino Shopify.

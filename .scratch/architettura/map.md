@@ -32,9 +32,9 @@ percorso delle schermate e aspetto grafico, compresi nome e brand kit (decisioni
   all'utente e si fanno con prototipi da guardare. Una sola direzione visiva, registrata in `docs/decisioni.md`.
 - Anche nome e brand kit sono scelte di gusto dell'utente (decisione 20). La skill logo-design si installa nel
   progetto, in `.claude/skills` e `.agents/skills` uguali, dopo averne letto il contenuto; mai a livello globale.
-- Due magazzini reali fanno da banco di prova per la base, senza diventarne la specializzazione: uno affianca due
-  gestionali esistenti (Ad Hoc Revolution e ARS Logistica) e usa solo il carico normale; l'altro usa solo Shopify e anche la giacenza «VEND»
-  (decisioni 15 e 19).
+- Due magazzini reali fanno da banco di prova per la base, senza diventarne la specializzazione: UFP affianca due
+  gestionali esistenti (Ad Hoc Revolution e ARS Logistica) e usa il carico normale e anche VEND, con ordini fornitore
+  che portano il riferimento del cliente; l'altro usa solo Shopify (decisioni 15, 19 e 42; se usa VEND è da chiarire).
 
 ## Decisions so far
 
@@ -62,6 +62,10 @@ tre livelli di conferma, quantità letta dalla scatola, ubicazioni facoltative, 
   ubicazioni, decisione 26), certificato HTTPS sulla rete interna, aggiornamenti, copie di sicurezza e ripristino.
 - **Inventario e rettifiche:** conta periodica, correzione delle giacenze, annullamento dei movimenti e loro effetto
   sulle assegnazioni.
+- **Acquisizione del DDT:** oggi il DDT arriva di carta dal corriere e viene scansionato e caricato; gli uffici hanno
+  spesso anche la versione digitale, che in magazzino non si usa. Da capire se la base legge la foto del DDT, importa
+  la versione digitale o chiede solo il numero (tocca identificazione, fonti degli ordini e schermate).
+- **Resi al fornitore:** compaiono con gli annullamenti (decisione 41); quando e come si registrano.
 - **Descrizione proposta da un modello che legge immagini e scrive testo** per l'articolo nuovo: se tenerla, e quale
   modello, dipende dalla prova e dal server.
 
