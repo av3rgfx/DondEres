@@ -9,6 +9,7 @@ Valgono per Claude Code e Codex. Leggere questo file a inizio lavoro.
 - Piattaforma: soprattutto telefono, in locale sulla rete aziendale; anche computer con telecamera integrata.
 - Stack: [da definire; non sceglierlo prima di avere i requisiti]
 - Decisioni dell'utente: docs/decisioni.md. Analisi: docs/analisi-progetto.md. Ricerche: docs/research/.
+  Prompt della prossima sessione: docs/prossima-sessione.md.
 - Lingua delle risposte e dei documenti: italiano
 
 ## Ordine delle decisioni
