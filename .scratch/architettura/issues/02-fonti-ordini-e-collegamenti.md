@@ -37,3 +37,5 @@ Risultato atteso: la parte su fonti e scambi in `docs/architettura.md`, più l'e
   del sito (decisione 46), quindi gli ordini fornitore nascono anche nella base. Il riferimento cliente sta sull'ordine
   fornitore intero o su ogni riga (39) e va scambiato con i gestionali. UFP vende anche al banco: è una fonte di ordini
   cliente da considerare. Il ricevimento parte sempre dal DDT (40): da capire se il DDT arriva dai gestionali.
+- 15/11/2026, primo giro di domande (pagina https://claude.ai/artifact/G5XtbLq6KFxqngFxXMXsVd): l'utente ha accettato
+  tutte le proposte consigliate, senza note. Registrate come decisioni 49–57.
