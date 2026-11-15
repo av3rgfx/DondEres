@@ -1,0 +1,9 @@
+{
+  "name": "donderes",
+  "private": true,
+  "description": "Strumenti di sviluppo per le skill del progetto (ocr, playwright-cli).",
+  "devDependencies": {
+    "@alibaba-group/open-code-review": "1.13.3",
+    "@playwright/cli": "0.1.23"
+  }
+}

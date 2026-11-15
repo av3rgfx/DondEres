@@ -47,6 +47,10 @@ Valgono per Claude Code e Codex. Leggere questo file a inizio lavoro.
 - Revisione del codice con open-code-review-delegate quando il programma ocr è disponibile; altrimenti dichiararlo e
   fare una revisione diretta.
 - Verificare il frontend nel browser (playwright-cli o il browser disponibile).
+- ocr e playwright-cli sono installati nel progetto (package.json, versioni esatte), non a livello globale: eseguire
+  `npm ci` in un ambiente nuovo, poi usarli come `npx ocr ...` e `npx playwright-cli ...` dove le skill scrivono
+  `ocr` e `playwright-cli`. playwright-cli non apre file locali (file://): servire la pagina con un server locale.
+  Decisione dell'utente del 15/11/2026: installarli perché le due skill funzionino come previsto.
 - write-swift solo per codice Swift.
 - Nessuna dichiarazione di conformità o di test superati senza verifica effettiva.
 
