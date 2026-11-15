@@ -1,0 +1,15 @@
+# Brand kit con la skill logo-design
+
+Type: task
+Label: wayfinder:task
+Status: open
+Blocked by: 13
+
+## Question
+
+Con il nome scelto, creare il brand kit con la skill logo-design di kaankiziltug (decisione 20). Prima si installa
+la skill nel progetto (`.claude/skills` e `.agents/skills`, uguali), dopo averla letta. Si segue il suo percorso:
+brief, concetti, punto di controllo con l'utente, kit. L'utente ha indicato l'esempio «Kiln»: chiarire se vale come
+riferimento di stile. Le scelte sono dell'utente.
+
+Risultato atteso: il brand kit nel repository, il link qui e la direzione scelta in `docs/decisioni.md`.

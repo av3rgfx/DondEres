@@ -124,7 +124,7 @@ Un adattamento leggero del modello sulle foto del magazzino resta possibile più
 
 ## 6. Domande aperte per l'utente
 
-Sono le domande che cambiano materialmente la soluzione. Andranno poste nella sessione Wayfinder.
+Sono le domande che cambiano materialmente la soluzione. Risposte del 15/11/2026: decisioni 15–28 in `docs/decisioni.md`. D5 resta aperta nella mappa `.scratch/architettura/map.md`.
 
 - **D1. Regola all'arrivo.** La frase ricevuta è: «Se il magazzino ha disponibilità, la quantità viene scalata; altrimenti l'articolo arrivato viene associato all'ultimo ordine effettuato su quel fornitore e scalato direttamente dall'ordine». Non è chiaro cosa si scali quando la merce *arriva*, perché l'arrivo di solito aumenta la giacenza. Ci sono anche due possibili contraddizioni:
   - gli ordini cliente si servono dal più vecchio, ma l'ordine fornitore scelto è «l'ultimo»;

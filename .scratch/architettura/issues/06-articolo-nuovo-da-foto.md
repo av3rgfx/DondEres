@@ -1,0 +1,20 @@
+# Inserimento di un articolo nuovo da foto
+
+Type: grilling
+Label: wayfinder:grilling
+Status: open
+Blocked by: 02, 05
+
+## Question
+
+Come si aggiunge un articolo nuovo fotografandolo (decisione 8)?
+
+- Chi può farlo: solo il responsabile, o anche l'operatore con approvazione successiva (decisione 27)?
+- Quante foto, da quali angolazioni, con quale guida a schermo?
+- Codice letto da barcode o codice stampato; descrizione scritta a mano o proposta da un modello (vedi Not yet
+  specified)?
+- Quando il prodotto affianca un gestionale esistente, l'articolo nuovo va anche lì, oppure nasce solo lì
+  (decisione 19)?
+- Cosa succede se l'articolo esiste già con un altro codice?
+
+Risultato atteso: il flusso dell'articolo nuovo in `docs/architettura.md`.
