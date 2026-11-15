@@ -12,3 +12,10 @@ conferma dei candidati, quantità, articolo nuovo, prelievo e spedizione, assegn
 iniziale? Si prova con un prototipo da guardare sul telefono, poco curato nell'aspetto.
 
 Risultato atteso: il percorso in `docs/architettura.md`, con il link al prototipo.
+
+## Comments
+
+- 15/11/2026, dal ticket «Fonti degli ordini»: servono la schermata «banco» (cliente, articoli, ubicazione, conferma;
+  avviso quando si toglie merce assegnata) (58, 65), il compito «rimetti a posto» (62), gli avvisi di scambio bloccato
+  e di differenze col sistema d'origine (49, 54), «aggiorna ora» (54), il documento dell'ordine fornitore (64). Oggi in
+  UFP la vendita al banco si fa da telefono con ARS: cliente, poi articoli e ubicazione, poi conferma.

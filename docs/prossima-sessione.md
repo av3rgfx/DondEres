@@ -22,18 +22,23 @@ Per lavorare un ticket preciso in una sessione parallela, aggiungere in fondo al
 
 In ordine di numero:
 
-1. «Percorso di identificazione e lettura della quantità»
-2. «App nativa o web app»: va chiarito anche il palmare industriale citato dall'utente (commento nel ticket).
-3. «Piano della prova di accuratezza visiva»: conviene partire presto, perché le foto reali richiedono tempo e da
+1. «Modello dei dati»: sbloccato dalla chiusura di «Fonti degli ordini»; nei commenti del ticket ci sono i concetti
+   nuovi (sistema d'origine, articolo provvisorio, banco, attesa di pagamento, un articolo in più ubicazioni).
+2. «Percorso di identificazione e lettura della quantità»
+3. «App nativa o web app»: va chiarito anche il palmare industriale citato dall'utente (commento nel ticket).
+4. «Piano della prova di accuratezza visiva»: conviene partire presto, perché le foto reali richiedono tempo e da
    questa prova dipendono la scelta del modello, la divisione tra le macchine e lo stack.
-4. «Nome del prodotto»
-5. «Fonti degli ordini e collegamento ai gestionali esistenti»: sblocca «Modello dei dati»; contiene le note del
-   ticket sulle regole all'arrivo (proposte d'ordine al fornitore, vendita al banco, DDT).
+5. «Nome del prodotto»
 
 Si possono lavorare in parallelo in sessioni diverse.
 
+## In sospeso fuori dalla mappa
+
+- Domande per il rivenditore di UFP in `docs/domande-rivenditore-ufp.md`: le manda l'utente (decisione 57). Le
+  risposte si annotano in fondo al file; servono al connettore Ad Hoc della specializzazione, non bloccano la mappa.
+
 ## Ultimo ticket chiuso
 
-15/11/2026: «Regole all'arrivo: carico normale e merce venduta (VEND)». Decisioni 29–48 (la 44 sostituisce la 29,
-la 42 corregge la 15), sezione «Ricevimento e assegnazione» in `docs/architettura.md`. Pagina usata per le domande:
-https://claude.ai/artifact/8bpuk2jouU2yTzEU9ewKnh (privata, la vede solo l'utente).
+15/11/2026: «Fonti degli ordini e collegamento ai gestionali esistenti». Decisioni 49–67, sezione «Fonti dei dati e
+collegamenti» in `docs/architettura.md`. Pagina usata per le domande:
+https://claude.ai/artifact/G5XtbLq6KFxqngFxXMXsVd (privata, la vede solo l'utente).

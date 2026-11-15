@@ -18,3 +18,9 @@ Come si aggiunge un articolo nuovo fotografandolo (decisione 8)?
 - Cosa succede se l'articolo esiste già con un altro codice?
 
 Risultato atteso: il flusso dell'articolo nuovo in `docs/architettura.md`.
+
+## Comments
+
+- 15/11/2026, dal ticket «Fonti degli ordini»: con un gestionale accanto l'articolo nuovo nasce provvisorio e si
+  collega quando il gestionale lo conosce con lo stesso codice (59). Nel magazzino Shopify gli articoli venduti sul sito
+  arrivano da Shopify; da foto si creano quelli fuori dal sito (60).
