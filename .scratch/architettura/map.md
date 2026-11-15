@@ -40,6 +40,10 @@ percorso delle schermate e aspetto grafico, compresi nome e brand kit (decisioni
 
 <!-- una riga per ticket chiuso: [titolo](issues/NN-slug.md): sintesi della risposta -->
 
+- [Shopify: ordini, evasione e giacenze viste da un gestionale esterno](issues/03-ricerca-shopify.md): API GraphQL
+  da aggiornare ogni anno; assegnazione e «evaso» restano nostri; niente webhook verso un server in sede, si
+  interroga Shopify a intervalli; connettore come modulo dietro un punto di estensione «canale di vendita».
+
 Prese prima della mappa, nel secondo giro di domande del 15/11/2026: decisioni 15–28 in
 [`docs/decisioni.md`](../../docs/decisioni.md) (assegnazione parziale, codice stampato come tipo di articolo,
 35.000 articoli, base principale o affiancata, prelievo e spedizione, Android e iPhone, niente lavoro senza rete,
