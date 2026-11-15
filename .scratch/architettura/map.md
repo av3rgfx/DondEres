@@ -32,14 +32,17 @@ percorso delle schermate e aspetto grafico, compresi nome e brand kit (decisioni
   all'utente e si fanno con prototipi da guardare. Una sola direzione visiva, registrata in `docs/decisioni.md`.
 - Anche nome e brand kit sono scelte di gusto dell'utente (decisione 20). La skill logo-design si installa nel
   progetto, in `.claude/skills` e `.agents/skills` uguali, dopo averne letto il contenuto; mai a livello globale.
-- Due magazzini reali fanno da banco di prova per la base, senza diventarne la specializzazione: uno affianca due
-  gestionali esistenti (Ad Hoc Revolution e ARS Logistica) e usa solo il carico normale; l'altro usa solo Shopify e anche la giacenza «VEND»
-  (decisioni 15 e 19).
+- Due magazzini reali fanno da banco di prova per la base, senza diventarne la specializzazione: UFP affianca due
+  gestionali esistenti (Ad Hoc Revolution e ARS Logistica) e usa il carico normale e anche VEND, con ordini fornitore
+  che portano il riferimento del cliente; l'altro usa solo Shopify e userà VEND con il riferimento preso dagli ordini del sito (decisioni 15, 19, 42 e 46).
 
 ## Decisions so far
 
 <!-- una riga per ticket chiuso: [titolo](issues/NN-slug.md): sintesi della risposta -->
 
+- [Regole all'arrivo: carico normale e merce venduta (VEND)](issues/01-regole-arrivo-carico-e-vend.md): si parte
+  dal DDT; tre strade (VEND se l'ordine fornitore porta il riferimento cliente, carico normale, merce non prevista);
+  VEND vince su «dal più vecchio», esce al prelievo, posti numerati facoltativi; acceso per magazzino (decisioni 30–48).
 - [Shopify: ordini, evasione e giacenze viste da un gestionale esterno](issues/03-ricerca-shopify.md): API GraphQL
   da aggiornare ogni anno; assegnazione e «evaso» restano nostri; niente webhook verso un server in sede, si
   interroga Shopify a intervalli; connettore come modulo dietro un punto di estensione «canale di vendita».
@@ -62,6 +65,13 @@ tre livelli di conferma, quantità letta dalla scatola, ubicazioni facoltative, 
   ubicazioni, decisione 26), certificato HTTPS sulla rete interna, aggiornamenti, copie di sicurezza e ripristino.
 - **Inventario e rettifiche:** conta periodica, correzione delle giacenze, annullamento dei movimenti e loro effetto
   sulle assegnazioni.
+- **Acquisizione del DDT:** oggi il DDT arriva di carta dal corriere e viene scansionato e caricato; gli uffici hanno
+  spesso anche la versione digitale, che in magazzino non si usa. Da capire se la base legge la foto del DDT, importa
+  la versione digitale o chiede solo il numero (tocca identificazione, fonti degli ordini e schermate).
+- **Resi al fornitore:** compaiono con gli annullamenti e con la merce non prevista (decisioni 41 e 45); quando e come
+  si registrano.
+- **Ottimizzazione del venduto (VEND):** l'utente vuole un'analisi a parte, soprattutto per UFP, che vende anche al
+  banco e ha più casi particolari da controllare.
 - **Descrizione proposta da un modello che legge immagini e scrive testo** per l'articolo nuovo: se tenerla, e quale
   modello, dipende dalla prova e dal server.
 

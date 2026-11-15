@@ -35,6 +35,10 @@ Chi spedisce la merce al magazzino.
 La merce chiesta a un fornitore e attesa in magazzino, divisa in righe con quantità ordinata, ricevuta e residua.
 _Evitare_: ordine d'acquisto, ordine (da solo)
 
+**Riferimento cliente**:
+L'indicazione, su un ordine fornitore o su una sua riga, del cliente per cui la merce è ordinata.
+_Evitare_: commessa, rif.
+
 **Ordine cliente**:
 La merce da consegnare a un cliente, divisa in righe; è aperto finché non è evaso.
 _Evitare_: ordine di vendita, ordine (da solo)
@@ -49,6 +53,10 @@ _Evitare_: consegnato
 
 ## Merce e scorte
 
+**DDT**:
+Il documento di trasporto che accompagna una consegna del fornitore e rimanda agli ordini fornitore a cui appartiene.
+_Evitare_: bolla
+
 **Ricevimento**:
 L'arrivo di una consegna in magazzino, con le identificazioni fatte sulla merce.
 _Evitare_: accettazione, entrata
@@ -60,6 +68,27 @@ _Evitare_: stock, scorta (al singolare), disponibilità
 **Assegnazione**:
 La parte di giacenza riservata a una riga di ordine cliente; può coprire la riga solo in parte.
 _Evitare_: allocazione, impegno, prenotazione
+
+**Carico**:
+Il movimento che fa entrare in giacenza la merce ricevuta.
+_Evitare_: versamento, entrata
+
+**Residuo**:
+La quantità di una riga d'ordine fornitore ancora attesa: ordinata meno ricevuta, mai sotto zero.
+_Evitare_: inevaso, rimanenza
+
+**Eccedenza**:
+La merce ricevuta oltre la quantità ordinata su una riga d'ordine fornitore.
+_Evitare_: surplus, extra
+
+**Merce senza ordine**:
+Merce ricevuta che nessun ordine fornitore aperto prevede.
+_Evitare_: merce fuori ordine, omaggio (è solo uno dei casi)
+
+**VEND**:
+La merce arrivata con un ordine fornitore fatto per un cliente preciso: resta da parte per la sua riga d'ordine
+cliente fino al prelievo, anche se il magazzino non ha un'area fisica apposita.
+_Evitare_: venduto (da solo), impegnato
 
 **Movimento**:
 Ogni variazione di giacenza (carico, prelievo, rettifica), con chi l'ha fatta e quando.

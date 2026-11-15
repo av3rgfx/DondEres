@@ -16,3 +16,8 @@ sul telefono (ML Kit, Apple Vision, `BarcodeDetector`, zxing-cpp), distribuzione
 qualsiasi, telefoni aziendali o personali.
 
 Risultato atteso: la scelta e il motivo in `docs/decisioni.md`, le conseguenze in `docs/architettura.md`.
+
+## Comments
+
+- 15/11/2026, dal ticket «Regole all'arrivo»: l'utente parla di conferma del prelievo «con il palmare». Da chiarire
+  qui se il magazzino usa palmari industriali (lettore barcode integrato, spesso Android) oltre ai telefoni.
