@@ -32,3 +32,8 @@ Risultato atteso: la parte su fonti e scambi in `docs/architettura.md`, più l'e
 ## Comments
 
 - 15/11/2026, dall'utente: i due gestionali del primo magazzino si chiamano «ad hoc Revolution» e «ARS Logistica».
+- 15/11/2026, dal ticket «Regole all'arrivo» (vedi `docs/architettura.md`, «Ricevimento e assegnazione»): nel
+  magazzino Shopify la base prepara le proposte d'ordine al fornitore con il riferimento del cliente preso dall'ordine
+  del sito (decisione 46), quindi gli ordini fornitore nascono anche nella base. Il riferimento cliente sta sull'ordine
+  fornitore intero o su ogni riga (39) e va scambiato con i gestionali. UFP vende anche al banco: è una fonte di ordini
+  cliente da considerare. Il ricevimento parte sempre dal DDT (40): da capire se il DDT arriva dai gestionali.

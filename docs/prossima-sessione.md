@@ -12,6 +12,10 @@ Registra ogni mia decisione in docs/decisioni.md, con data e motivo.
 Parlami in italiano, con domande semplici: cosa chiedi, perché conta, cosa comporta ogni opzione.
 ```
 
-Frontiera al 15/11/2026, in ordine: «Regole all'arrivo: carico normale e merce venduta (VEND)», «Percorso di
+Frontiera al 15/11/2026, in ordine: «Percorso di
 identificazione e lettura della quantità», «App nativa o web app», «Piano della prova di accuratezza visiva», «Nome
 del prodotto», «Fonti degli ordini e collegamento ai gestionali esistenti» (le sue due ricerche sono chiuse). Si possono lavorare in parallelo in sessioni diverse.
+
+Chiuso il 15/11/2026: «Regole all'arrivo: carico normale e merce venduta (VEND)» (decisioni 30–48, sezione
+«Ricevimento e assegnazione» in `docs/architettura.md`). Per le domande all'utente ha funzionato bene una pagina
+interattiva con esempi visivi e risposte salvate, invece delle domande in chat.

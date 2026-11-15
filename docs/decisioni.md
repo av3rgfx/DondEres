@@ -51,8 +51,16 @@ Le decisioni tecniche ancora aperte non stanno qui: stanno in `docs/analisi-prog
 | 43 | 15/11/2026 | Il nome «UFP» si può scrivere nei documenti del progetto. | Non indicato. |
 | 44 | 15/11/2026 | VEND nasce solo dal riferimento del cliente scritto sull'ordine fornitore: il programma non collega da solo un ordine cliente alla merce in arrivo. Se il riferimento manca, la merce segue il carico normale e si assegna dal più vecchio. Corregge la decisione 29. | In UFP gli ordini dei clienti arrivano per telefono o email; se chiedono un articolo che non è a magazzino o non è a catalogo, chi ordina al fornitore scrive il riferimento del cliente. |
 | 45 | 15/11/2026 | La merce che nessun ordine fornitore prevede si carica, ma non si ubica (né in VEND né sugli scaffali) finché il responsabile non decide se tenerla o renderla al fornitore. Precisa la decisione 31, che resta valida per la registrazione da parte dell'operatore. | «Si deve prima decidere se tenerlo o rimandarlo indietro.» |
+| 46 | 15/11/2026 | Nel magazzino Shopify il riferimento del cliente lo scrive il programma: per un ordine del sito con un articolo che non c'è, prepara la proposta d'ordine al fornitore con il riferimento già compilato, e una persona la conferma. Così anche lì si usa VEND. | L'utente: «nel magazzino con Shopify dovrà essere automatizzato, dato che si prende il dato di chi ha ordinato dall'e-commerce»; proposta accettata. |
+| 47 | 15/11/2026 | VEND può avere posti numerati (VEND1, VEND2…): un posto per ogni ordine cliente, proposto dal programma (lo stesso se l'ordine ne ha già uno, altrimenti il primo libero) e confermato scansionando l'etichetta del posto. Si sceglie alla configurazione iniziale; il magazzino può tenere anche un solo tavolo VEND senza posti. | Proposta dell'utente: trovare subito dal palmare dove sta ogni articolo venduto, invece di cercarlo su un tavolo pieno. Configurabile «solo se approvano di gestire il venduto in questo modo». |
+| 48 | 15/11/2026 | La merce non prevista non si assegna agli ordini cliente finché il responsabile non decide di tenerla. | Non indicato (proposta accettata). |
 
 ## Note di lettura
 
 - Decisione 5: «fino a 35.000 unità» indica 35.000 articoli diversi a catalogo. Confermato con la decisione 18.
 - Decisione 6: il «numero seriale» dell'utente è un codice che identifica il tipo di articolo, non il singolo pezzo. Confermato con la decisione 17. Nei documenti si chiama «codice stampato» (vedi `GLOSSARY.md`).
+- Decisione 15: la parte su quale magazzino usa VEND è corretta dalla decisione 42 (VEND si usa in UFP) e dalla 46
+  (anche il magazzino Shopify lo userà).
+- Decisione 29: sostituita dalla decisione 44 (VEND nasce solo dal riferimento cliente sull'ordine fornitore).
+- Decisione 31: precisata dalle decisioni 45 e 48 (la merce non prevista non si ubica né si assegna finché il
+  responsabile non decide).

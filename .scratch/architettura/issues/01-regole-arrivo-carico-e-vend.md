@@ -2,7 +2,7 @@
 
 Type: grilling
 Label: wayfinder:grilling
-Status: claimed
+Status: resolved
 Blocked by: —
 
 ## Question
@@ -46,3 +46,20 @@ carico, residuo) in `GLOSSARY.md`.
   biglietto che dice di chi è. Proposte dell'utente, da confermare nel riepilogo finale: nel magazzino Shopify il
   riferimento va preso in automatico dall'ordine del sito; VEND diventa un'ubicazione con posti numerati (VEND1,
   VEND2…) e il palmare dice in quale posto si trova ogni articolo venduto, anche in UFP.
+- 15/11/2026, riepilogo finale confermato dall'utente: decisioni 46–48.
+
+## Answer
+
+Regole scritte in [`docs/architettura.md`](../../../docs/architettura.md), sezione «Ricevimento e assegnazione»;
+decisioni 30–48 in `docs/decisioni.md` (la 44 sostituisce la 29, la 42 corregge la 15). In sintesi:
+
+- Il ricevimento parte sempre dal DDT; ogni riga prende una di tre strade: **VEND** se l'ordine fornitore porta il
+  riferimento del cliente, **carico normale** se è un ordine di magazzino, **merce non prevista** se nessun ordine la
+  prevede (resta ferma finché decide il responsabile).
+- VEND nasce solo dal riferimento cliente, mai da un collegamento automatico; vince sulla regola «dal più vecchio»;
+  esce con il prelievo; può avere posti numerati, un posto per ordine cliente.
+- Più merce: si accetta e si segnala; meno merce: la riga resta aperta.
+- VEND sta nella base, spento di serie, acceso per magazzino. UFP (Ad Hoc + ARS) lo usa con riferimento scritto da chi
+  ordina; il magazzino Shopify lo userà con riferimento compilato dal programma sulla proposta d'ordine.
+- Termini nuovi in `GLOSSARY.md`: Carico, Residuo, Eccedenza, Merce senza ordine, VEND, DDT, Riferimento cliente.
+- Strumento usato per le domande: pagina interattiva «Merce in arrivo» (https://claude.ai/artifact/8bpuk2jouU2yTzEU9ewKnh).
