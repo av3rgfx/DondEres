@@ -34,6 +34,11 @@ Le decisioni tecniche ancora aperte non stanno qui: stanno in `docs/analisi-prog
 | 26 | 15/11/2026 | La base gestisce un solo magazzino. Alla configurazione iniziale si sceglie se usare le ubicazioni oppure no. | Non indicato. |
 | 27 | 15/11/2026 | Ognuno entra con il proprio utente, così ogni movimento registra chi l'ha fatto. Due ruoli: operatore (riceve, identifica, preleva, spedisce) e responsabile (in più aggiunge articoli, corregge giacenze, annulla movimenti, gestisce gli utenti). | Non indicato (proposta accettata). |
 | 28 | 15/11/2026 | L'interfaccia della base è in italiano, con i testi separati dal codice per poterla tradurre più avanti. | Non indicato (proposta accettata). |
+| 29 | 15/11/2026 | Merce venduta (VEND): se arriva un ordine cliente e la giacenza non basta, la riga d'ordine cliente si collega a un ordine fornitore aperto. Quando quella merce arriva, i pezzi collegati vanno in VEND per quell'ordine cliente; il resto entra nella giacenza normale. Confermato con l'esempio: F7 da 5 pezzi, C1 da 2 pezzi venduti con giacenza 0, all'arrivo 2 in VEND e 3 sullo scaffale. | Non indicato (proposta accettata). |
+| 30 | 15/11/2026 | VEND è sempre un conto nel programma; il magazzino può collegarlo anche a un'area fisica, se ne ha una. | Non indicato (proposta accettata). |
+| 31 | 15/11/2026 | La merce che arriva senza un ordine fornitore aperto la registra l'operatore: entra in giacenza e si assegna subito; il movimento è segnato «senza ordine» e il responsabile lo trova tra i movimenti da controllare. | Non indicato (proposta accettata). |
+| 32 | 15/11/2026 | Se arriva più merce di quella ordinata, si accetta tutta: il residuo della riga d'ordine fornitore va a 0 e l'eccedenza viene segnalata al responsabile. | Non indicato (proposta accettata). |
+| 33 | 15/11/2026 | Se arriva meno merce di quella ordinata, la riga d'ordine fornitore resta aperta con il residuo finché arriva il resto o il responsabile la chiude. | Non indicato (proposta accettata). |
 
 ## Note di lettura
 

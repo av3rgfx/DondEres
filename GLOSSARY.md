@@ -61,6 +61,27 @@ _Evitare_: stock, scorta (al singolare), disponibilità
 La parte di giacenza riservata a una riga di ordine cliente; può coprire la riga solo in parte.
 _Evitare_: allocazione, impegno, prenotazione
 
+**Carico**:
+Il movimento che fa entrare in giacenza la merce ricevuta.
+_Evitare_: versamento, entrata
+
+**Residuo**:
+La quantità di una riga d'ordine fornitore ancora attesa: ordinata meno ricevuta, mai sotto zero.
+_Evitare_: inevaso, rimanenza
+
+**Eccedenza**:
+La merce ricevuta oltre la quantità ordinata su una riga d'ordine fornitore.
+_Evitare_: surplus, extra
+
+**Merce senza ordine**:
+Merce ricevuta che nessun ordine fornitore aperto prevede.
+_Evitare_: merce fuori ordine, omaggio (è solo uno dei casi)
+
+**VEND**:
+La merce già venduta a una riga d'ordine cliente quando è arrivata: è giunta con l'ordine fornitore a cui la riga era
+collegata e resta da parte per quella riga, anche se il magazzino non ha un'area fisica apposita.
+_Evitare_: venduto (da solo), impegnato
+
 **Movimento**:
 Ogni variazione di giacenza (carico, prelievo, rettifica), con chi l'ha fatta e quando.
 _Evitare_: transazione, operazione

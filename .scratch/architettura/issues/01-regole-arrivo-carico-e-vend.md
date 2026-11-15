@@ -26,3 +26,8 @@ Da chiarire con esempi numerici:
 
 Risultato atteso: le regole di ricevimento e di assegnazione in `docs/architettura.md` e i termini nuovi (VEND,
 carico, residuo) in `GLOSSARY.md`.
+
+## Comments
+
+- 15/11/2026, primo giro (pagina interattiva «Merce in arrivo»): confermate tutte le proposte. Decisioni 29–33 in
+  `docs/decisioni.md`; termini Carico, Residuo, Eccedenza, Merce senza ordine e VEND in `GLOSSARY.md`.
