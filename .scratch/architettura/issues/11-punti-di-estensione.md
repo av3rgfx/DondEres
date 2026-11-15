@@ -13,3 +13,9 @@ Shopify, formati di etichette dei fornitori, regole di assegnazione diverse, cam
 Come si aggiorna la base senza rompere le specializzazioni?
 
 Risultato atteso: l'elenco dei punti di estensione e il loro contratto in `docs/architettura.md`.
+
+## Comments
+
+- 15/11/2026, dal ticket «Fonti degli ordini»: collegamenti previsti e loro posto (51, 67): scambio a file nella base,
+  Shopify modulo con la base, Ad Hoc nella specializzazione. Il connettore traduce documenti e stati (61) e lavora con
+  la coda d'uscita (54). Configurazioni nuove: modo, connettore Shopify, intervallo di scambio, solo ordini pagati.

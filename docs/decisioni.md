@@ -70,6 +70,9 @@ Le decisioni tecniche ancora aperte non stanno qui: stanno in `docs/analisi-prog
 | 62 | 15/11/2026 | Se un ordine viene annullato o ridotto nel sistema d'origine dopo il prelievo, il programma avvisa e crea il compito «rimetti a posto»: i pezzi tornano liberi quando l'operatore li ubica. Se l'ordine era già spedito, il programma non cambia nulla e lo segnala al responsabile. | Non indicato (proposta accettata). |
 | 63 | 15/11/2026 | Gli ordini non ancora pagati entrano nel programma ma non ricevono merce: restano «in attesa di pagamento» e, una volta pagati, tornano in coda con la loro data. Si sceglie per magazzino, alla configurazione; di serie è acceso. | Non indicato (proposta accettata). |
 | 64 | 15/11/2026 | Un ordine fornitore confermato nel programma diventa un documento (PDF e file) con il riferimento del cliente, che una persona manda al fornitore come preferisce. Il programma non lo invia da solo. | Non indicato (proposta accettata). |
+| 65 | 15/11/2026 | La vendita al banco nasce sul telefono, nel programma: chi vende sceglie il cliente (uno preciso, quello generico delle vendite al banco o nessuno), scansiona gli articoli e l'ubicazione da cui li prende e conferma. In UFP l'ordine va poi ad Ad Hoc Revolution, dove si fanno i documenti di vendita, come oggi con ARS Logistica. Vale nella base anche senza gestionale. | L'utente ha spiegato che oggi in UFP la vendita assistita al banco si fa così con ARS Logistica; proposta accettata. |
+| 66 | 15/11/2026 | Confermate quattro regole sugli ordini importati: «dal più vecchio» usa la data dell'ordine nel sistema d'origine (per Shopify data e ora d'acquisto); ogni dato importato conserva il codice che ha nel sistema d'origine; una riga con un articolo sconosciuto entra lo stesso, resta senza merce e il responsabile vede un avviso; con un negozio Shopify che ha più magazzini, il programma lavora solo la parte di ordine assegnata al suo. | Non indicato (deduzioni proposte nel riepilogo e confermate). |
+| 67 | 15/11/2026 | Collegamenti previsti: lo scambio a file nella base, Shopify come modulo con la base, Ad Hoc Revolution nella specializzazione per UFP. Nessun collegamento con ARS Logistica. | Non indicato (riepilogo confermato). |
 
 ## Note di lettura
 
@@ -80,3 +83,6 @@ Le decisioni tecniche ancora aperte non stanno qui: stanno in `docs/analisi-prog
 - Decisione 29: sostituita dalla decisione 44 (VEND nasce solo dal riferimento cliente sull'ordine fornitore).
 - Decisione 31: precisata dalle decisioni 45 e 48 (la merce non prevista non si ubica né si assegna finché il
   responsabile non decide).
+- Decisione 56: per UFP la decisione 65 precisa dove nasce l'ordine al banco (sul telefono, nel programma, poi in Ad
+  Hoc). Nel secondo giro l'utente aveva scelto «in Ad Hoc, letta subito dal programma», ma la sua nota descriveva la
+  pratica attuale con ARS: la scelta non è stata registrata e la domanda è stata rifatta.

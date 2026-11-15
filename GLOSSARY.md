@@ -22,6 +22,11 @@ _Evitare_: EAN (è solo uno dei formati), codice a barre
 Il codice articolo stampato in chiaro sull'etichetta della scatola, letto come testo quando manca il barcode.
 _Evitare_: numero seriale, seriale, matricola
 
+**Articolo provvisorio**:
+Un articolo creato nel magazzino quando c'è un gestionale accanto, usabile subito, che diventa definitivo quando il
+gestionale lo conosce con lo stesso codice.
+_Evitare_: articolo temporaneo, bozza
+
 **Foto di riferimento**:
 Una foto di un articolo conservata per riconoscerlo dall'aspetto.
 _Evitare_: immagine campione
@@ -39,9 +44,21 @@ _Evitare_: ordine d'acquisto, ordine (da solo)
 L'indicazione, su un ordine fornitore o su una sua riga, del cliente per cui la merce è ordinata.
 _Evitare_: commessa, rif.
 
+**Proposta d'ordine**:
+Un ordine fornitore preparato dal programma e non ancora confermato da una persona.
+_Evitare_: bozza d'ordine, suggerimento
+
 **Ordine cliente**:
 La merce da consegnare a un cliente, divisa in righe; è aperto finché non è evaso.
 _Evitare_: ordine di vendita, ordine (da solo)
+
+**Vendita al banco**:
+Un ordine cliente creato nel momento in cui il cliente è in magazzino e porta via subito la merce.
+_Evitare_: vendita assistita, vendita diretta
+
+**In attesa di pagamento**:
+Stato di un ordine cliente non ancora pagato, che non riceve merce finché il pagamento non arriva.
+_Evitare_: sospeso, bloccato
 
 **Evaso**:
 Stato di un ordine cliente la cui merce è stata prelevata ed è pronta a partire.
@@ -97,6 +114,17 @@ _Evitare_: transazione, operazione
 **Ubicazione**:
 Il punto del magazzino in cui sta la merce, come uno scaffale o una corsia; si usa solo se il magazzino lo sceglie.
 _Evitare_: posizione, locazione
+
+## Sistemi
+
+**Gestionale**:
+Il programma che tiene articoli, ordini e documenti di un'azienda, accanto al quale il prodotto può lavorare.
+_Evitare_: ERP, software esterno
+
+**Sistema d'origine**:
+Il programma in cui un dato è nato e in cui soltanto si può cambiare: il gestionale, il negozio online o il prodotto
+stesso.
+_Evitare_: master, fonte di verità, sistema esterno
 
 ## Persone
 

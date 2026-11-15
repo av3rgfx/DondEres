@@ -49,6 +49,9 @@ percorso delle schermate e aspetto grafico, compresi nome e brand kit (decisioni
 - [Ad Hoc Revolution e ARS Logistica: come si scambiano i dati](issues/18-ricerca-adhoc-revolution-ars-logistica.md):
   nessuna interfaccia pubblica, tutto passa dal rivenditore; ARS fa già ricevimento e prelievo da telefono, quindi
   va decisa la divisione del lavoro; scambio a file come via generale.
+- [Fonti degli ordini e collegamento ai gestionali esistenti](issues/02-fonti-ordini-e-collegamenti.md): comanda il
+  sistema d'origine; in UFP il programma sostituisce ARS e restituisce documenti ad Ad Hoc; scambio a file nella base,
+  Shopify modulo, Ad Hoc nella specializzazione; banco dal telefono; scambio ogni 5 minuti con coda (decisioni 49–67).
 
 Prese prima della mappa, nel secondo giro di domande del 15/11/2026: decisioni 15–28 in
 [`docs/decisioni.md`](../../docs/decisioni.md) (assegnazione parziale, codice stampato come tipo di articolo,
@@ -78,6 +81,8 @@ tre livelli di conferma, quantità letta dalla scatola, ubicazioni facoltative, 
 ## Out of scope
 
 - Specializzazione per un magazzino specifico (decisione 4).
+- Connettore Ad Hoc Revolution per UFP: sta nella specializzazione, dopo le risposte del rivenditore (decisioni 51 e
+  57; domande in `docs/domande-rivenditore-ufp.md`).
 - Registrazione per numero seriale del singolo pezzo, lotti e scadenze: possibile estensione (decisione 17).
 - Lavoro senza rete (decisione 23).
 - Conteggio dei pezzi dall'immagine (decisione 25).
