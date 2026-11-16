@@ -18,27 +18,27 @@ Lavora a giri: registra le risposte di ogni giro prima del successivo e chiudi c
 
 Per lavorare un ticket preciso in una sessione parallela, aggiungere in fondo al prompt: `Lavora il ticket «<titolo>».`
 
-## Frontiera al 15/11/2026
+## Frontiera al 16/11/2026
 
 In ordine di numero:
 
-1. «Modello dei dati»: sbloccato dalla chiusura di «Fonti degli ordini»; nei commenti del ticket ci sono i concetti
-   nuovi (sistema d'origine, articolo provvisorio, banco, attesa di pagamento, un articolo in più ubicazioni).
-2. «Percorso di identificazione e lettura della quantità»
-3. «App nativa o web app»: va chiarito anche il palmare industriale citato dall'utente (commento nel ticket).
-4. «Piano della prova di accuratezza visiva»: conviene partire presto, perché le foto reali richiedono tempo e da
+1. «Percorso di identificazione e lettura della quantità»
+2. «App nativa o web app»: va chiarito anche il palmare industriale citato dall'utente (commento nel ticket). In UFP
+   oggi i palmari usano ARS dal browser.
+3. «Piano della prova di accuratezza visiva»: conviene partire presto, perché le foto reali richiedono tempo e da
    questa prova dipendono la scelta del modello, la divisione tra le macchine e lo stack.
+4. «Punti di estensione per la specializzazione»: sbloccato dalla chiusura di «Modello dei dati».
 5. «Nome del prodotto»
 
 Si possono lavorare in parallelo in sessioni diverse.
 
 ## In sospeso fuori dalla mappa
 
-- Domande per il rivenditore di UFP in `docs/domande-rivenditore-ufp.md`: le manda l'utente (decisione 57). Le
-  risposte si annotano in fondo al file; servono al connettore Ad Hoc della specializzazione, non bloccano la mappa.
+- Domande per il rivenditore di UFP in `docs/domande-rivenditore-ufp.md` (aggiunte la 17 e la 18 il 16/11/2026): le
+  manda l'utente (decisione 57). Le risposte si annotano in fondo al file; servono al connettore Ad Hoc della
+  specializzazione, non bloccano la mappa.
 
 ## Ultimo ticket chiuso
 
-15/11/2026: «Fonti degli ordini e collegamento ai gestionali esistenti». Decisioni 49–67, sezione «Fonti dei dati e
-collegamenti» in `docs/architettura.md`. Pagina usata per le domande:
-https://claude.ai/artifact/G5XtbLq6KFxqngFxXMXsVd (privata, la vede solo l'utente).
+16/11/2026: «Modello dei dati». Decisioni 68–86, sezione «Modello dei dati» in `docs/architettura.md`. Pagina usata
+per le domande: https://claude.ai/artifact/4HA7JqQbi8QtgcpfPmo9xd (privata, la vede solo l'utente).

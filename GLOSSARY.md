@@ -14,6 +14,11 @@ Un codice che identifica un articolo; un articolo può averne più di uno (barco
 produttore, codice interno).
 _Evitare_: codice prodotto
 
+**Collegamento da confermare**:
+Un codice del fornitore collegato a un articolo da un operatore e non ancora confermato dal responsabile: vale, ma
+ogni volta chiede un tocco di conferma.
+_Evitare_: alias provvisorio, abbinamento
+
 **Barcode**:
 Il codice articolo in forma di codice a barre o QR, letto otticamente.
 _Evitare_: EAN (è solo uno dei formati), codice a barre
@@ -30,6 +35,22 @@ _Evitare_: articolo temporaneo, bozza
 **Foto di riferimento**:
 Una foto di un articolo conservata per riconoscerlo dall'aspetto.
 _Evitare_: immagine campione
+
+**Unità di magazzino**:
+L'unità in cui si conta un articolo in giacenza (pezzo, chilo, metro); ogni articolo ne ha una sola.
+_Evitare_: unità di misura (da sola), UM
+
+**Conversione**:
+Il rapporto fisso tra un'unità del fornitore (tonnellata, confezione, coppia) e l'unità di magazzino di un articolo.
+_Evitare_: fattore, equivalenza
+
+**Prezzo di vendita**:
+Il prezzo a cui un articolo si vende al cliente.
+_Evitare_: listino (da solo)
+
+**Costo d'acquisto**:
+Il prezzo a cui un articolo si compra dal fornitore.
+_Evitare_: prezzo d'acquisto, costo (da solo)
 
 ## Ordini
 
@@ -78,6 +99,10 @@ _Evitare_: bolla
 L'arrivo di una consegna in magazzino, con le identificazioni fatte sulla merce.
 _Evitare_: accettazione, entrata
 
+**Quantità in bolla**:
+La quantità che il fornitore dichiara sul DDT per una riga, distinta da quella contata in magazzino.
+_Evitare_: quantità stampata, quantità dichiarata
+
 **Giacenza**:
 La quantità di un articolo presente in magazzino.
 _Evitare_: stock, scorta (al singolare), disponibilità
@@ -111,9 +136,38 @@ _Evitare_: venduto (da solo), impegnato
 Ogni variazione di giacenza (carico, prelievo, rettifica), con chi l'ha fatta e quando.
 _Evitare_: transazione, operazione
 
+**Correzione**:
+Il movimento che rimedia a un movimento sbagliato, collegato a quello: il movimento sbagliato non si cancella.
+_Evitare_: storno, annullamento (da solo), cancellazione
+
+**Rettifica**:
+Il movimento che porta la giacenza di un'ubicazione alla quantità contata.
+_Evitare_: aggiustamento, inventario (da solo)
+
 **Ubicazione**:
 Il punto del magazzino in cui sta la merce, come uno scaffale o una corsia; si usa solo se il magazzino lo sceglie.
-_Evitare_: posizione, locazione
+_Evitare_: posizione, locazione, buca (è il nome usato in UFP)
+
+**Ubicazione abituale**:
+L'ubicazione in cui di solito si mette un articolo; facoltativa, e l'articolo può stare anche altrove.
+_Evitare_: ubicazione principale, ubicazione fissa
+
+**Area di ricevimento**:
+L'ubicazione in cui sta la merce contata e non ancora messa a posto.
+_Evitare_: CHECK (è il nome usato in UFP), zona di arrivo
+
+**Messa a posto**:
+Lo spostamento della merce dall'area di ricevimento alla sua ubicazione.
+_Evitare_: stoccaggio, «sparare in buca», Libera
+
+**Compito**:
+Un lavoro fisico che il programma chiede di fare, come mettere a posto la merce ricevuta o rimettere a posto quella di
+un ordine annullato.
+_Evitare_: missione, task, lista (da sola)
+
+**Da controllare**:
+L'elenco dei movimenti e degli avvisi che il responsabile deve guardare e approvare o correggere.
+_Evitare_: anomalie, eccezioni, coda (da sola)
 
 ## Sistemi
 

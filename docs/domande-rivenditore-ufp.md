@@ -53,9 +53,16 @@ Per collegarlo ad Ad Hoc vi chiediamo:
     inventario e vendita al banco (contratti, licenze, dati)?
 16. Che cos'è «NEX Logistica»? Sostituisce ARS Logistica?
 
+**Articoli e prezzi** (aggiunte il 16/11/2026, dal ticket «Modello dei dati»)
+
+17. Si possono leggere da Ad Hoc il prezzo di vendita e il costo d'acquisto di ogni articolo? Al banco il nostro
+    programma mostrerà il prezzo, preso da Ad Hoc e mai cambiato da noi.
+18. Ad Hoc tiene i codici con cui i fornitori chiamano i vostri articoli, e le conversioni tra le unità del fornitore e
+    le vostre (per esempio tonnellate e chili, confezioni e pezzi)? Si possono leggere?
+
 **Prove**
 
-17. Si può avere un ambiente di prova (una ditta o una copia di test, senza dati reali dei clienti) per sviluppare il
+19. Si può avere un ambiente di prova (una ditta o una copia di test, senza dati reali dei clienti) per sviluppare il
     collegamento?
 
 Grazie.

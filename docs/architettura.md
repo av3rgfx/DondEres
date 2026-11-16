@@ -244,3 +244,132 @@ persona lo manda al fornitore. Il programma non lo invia da solo (64).
   dati» e «Percorso delle schermate».
 - Schermate del banco, del compito «rimetti a posto» e degli avvisi: ticket «Percorso delle schermate».
 - Come entra il DDT nel programma: sezione «Not yet specified» della mappa.
+
+## Modello dei dati
+
+Dal ticket «Modello dei dati», chiuso il 16/11/2026. Decisioni 17, 26, 27, 37, 49, 59, 61, 66 e 68–86. Il ticket ha
+tenuto conto del funzionamento attuale di ARS Logistica in UFP, descritto dall'utente in un documento che non sta nel
+repository perché contiene dati personali; i fatti utili sono annotati nel ticket.
+
+Qui si descrive cosa il programma ricorda e con quali regole, senza scegliere il database: lo stack è un ticket a parte.
+I nomi delle entità sono quelli di `GLOSSARY.md`.
+
+### Entità
+
+**Catalogo**
+
+| Entità | Cosa contiene | Note |
+|---|---|---|
+| Articolo | Descrizione, unità di magazzino, se si tiene a magazzino, ubicazione abituale facoltativa, provvisorio sì o no, prezzo di vendita e costo d'acquisto se i prezzi sono accesi | 37, 59, 72, 75, 78, 83 |
+| Codice articolo | Valore com'è scritto, tipo (barcode, codice stampato, del fornitore, del produttore, interno), fornitore se è un suo codice, stato (confermato o da confermare) | Lo stesso codice può puntare a più articoli: allora il programma propone i candidati (24, 71) |
+| Conversione | Articolo, fornitore, unità del fornitore, quantità nell'unità di magazzino, approvata da chi e quando | 72 |
+| Foto di riferimento | Articolo, foto, impronta numerica, da dove viene (inserimento, conferma di un'identificazione) | Si precisa nel ticket sul percorso di identificazione |
+
+**Ordini e persone esterne**
+
+| Entità | Cosa contiene | Note |
+|---|---|---|
+| Fornitore | Codice, nome | |
+| Cliente | Codice, nome; nient'altro | 79 |
+| Ordine fornitore e righe | Numero, data, fornitore, riferimento cliente (sull'ordine o sulla riga); per riga: articolo, quantità ordinata, ricevuta, residuo | 39 |
+| Proposta d'ordine | Ordine fornitore preparato dal programma, in attesa di conferma | 46 |
+| Ordine cliente e righe | Numero, data, cliente, «banco» sì o no, stato (in attesa di pagamento, aperto, evaso, spedito); per riga: articolo, quantità, assegnata, prelevata, spedita | 21, 56, 63 |
+
+**Ricevimento**
+
+| Entità | Cosa contiene | Note |
+|---|---|---|
+| DDT | Numero del fornitore com'è scritto (con suffissi: «698/00»), numero interno, data, fornitore, stato (aperto o chiuso), carichi già mandati al gestionale | 40, 68, 82 |
+| Riga del DDT | Articolo, riga d'ordine fornitore scelta, quantità in bolla (se nota), quantità contata, stato (pronta o ferma, con il motivo) | 70, 73, 82 |
+| Scansione | DDT o prelievo, articolo, quantità, chi, quando, da quale dispositivo, esito | Ogni scansione è un dato a sé: due operatori sulla stessa riga sommano (86) |
+
+**Giacenze e movimenti**
+
+| Entità | Cosa contiene | Note |
+|---|---|---|
+| Ubicazione | Codice, tipo (normale, area di ricevimento, VEND, posto VEND) | Solo se il magazzino usa le ubicazioni (26); una sola area di ricevimento (86) |
+| Giacenza | Articolo, ubicazione, stato della merce, quantità; mai sotto zero | Stati nella sezione «Ricevimento e assegnazione»; 77 |
+| Assegnazione | Riga d'ordine cliente, articolo, quantità; nessuna ubicazione | 76 |
+| Movimento | Tipo (carico, messa a posto, prelievo, spedizione, rettifica, correzione, passaggio in VEND), articolo, quantità, da e verso quale ubicazione o stato, documento d'origine (DDT, ordine), chi, quando, dispositivo, movimento corretto se è una correzione | 27, 74 |
+
+**Lavoro e controllo**
+
+| Entità | Cosa contiene | Note |
+|---|---|---|
+| Compito | Tipo (da mettere a posto, rimetti a posto), articolo, quantità, da dove | 62, 69 |
+| Da controllare | Movimenti e avvisi per il responsabile: merce senza ordine, eccedenze, conteggi, collegamenti da confermare, differenze con la bolla, unità mai viste, possibili doppioni, differenze con il sistema d'origine | 31, 32, 45, 49, 71–73, 77, 86 |
+| Coda di uscita | Documenti da mandare a gestionale o Shopify, con stato e tentativi | 54, 61 |
+| Utente | Nome, ruolo (operatore o responsabile), PIN o password, attivo sì o no | 27, 80 |
+| Configurazione | Le scelte per magazzino delle tabelle «Configurazione per magazzino» | |
+
+**Provenienza.** Articoli, fornitori, clienti e ordini importati portano il sistema d'origine e il codice che hanno lì
+(49, 66). Su quei campi il programma non scrive; ci aggiunge i propri dati.
+
+### Ricevimento in un passaggio
+
+Si fa tutto dal telefono (68): si apre il DDT, si scansiona, si chiude. Il computer resta possibile, non necessario.
+
+1. Più operatori lavorano sullo stesso DDT, anche in giorni diversi. Non serve «sospendere»: ogni scansione è già salvata.
+2. Per ogni articolo il programma sceglie la riga d'ordine fornitore: quella indicata sul DDT; se manca, prima le righe
+   con il riferimento di un cliente, poi la più vecchia. L'operatore può cambiarla (70).
+3. Un codice del fornitore sconosciuto lo collega l'operatore; il collegamento resta «da confermare» finché il
+   responsabile non dice sì (71). Se dice no, il programma elenca i carichi fatti con quel collegamento, da correggere
+   (86).
+4. Un'unità del fornitore si converte con la conversione approvata; un'unità mai vista ferma la riga e la manda al
+   responsabile (72).
+5. La merce contata va nell'area di ricevimento: è già in giacenza e si assegna subito. La messa a posto si fa subito o
+   più tardi, partendo dall'elenco «da mettere a posto»; il programma propone l'ubicazione abituale (69, 75).
+6. Se la quantità in bolla è nota, le differenze con la contata vanno al responsabile (73).
+7. «Chiudi DDT» manda un carico al gestionale. Se una riga è ferma, l'operatore sceglie se chiudere con le righe pronte
+   (proposto) o aspettare; nel primo caso la riga ferma avrà poi un carico suo (61, 82).
+8. Un DDT con stesso fornitore, numero e data di uno già registrato dà un avviso di possibile doppione (86).
+
+Come entra la bolla nel programma (foto, file, solo numero) resta nella nebbia della mappa.
+
+### Correzioni, rettifiche e storico
+
+- Un movimento non si cancella mai. Un errore si corregge con una **correzione**, collegata al movimento sbagliato;
+  giacenza e assegnazioni si rifanno da sole (74).
+- Finché il DDT o il prelievo è aperto, corregge l'operatore che ha fatto il movimento; dopo la chiusura solo il
+  responsabile, e al gestionale va una rettifica (81). Un DDT non si rifà da capo.
+- Se la merce c'è ma non risulta, l'operatore conta l'ubicazione: la **rettifica** vale subito e va tra le cose da
+  controllare (77). La giacenza non va mai sotto zero.
+- Lo storico conserva per ogni movimento chi, quando, da quale dispositivo, cosa e con quale esito (27).
+
+### Requisiti di affidabilità
+
+Ricavati dai casi reali di UFP con ARS (scansioni perse dopo una sospensione, DDT non rintracciabile e rifatto) e dalla
+decisione 23.
+
+- Ogni scansione si salva sul server appena fatta e mostra il suo esito: salvata, in attesa, non riuscita.
+- Ripetere un invio (doppio tocco, rete che torna, riapertura) non crea doppioni: ogni operazione ha la sua identità.
+- Un DDT si trova sempre, in qualsiasi stato, con le sue righe, i carichi mandati e quelli in coda.
+- Lo stesso codice su due righe d'ordine resta su due righe; un codice non si «indovina» da uno simile.
+
+### Prezzi
+
+Accesi per magazzino, spenti di serie (83). Con un gestionale accanto vengono da lì, a ogni scambio, e nel programma si
+leggono soltanto; quando il programma è il gestionale principale si inseriscono a mano o da file. Al banco si mostra il
+prezzo di vendita dell'articolo, uguale per tutti: listini e sconti del cliente li applica il gestionale (84). Il costo
+d'acquisto lo vede solo il responsabile (85).
+
+### Spazio per le estensioni
+
+- Seriali, lotti e scadenze (17): giacenze e movimenti hanno posto per una «partita» facoltativa, vuota nella base.
+- Campi aggiuntivi su articoli, ordini e clienti: si decide nel ticket «Punti di estensione per la specializzazione».
+
+### Configurazione per magazzino (aggiunte)
+
+| Scelta | Valori | Di serie | Decisione |
+|---|---|---|---|
+| Prezzi | accesi, spenti | spenti | 83 |
+| Uscita automatica dal telefono | minuti senza uso | 30 | 80 |
+
+### Rimandato ad altri ticket o alla nebbia della mappa
+
+- Schermate del ricevimento, della messa a posto, della chiusura del DDT, delle cose da controllare e del banco: ticket
+  «Percorso delle schermate».
+- Foto di riferimento e impronte: ticket «Percorso di identificazione e lettura della quantità».
+- Prezzi, codici dei fornitori e conversioni da leggere in Ad Hoc: domande 17 e 18 in `docs/domande-rivenditore-ufp.md`.
+- Catalogo visivo per la vendita al banco (idea dell'utente, 78 e 86): sezione «Not yet specified» della mappa.
+- Inventario periodico: sezione «Not yet specified» della mappa; la rettifica per conteggio è già definita qui.
