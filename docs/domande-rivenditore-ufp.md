@@ -65,6 +65,12 @@ Per collegarlo ad Ad Hoc vi chiediamo:
 19. Si può avere un ambiente di prova (una ditta o una copia di test, senza dati reali dei clienti) per sviluppare il
     collegamento?
 
+**Articoli non a catalogo**
+
+20. Quando si ordina a un fornitore un articolo che non è a catalogo (per esempio per un cliente), come si scrive la
+    riga sull'ordine fornitore in Ad Hoc: con un codice articolo nuovo, con un codice generico e la descrizione, o in un
+    altro modo? Un articolo creato in Ad Hoc può avere anche il barcode o il codice del produttore, da leggere?
+
 Grazie.
 
 ---

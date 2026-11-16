@@ -29,3 +29,8 @@ Risultato atteso: il percorso in `docs/architettura.md`, con il link al prototip
   articoli (91); «Collego questo barcode?» (92); avviso «codice simile, controlla» (89); scelta tra più codici
   nell'inquadratura (102); due quantità lette (93); «× colli» (94); «come l'ultima volta» (100); avviso «non è tra gli
   attesi» (88); stop al prelievo con un altro articolo (97, 103); uscite del «non lo so» (98).
+- 16/11/2026, dal ticket «Inserimento di un articolo nuovo da foto»: schermate da disegnare: righe attese senza
+  articolo in cima (109), tre foto guidate con riquadro e avvisi (106), scheda con campi compilati dal programma (107),
+  parole dell'etichetta da toccare (108), «È uno di questi?» (110), segno «da confermare» (115), uscite del responsabile
+  «Conferma / Unisci / Rifiuta» (114), «Aggiungi foto» nella scheda dell'articolo (117). Al prelievo l'uscita
+  «Articolo nuovo» non compare (118).

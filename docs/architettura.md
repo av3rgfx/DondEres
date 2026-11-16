@@ -179,8 +179,8 @@ Su ogni dato comanda il sistema che l'ha creato, il suo **sistema d'origine** (4
 
 Nasce **provvisorio** nel programma e si può ricevere subito. Il responsabile lo crea anche nel gestionale, con prezzi e
 IVA. Al primo scambio il programma lo riconosce dal codice e lo collega: da lì comanda il gestionale, le foto di
-riferimento restano nel programma (59). Chi può crearlo e quali dati servono: ticket «Inserimento di un articolo nuovo
-da foto».
+riferimento restano nel programma (59). Chi lo crea, con quali dati, e come si collega: sezione «Articolo nuovo da
+foto».
 
 ### Cosa entra e cosa esce
 
@@ -260,7 +260,7 @@ I nomi delle entità sono quelli di `GLOSSARY.md`.
 
 | Entità | Cosa contiene | Note |
 |---|---|---|
-| Articolo | Descrizione, unità di magazzino, se si tiene a magazzino, ubicazione abituale facoltativa, provvisorio sì o no, prezzo di vendita e costo d'acquisto se i prezzi sono accesi | 37, 59, 72, 75, 78, 83 |
+| Articolo | Descrizione, unità di magazzino, se si tiene a magazzino, ubicazione abituale facoltativa, provvisorio sì o no, da confermare sì o no, stato (attivo, rifiutato, unito a un altro articolo), chi l'ha creato, quando e da dove, prezzo di vendita e costo d'acquisto se i prezzi sono accesi | 37, 59, 72, 75, 78, 83, 105, 111, 114, 118 |
 | Codice articolo | Valore com'è scritto, tipo (barcode, codice stampato, del fornitore, del produttore, interno), fornitore se è un suo codice, stato (confermato o da confermare) | Lo stesso codice può puntare a più articoli: allora il programma propone i candidati (24, 71) |
 | Conversione | Articolo, fornitore, unità del fornitore, quantità nell'unità di magazzino, approvata da chi e quando | 72 |
 | Foto di riferimento | Articolo, foto originale, impronta numerica, da dove viene (inserimento, conferma di un'identificazione), chi l'ha confermata | Filtri e tetto per articolo nella sezione «Percorso di identificazione» (96) |
@@ -500,5 +500,85 @@ per la specializzazione».
   in sede» e «App nativa o web app».
 - Le schermate (scheda «È questo», scelta tra più codici, «× colli», uscite del «non lo so»): ticket «Percorso delle
   schermate».
-- Chi può creare l'articolo nuovo dall'uscita «Articolo nuovo»: ticket «Inserimento di un articolo nuovo da foto».
+- Chi può creare l'articolo nuovo dall'uscita «Articolo nuovo»: sezione «Articolo nuovo da foto».
 - Formati di etichette dei fornitori con regole proprie: ticket «Punti di estensione per la specializzazione».
+
+## Articolo nuovo da foto
+
+Dal ticket «Inserimento di un articolo nuovo da foto», chiuso il 16/11/2026. Decisioni 8, 27, 49, 55, 59, 60, 96, 98 e
+105–118. Ricerche: `docs/research/2026-11-15-addestramento-ed-esecuzione-locale.md` (3–5 foto per articolo come punto
+di partenza, ipotesi) e `docs/research/2026-11-15-progetti-simili-riconoscimento-prodotti.md` (da 1 a 8 foto le
+risposte giuste passano dal 51% al 79% in un progetto pubblicato).
+
+### Da dove si parte
+
+| Dove | Chi | Come |
+|---|---|---|
+| «Non lo so» al ricevimento, alla messa a posto, al banco, nei conteggi | Operatore o responsabile | Uscita «Articolo nuovo» (98, 105) |
+| Prelievo | — | Non compare: un articolo diverso da quello da prelevare ferma con un avviso (97, 118) |
+| Catalogo, da telefono o computer | Responsabile | Inserimento a mano o da file; le foto sono facoltative (55, 118) |
+| Scheda di un articolo esistente | Chiunque | «Aggiungi foto», con la stessa guida (117) |
+
+### Il flusso
+
+1. **Righe che aspettano un articolo.** Al ricevimento, in cima compaiono le righe attese degli ordini fornitore con un
+   articolo sconosciuto o solo descritto, con codice e descrizione già compilati. Scelta la riga, la merce segue la sua
+   strada: VEND se c'è il riferimento del cliente, altrimenti il carico normale (109). Senza una riga che lo aspetta,
+   l'articolo nuovo trovato fuori dagli attesi segue la strada della merce non prevista (45, 48, 118).
+2. **Foto.** Fino a tre, guidate da un riquadro: davanti, etichetta con il codice, altro lato. La prima è obbligatoria;
+   il programma avvisa se una foto è mossa o buia (106). Sono le prime foto di riferimento e seguono le loro regole (96).
+3. **Dati.** Obbligatori foto, descrizione e unità di magazzino (di serie «pezzo»). I codici letti dalle foto (barcode,
+   codice stampato) si compilano da soli e si correggono; al ricevimento il fornitore viene dal DDT (107).
+4. **Descrizione.** La scrive chi crea l'articolo; le parole lette sull'etichetta compaiono come pezzi da toccare
+   (marca, misure, materiale). Un modello che scrive la descrizione da solo si valuta dopo la prova visiva (108).
+5. **Controllo dei doppioni.** Prima di salvare il programma cerca in tutto il catalogo con codici, descrizione e
+   aspetto e mostra fino a 3 articoli simili: «È uno di questi?». Se sì, non crea niente: foto e codice nuovo si
+   collegano a quell'articolo, da confermare (71, 92, 110).
+6. **Salvataggio.** Creato da un operatore, l'articolo è **da confermare** (105). Ricorda chi l'ha creato, quando, da
+   quale dispositivo e da quale DDT o momento del lavoro (118).
+
+### Nell'attesa e alla conferma
+
+- L'articolo da confermare si usa come gli altri (messa a posto, prelievo, banco, conteggi) e porta il segno «da
+  confermare» sulle schede (115).
+- Il responsabile lo trova tra le cose da controllare e ha tre uscite (114):
+
+| Uscita | Cosa succede |
+|---|---|
+| Conferma | Il responsabile corregge o completa i dati (ubicazione abituale, prezzi, «si tiene a magazzino», 107) e l'articolo è a catalogo come gli altri |
+| Unisci a un articolo esistente | Codici e foto passano all'esistente, la giacenza si sposta con correzioni collegate (74); il nuovo resta nello storico come «unito a…» (111) |
+| Rifiuta | L'articolo non si usa più; la merce già ricevuta va «in attesa di decisione» (45), le foto si scartano, i movimenti restano nello storico |
+
+L'unione serve anche per un doppione scoperto più tardi, chiunque l'abbia creato (111).
+
+### Secondo il modo di lavorare
+
+| Modo | Cosa succede all'articolo nuovo |
+|---|---|
+| Gestionale principale | Confermato, è definitivo e lo comanda il programma (49, 118) |
+| Accanto a un gestionale | È anche **provvisorio** (59): un'attesa diversa da «da confermare», e le due possono valere insieme (118) |
+| Magazzino Shopify | Si crea nel programma solo se non è venduto sul sito (60); se poi compare su Shopify con lo stesso SKU o barcode, il programma propone al responsabile di collegarlo, e da lì comanda Shopify (116) |
+
+**Accanto a un gestionale**:
+
+- Alla chiusura del DDT la riga di un articolo provvisorio è una riga ferma (82): l'operatore sceglie se chiudere con le
+  righe pronte, e la riga ferma parte con un carico suo appena il gestionale conosce l'articolo (112).
+- Un ordine al banco con un articolo provvisorio aspetta in coda e parte verso il gestionale appena l'articolo è
+  collegato (115).
+- Il programma collega da solo l'articolo provvisorio a un articolo del gestionale che ha uno dei suoi codici (barcode,
+  codice stampato, codice del fornitore). Se ne trova più d'uno, o nessuno dopo un giorno, lo segnala al responsabile,
+  che sceglie a mano l'articolo del gestionale (113). Foto di riferimento, ubicazioni e storico restano nel programma.
+
+### Configurazione per magazzino
+
+Nessuna scelta nuova.
+
+### Rimandato ad altri ticket o alla nebbia della mappa
+
+- Schermate dell'inserimento, della guida alla ripresa, del controllo dei doppioni, dell'unione e delle uscite del
+  responsabile: ticket «Percorso delle schermate».
+- Se l'inserimento con 1 o 3 foto basta al riconoscimento dall'aspetto, e quanto bene si leggono le parole
+  dell'etichetta: ticket «Piano della prova di accuratezza visiva».
+- Descrizione proposta da un modello che legge immagini e scrive testo: sezione «Not yet specified» della mappa.
+- Cosa si fa della merce di un articolo rifiutato che si rende al fornitore: resi al fornitore, sezione «Not yet
+  specified» della mappa.

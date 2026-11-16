@@ -32,6 +32,17 @@ Un articolo creato nel magazzino quando c'è un gestionale accanto, usabile subi
 gestionale lo conosce con lo stesso codice.
 _Evitare_: articolo temporaneo, bozza
 
+**Articolo da confermare**:
+Un articolo creato da un operatore e non ancora controllato dal responsabile: si usa subito, e il responsabile lo
+conferma, lo corregge o lo unisce a un altro. Con un gestionale accanto può essere anche provvisorio: sono due attese
+diverse, una del responsabile e una del gestionale.
+_Evitare_: articolo in bozza, articolo non approvato
+
+**Unione di articoli**:
+Il rimedio a un doppione: un articolo creato due volte confluisce in quello già esistente con codici, foto e giacenza, e
+resta nello storico come «unito a» quello.
+_Evitare_: fusione, merge, cancellazione del doppione
+
 **Identificazione**:
 Il riconoscimento dell'articolo che l'operatore ha davanti, dal barcode, dal codice stampato o dall'aspetto, confermato
 dall'operatore quando il programma non è certo.
