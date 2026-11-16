@@ -582,3 +582,104 @@ Nessuna scelta nuova.
 - Descrizione proposta da un modello che legge immagini e scrive testo: sezione «Not yet specified» della mappa.
 - Cosa si fa della merce di un articolo rifiutato che si rende al fornitore: resi al fornitore, sezione «Not yet
   specified» della mappa.
+
+## Dispositivi e forma del programma
+
+Dal ticket «App nativa o web app», chiuso il 16/11/2026. Decisioni 9, 22, 23, 27, 80, 87 e 119–127. Ricerche:
+`docs/research/2026-11-15-addestramento-ed-esecuzione-locale.md` (§G OCR e barcode, §H fotocamera da web app) e
+`docs/research/2026-11-15-modelli-visivi-riconoscimento-articoli.md` (§6).
+
+### Dispositivi
+
+| Dispositivo | Di chi | Come legge il barcode | Codice stampato e aspetto |
+|---|---|---|---|
+| Telefono Android | Azienda o dipendente (120) | Fotocamera, con il lettore di Chrome (`BarcodeDetector`) | Fotocamera |
+| iPhone | Azienda o dipendente (120) | Fotocamera, con una libreria inclusa nella pagina (zxing-cpp in WebAssembly) | Fotocamera |
+| Palmare industriale Android | Azienda (119) | Grilletto | Fotocamera |
+| Computer con telecamera | Azienda | Telecamera, con il lettore del browser dove c'è, altrimenti la libreria | Telecamera |
+
+Il codice stampato si legge sul server, con la foto che viaggia sulla rete interna (121, 127). Dove gira ogni altro passo
+dell'identificazione lo decide il ticket «Divisione tra telefono, computer e server in sede».
+
+IPOTESI da verificare sul palmare di UFP: il lettore a grilletto scrive il codice nel campo attivo come una tastiera
+(per esempio il profilo «tastiera» di Zebra DataWedge), quindi la pagina tiene sempre pronto un campo che lo riceve
+nelle schermate di identificazione.
+
+### Una web app servita dal server in sede
+
+- Su ogni dispositivo il programma si apre dal browser; non si installa nulla (121, 122). Lo serve il **server in
+  sede**, che tiene anche i dati; la base non funziona senza (126).
+- C'è una sola versione del programma, sul server: tutti i dispositivi usano la stessa (127).
+- Il server si raggiunge solo dalla rete interna del magazzino: è il motivo della scelta (121).
+- **Prima apertura**: si inquadra un QR stampato in magazzino con l'indirizzo del programma (127). Su Android e sul
+  computer si può aggiungere un'icona.
+- **iPhone**: si usa da Safari, con «Fotocamera: Consenti» impostato una volta nelle impostazioni del sito; la prima
+  apertura guida l'operatore (124). Le web app aggiunte alla schermata Home richiedono di nuovo il permesso, soprattutto
+  se la fotocamera è accesa quando lo schermo si spegne ([WebKit bug 280394](https://bugs.webkit.org/show_bug.cgi?id=280394),
+  aperto, ultimo aggiornamento 08/07/2026); l'icona sulla Home si adotta solo se la prova su un iPhone vero lo permette.
+  L'impostazione per sito di Safari è descritta da guide di terzi
+  ([MacRumors](https://www.macrumors.com/how-to/access-website-settings-in-safari/)), non da Apple: va provata.
+- **Fotocamera**: si accende solo nelle schermate che la usano e si spegne quando lo schermo si spegne o si cambia
+  schermata (127).
+- **Telefoni personali**: quando un dipendente se ne va basta disattivarne l'utente (27); sul telefono resta al
+  massimo un segnalibro (127). Sui telefoni condivisi vale l'accesso con nome e PIN (80).
+
+### Collegamento sicuro
+
+Il browser dà la fotocamera solo a una pagina in contesto sicuro: `https`, oppure `localhost`; un indirizzo di rete
+locale in `http` non lo è ([MDN, Secure Contexts](https://developer.mozilla.org/en-US/docs/Web/Security/Secure_Contexts)).
+Il certificato deve essere riconosciuto dal dispositivo (123):
+
+| Magazzino | Certificato | Lavoro sui dispositivi | Internet |
+|---|---|---|---|
+| Con un dominio | Del dominio dell'azienda (per esempio magazzino.azienda.it), gratuito, rinnovato dal server da solo con la sfida DNS di Let's Encrypt ([tipi di sfida](https://letsencrypt.org/docs/challenge-types/)) | Nessuno | Solo per il rinnovo, verso il gestore del DNS |
+| Senza dominio | Interno, creato dal server | Installarlo e renderlo attendibile su ogni dispositivo, anche personale, e a ogni dispositivo nuovo | No |
+
+- Con il dominio il nome diventa pubblico (i certificati sono registrati in elenchi pubblici), ma da fuori non porta
+  a nulla: il server resta sulla rete interna.
+- IPOTESI da verificare in magazzino: alcuni router scartano le risposte DNS pubbliche che puntano a un indirizzo
+  interno; in quel caso il nome si risolve con il DNS interno.
+
+### Rete assente
+
+L'operazione in corso (23) resta nella memoria del browser del dispositivo, legata all'utente che l'ha fatta, e parte
+una volta sola quando la rete torna. Se qualcuno cancella i dati del browser prima, si perde: al rientro il programma
+lo dice (127).
+
+### Aggiornamenti
+
+| Tipo | Chi decide | Quando |
+|---|---|---|
+| Normale | Il responsabile, dall'avviso «È disponibile un aggiornamento» | Quando sceglie, per esempio a fine giornata |
+| Importante, come la correzione di un errore | Nessuno: è obbligatorio | Da solo, di notte |
+
+In tutti e due i casi prima si fa una copia di sicurezza e i dispositivi aperti si ricaricano alla prima pausa, senza
+perdere l'operazione in corso (125).
+
+Da decidere con l'installazione (proposta non ancora confermata): chi segna un aggiornamento come importante; il
+ritorno da solo alla versione precedente se dopo un aggiornamento notturno il programma non riparte; l'avviso al
+responsabile il mattino dopo.
+
+### Prove su dispositivi veri
+
+Prima di scegliere lo stack (127):
+
+- un iPhone: permesso della fotocamera in Safari con «Consenti» e, per confronto, dall'icona sulla Home (124);
+- un telefono Android: lettura del barcode con il lettore di Chrome;
+- un palmare di UFP: grilletto (ipotesi della tastiera) e fotocamera (119);
+- il collegamento sicuro con il router di un magazzino vero (123).
+
+### Configurazione per magazzino
+
+- Dominio dell'azienda oppure certificato interno (123).
+
+### Rimandato ad altri ticket o alla nebbia della mappa
+
+- Cosa gira sul dispositivo e cosa sul server per ogni inquadratura, cosa viaggia in rete: ticket «Divisione tra
+  telefono, computer e server in sede».
+- Librerie del browser, del server e del meccanismo di aggiornamento: ticket «Stack».
+- Schermate della prima apertura dal QR, della guida a «Consenti» su iPhone, dell'avviso di aggiornamento, del campo
+  per il grilletto; la barra di Safari visibile su iPhone: ticket «Percorso delle schermate».
+- Foto «di arrivo» della prova scattate dal browser dei telefoni: ticket «Piano della prova di accuratezza visiva».
+- Procedura guidata, rinnovo del certificato, copie di sicurezza, ritorno alla versione precedente: installazione e
+  configurazione iniziale, sezione «Not yet specified» della mappa.

@@ -31,3 +31,7 @@ l'utente.
   guidate (davanti, etichetta, altro lato), con la sola prima obbligatoria (106); poi le foto crescono con le conferme
   (96) e con «Aggiungi foto» (117). Il piano può misurare quanto riconosce l'aspetto con 1 e con 3 foto per articolo, e
   quanto bene si leggono le parole dell'etichetta proposte per la descrizione (108).
+- 16/11/2026, dal ticket «App nativa o web app»: il programma è una web app (121), quindi le foto «di arrivo» della
+  prova vanno scattate come le scatterà il programma, dal browser dei telefoni (Safari su iPhone, Chrome su Android e
+  sul palmare, 119, 124), non con l'app Fotocamera. Il codice stampato si legge sul server (121). Accanto alla prova
+  visiva servono le prove sui dispositivi veri elencate in `docs/architettura.md` (127).

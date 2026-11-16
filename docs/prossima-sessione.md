@@ -22,13 +22,14 @@ Per lavorare un ticket preciso in una sessione parallela, aggiungere in fondo al
 
 In ordine di numero:
 
-1. «App nativa o web app»: va chiarito anche il palmare industriale citato dall'utente (commento nel ticket). In UFP
-   oggi i palmari usano ARS dal browser. Sblocca, con gli altri già chiusi, «Percorso delle schermate».
-2. «Piano della prova di accuratezza visiva»: conviene partire presto, perché le foto reali richiedono tempo e da
+1. «Piano della prova di accuratezza visiva»: conviene partire presto, perché le foto reali richiedono tempo e da
    questa prova dipendono la scelta del modello, la divisione tra le macchine e lo stack. Deve dare anche le soglie del
-   percorso di identificazione e può misurare l'aspetto con 1 e 3 foto per articolo (commenti nel ticket).
-3. «Punti di estensione per la specializzazione».
-4. «Nome del prodotto».
+   percorso di identificazione e può misurare l'aspetto con 1 e 3 foto per articolo. Le foto «di arrivo» vanno scattate
+   dal browser dei telefoni, come farà la web app (commenti nel ticket).
+2. «Punti di estensione per la specializzazione».
+3. «Nome del prodotto».
+4. «Percorso delle schermate»: sbloccato dalla chiusura di «App nativa o web app»; nel ticket ci sono i commenti di
+   tutti i ticket chiusi.
 
 Si possono lavorare in parallelo in sessioni diverse.
 
@@ -40,6 +41,7 @@ Si possono lavorare in parallelo in sessioni diverse.
 
 ## Ultimo ticket chiuso
 
-16/11/2026: «Inserimento di un articolo nuovo da foto». Decisioni 105–118, sezione «Articolo nuovo da foto» in
-`docs/architettura.md`. Pagina usata per le domande: https://claude.ai/artifact/Ya1PcYYrLdq2hj3qPdSJCt (privata, la vede
-solo l'utente).
+16/11/2026: «App nativa o web app». Decisioni 119–127, sezione «Dispositivi e forma del programma» in
+`docs/architettura.md`. Pagina usata per le domande: https://claude.ai/artifact/41KfvE3P7rhiPdEZLueyRw (privata, la vede
+solo l'utente). Restano da fare le prove su dispositivi veri (un iPhone, un Android, un palmare di UFP), prima dello
+stack.

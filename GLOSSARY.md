@@ -215,6 +215,15 @@ Il programma in cui un dato è nato e in cui soltanto si può cambiare: il gesti
 stesso.
 _Evitare_: master, fonte di verità, sistema esterno
 
+**Server in sede**:
+Il computer del magazzino, sulla sua rete interna, che tiene i dati e serve il programma a telefoni, palmari e
+computer.
+_Evitare_: cloud, hosting
+
+**Palmare**:
+Un dispositivo portatile robusto con un lettore di barcode a grilletto, usato in magazzino al posto del telefono.
+_Evitare_: terminale, PDA, scanner (lo scanner è solo il lettore)
+
 ## Persone
 
 **Operatore**:
