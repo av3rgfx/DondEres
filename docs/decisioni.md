@@ -86,6 +86,12 @@ Le decisioni tecniche ancora aperte non stanno qui: stanno in `docs/analisi-prog
 | 78 | 16/11/2026 | Il programma tiene il costo d'acquisto e il prezzo di vendita degli articoli. Servono a chi lo usa anche per vendere: in UFP chi vende al banco con il palmare deve vedere il prezzo appena scansiona un articolo. A un magazzino che lo usa solo per ordini e carico, come quello con Shopify, non servono. | Nota dell'utente. L'utente propone anche, più avanti, un catalogo visivo nella vendita al banco per cercare un articolo e vederne disponibilità, prezzo, giacenza e ubicazione, utile quando il cliente non sa bene cosa vuole. |
 | 79 | 16/11/2026 | Del cliente il programma tiene solo codice e nome; indirizzi e contatti restano nel sistema d'origine. | Non indicato (proposta accettata). |
 | 80 | 16/11/2026 | Sui telefoni condivisi si entra scegliendo il proprio nome da un elenco e scrivendo un PIN personale di 6 cifre. Si esce con «Esci» o dopo 30 minuti senza uso (valore cambiabile), senza perdere il lavoro a metà. Il responsabile entra con una password più lunga. | Non indicato (proposta accettata). |
+| 81 | 16/11/2026 | Un movimento sbagliato lo corregge l'operatore che l'ha fatto, finché il DDT o il prelievo è aperto. Dopo la chiusura lo corregge solo il responsabile, e al gestionale va una rettifica. Precisa la decisione 27. | Non indicato (proposta accettata). |
+| 82 | 16/11/2026 | Se alla chiusura di un DDT una riga è ancora ferma (unità mai vista, codice da collegare), sceglie l'operatore: chiudere subito con le righe pronte, e la riga ferma avrà poi un carico suo, oppure aspettare e fare un solo carico per quella bolla. La scelta proposta è «sì, chiudi con le righe pronte». Precisa la decisione 61. | L'utente: «in certi casi è necessario caricare subito gli articoli […], in altri serve creare un singolo DDT per quella bolla, quindi si aspetta». |
+| 83 | 16/11/2026 | I prezzi si accendono per magazzino e di serie sono spenti. Con un gestionale accanto vengono dal gestionale e si cambiano solo lì; il programma li mostra soltanto. Quando il programma è il gestionale principale, si inseriscono nel programma, a mano o da file. Precisa la decisione 78. | Non indicato (deduzione dalla decisione 49 proposta e accettata). |
+| 84 | 16/11/2026 | Al banco il programma mostra il prezzo di vendita dell'articolo, uguale per tutti i clienti. Listini e sconti del cliente li applica il gestionale sul documento di vendita. | Non indicato (proposta accettata). |
+| 85 | 16/11/2026 | Il costo d'acquisto lo vede solo il responsabile; l'operatore vede il prezzo di vendita. | Al banco lo schermo può essere sotto gli occhi del cliente; proposta accettata. |
+| 86 | 16/11/2026 | Confermato il riepilogo del modello dei dati, con queste deduzioni: un DDT con stesso fornitore, numero e data di uno già registrato dà un avviso di possibile doppione; due operatori che contano la stessa riga sommano le loro scansioni; se il responsabile rifiuta un collegamento da confermare, il programma elenca i carichi fatti con quel collegamento, da correggere; una sola area di ricevimento per magazzino; per seriali, lotti e scadenze c'è spazio nei dati, vuoto nella base (17); il catalogo visivo per la vendita al banco si specifica più avanti. | Non indicato (riepilogo confermato). |
 
 ## Note di lettura
 
@@ -100,4 +106,7 @@ Le decisioni tecniche ancora aperte non stanno qui: stanno in `docs/analisi-prog
   Hoc). Nel secondo giro l'utente aveva scelto «in Ad Hoc, letta subito dal programma», ma la sua nota descriveva la
   pratica attuale con ARS: la scelta non è stata registrata e la domanda è stata rifatta.
 - Decisione 27: precisata dalla 77 (l'operatore può contare un'ubicazione quando la merce c'è ma non risulta; il
-  responsabile verifica).
+  responsabile verifica) e dalla 81 (l'operatore corregge il proprio lavoro finché il DDT o il prelievo è aperto).
+- Decisione 61: precisata dalla 82 (un DDT con una riga ferma può chiudersi con due carichi, se l'operatore lo sceglie).
+- Decisione 78: precisata dalle 83–85 (prezzi accesi per magazzino, presi dal gestionale quando c'è, costo visibile solo
+  al responsabile).

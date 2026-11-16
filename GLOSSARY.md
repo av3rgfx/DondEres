@@ -160,6 +160,15 @@ _Evitare_: CHECK (è il nome usato in UFP), zona di arrivo
 Lo spostamento della merce dall'area di ricevimento alla sua ubicazione.
 _Evitare_: stoccaggio, «sparare in buca», Libera
 
+**Compito**:
+Un lavoro fisico che il programma chiede di fare, come mettere a posto la merce ricevuta o rimettere a posto quella di
+un ordine annullato.
+_Evitare_: missione, task, lista (da sola)
+
+**Da controllare**:
+L'elenco dei movimenti e degli avvisi che il responsabile deve guardare e approvare o correggere.
+_Evitare_: anomalie, eccezioni, coda (da sola)
+
 ## Sistemi
 
 **Gestionale**:

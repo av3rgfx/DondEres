@@ -52,6 +52,9 @@ percorso delle schermate e aspetto grafico, compresi nome e brand kit (decisioni
 - [Fonti degli ordini e collegamento ai gestionali esistenti](issues/02-fonti-ordini-e-collegamenti.md): comanda il
   sistema d'origine; in UFP il programma sostituisce ARS e restituisce documenti ad Ad Hoc; scambio a file nella base,
   Shopify modulo, Ad Hoc nella specializzazione; banco dal telefono; scambio ogni 5 minuti con coda (decisioni 49–67).
+- [Modello dei dati](issues/04-modello-dei-dati.md): ricevimento in un passaggio dal telefono, area di ricevimento,
+  correzioni senza cancellare, mai sotto zero, assegnazione per quantità, unità e codici del fornitore approvati dal
+  responsabile, prezzi accesi per magazzino; entità in `docs/architettura.md` (decisioni 68–86).
 
 Prese prima della mappa, nel secondo giro di domande del 15/11/2026: decisioni 15–28 in
 [`docs/decisioni.md`](../../docs/decisioni.md) (assegnazione parziale, codice stampato come tipo di articolo,
@@ -66,8 +69,11 @@ tre livelli di conferma, quantità letta dalla scatola, ubicazioni facoltative, 
   giustificano.
 - **Installazione e configurazione iniziale in un magazzino nuovo:** procedura guidata (dove si sceglie se usare le
   ubicazioni, decisione 26), certificato HTTPS sulla rete interna, aggiornamenti, copie di sicurezza e ripristino.
-- **Inventario e rettifiche:** conta periodica, correzione delle giacenze, annullamento dei movimenti e loro effetto
-  sulle assegnazioni.
+- **Inventario:** conta periodica di tutto il magazzino o di una parte. Rettifica per conteggio, correzioni ed effetto
+  sulle assegnazioni sono già definiti nel «Modello dei dati».
+- **Catalogo visivo per la vendita al banco** (idea dell'utente, decisioni 78 e 86): cercare un articolo e vederne
+  disponibilità, prezzo, giacenza e ubicazione, anche quando il cliente non sa bene cosa vuole. Tocca identificazione e
+  schermate.
 - **Acquisizione del DDT:** oggi il DDT arriva di carta dal corriere e viene scansionato e caricato; gli uffici hanno
   spesso anche la versione digitale, che in magazzino non si usa. Da capire se la base legge la foto del DDT, importa
   la versione digitale o chiede solo il numero (tocca identificazione, fonti degli ordini e schermate).
