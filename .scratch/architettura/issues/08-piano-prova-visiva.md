@@ -27,3 +27,7 @@ l'utente.
   «convincente» tra gli attesi (88), la soglia del «non lo so» (24) e il tetto di foto per articolo (96). Da misurare
   con e senza restringere agli articoli attesi (88, 97). Va deciso se misurare anche la lettura del codice stampato con
   il confronto dei segni che si confondono (89) e la lettura della quantità (93, 101).
+- 16/11/2026, dal ticket «Inserimento di un articolo nuovo da foto»: all'inserimento si scattano fino a tre foto
+  guidate (davanti, etichetta, altro lato), con la sola prima obbligatoria (106); poi le foto crescono con le conferme
+  (96) e con «Aggiungi foto» (117). Il piano può misurare quanto riconosce l'aspetto con 1 e con 3 foto per articolo, e
+  quanto bene si leggono le parole dell'etichetta proposte per la descrizione (108).

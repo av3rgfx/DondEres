@@ -59,6 +59,10 @@ percorso delle schermate e aspetto grafico, compresi nome e brand kit (decisioni
   un'inquadratura sola, prima gli articoli attesi poi il catalogo; codice stampato con i segni che si confondono;
   barcode multipli o sconosciuti; quantità solo da GS1 o parole di quantità, colli e contenuto ricordato; foto di
   riferimento filtrate; stesso percorso al prelievo come controllo; soglie dopo la prova (decisioni 87–104).
+- [Inserimento di un articolo nuovo da foto](issues/06-articolo-nuovo-da-foto.md): lo crea anche l'operatore, «da
+  confermare» e usabile subito; tre foto guidate; righe attese senza articolo in cima (VEND compreso); «È uno di
+  questi?» e unione dei doppioni; il responsabile conferma, unisce o rifiuta; riga ferma e collegamento per codice con
+  un gestionale; «Aggiungi foto» su ogni articolo (decisioni 105–118).
 
 Prese prima della mappa, nel secondo giro di domande del 15/11/2026: decisioni 15–28 in
 [`docs/decisioni.md`](../../docs/decisioni.md) (assegnazione parziale, codice stampato come tipo di articolo,
@@ -81,12 +85,12 @@ tre livelli di conferma, quantità letta dalla scatola, ubicazioni facoltative, 
 - **Acquisizione del DDT:** oggi il DDT arriva di carta dal corriere e viene scansionato e caricato; gli uffici hanno
   spesso anche la versione digitale, che in magazzino non si usa. Da capire se la base legge la foto del DDT, importa
   la versione digitale o chiede solo il numero (tocca identificazione, fonti degli ordini e schermate).
-- **Resi al fornitore:** compaiono con gli annullamenti e con la merce non prevista (decisioni 41 e 45); quando e come
-  si registrano.
+- **Resi al fornitore:** compaiono con gli annullamenti, con la merce non prevista e con gli articoli nuovi rifiutati
+  dal responsabile (decisioni 41, 45 e 114); quando e come si registrano.
 - **Ottimizzazione del venduto (VEND):** l'utente vuole un'analisi a parte, soprattutto per UFP, che vende anche al
   banco e ha più casi particolari da controllare.
 - **Descrizione proposta da un modello che legge immagini e scrive testo** per l'articolo nuovo: se tenerla, e quale
-  modello, dipende dalla prova e dal server.
+  modello, dipende dalla prova e dal server. Oggi la scrive l'operatore con le parole lette sull'etichetta (108).
 
 ## Out of scope
 

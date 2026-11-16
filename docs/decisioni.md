@@ -119,6 +119,11 @@ Le decisioni tecniche ancora aperte non stanno qui: stanno in `docs/analisi-prog
 | 111 | 16/11/2026 | Un doppione scoperto dopo si rimedia unendo i due articoli: il responsabile unisce il nuovo all'esistente, codici e foto passano all'esistente, la giacenza si sposta con correzioni collegate (74) e il nuovo resta nello storico come «unito a…». | Non indicato (proposta accettata). |
 | 112 | 16/11/2026 | Con un gestionale accanto, la riga di un articolo provvisorio è una riga ferma (82): alla chiusura del DDT l'operatore sceglie se chiudere con le righe pronte, e la riga ferma parte con un carico suo appena il gestionale conosce l'articolo. Precisa le decisioni 59 e 61. | Non indicato (proposta accettata). |
 | 113 | 16/11/2026 | Il programma collega da solo l'articolo provvisorio a un articolo del gestionale che ha uno dei suoi codici (barcode, codice stampato, codice del fornitore). Se ne trova più d'uno, o nessuno dopo un giorno, lo segnala al responsabile, che sceglie a mano l'articolo del gestionale. Precisa la decisione 59. | Non indicato (proposta accettata). |
+| 114 | 16/11/2026 | Il responsabile chiude un articolo da confermare in tre modi: «Conferma», dopo aver corretto o completato i dati; «Unisci a un articolo esistente» (111); «Rifiuta». Un articolo rifiutato non si usa più: la merce già ricevuta va «in attesa di decisione» (45), le sue foto si scartano e i movimenti restano nello storico. | Non indicato (proposta accettata). |
+| 115 | 16/11/2026 | Prima della conferma l'articolo da confermare si usa come qualsiasi altro (mettere a posto, prelevare, banco, conteggi), con il segno «da confermare» sulle schede. Con un gestionale accanto, un ordine al banco con un articolo provvisorio aspetta in coda e parte verso il gestionale appena l'articolo è collegato. | Non indicato (proposta accettata). |
+| 116 | 16/11/2026 | Nel magazzino Shopify, se un articolo creato nel programma compare su Shopify con lo stesso SKU o barcode, il programma propone al responsabile di collegarli. Una volta collegati comanda Shopify (60); foto, ubicazioni e storico restano nel programma. | Non indicato (proposta accettata). |
+| 117 | 16/11/2026 | Dalla scheda di qualsiasi articolo si possono aggiungere foto di riferimento con «Aggiungi foto», con la stessa guida dell'inserimento (106). Può farlo chiunque; le foto seguono le regole delle foto di riferimento (96). | Non indicato (proposta accettata). |
+| 118 | 16/11/2026 | Confermato il riepilogo dell'inserimento di un articolo nuovo da foto, con queste deduzioni: al prelievo «Articolo nuovo» non compare (lì un articolo diverso ferma con un avviso, 97), mentre compare al ricevimento, alla messa a posto, al banco e nei conteggi; il responsabile crea un articolo anche dal catalogo, da telefono o computer, e quando lo inserisce a mano o da file le foto sono facoltative (55); quando il programma è il gestionale principale l'articolo confermato è definitivo e lo comanda il programma (49); «da confermare» e «provvisorio» sono due attese diverse e possono valere insieme; ogni articolo nuovo ricorda chi l'ha creato, quando, da quale dispositivo e da quale DDT o momento del lavoro; un articolo nuovo fuori dagli attesi e senza una riga che lo aspetta segue la strada della merce non prevista (45, 48). | Non indicato (riepilogo confermato). |
 
 ## Note di lettura
 
@@ -143,5 +148,7 @@ Le decisioni tecniche ancora aperte non stanno qui: stanno in `docs/analisi-prog
   partenza, registrazione immediata con la quantità letta, contenuto del collo ricordato, chili e metri).
 - Decisione 95: precisata dalla 100 (l'ultimo contenuto del collo confermato prende il posto dell'1 di partenza).
 - Decisione 27: precisata anche dalla 105 (l'operatore può creare un articolo nuovo, che nasce da confermare).
-- Decisione 59: precisata dalle 112 e 113 (riga ferma per l'articolo provvisorio, collegamento al gestionale per
-  codice o a mano).
+- Decisione 59: precisata dalle 112, 113 e 115 (riga ferma per l'articolo provvisorio, collegamento al gestionale per
+  codice o a mano, ordine al banco in coda finché l'articolo non è collegato).
+- Decisione 60: precisata dalla 116 (un articolo creato nel programma che compare su Shopify si collega con il sì del
+  responsabile).
