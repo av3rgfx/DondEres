@@ -32,6 +32,21 @@ Un articolo creato nel magazzino quando c'è un gestionale accanto, usabile subi
 gestionale lo conosce con lo stesso codice.
 _Evitare_: articolo temporaneo, bozza
 
+**Identificazione**:
+Il riconoscimento dell'articolo che l'operatore ha davanti, dal barcode, dal codice stampato o dall'aspetto, confermato
+dall'operatore quando il programma non è certo.
+_Evitare_: riconoscimento (da solo), scansione (è il singolo gesto registrato)
+
+**Articoli attesi**:
+Gli articoli che il programma si aspetta di vedere in un momento del lavoro, come quelli delle righe aperte degli ordini
+fornitore al ricevimento o quello della riga da prelevare; si cercano prima del resto del catalogo.
+_Evitare_: candidati, contesto, articoli previsti
+
+**«Non lo so»**:
+La risposta del programma quando nessun codice e nessun aspetto indicano un articolo con abbastanza sicurezza: invece di
+indovinare, chiede all'operatore come proseguire.
+_Evitare_: errore, articolo non trovato
+
 **Foto di riferimento**:
 Una foto di un articolo conservata per riconoscerlo dall'aspetto.
 _Evitare_: immagine campione
