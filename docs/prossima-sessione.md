@@ -35,8 +35,8 @@ Si possono lavorare in parallelo in sessioni diverse.
 ## In sospeso fuori dalla mappa
 
 - Domande per il rivenditore di UFP in `docs/domande-rivenditore-ufp.md` (aggiunte la 17, la 18 e la 20 il
-  16/11/2026; la 20 riguarda gli articoli non a catalogo sugli ordini fornitore): le manda l'utente (decisione 57). Le risposte si annotano in fondo al file; servono al connettore Ad Hoc della
-  specializzazione, non bloccano la mappa.
+  16/11/2026; la 20 riguarda gli articoli non a catalogo sugli ordini fornitore): le manda l'utente (decisione 57). Le
+  risposte si annotano in fondo al file; servono al connettore Ad Hoc della specializzazione, non bloccano la mappa.
 
 ## Ultimo ticket chiuso
 
