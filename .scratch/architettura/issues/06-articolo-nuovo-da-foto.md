@@ -24,3 +24,7 @@ Risultato atteso: il flusso dell'articolo nuovo in `docs/architettura.md`.
 - 15/11/2026, dal ticket «Fonti degli ordini»: con un gestionale accanto l'articolo nuovo nasce provvisorio e si
   collega quando il gestionale lo conosce con lo stesso codice (59). Nel magazzino Shopify gli articoli venduti sul sito
   arrivano da Shopify; da foto si creano quelli fuori dal sito (60).
+- 16/11/2026, dal ticket «Percorso di identificazione»: l'articolo nuovo si raggiunge dall'uscita «Articolo nuovo» del
+  «non lo so» (98); un barcode sconosciuto prima prova codice stampato e aspetto (92), quindi «articolo nuovo» arriva
+  solo quando nessuno dei due trova l'articolo. Le foto dell'inserimento sono foto di riferimento come quelle delle
+  conferme (96).

@@ -55,6 +55,10 @@ percorso delle schermate e aspetto grafico, compresi nome e brand kit (decisioni
 - [Modello dei dati](issues/04-modello-dei-dati.md): ricevimento in un passaggio dal telefono, area di ricevimento,
   correzioni senza cancellare, mai sotto zero, assegnazione per quantità, unità e codici del fornitore approvati dal
   responsabile, prezzi accesi per magazzino; entità in `docs/architettura.md` (decisioni 68–86).
+- [Percorso di identificazione e lettura della quantità](issues/05-percorso-identificazione-e-quantita.md):
+  un'inquadratura sola, prima gli articoli attesi poi il catalogo; codice stampato con i segni che si confondono;
+  barcode multipli o sconosciuti; quantità solo da GS1 o parole di quantità, colli e contenuto ricordato; foto di
+  riferimento filtrate; stesso percorso al prelievo come controllo; soglie dopo la prova (decisioni 87–104).
 
 Prese prima della mappa, nel secondo giro di domande del 15/11/2026: decisioni 15–28 in
 [`docs/decisioni.md`](../../docs/decisioni.md) (assegnazione parziale, codice stampato come tipo di articolo,

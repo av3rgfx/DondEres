@@ -24,3 +24,8 @@ Risultato atteso: il percorso in `docs/architettura.md`, con il link al prototip
   cose da controllare del responsabile (86), la correzione dell'operatore a DDT aperto (81), il conteggio quando la
   merce non risulta (77), il prezzo al banco e il costo visibile solo al responsabile (84, 85), l'accesso con nome e
   PIN (80).
+- 16/11/2026, dal ticket «Percorso di identificazione»: schermate e stati da prevedere: inquadratura unica (87); registrato
+  con «Annulla» e quantità modificabile (99); scheda «È questo» / «No, è un altro» (90); schede di un barcode su più
+  articoli (91); «Collego questo barcode?» (92); avviso «codice simile, controlla» (89); scelta tra più codici
+  nell'inquadratura (102); due quantità lette (93); «× colli» (94); «come l'ultima volta» (100); avviso «non è tra gli
+  attesi» (88); stop al prelievo con un altro articolo (97, 103); uscite del «non lo so» (98).

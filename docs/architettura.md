@@ -263,7 +263,8 @@ I nomi delle entità sono quelli di `GLOSSARY.md`.
 | Articolo | Descrizione, unità di magazzino, se si tiene a magazzino, ubicazione abituale facoltativa, provvisorio sì o no, prezzo di vendita e costo d'acquisto se i prezzi sono accesi | 37, 59, 72, 75, 78, 83 |
 | Codice articolo | Valore com'è scritto, tipo (barcode, codice stampato, del fornitore, del produttore, interno), fornitore se è un suo codice, stato (confermato o da confermare) | Lo stesso codice può puntare a più articoli: allora il programma propone i candidati (24, 71) |
 | Conversione | Articolo, fornitore, unità del fornitore, quantità nell'unità di magazzino, approvata da chi e quando | 72 |
-| Foto di riferimento | Articolo, foto, impronta numerica, da dove viene (inserimento, conferma di un'identificazione) | Si precisa nel ticket sul percorso di identificazione |
+| Foto di riferimento | Articolo, foto originale, impronta numerica, da dove viene (inserimento, conferma di un'identificazione), chi l'ha confermata | Filtri e tetto per articolo nella sezione «Percorso di identificazione» (96) |
+| Contenuto del collo | Articolo, fornitore, ultimo contenuto confermato, chi e quando | Solo un consiglio, senza approvazione (100) |
 
 **Ordini e persone esterne**
 
@@ -281,7 +282,7 @@ I nomi delle entità sono quelli di `GLOSSARY.md`.
 |---|---|---|
 | DDT | Numero del fornitore com'è scritto (con suffissi: «698/00»), numero interno, data, fornitore, stato (aperto o chiuso), carichi già mandati al gestionale | 40, 68, 82 |
 | Riga del DDT | Articolo, riga d'ordine fornitore scelta, quantità in bolla (se nota), quantità contata, stato (pronta o ferma, con il motivo) | 70, 73, 82 |
-| Scansione | DDT o prelievo, articolo, quantità, chi, quando, da quale dispositivo, esito | Ogni scansione è un dato a sé: due operatori sulla stessa riga sommano (86) |
+| Scansione | DDT o prelievo, articolo, quantità, colli, come è stato identificato (barcode, codice stampato, aspetto, a mano), proposte mostrate, chi, quando, da quale dispositivo, esito | Ogni scansione è un dato a sé: due operatori sulla stessa riga sommano (86); identificazione registrata (104) |
 
 **Giacenze e movimenti**
 
@@ -369,7 +370,135 @@ d'acquisto lo vede solo il responsabile (85).
 
 - Schermate del ricevimento, della messa a posto, della chiusura del DDT, delle cose da controllare e del banco: ticket
   «Percorso delle schermate».
-- Foto di riferimento e impronte: ticket «Percorso di identificazione e lettura della quantità».
+- Foto di riferimento e impronte: risolte nella sezione «Percorso di identificazione e lettura della quantità».
 - Prezzi, codici dei fornitori e conversioni da leggere in Ad Hoc: domande 17 e 18 in `docs/domande-rivenditore-ufp.md`.
 - Catalogo visivo per la vendita al banco (idea dell'utente, 78 e 86): sezione «Not yet specified» della mappa.
 - Inventario periodico: sezione «Not yet specified» della mappa; la rettifica per conteggio è già definita qui.
+
+## Percorso di identificazione e lettura della quantità
+
+Dal ticket «Percorso di identificazione e lettura della quantità», chiuso il 16/11/2026. Decisioni 6, 24, 25 e 87–104.
+Ricerche: `docs/research/2026-11-15-modelli-visivi-riconoscimento-articoli.md` (§6, OCR e barcode) e
+`docs/research/2026-11-15-addestramento-ed-esecuzione-locale.md` (§C, rifiuto degli sconosciuti e ciclo di conferma).
+
+Qui si descrive cosa vede e cosa fa l'operatore, non dove gira il calcolo: la divisione tra telefono e server è nel
+ticket «Divisione tra telefono, computer e server in sede». Le soglie numeriche si fissano con la prova visiva (104).
+
+### Un'inquadratura sola
+
+L'operatore inquadra la scatola una volta. Il programma prova da solo, in quest'ordine, e si ferma al primo che basta
+(87):
+
+1. **Barcode.**
+2. **Codice stampato**, letto come testo.
+3. **Aspetto**, confrontato con le foto di riferimento.
+
+Se nell'inquadratura ci sono codici di articoli diversi, il programma li mostra e l'operatore tocca quello giusto; non
+registra nulla da solo. Due codici uguali sono lo stesso articolo (102).
+
+### Articoli attesi
+
+Il programma cerca prima tra gli **articoli attesi**; se lì non trova niente di convincente, cerca in tutto il catalogo e
+avvisa «non è tra gli attesi» (88). Cosa è atteso dipende dal momento (97, 104):
+
+| Momento | Articoli attesi | Se è un altro articolo |
+|---|---|---|
+| Ricevimento | Righe aperte di tutti gli ordini fornitore aperti del fornitore del DDT; in cima quelle indicate sul DDT (70) | Strada della merce non prevista (45, 48) |
+| Prelievo | L'articolo della riga da prelevare | Stop con avviso: l'identificazione è un controllo |
+| Messa a posto | L'elenco «da mettere a posto» | Avviso |
+| Banco, conteggi | Nessuno: tutto il catalogo | — |
+
+Al prelievo si inquadra anche l'articolo senza codici: se l'articolo da prelevare è tra le proposte dall'aspetto, un
+tocco conferma; se non c'è, avviso (103).
+
+### Cosa vede l'operatore
+
+| Esito | Cosa vede | Tocchi | Decisione |
+|---|---|---|---|
+| Barcode su un solo articolo | Registrato subito, con la quantità letta se c'è; «Annulla» e quantità modificabile | 0 | 24, 99 |
+| Barcode su più articoli | Le schede di quegli articoli, con foto; gli attesi in cima | 1 | 91 |
+| Barcode da confermare | Scheda dell'articolo collegato; vale, ma chiede un tocco finché il responsabile non conferma | 1 | 71, 92 |
+| Barcode sconosciuto | Si prosegue da soli con codice stampato e aspetto; trovato l'articolo, «Collego questo barcode?» | 1–2 | 92 |
+| Codice stampato su un solo articolo | Scheda con foto: «È questo» / «No, è un altro» (apre le proposte dall'aspetto) | 1 | 90 |
+| Codice stampato simile, un solo candidato tra gli attesi | Come sopra, con l'avviso «codice simile, controlla» | 1 | 89 |
+| Aspetto | 3–5 proposte con foto | 1 | 24 |
+| «Non lo so» | Riprova con un consiglio (più vicino, più luce), cerca scrivendo codice o descrizione, «Articolo nuovo» | — | 98 |
+
+Un barcode sconosciuto collegato a un articolo segue le regole dei codici del fornitore: il collegamento vale subito, il
+responsabile lo conferma, e se lo rifiuta il programma elenca i carichi fatti con quel collegamento (71, 86).
+
+### Confronto del codice stampato
+
+Un codice letto corrisponde a un codice a catalogo quando è uguale dopo aver trattato come equivalenti (89):
+
+- i segni che si confondono: 0 e O; 1, I e l; 5 e S; 8 e B; 2 e Z;
+- spazi, trattini e altri separatori, che si ignorano;
+- maiuscole e minuscole.
+
+Esempio: «A1O 0O1I» corrisponde ad A100011. Un carattere davvero diverso o mancante («A10001») si accetta solo se tra gli
+attesi c'è un candidato solo, e con l'avviso. Non si cerca mai un codice «simile» in tutto il catalogo: è il requisito
+«un codice non si indovina da uno simile» del modello dei dati. In ogni caso serve il tocco dell'operatore (24).
+
+### Quantità
+
+| Caso | Cosa propone il programma | Decisione |
+|---|---|---|
+| Numero nel barcode GS1 della scatola | Quel numero | 93 |
+| Numero accanto a una parola di quantità (QTÀ, Q.TY, PZ, PCS, NR, CONF, «× 12») | Quel numero | 93 |
+| Articolo che si conta a chili, metri o altra misura | Il valore in quell'unità sull'etichetta; con lordo e netto, il netto | 101 |
+| Due numeri diversi | Li mostra entrambi; sceglie l'operatore, e la registrazione aspetta | 93, 99 |
+| Unità del fornitore (CONF, coppie, tonnellate) | Convertita con la conversione approvata; un'unità mai vista ferma la riga | 72, 93 |
+| Nulla di leggibile, ma un collo confermato in passato | L'ultimo contenuto del collo per articolo e fornitore, «come l'ultima volta» | 100 |
+| Nulla di leggibile e nessun precedente | 1 per gli articoli a pezzi; vuoto per le altre unità | 95 |
+
+Ogni proposta resta modificabile (25). Lotto, peso o misure non diventano mai la quantità di un articolo che si conta a
+pezzi. Lotti, scadenze e seriali scritti nel barcode GS1 si ignorano nella base (17, 104).
+
+**Più colli uguali.** Si scansiona un collo e si scrive quanti colli sono; chi preferisce li scansiona tutti, e ogni
+scansione aggiunge un collo. Ogni scansione resta un dato a sé (86, 94).
+
+**Contenuto del collo.** Ogni volta che l'operatore conferma quanti pezzi ha un collo, il programma lo ricorda per
+articolo e fornitore. È solo un consiglio: non serve l'approvazione del responsabile, a differenza delle conversioni
+(72, 100).
+
+### Foto di riferimento
+
+Diventano foto di riferimento le foto delle identificazioni confermate da barcode, codice stampato o tocco
+dell'operatore (96):
+
+- si scartano le foto mosse;
+- al massimo una per articolo per DDT;
+- un tetto per articolo, che tiene le foto più diverse tra loro; il numero si fissa dopo la prova (104);
+- ogni foto ricorda chi l'ha confermata, e il responsabile può toglierla;
+- le foto di un collegamento da confermare aspettano la conferma; se il collegamento è rifiutato, si scartano.
+
+Si conservano le foto originali, non solo le impronte: se cambia il modello visivo, le impronte si ricalcolano (analisi
+§4.2).
+
+### Cosa si registra
+
+Ogni identificazione registra come è avvenuta (barcode, codice stampato, aspetto, scritto a mano), con quali proposte,
+chi l'ha confermata e da quale dispositivo (104). Anche ogni «non lo so» resta nello storico (98). Serve allo storico dei
+movimenti e a misurare, con l'uso, dove il riconoscimento sbaglia.
+
+### Da fissare con la prova visiva
+
+- Quando un candidato è «convincente» tra gli attesi e quando si passa al catalogo intero (88).
+- Quando l'aspetto dice «non lo so» (24).
+- Quante foto tenere per articolo (96).
+- Quanto bene si leggono codice stampato e quantità dalle foto reali: il piano della prova decide se misurarlo.
+
+### Configurazione per magazzino
+
+Nessuna scelta nuova: il percorso è lo stesso in ogni magazzino. Le parole di quantità si possono ampliare con i
+termini dei fornitori di un magazzino; dove stanno (configurazione o modulo) si decide nel ticket «Punti di estensione
+per la specializzazione».
+
+### Rimandato ad altri ticket
+
+- Dove girano lettura del barcode, del testo e confronto dell'aspetto: ticket «Divisione tra telefono, computer e server
+  in sede» e «App nativa o web app».
+- Le schermate (scheda «È questo», scelta tra più codici, «× colli», uscite del «non lo so»): ticket «Percorso delle
+  schermate».
+- Chi può creare l'articolo nuovo dall'uscita «Articolo nuovo»: ticket «Inserimento di un articolo nuovo da foto».
+- Formati di etichette dei fornitori con regole proprie: ticket «Punti di estensione per la specializzazione».

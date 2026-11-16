@@ -22,3 +22,6 @@ Risultato atteso: l'elenco dei punti di estensione e il loro contratto in `docs/
 - 16/11/2026, dal ticket «Modello dei dati»: nuove scelte per magazzino (prezzi accesi o spenti, 83; uscita automatica
   dal telefono, 80); spazio previsto per una «partita» facoltativa per seriali, lotti e scadenze (17); i campi
   aggiuntivi restano da decidere qui.
+- 16/11/2026, dal ticket «Percorso di identificazione»: le parole che indicano la quantità sulle etichette (93) si
+  possono ampliare con i termini dei fornitori di un magazzino; i formati di etichetta dei fornitori con regole proprie
+  sono un candidato a punto di estensione.
