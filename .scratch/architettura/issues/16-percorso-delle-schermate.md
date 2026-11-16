@@ -34,3 +34,8 @@ Risultato atteso: il percorso in `docs/architettura.md`, con il link al prototip
   parole dell'etichetta da toccare (108), «È uno di questi?» (110), segno «da confermare» (115), uscite del responsabile
   «Conferma / Unisci / Rifiuta» (114), «Aggiungi foto» nella scheda dell'articolo (117). Al prelievo l'uscita
   «Articolo nuovo» non compare (118).
+- 16/11/2026, dal ticket «App nativa o web app»: tutto gira nel browser (121, 122). Schermate e stati da prevedere:
+  prima apertura dal QR (127); guida a «Fotocamera: Consenti» su iPhone (124), con la barra di Safari visibile; richiesta
+  del permesso e cosa fare se negato; fotocamera spenta fuori dalle schermate che la usano (127); campo sempre pronto per
+  il grilletto del palmare (119); avviso «È disponibile un aggiornamento» per il responsabile e ricarica alla prima
+  pausa (125); messaggio di rete assente e di operazione persa se i dati del browser sono stati cancellati (23, 127).

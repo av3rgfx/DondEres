@@ -12,3 +12,12 @@ partire da app nativa o web, divisione tra le macchine, modello scelto nella pro
 riusano prima le funzioni native e le librerie mature; si guardano le licenze (analisi §4.1).
 
 Risultato atteso: lo stack e il motivo di ogni scelta in `docs/architettura.md` e in `docs/decisioni.md`.
+
+## Comments
+
+- 16/11/2026, dal ticket «App nativa o web app»: niente app nativa; web app nel browser servita dal server in sede
+  (121, 122). Da coprire: lettura del barcode nel browser (`BarcodeDetector` dove c'è, zxing-cpp in WebAssembly
+  altrove), fotocamera solo in contesto sicuro, memoria del browser per l'operazione in corso (127), certificato del
+  dominio con la sfida DNS di Let's Encrypt oppure certificato interno (123), aggiornamento del server con copia di
+  sicurezza e aggiornamenti obbligatori notturni (125), lettore a grilletto del palmare come tastiera (ipotesi, 119).
+  Prima di scegliere, le prove su dispositivi veri (127).

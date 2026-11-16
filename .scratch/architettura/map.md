@@ -63,6 +63,10 @@ percorso delle schermate e aspetto grafico, compresi nome e brand kit (decisioni
   confermare» e usabile subito; tre foto guidate; righe attese senza articolo in cima (VEND compreso); «È uno di
   questi?» e unione dei doppioni; il responsabile conferma, unisce o rifiuta; riga ferma e collegamento per codice con
   un gestionale; «Aggiungi foto» su ogni articolo (decisioni 105–118).
+- [App nativa o web app](issues/07-app-nativa-o-web.md): web app dal browser su telefoni, palmari e computer, servita
+  dal server in sede (accesso solo dalla rete interna); palmari con grilletto e telefoni personali compresi;
+  certificato del dominio aziendale o interno; iPhone da Safari; aggiornamenti del responsabile, obbligatori di notte;
+  prove su dispositivi veri (decisioni 119–127).
 
 Prese prima della mappa, nel secondo giro di domande del 15/11/2026: decisioni 15–28 in
 [`docs/decisioni.md`](../../docs/decisioni.md) (assegnazione parziale, codice stampato come tipo di articolo,
@@ -76,7 +80,9 @@ tre livelli di conferma, quantità letta dalla scatola, ubicazioni facoltative, 
 - **Adattamento del modello visivo** (metric learning) sulle foto del magazzino: solo se i numeri della prova lo
   giustificano.
 - **Installazione e configurazione iniziale in un magazzino nuovo:** procedura guidata (dove si sceglie se usare le
-  ubicazioni, decisione 26), certificato HTTPS sulla rete interna, aggiornamenti, copie di sicurezza e ripristino.
+  ubicazioni, decisione 26, e dominio o certificato interno, 123), rinnovo del certificato, aggiornamenti (chi segna
+  quelli obbligatori, ritorno alla versione precedente se il programma non riparte, 125), copie di sicurezza e
+  ripristino.
 - **Inventario:** conta periodica di tutto il magazzino o di una parte. Rettifica per conteggio, correzioni ed effetto
   sulle assegnazioni sono già definiti nel «Modello dei dati».
 - **Catalogo visivo per la vendita al banco** (idea dell'utente, decisioni 78 e 86): cercare un articolo e vederne
@@ -101,3 +107,4 @@ tre livelli di conferma, quantità letta dalla scatola, ubicazioni facoltative, 
 - Lavoro senza rete (decisione 23).
 - Conteggio dei pezzi dall'immagine (decisione 25).
 - Più magazzini nella stessa installazione (decisione 26).
+- Magazzini senza un server in sede: altre soluzioni da studiare dopo, come iniziativa a parte (decisione 126).

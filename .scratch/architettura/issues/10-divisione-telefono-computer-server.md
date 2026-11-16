@@ -19,3 +19,8 @@ Risultato atteso: la divisione in `docs/architettura.md` e i requisiti minimi de
 - 16/11/2026, dal ticket «Percorso di identificazione»: un'inquadratura sola prova barcode, codice stampato e aspetto in
   fila (87); le foto confermate diventano foto di riferimento (96) e ogni identificazione si registra con il suo metodo
   (104). Va deciso dove gira ogni passo e cosa viaggia in rete per ogni inquadratura.
+- 16/11/2026, dal ticket «App nativa o web app»: web app servita dal server in sede, su tutti i dispositivi (121, 122,
+  126). Già deciso: il barcode si legge sul dispositivo (lettore di Chrome, libreria nella pagina o grilletto), il
+  codice stampato sul server, con la foto che viaggia in rete interna (127). L'operazione in corso senza rete resta nella
+  memoria del browser (127). Restano da decidere qui l'aspetto (impronte nel browser o sul server) e cosa viaggia per
+  ogni inquadratura.
