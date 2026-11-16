@@ -126,6 +126,15 @@ _Evitare_: stock, scorta (al singolare), disponibilità
 La parte di giacenza riservata a una riga di ordine cliente; può coprire la riga solo in parte.
 _Evitare_: allocazione, impegno, prenotazione
 
+**Collo**:
+Una scatola o confezione così come arriva dal fornitore; ne arrivano spesso molte uguali dello stesso articolo.
+_Evitare_: pacco, cartone, confezione (da sola)
+
+**Contenuto del collo**:
+Quanti pezzi, o quanta quantità nell'unità di magazzino, contiene un collo di un articolo da un fornitore; il programma
+ricorda l'ultimo confermato e lo propone come consiglio.
+_Evitare_: conversione (è un'altra cosa, approvata dal responsabile), imballo
+
 **Carico**:
 Il movimento che fa entrare in giacenza la merce ricevuta.
 _Evitare_: versamento, entrata

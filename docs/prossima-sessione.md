@@ -22,13 +22,15 @@ Per lavorare un ticket preciso in una sessione parallela, aggiungere in fondo al
 
 In ordine di numero:
 
-1. «Percorso di identificazione e lettura della quantità»
+1. «Inserimento di un articolo nuovo da foto»: sbloccato dalla chiusura di «Percorso di identificazione». Si arriva
+   dall'uscita «Articolo nuovo» del «non lo so» (98); vedi il commento nel ticket.
 2. «App nativa o web app»: va chiarito anche il palmare industriale citato dall'utente (commento nel ticket). In UFP
    oggi i palmari usano ARS dal browser.
 3. «Piano della prova di accuratezza visiva»: conviene partire presto, perché le foto reali richiedono tempo e da
-   questa prova dipendono la scelta del modello, la divisione tra le macchine e lo stack.
-4. «Punti di estensione per la specializzazione»: sbloccato dalla chiusura di «Modello dei dati».
-5. «Nome del prodotto»
+   questa prova dipendono la scelta del modello, la divisione tra le macchine e lo stack. Ora deve dare anche le soglie
+   del percorso di identificazione (commento nel ticket).
+4. «Punti di estensione per la specializzazione».
+5. «Nome del prodotto».
 
 Si possono lavorare in parallelo in sessioni diverse.
 
@@ -40,5 +42,6 @@ Si possono lavorare in parallelo in sessioni diverse.
 
 ## Ultimo ticket chiuso
 
-16/11/2026: «Modello dei dati». Decisioni 68–86, sezione «Modello dei dati» in `docs/architettura.md`. Pagina usata
-per le domande: https://claude.ai/artifact/4HA7JqQbi8QtgcpfPmo9xd (privata, la vede solo l'utente).
+16/11/2026: «Percorso di identificazione e lettura della quantità». Decisioni 87–104, sezione omonima in
+`docs/architettura.md`. Pagina usata per le domande: https://claude.ai/artifact/TfFoX5VKMN38WPPUQjdRvS (privata, la vede
+solo l'utente).

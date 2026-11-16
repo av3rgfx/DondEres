@@ -20,3 +20,10 @@ Come si fa la prova con foto reali che decide il modello visivo (decisione 12)?
 
 Risultato atteso: il piano della prova in `docs/architettura.md`, con la lista delle foto da scattare per
 l'utente.
+
+## Comments
+
+- 16/11/2026, dal ticket «Percorso di identificazione»: la prova deve dare i numeri per fissare quando un candidato è
+  «convincente» tra gli attesi (88), la soglia del «non lo so» (24) e il tetto di foto per articolo (96). Da misurare
+  con e senza restringere agli articoli attesi (88, 97). Va deciso se misurare anche la lettura del codice stampato con
+  il confronto dei segni che si confondono (89) e la lettura della quantità (93, 101).
