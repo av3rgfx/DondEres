@@ -879,7 +879,9 @@ Totale: circa 1.620 foto e 9 ore di scatti con l'iPhone, più 480 foto di arrivo
 
 ## Percorso delle schermate
 
-Dal ticket «Percorso delle schermate», in corso dal 17/11/2026. Decisioni 160–166 finora. Qui si decide quali
+Dal ticket «Percorso delle schermate», in corso dal 17/11/2026. Decisioni 160–172 finora. Prototipo:
+`prototipi/percorso-schermate/index.html`, pubblicato anche come pagina privata per il telefono dell'utente
+(https://claude.ai/artifact/Vb6ijyDdr4n2gsZcKhhVur). Qui si decide quali
 schermate ci sono e in che ordine; colori, caratteri e stile vengono con il ticket «Aspetto grafico» (14).
 
 ### Schermate della base
@@ -906,7 +908,8 @@ Fuori da questo ticket, nella nebbia della mappa: inventario periodico, catalogo
 - **Schermata del DDT**: inquadratura in alto, sempre accesa; sotto le righe attese con contato e atteso (162). Un
   barcode su un solo articolo si registra senza tocchi (99): si passa da una scatola all'altra senza toccare lo schermo.
 - **Messa a posto**: alla chiusura del DDT «Metti a posto adesso», altrimenti dall'elenco (163).
-- **Prelievo**: un ordine alla volta, guidato riga per riga in ordine di ubicazione (164).
+- **Prelievo**: un ordine alla volta, guidato riga per riga in ordine di ubicazione (164); gli ordini arrivano dai
+  piani di spedizione o dalla coda (167, 168).
 - **Ordini coperti in parte**: si prelevano o no secondo la scelta del magazzino, di serie sì; il responsabile decide
   per il singolo ordine; in UFP decide chi crea il piano di spedizione (165).
 - **Righe che aspettano il responsabile**: la riga si ferma e l'operatore continua; il responsabile decide da «Da
@@ -928,4 +931,24 @@ Fatto riferito dall'utente il 17/11/2026, nella nota alla domanda sulla prima sc
    corriere parte la merce (per esempio BARTOLINI, GLS).
 
 Nel magazzino Shopify oggi si lavora con fogli di carta; potrebbe lavorare in modo simile, con i piani gestiti in
-automatico (165). Le scelte su piani, fine della preparazione e spedizione sono nel secondo giro di domande.
+automatico (165).
+
+### Preparazione e spedizione
+
+Cambiamenti rispetto a oggi in UFP, proposti dall'agente e accettati: la copertura di ogni ordine si vede mentre si
+crea il piano; la sigla è sostituita dal nome di chi ha fatto l'accesso; «spedito» si segna al ritiro, per corriere.
+
+| Passo | Con i piani (UFP) | Con la coda (Shopify) | Decisioni |
+|---|---|---|---|
+| Chi dà il lavoro | Chi ha il permesso «Pianifica le spedizioni» crea il piano: titolo libero, preparatore, ordini con la loro copertura (completo, «3 di 5», niente) | Nessuno: «Prossimo ordine» dà l'ordine pronto più vecchio | 165, 167–169 |
+| Cosa vede il preparatore | Prima i suoi piani, poi quelli dei colleghi | Il numero di ordini in coda e «Prossimo ordine» | 167, 168 |
+| Prendere un ordine | Chi lo apre lo prende; gli altri vedono «in preparazione da…»; chi pianifica riassegna | Chi lo riceve dalla coda lo prende | 170 |
+| Prelievo | Riga per riga in ordine di ubicazione: scansione dell'ubicazione, inquadratura dell'articolo (stop se è un altro), quantità; la merce in VEND si prende dal suo posto | Uguale | 76, 97, 103, 164 |
+| Fine | Colli, chili, «Preparato da» già compilato con chi ha fatto l'accesso e modificabile, corriere in grande; i colli vanno nel posto del corriere. L'ordine è evaso | Uguale; a Shopify non si manda niente | 21, 52, 171, 172 |
+| Spedizione | «Spedisci»: ordini pronti divisi per corriere; si toccano quelli che restano; «Ritirato da …» segna spediti gli altri | Uguale; la spedizione si segna anche su Shopify | 52, 61, 172 |
+
+Un ordine pronto troppo tardi per il corriere resta pronto e parte con il ritiro successivo (172). Al banco l'ordine si
+preleva e si spedisce subito, senza piano né coda (56).
+
+Domande aggiunte per il rivenditore di UFP (21, 22 in `docs/domande-rivenditore-ufp.md`): agente e corriere
+sull'ordine in Ad Hoc; colli e peso restituiti oggi da ARS.

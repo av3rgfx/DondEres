@@ -116,7 +116,8 @@ const ARTS = {
   V13:{code:"VT-1201", desc:"Valvola a sfera 3/4\" leva blu", unit:"pz", loc:"A-05-2", price:"11,50 €", cost:"6,00 €", photo:"valvola blu"},
   N55:{code:"NB-55", desc:"Nastro butilico 50 mm", unit:"pz", loc:"D-01-3", price:"9,80 €", cost:"4,90 €", photo:"nastro"}
 };
-const USERS = [{n:"Marco",r:"op"},{n:"Luca",r:"op"},{n:"Sara",r:"op"},{n:"Anna",r:"boss"}];
+const USERS = [{n:"Marco",r:"op"},{n:"Luca",r:"op"},{n:"Sara",r:"op",plan:true},{n:"Anna",r:"boss"}];
+const canPlan = () => S.user && (S.user.r==="boss" || S.user.plan);
 
 function initial(){
   return {
@@ -135,7 +136,23 @@ function initial(){
       {id:"c2", t:"conta", a:"S77", q:7, txt:"Conteggio di Sara in C-02-4: 7 invece di 5"}
     ],
     log:["Prototipo avviato con dati d'esempio inventati."],
-    lastDdt:null, collo:{S77:24}, newArt:null, put:null, banco:null, cerca:"", cnt:null, ddtDraft:{forn:"Idrotecnica Nord", num:""}, n:0
+    lastDdt:null, collo:{S77:24},
+    coda:false, ordine:null, pk:null, cour:{BRT:"Bartolini", GLS:"GLS"},
+    piani:[{id:"p1", t:"Bianchi M.", prep:"Luca", ord:["1042","1039"]},{id:"p2", t:"Ferri G.", prep:"Paolo", ord:["1050","1053"]}],
+    ordini:{
+      "1042":{cli:"Rossi Srl", cour:"BRT", stato:"aperto", righe:[{a:"R110",q:4,ass:4},{a:"G44",q:20,ass:20},{a:"S77",q:6,ass:6}]},
+      "1039":{cli:"Edil Po", cour:"BRT", stato:"aperto", righe:[{a:"N55",q:5,ass:3},{a:"V12",q:2,ass:2}]},
+      "1050":{cli:"Termo Sud", cour:"GLS", stato:"aperto", da:"Paolo", righe:[{a:"V13",q:1,ass:1,vend:"VEND3"},{a:"R110",q:2,ass:2}]},
+      "1053":{cli:"Idraulica Ponte", cour:"GLS", stato:"aperto", righe:[{a:"S77",q:3,ass:3}]},
+      "1044":{cli:"Verdi Impianti", cour:"BRT", stato:"aperto", righe:[{a:"N55",q:4,ass:0}]},
+      "1048":{cli:"Casa e Clima", cour:"GLS", stato:"aperto", righe:[{a:"G44",q:15,ass:15},{a:"V12",q:1,ass:1}]},
+      "1031":{cli:"Bianchi Edilizia", cour:"BRT", stato:"pronto", colli:2, kg:"14", prep:"Marco", righe:[]},
+      "1035":{cli:"Termo Sud", cour:"GLS", stato:"pronto", colli:1, kg:"3,5", prep:"Sara", righe:[]},
+      "1036":{cli:"Rossi Srl", cour:"BRT", stato:"pronto", colli:3, kg:"22", prep:"Luca", righe:[]},
+      "#5521":{cli:"Ordine del sito, 09:14", cour:"GLS", stato:"aperto", shop:true, righe:[{a:"S77",q:2,ass:2}]},
+      "#5523":{cli:"Ordine del sito, 09:31", cour:"BRT", stato:"aperto", shop:true, righe:[{a:"R110",q:10,ass:10}]},
+      "#5524":{cli:"Ordine del sito, 09:40", cour:"GLS", stato:"aperto", shop:true, righe:[{a:"V12",q:1,ass:1}]}
+    }, newArt:null, put:null, banco:null, cerca:"", cnt:null, ddtDraft:{forn:"Idrotecnica Nord", num:""}, n:0
   };
 }
 let S = initial();
@@ -147,7 +164,8 @@ function back(){ S.sheet=null; S.toast=null; S.screen = S.stack.pop() || "home";
 const ddt = () => S.ddts.find(d => d.id===S.lastDdt);
 const counts = () => ({
   ricevi:S.ddts.filter(d=>d.open).length, metti:S.area.length + S.rimetti.length,
-  preleva:3, spedisci:2, controlli:S.controlli.length
+  preleva: S.coda ? Object.values(S.ordini).filter(o=>o.shop&&o.stato==="aperto").length : S.piani.filter(p=>p.prep===(S.user&&S.user.n)).reduce((n,p)=>n+p.ord.filter(k=>S.ordini[k].stato==="aperto").length,0),
+  spedisci: Object.values(S.ordini).filter(o=>o.stato==="pronto").length, controlli:S.controlli.length
 });
 function register(lineIdx, q, how){
   const d = ddt(); const l = d.lines[lineIdx]; l.cnt += q; l.lastQ = q;
@@ -205,8 +223,9 @@ V.home = () => {
     ${t(c.preleva,"Preleva","go:preleva")}${t(c.spedisci,"Spedisci","go:spedisci")}
     ${t(null,"Banco","go:banco")}${t(null,"Cerca articolo","go:cerca")}
   </div>
+  ${canPlan()&&!S.coda?`<button class="btn" data-act="go:piani">Piani di spedizione</button>`:""}
   ${isBoss()?`<div class="btns two"><button class="btn small" data-act="go:utenti">Utenti</button><button class="btn small" data-act="go:config">Configurazione</button></div>`:""}
-  <p class="muted">Il numero dice quante cose aspettano. Preleva e Spedisci si disegnano con il secondo giro di domande.</p>
+  <p class="muted">Il numero dice quante cose aspettano. ${S.coda?"Magazzino con la coda (come Shopify).":"Magazzino con i piani di spedizione (come UFP)."} Si cambia da «Scenari».</p>
   </main>`;
 };
 
@@ -410,13 +429,65 @@ SH.ctl = ({id}) => { const c=S.controlli.find(x=>x.id===id); const b = (t,cls=""
 V.utenti = () => `${hdr("Utenti")}<main class="main"><div class="list">${USERS.map(u=>row(u.n,u.r==="boss"?"responsabile":"operatore")).join("")}</div><button class="btn">Nuovo utente</button><p class="muted">Segnaposto: per chi se ne va basta disattivare l'utente.</p></main>`;
 V.config = () => `${hdr("Configurazione")}<main class="main"><div class="warnbox boss">Segnaposto: la procedura guidata dell'installazione è ancora nella nebbia della mappa.</div><div class="list">
   ${[["Ubicazioni","sì"],["VEND","acceso"],["Posti VEND","numerati"],["Prezzi","accesi"],["Ordini parziali si prelevano","sì"],["Uscita dopo","30 min"],["Scambio ogni","5 min"]].map(([a,b])=>row(a,b)).join("")}</div></main>`;
-V.preleva = () => `${hdr("Preleva")}<main class="main"><div class="warnbox boss">Si disegna con le risposte del secondo giro (piani di spedizione, coda, aiuto ai colleghi, fine della preparazione).</div>
-  <div class="list">${row("1042 · Rossi Srl","completo","done")}${row("1047 · Banco","completo","done")}${row("1039 · Edil Po","3 di 5","part")}</div></main>`;
-V.spedisci = () => `${hdr("Spedisci")}<main class="main"><div class="warnbox boss">Si disegna con le risposte del secondo giro.</div></main>`;
+const cop = o => { const t=o.righe.reduce((n,r)=>n+r.q,0), a=o.righe.reduce((n,r)=>n+r.ass,0); return a>=t?["completo","done"]:a>0?[`${a} di ${t}`,"part"]:["niente","dim"]; };
+const ordRow = (k, act=true) => { const o=S.ordini[k]; const [t,c]=cop(o);
+  if(o.stato!=="aperto") return row(`${k} · ${esc(o.cli)}`, o.stato==="pronto"?"pronto":"spedito", "done");
+  if(o.da && o.da!==S.user.n) return row(`${k} · ${esc(o.cli)}`, `in preparazione da ${o.da}`, "dim");
+  return row(`${k} · ${esc(o.cli)}`, t, c, act&&c!=="dim"?"ord:"+k:"", `${S.cour[o.cour]}${o.da===S.user.n?" · lo stai preparando tu":""}`); };
+V.preleva = () => {
+  if(S.coda){ const q=Object.entries(S.ordini).filter(([k,o])=>o.shop&&o.stato==="aperto");
+    return `${hdr("Preleva","Coda degli ordini del sito")}<main class="main"><div class="tile"><b>${q.length}</b><span>ordini pronti da prelevare</span></div>
+    ${q.length?`<button class="btn go" data-act="prossimo">Prossimo ordine</button>`:""}
+    <p class="muted">Ti do l'ordine pronto più vecchio. Chi lo prende lo toglie dalla coda: nessun altro lo vede.</p>
+    <h2>In coda</h2><div class="list">${q.map(([k,o])=>row(`${k}`,o.da?`preso da ${o.da}`:esc(o.cli.replace("Ordine del sito, ","")),o.da?"dim":"")).join("")}</div></main>`; }
+  const mine=S.piani.filter(p=>p.prep===S.user.n), others=S.piani.filter(p=>p.prep!==S.user.n);
+  const pr = p => row(`Piano «${esc(p.t)}»`, `${p.ord.filter(k=>S.ordini[k].stato==="aperto").length} da fare`, p.prep===S.user.n?"boss":"", "piano:"+p.id, `${p.ord.length} ordini · ${p.prep}`);
+  return `${hdr("Preleva","Piani di spedizione")}<main class="main">
+    <h2>I tuoi piani</h2><div class="list">${mine.map(pr).join("") || `<p class="muted">Nessun piano dato a te.</p>`}</div>
+    <h2>Piani dei colleghi</h2><div class="list">${others.map(pr).join("")}</div>
+    <p class="muted">Puoi aiutare un collega prendendo un suo ordine non ancora aperto.</p></main>`; };
+V.piano = () => { const p=S.piani.find(x=>x.id===S.pianoSel);
+  return `${hdr(`Piano «${esc(p.t)}»`,`di ${p.prep}`)}<main class="main"><div class="list">${p.ord.map(k=>ordRow(k)).join("")}</div>
+  <p class="muted">Tocca un ordine per iniziare. Chi lo apre lo prende.</p></main>`; };
+function pickRows(o){ return o.righe.map((r,i)=>({...r,i})).filter(r=>r.ass>0).sort((x,y)=>(x.vend||A(x.a).loc).localeCompare(y.vend||A(y.a).loc)); }
+V.pick = () => { const k=S.ordine, o=S.ordini[k], rows=pickRows(o), P=S.pk; const r=rows[P.n];
+  if(!r) return V.fine();
+  const where = r.vend || A(r.a).loc;
+  const stepTxt = P.st===0?`Vai a <b>${where}</b> e scansiona l'ubicazione`:P.st===1?`Inquadra la scatola di <b>${A(r.a).code}</b>`:`Quanti ne prendi?`;
+  return `${hdr(`Ordine ${k}`,`${esc(o.cli)} · riga ${P.n+1} di ${rows.length}`)}<main class="main">
+    <div class="row boss"><span class="l"><span>${A(r.a).code} · ${esc(A(r.a).desc)}</span><small>${r.ass<r.q?`prendi ${r.ass} di ${r.q}: il resto non c'è ancora`:`prendi ${r.ass} ${A(r.a).unit}`}${r.vend?" · merce venduta, nel suo posto VEND":""}</small></span><span class="r">${where}</span></div>
+    ${P.st<2?`<div class="cam"><div class="frame">${stepTxt}</div><div class="chips">${P.st===0?`<button class="chip" data-act="pkLoc:ok">Simula: ${where}</button><button class="chip" data-act="pkLoc:no">Simula: un'altra ubicazione</button>`:`<button class="chip" data-act="pkArt:ok">Simula: ${A(r.a).code}</button><button class="chip" data-act="pkArt:no">Simula: un altro articolo</button>`}</div></div>`:
+     `<div class="qty"><button class="ic" data-act="qm" aria-label="Meno">−</button><input id="q" type="number" inputmode="numeric" value="${r.ass}"><button class="ic" data-act="qp" aria-label="Più">+</button></div><button class="btn go" data-act="pkQty">Preso</button>`}
+    ${P.warn?`<div class="warnbox bad">${P.warn}</div>`:""}
+    <h2>Righe</h2><div class="list">${rows.map((x,j)=>row(`${x.vend||A(x.a).loc} · ${A(x.a).code}`,j<P.n?"preso":`${x.ass}`,j<P.n?"done":j===P.n?"part":"")).join("")}</div></main>`; };
+V.fine = () => { const k=S.ordine, o=S.ordini[k];
+  return `${hdr(`Ordine ${k}`,"Fine della preparazione")}<main class="main">
+    <div class="field"><label for="colli2">Colli</label><input id="colli2" type="number" inputmode="numeric" value="2"></div>
+    <div class="field"><label for="kg">Chili</label><input id="kg" type="text" inputmode="decimal" value="12,5"></div>
+    <div class="field"><label for="prep">Preparato da</label><select id="prep">${USERS.filter(u=>u.r==="op").map(u=>`<option ${u.n===S.user.n?"selected":""}>${u.n}</option>`).join("")}</select></div>
+    <div class="tile" style="text-align:center"><b>${o.cour}</b><span>${S.cour[o.cour]}: metti i colli nel suo posto</span></div>
+    <button class="btn go" data-act="pronto">Ordine pronto</button>
+    <p class="muted">Il nome è quello di chi ha fatto l'accesso; cambialo solo se ha preparato un altro. Pronto vuol dire evaso: «spedito» si segna quando parte davvero.</p></main>`; };
+V.spedisci = () => { const by={}; Object.entries(S.ordini).filter(([k,o])=>o.stato==="pronto").forEach(([k,o])=>{(by[o.cour]=by[o.cour]||[]).push(k);});
+  S.resta = S.resta || {};
+  return `${hdr("Spedisci","Ordini pronti, per corriere")}<main class="main">${Object.keys(by).length?Object.entries(by).map(([c,ks])=>{ const go=ks.filter(k=>!S.resta[k]);
+    return `<h2>${S.cour[c]}</h2><div class="list">${ks.map(k=>{const o=S.ordini[k]; return row(`${k} · ${esc(o.cli)}`, S.resta[k]?"resta":`${o.colli} colli`, S.resta[k]?"dim":"done", "resta:"+k, `${o.kg} kg · preparato da ${o.prep}`);}).join("")}</div>
+    <button class="btn go" data-act="ritirato:${c}" ${go.length?"":"disabled"}>Ritirato da ${S.cour[c]} (${go.length})</button>`; }).join(""):`<p class="muted">Nessun ordine pronto.</p>`}
+    <p class="muted">Tocca un ordine che non parte oggi: resta pronto e parte con il prossimo ritiro.</p></main>`; };
+V.piani = () => `${hdr("Piani di spedizione","Chi pianifica")}<main class="main"><div class="list">${S.piani.map(p=>row(`«${esc(p.t)}»`,p.prep,"","",`${p.ord.join(", ")}`)).join("")}</div>
+  <button class="btn go" data-act="go:nuovoPiano">Nuovo piano</button></main>`;
+V.nuovoPiano = () => { const liberi=Object.keys(S.ordini).filter(k=>!S.ordini[k].shop && S.ordini[k].stato==="aperto" && !S.piani.some(p=>p.ord.includes(k)));
+  return `${hdr("Nuovo piano")}<main class="main">
+  <div class="field"><label for="pt">Titolo</label><input id="pt" type="text" value="Verdi A."></div><p class="muted">Proposto dall'agente dell'ordine, se il gestionale lo manda.</p>
+  <div class="field"><label for="pp">Preparatore</label><select id="pp">${USERS.filter(u=>u.r==="op").map(u=>`<option>${u.n}</option>`).join("")}</select></div>
+  <h2>Ordini senza piano</h2><div class="list">${liberi.map(k=>{const o=S.ordini[k],[t,c]=cop(o);return `<label class="row ${c}"><span class="l"><span><input type="checkbox" data-ord="${k}" ${c==="done"?"checked":""}> ${k} · ${esc(o.cli)}</span><small>${S.cour[o.cour]}</small></span><span class="r">${t}</span></label>`;}).join("")}</div>
+  <button class="btn go" data-act="creaPiano">Crea e dai al preparatore</button>
+  <p class="muted">Un ordine coperto in parte si dà solo se lo scegli: il cliente riceverà due spedizioni.</p></main>`; };
 V.scenari = () => `${hdr("Scenari del prototipo")}<main class="main"><div class="scen">
   <button class="btn" data-act="sc:rete">${S.online?"Simula rete assente":"Torna la rete"}</button>
   <button class="btn" data-act="sc:timeout">Simula 30 minuti senza uso</button>
   <button class="btn" data-act="sc:sync">${S.sync?"Simula scambio bloccato da 15 minuti":"Scambio di nuovo a posto"}</button>
+  <button class="btn" data-act="sc:coda">${S.coda?"Magazzino con i piani (come UFP)":"Magazzino con la coda (come Shopify)"}</button>
   <button class="btn" data-act="sc:primo">Rivedi la prima apertura</button>
   <button class="btn" data-act="sc:boss">Entra come responsabile (Anna)</button>
   <button class="btn bad" data-act="sc:reset">Ricomincia da capo</button></div>
@@ -503,12 +574,24 @@ function act(a, el){
     case "contaOk": { const n=document.getElementById("cn").value; S.controlli.push({id:"c"+(++S.n), t:"conta", a:S.cerca, txt:`Conteggio di ${S.user.n} in ${S.cnt}: ${n} ${A(S.cerca).code}`}); log(`Conteggio: ${n} ${A(S.cerca).code} in ${S.cnt}, vale subito`); return back(); }
     case "aggFoto": S.newArt={step:1, shots:0, code:A(S.cerca).code, desc:A(S.cerca).desc, line:null, agg:true}; log("Aggiungi foto: stessa guida dell'inserimento"); return go("nuovoFoto");
     case "ctl": return sheet("ctl",{id:x});
+    case "piano": S.pianoSel=x; return go("piano");
+    case "ord": { const o=S.ordini[x]; o.da=S.user.n; S.ordine=x; S.pk={n:0,st:0}; log(`${S.user.n} prende l'ordine ${x}: gli altri lo vedono in preparazione`); return go("pick"); }
+    case "prossimo": { const k=Object.keys(S.ordini).find(k=>S.ordini[k].shop&&S.ordini[k].stato==="aperto"&&!S.ordini[k].da); if(!k) return; return act("ord:"+k); }
+    case "pkLoc": if(x==="no"){ S.pk.warn="Non è l'ubicazione proposta. Prendi da qui solo se l'articolo c'è: il programma la cambia."; } else { S.pk.warn=null; S.pk.st=1; } return render();
+    case "pkArt": if(x==="no"){ S.pk.warn="Stop: non è l'articolo di questa riga. Rimettilo a posto e inquadra quello giusto."; } else { S.pk.warn=null; S.pk.st=2; } return render();
+    case "pkQty": { const o=S.ordini[S.ordine], r=pickRows(o)[S.pk.n]; const q=+document.getElementById("q").value; log(`Prelevati ${q} ${A(r.a).code} da ${r.vend||A(r.a).loc} per l'ordine ${S.ordine}`); S.pk={n:S.pk.n+1,st:0}; render(); return window.scrollTo(0,0); }
+    case "pronto": { const o=S.ordini[S.ordine]; o.stato="pronto"; o.colli=document.getElementById("colli2").value; o.kg=document.getElementById("kg").value; o.prep=document.getElementById("prep").value;
+      log(`Ordine ${S.ordine} pronto (evaso): ${o.colli} colli, ${o.kg} kg, preparato da ${o.prep}${o.prep!==S.user.n?` (registrato da ${S.user.n})`:""}; ${o.shop?"a Shopify non si manda niente finché non parte":"documento di prelievo al gestionale"}`); S.ordine=null; S.pk=null; back(); return; }
+    case "resta": S.resta=S.resta||{}; S.resta[x]=!S.resta[x]; return render();
+    case "ritirato": { const ks=Object.keys(S.ordini).filter(k=>S.ordini[k].stato==="pronto"&&S.ordini[k].cour===x&&!(S.resta||{})[k]); ks.forEach(k=>S.ordini[k].stato="spedito"); log(`Ritirato da ${S.cour[x]}: spediti ${ks.join(", ")} (${S.user.n}); documenti di spedizione al gestionale o a Shopify`); return render(); }
+    case "creaPiano": { const ks=[...document.querySelectorAll("[data-ord]")].filter(i=>i.checked).map(i=>i.dataset.ord); if(!ks.length) return; const t=document.getElementById("pt").value, pp=document.getElementById("pp").value; S.piani.push({id:"p"+(++S.n), t, prep:pp, ord:ks}); log(`${S.user.n} crea il piano «${t}» per ${pp}: ${ks.join(", ")}`); return back(); }
     case "ctlDone": { const c=S.controlli.find(z=>z.id===x); S.controlli=S.controlli.filter(z=>z.id!==x); log(`${S.user.n}: «${[y,...rest].join(":")}» per ${c.txt}`); S.sheet=null; return render(); }
     case "sc":
       if(x==="rete"){ S.online=!S.online; log(S.online?`Rete tornata: partite ${S.pendingOffline} scansioni`:"Rete assente"); if(S.online) S.pendingOffline=0; return back(); }
       if(x==="timeout"){ if(!S.user) return back(); S.resume=S.stack[S.stack.length-1]||"home"; log(`Uscita automatica di ${S.user.n} dopo 30 minuti senza uso: il lavoro a metà resta`); S.user=null; S.stack=[]; return go("accesso", false); }
       if(x==="sync"){ S.sync=!S.sync; return back(); }
       if(x==="primo"){ S.stack=[]; return go("primo", false); }
+      if(x==="coda"){ S.coda=!S.coda; log(S.coda?"Ora il magazzino lavora con la coda":"Ora il magazzino lavora con i piani"); S.stack=[]; return go("home", false); }
       if(x==="boss"){ S.pinFor="Anna"; S.stack=[]; return go("pin", false); }
       if(x==="reset"){ S=initial(); return render(); }
   }
