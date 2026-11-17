@@ -21,3 +21,6 @@ Risultato atteso: lo stack e il motivo di ogni scelta in `docs/architettura.md` 
   dominio con la sfida DNS di Let's Encrypt oppure certificato interno (123), aggiornamento del server con copia di
   sicurezza e aggiornamenti obbligatori notturni (125), lettore a grilletto del palmare come tastiera (ipotesi, 119).
   Prima di scegliere, le prove su dispositivi veri (127).
+- 17/11/2026, dal ticket «Piano della prova di accuratezza visiva»: per la prova, lettura del codice stampato sul
+  server con PaddleOCR (Apache-2.0), modelli visivi SigLIP 2, PE-Core e DINOv2 (Apache-2.0), DINOv3 solo come confronto
+  (140–142, 145). Lo stack del riconoscimento dipende dal modello scelto nell'esecuzione della prova.

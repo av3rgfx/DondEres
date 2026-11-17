@@ -7,8 +7,9 @@ per sessione.
 /wayfinder .scratch/architettura/map.md
 
 Leggi prima AGENTS.md, poi la mappa (solo map.md, non tutti i ticket). Prendi il primo ticket della frontiera:
-aperto, non bloccato, non preso. Se è il «Piano della prova di accuratezza visiva», chiedimi per prima cosa dove
-conservare le foto reali e se possono stare nel repository.
+aperto, non bloccato, non preso. Se è «Esecuzione della prova visiva e scelta del modello», controlla per prima cosa
+che il repository privato delle foto sia collegato alla sessione (decisioni 128 e 145): se non c'è, chiedimelo prima
+di tutto il resto; poi prepara la pagina di scatto e fammela provare su un telefono.
 Registra ogni mia decisione in docs/decisioni.md, con data e motivo; scrivi la tua parte in docs/architettura.md.
 Parlami in italiano, con domande semplici: cosa chiedi, perché conta, cosa comporta ogni opzione.
 Per le domande usa una pagina interattiva (Artifact) con esempi visivi che cambiano con la risposta, opzione
@@ -18,18 +19,18 @@ Lavora a giri: registra le risposte di ogni giro prima del successivo e chiudi c
 
 Per lavorare un ticket preciso in una sessione parallela, aggiungere in fondo al prompt: `Lavora il ticket «<titolo>».`
 
-## Frontiera al 16/11/2026
+## Frontiera al 17/11/2026
 
 In ordine di numero:
 
-1. «Piano della prova di accuratezza visiva»: conviene partire presto, perché le foto reali richiedono tempo e da
-   questa prova dipendono la scelta del modello, la divisione tra le macchine e lo stack. Deve dare anche le soglie del
-   percorso di identificazione e può misurare l'aspetto con 1 e 3 foto per articolo. Le foto «di arrivo» vanno scattate
-   dal browser dei telefoni, come farà la web app (commenti nel ticket).
+1. «Esecuzione della prova visiva e scelta del modello» (task con l'utente): sbloccata il 17/11/2026. Piano e lista
+   delle foto nella sezione «Prova di accuratezza visiva» di `docs/architettura.md`; modelli e misure nelle decisioni
+   141 e 146–148. Prima di iniziarla l'utente crea su GitHub il repository privato delle foto (per esempio
+   «prova-visiva-foto») e lo aggiunge alla sessione. Se l'utente vuole DINOv3, la chiave di Hugging Face si chiede con
+   il modulo sicuro, mai in chat (141). Lavoro lungo: si sviluppa in più sessioni, finché le foto non sono scattate.
 2. «Punti di estensione per la specializzazione».
 3. «Nome del prodotto».
-4. «Percorso delle schermate»: sbloccato dalla chiusura di «App nativa o web app»; nel ticket ci sono i commenti di
-   tutti i ticket chiusi.
+4. «Percorso delle schermate»: nel ticket ci sono i commenti di tutti i ticket chiusi.
 
 Si possono lavorare in parallelo in sessioni diverse.
 
@@ -41,7 +42,7 @@ Si possono lavorare in parallelo in sessioni diverse.
 
 ## Ultimo ticket chiuso
 
-16/11/2026: «App nativa o web app». Decisioni 119–127, sezione «Dispositivi e forma del programma» in
-`docs/architettura.md`. Pagina usata per le domande: https://claude.ai/artifact/41KfvE3P7rhiPdEZLueyRw (privata, la vede
-solo l'utente). Restano da fare le prove su dispositivi veri (un iPhone, un Android, un palmare di UFP), prima dello
-stack.
+17/11/2026: «Piano della prova di accuratezza visiva» e la ricerca «Modelli visivi open source recenti: ce ne sono di
+migliori?». Decisioni 128–148, sezione «Prova di accuratezza visiva» in
+`docs/architettura.md`, con la lista delle foto da scattare. Pagina usata per le domande:
+https://claude.ai/artifact/9fL5bbNUMMkYAzxWjECaHs (privata, la vede solo l'utente).

@@ -683,3 +683,130 @@ Prima di scegliere lo stack (127):
 - Foto «di arrivo» della prova scattate dal browser dei telefoni: ticket «Piano della prova di accuratezza visiva».
 - Procedura guidata, rinnovo del certificato, copie di sicurezza, ritorno alla versione precedente: installazione e
   configurazione iniziale, sezione «Not yet specified» della mappa.
+
+## Prova di accuratezza visiva
+
+Dal ticket «Piano della prova di accuratezza visiva», chiuso il 17/11/2026. Decisioni 12 e 128–148. La prova decide il
+modello visivo (12) e dà i numeri lasciati aperti dal percorso di identificazione (sezione «Da fissare con la prova
+visiva»). La esegue il ticket «Esecuzione della prova visiva e scelta del modello». Ricerche:
+`docs/research/2026-11-15-addestramento-ed-esecuzione-locale.md` (§A, §C, §I) e
+`docs/research/2026-11-15-modelli-visivi-riconoscimento-articoli.md` (§1, raccomandazione),
+`docs/research/2026-11-17-locateanything-nvidia.md`, `docs/research/2026-11-17-modelli-visivi-recenti.md`.
+
+### Dove stanno le foto
+
+| Cosa | Dove | Chi lo vede |
+|---|---|---|
+| Foto della prova | Repository GitHub privato e separato, solo per la prova (128) | Il proprietario e chi invita |
+| Tabella sigla anonima → codice vero dell'articolo | Stesso repository privato (129) | Come sopra |
+| Piano, script, risultati in numeri con le sigle anonime (A001, A002…) | Repository del progetto, pubblico (129) | Chiunque |
+
+- Nelle foto solo scatole ed etichette; una foto con un volto, un documento o il nome di un cliente si rifà da un'altra
+  faccia della scatola (130).
+- Le foto restano dopo la prova, per rifarla con un modello nuovo e per l'eventuale adattamento del modello; si
+  cancellano se il magazzino che le ha fornite lo chiede (131).
+
+### Articoli
+
+- Articoli di UFP; il magazzino Shopify fa, se possibile, una seconda prova con lo stesso piano (132).
+- 200 articoli a catalogo e 40 lasciati fuori dal catalogo, fotografati solo come merce in arrivo: servono a misurare
+  quante volte il programma dice «non lo so» invece di indovinare (133).
+- Scelti a caso tra gli articoli che arrivano: la prova misura il caso di tutti i giorni (134).
+
+### Foto
+
+| Foto | Quante | Come | A cosa servono |
+|---|---|---|---|
+| Di riferimento | 3 per articolo a catalogo: davanti, etichetta, altro lato (135) | Come all'inserimento guidato di un articolo nuovo (106) | Sono ciò che il programma conosce; si misura con 1 e con 3 |
+| Di arrivo | 3 per articolo, anche per quelli fuori catalogo (135) | Come in un ricevimento vero: iPhone, Android e palmare, almeno due persone, almeno due giorni, luce normale (137) | Sono ciò che il programma deve riconoscere; mai usate come riferimento |
+
+Stima con 200 + 40 articoli: 200 × 6 + 40 × 3 = 1.320 foto, circa 7 ore di scatti a 20 secondi per foto (deduzione).
+
+**Pagina di scatto** (136): una pagina web, aperta dal browser del telefono come il programma vero, quindi con la stessa
+fotocamera vista dal browser. Si legge il codice dell'articolo, si scattano le foto guidate, la pagina dà a ogni foto un
+nome con articolo, tipo di foto, giorno e dispositivo. Le foto restano sul telefono; a fine giro si passano al computer e
+si caricano nel repository privato (128). La pagina è solo codice, senza dati, su un indirizzo sicuro (per esempio
+GitHub Pages), perché il browser apre la fotocamera solo da lì. La prepara il ticket «Esecuzione della prova visiva e
+scelta del modello».
+
+**Articoli di contorno** (139): 300 articoli in più, una sola foto davanti ciascuno; non si cercano mai, affollano la
+ricerca. Con loro si provano 20, 100, 200 e 500 articoli attesi (138, 139).
+
+Totale stimato: 200 × 6 + 40 × 3 + 300 × 1 = 1.620 foto, circa 9 ore di scatti a 20 secondi per foto (deduzione).
+
+### Modelli
+
+| Modello | Licenza | Taglie | Ruolo |
+|---|---|---|---|
+| SigLIP 2 | Apache-2.0 | media e grande | Candidato (146) |
+| PE-Core | Apache-2.0 | media e grande | Candidato (146) |
+| DINOv2 | Apache-2.0 | media | Candidato e termine di paragone (146) |
+| TIPSv2 (Google, aprile 2026) | Apache-2.0 | media | Candidato nuovo, senza risultati pubblici sui prodotti (146) |
+| DINOv3 | Licenza propria di Meta | media e grande | Solo confronto, dopo che l'utente ha letto la licenza e ottenuto l'accesso; nel prodotto solo se vince nettamente e l'utente accetta la licenza (141) |
+
+La ricerca del 17/11/2026 non ha trovato modelli recenti con licenza commerciale migliori di SigLIP 2 e PE-Core sui
+prodotti. C-RADIO di NVIDIA resta fuori per la licenza propria e la mancanza di risultati sui prodotti (148).
+LocateAnything di NVIDIA non entra: localizza oggetti descritti a parole ma non riconosce quale articolo è, e la
+licenza esclude l'uso commerciale (`docs/research/2026-11-17-locateanything-nvidia.md`).
+
+### Cosa si misura
+
+- **Aspetto**: articolo giusto al primo posto e tra le prime 5 proposte, con 20, 100, 200 e 500 articoli attesi, con 1 e
+  con 3 foto di riferimento, diviso per dispositivo (135, 137, 139).
+- **Codice stampato e quantità**: quante volte si leggono giusti, confrontati con quanto scritto da chi scatta (142).
+- **Tempi**: solo nella sessione di Claude, per confrontare i modelli; la macchina vera quando si sceglie il server
+  (143).
+
+### Quando un modello basta
+
+Con 100 articoli attesi, l'articolo giusto è tra le 5 proposte in almeno 95 arrivi su 100. Tra i modelli che ci
+arrivano si sceglie il più veloce; se nessuno ci arriva, si studia l'adattamento (144).
+
+### Come si calcola
+
+Deduzioni confermate con la decisione 145.
+
+- **Due metà.** Le foto di arrivo si dividono a caso in due metà: con la prima si scelgono le soglie, con la seconda si
+  controllano. I numeri che contano sono quelli della seconda.
+- **Soglie.** La soglia del «non lo so» (24) e quella dell'articolo «convincente» tra gli attesi (88) sono le più severe
+  che rispettano ancora il traguardo (144). Si riporta quanti dei 40 articoli fuori catalogo ricevono «non lo so» e quanti
+  articoli a catalogo lo ricevono per sbaglio.
+- **Tetto di foto per articolo** (96): la prova confronta solo 1 e 3 foto; si parte da 10 e si rivede con lo storico
+  delle identificazioni (104).
+- **Codice stampato e quantità**: letti sul server con PaddleOCR (Apache-2.0), con il confronto dei segni che si
+  confondono (89) e le parole di quantità (93); la verità è quanto scrive chi scatta (142).
+- **Ritaglio**: ogni modello si misura con il riquadro al centro della pagina di scatto e con il ritaglio automatico
+  della scatola (OWLv2, senza addestramento). Se il ritaglio aiuta molto entra nel programma, tenendo conto del lavoro in
+  più per il server (147).
+- **Articoli attesi simulati**: per ogni foto di arrivo si cerca tra l'articolo giusto e altri articoli presi a caso,
+  fino a 20, 100, 200 o 500 (di contorno compresi), oltre che tra gli articoli lasciati fuori catalogo, che non hanno un
+  giusto (deduzione).
+
+### Lista delle foto da scattare
+
+1. **Prima.** L'utente crea il repository privato e lo aggiunge alla sessione del ticket «Esecuzione della prova visiva
+   e scelta del modello». Se vuole DINOv3, ne legge la licenza e chiede l'accesso (141). Sceglie a caso, tra gli
+   articoli che arrivano, 200 articoli da mettere a catalogo, 40 da lasciare fuori e 300 di contorno (133, 134, 139).
+   L'agente prepara e pubblica la pagina di scatto; si prova prima su un telefono (136, 145).
+2. **Foto di riferimento**, dalla pagina di scatto: per ognuno dei 200, davanti, etichetta (scrivendo codice stampato e
+   quantità, vuoti se non ci sono) e altro lato; per ognuno dei 300 di contorno, solo davanti (135, 139, 142).
+3. **Foto di arrivo**, in almeno due giorni e da almeno due persone: 3 per ognuno dei 200 e dei 40, divise tra iPhone,
+   Android e palmare, con la merce come arriva, la luce normale e, quando si può, un collo diverso da quello delle foto
+   di riferimento (135, 137, 145).
+4. **A fine giro**: foto dal telefono al computer, poi nel repository privato (128, 136).
+5. **Sempre**: solo scatole ed etichette; con un volto, un documento o il nome di un cliente la foto si rifà da
+   un'altra faccia (130).
+
+Totale: circa 1.620 foto e 9 ore di scatti (deduzione, a 20 secondi per foto).
+
+### Rimandato ad altri ticket o alla nebbia della mappa
+
+- Pagina di scatto, script, calcolo, numeri e scelta del modello: ticket «Esecuzione della prova visiva e scelta del
+  modello».
+- Tempi sulla macchina vera e requisiti del server: «Server in sede: requisiti minimi» nella nebbia della mappa e ticket
+  «Divisione tra telefono, computer e server in sede» (143).
+- Adattamento del modello, se nessun modello raggiunge il traguardo: nebbia della mappa (144).
+- Seconda prova sul magazzino Shopify, facoltativa, con lo stesso piano (132).
+- Prove su dispositivi veri, compreso il tempo della rete dal telefono al server: sezione «Prove su dispositivi veri»
+  (127).
+

@@ -2,7 +2,7 @@
 
 Type: grilling
 Label: wayfinder:grilling
-Status: open
+Status: resolved
 Blocked by: —
 
 ## Question
@@ -35,3 +35,27 @@ l'utente.
   prova vanno scattate come le scatterà il programma, dal browser dei telefoni (Safari su iPhone, Chrome su Android e
   sul palmare, 119, 124), non con l'app Fotocamera. Il codice stampato si legge sul server (121). Accanto alla prova
   visiva servono le prove sui dispositivi veri elencate in `docs/architettura.md` (127).
+
+## Answer
+
+Chiuso il 17/11/2026 in tre giri, un riepilogo e una spiegazione con un esempio, chiesta dall'utente (pagina delle
+domande: https://claude.ai/artifact/9fL5bbNUMMkYAzxWjECaHs, privata). Decisioni 128–145 in `docs/decisioni.md`; sezione
+«Prova di accuratezza visiva» in `docs/architettura.md`, con la lista delle foto; ricerca
+`docs/research/2026-11-17-locateanything-nvidia.md`.
+
+- Foto in un repository GitHub privato e separato; nel repository pubblico solo piano, script e numeri con sigle
+  anonime; solo scatole ed etichette; foto conservate dopo la prova (128–131).
+- UFP ora, magazzino Shopify facoltativo dopo; 200 articoli a caso tra quelli che arrivano, 40 fuori catalogo, 300 di
+  contorno (132–134, 139). La 138 (500 attesi con 200 articoli) è corretta dalla 139.
+- 3 foto di riferimento e 3 di arrivo per articolo, con una pagina di scatto dal browser; iPhone, Android e palmare, due
+  persone, due giorni, luce normale (135–137).
+- Modelli: SigLIP 2, PE-Core, DINOv2 in taglia media e grande; DINOv3 solo come confronto (140, 141). LocateAnything
+  escluso: localizza ma non riconosce l'articolo, e la licenza è non commerciale.
+- Si misurano anche codice stampato e quantità; tempi solo nella sessione di Claude, perché computer e server aziendali
+  non si toccano finché non c'è una versione da provare (142, 143).
+- Traguardo: con 100 attesi, il giusto tra le 5 proposte in 95 arrivi su 100; si sceglie il più veloce (144).
+- Deduzioni confermate: due metà per soglie e controllo, soglie, tetto di 10 foto, PaddleOCR, nessun ritaglio, colli
+  diversi, chi crea repository e pagina (145).
+- Nuovo ticket di ricerca «Modelli visivi open source recenti: ce ne sono di migliori?», chiesto dall'utente prima di
+  iniziare; blocca l'esecuzione.
+

@@ -67,6 +67,14 @@ percorso delle schermate e aspetto grafico, compresi nome e brand kit (decisioni
   dal server in sede (accesso solo dalla rete interna); palmari con grilletto e telefoni personali compresi;
   certificato del dominio aziendale o interno; iPhone da Safari; aggiornamenti del responsabile, obbligatori di notte;
   prove su dispositivi veri (decisioni 119–127).
+- [Piano della prova di accuratezza visiva](issues/08-piano-prova-visiva.md): foto in un repository privato, nel
+  pubblico solo numeri anonimi; UFP, 200 articoli a caso più 40 fuori catalogo e 300 di contorno; 3 + 3 foto dalla
+  pagina di scatto nel browser; SigLIP 2, PE-Core, DINOv2 (DINOv3 solo confronto); traguardo 95 su 100 tra le 5
+  proposte con 100 attesi; tempi solo nella sessione (decisioni 128–145; modelli aggiornati dalla 146).
+- [Modelli visivi open source recenti: ce ne sono di migliori?](issues/19-ricerca-modelli-visivi-recenti.md): nessun
+  modello recente con licenza commerciale batte SigLIP 2 e PE-Core sui prodotti; TIPSv2 e C-RADIO senza risultati
+  diretti; il ritaglio automatico dell'oggetto vale più di un modello nuovo. Esito: TIPSv2 media al posto di DINOv2
+  grande, si misura anche il ritaglio, C-RADIO fuori (decisioni 146–148).
 
 Prese prima della mappa, nel secondo giro di domande del 15/11/2026: decisioni 15–28 in
 [`docs/decisioni.md`](../../docs/decisioni.md) (assegnazione parziale, codice stampato come tipo di articolo,
@@ -76,7 +84,8 @@ tre livelli di conferma, quantità letta dalla scatola, ubicazioni facoltative, 
 ## Not yet specified
 
 - **Server in sede: requisiti minimi.** Scheda grafica sì o no, memoria, sistema operativo: si chiarisce con i
-  risultati della prova e la divisione tra le macchine.
+  risultati della prova e la divisione tra le macchine. La prova misura i tempi solo nel cloud (decisione 143): la
+  macchina vera va misurata a parte, quando c'è una versione da provare.
 - **Adattamento del modello visivo** (metric learning) sulle foto del magazzino: solo se i numeri della prova lo
   giustificano.
 - **Installazione e configurazione iniziale in un magazzino nuovo:** procedura guidata (dove si sceglie se usare le
