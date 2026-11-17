@@ -62,6 +62,8 @@ button[disabled]{opacity:.45;cursor:not-allowed}
 .item img{width:56px;height:56px;object-fit:cover;border-radius:6px;background:var(--line)}
 .item div{min-width:0;font-size:14px;overflow-wrap:anywhere}
 .item button{min-height:44px;padding:6px 10px;font-size:14px}
+button.item{width:100%;text-align:left;border:2px solid var(--line);font-weight:400;grid-template-columns:56px 1fr}
+button.item:hover{border-color:var(--ink)}
 .code{font-family:var(--mono);font-weight:700;overflow-wrap:anywhere}
 .parts{display:grid;gap:8px}
 /* Schermata di scatto: video intero (stessa inquadratura della foto salvata) con il riquadro al centro */
@@ -136,12 +138,14 @@ button[disabled]{opacity:.45;cursor:not-allowed}
       <button type="button" class="mode" data-mode="contorno" aria-pressed="false">Contorno<small>1 foto: davanti</small></button>
     </div>
     <form id="codeForm" style="display:grid;gap:10px" novalidate>
-      <label>Codice articolo <small>scrivilo o leggilo con il grilletto del palmare</small>
+      <label><span id="codeLabTxt">Codice articolo</span> <small id="codeLabSmall">scrivilo o leggilo con il grilletto del palmare</small>
         <input id="code" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" enterkeyhint="go" maxlength="40" required>
       </label>
+      <div class="list" id="pick" hidden></div>
       <p id="codeMsg" class="msg" hidden></p>
       <div class="row" id="codeActions">
         <button class="primary" type="submit" id="go">Inizia le foto</button>
+        <button type="button" id="freeCode" hidden>Fuori catalogo: scrivi il codice</button>
       </div>
     </form>
   </section>
@@ -159,7 +163,8 @@ button[disabled]{opacity:.45;cursor:not-allowed}
 
   <section class="card" id="export" aria-labelledby="h-export" hidden>
     <h2 id="h-export">Fine giro</h2>
-    <p class="muted">Prepara i file ZIP (al massimo 24 MB l'uno) con le foto e l'elenco. Salvali, passali al computer e caricali nel repository privato.</p>
+    <p class="muted">Prepara i file ZIP (al massimo 24 MB l'uno) con le foto e l'elenco. Salvali, passali al computer e caricali nel repository privato, nella cartella «da-caricare».</p>
+    <p class="msg warn">Esporta a fine giornata: Safari può cancellare i dati di un sito che non usi per 7 giorni.</p>
     <div class="row">
       <button type="button" class="primary" id="doExport">Esporta le foto nuove</button>
       <button type="button" id="reExport">Scarica di nuovo le esportate</button>
@@ -191,6 +196,7 @@ button[disabled]{opacity:.45;cursor:not-allowed}
       <label>Codice stampato <small>il codice del prodotto scritto sull'etichetta</small>
         <input id="printed" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" maxlength="60">
       </label>
+      <button type="button" id="sameCode">Uguale al codice articolo</button>
       <label>Quantità scritta sulla scatola <small>per esempio 12 o 2,5 kg</small>
         <input id="qty" autocomplete="off" spellcheck="false" maxlength="30">
       </label>
@@ -210,7 +216,7 @@ button[disabled]{opacity:.45;cursor:not-allowed}
 
 <script>
 "use strict";
-const VERSION = "1 · 17/11/2026";
+const VERSION = "3 · 17/11/2026";
 const MAX_SIDE = 1920;            // lato lungo massimo della foto salvata
 const JPEG_Q = 0.9;
 const PART_MAX = 24 * 1024 * 1024; // il sito di GitHub accetta file fino a 25 MB
@@ -231,26 +237,65 @@ const store = {
 };
 $("#ver").textContent = "Versione " + VERSION + ".";
 
-/* ---------- Archivio locale (IndexedDB): {id, meta, data: ArrayBuffer, thumb, stato: "nuova"|"esportata"} ---------- */
+/* ---------- Archivio locale (IndexedDB)
+   foto: {id, meta, thumb, bytes, stato: "nuova"|"esportata"}, leggero, letto spesso;
+   dati: {id, data: ArrayBuffer}, la foto vera, letta solo all'esportazione;
+   articoli: {codice, thumb, arrivi}, gli articoli fotografati come riferimento. ---------- */
 let idb;
 function openDb(){
   return new Promise((res, rej) => {
-    const r = indexedDB.open("prova-visiva", 1);
-    r.onupgradeneeded = () => r.result.createObjectStore("foto", {keyPath:"id", autoIncrement:true});
+    const r = indexedDB.open("prova-visiva", 3);
+    r.onupgradeneeded = () => {
+      const d = r.result;
+      if(!d.objectStoreNames.contains("foto")) d.createObjectStore("foto", {keyPath:"id", autoIncrement:true});
+      if(!d.objectStoreNames.contains("articoli")) d.createObjectStore("articoli", {keyPath:"codice"});
+      if(!d.objectStoreNames.contains("dati")){
+        const dati = d.createObjectStore("dati", {keyPath:"id"});
+        // Versioni 1 e 2 tenevano la foto dentro il record: la si sposta in "dati".
+        r.transaction.objectStore("foto").openCursor().onsuccess = e => {
+          const c = e.target.result; if(!c) return;
+          const v = c.value;
+          if(v.data){ dati.put({id: v.id, data: v.data}); v.bytes = v.data.byteLength; delete v.data; c.update(v); }
+          c.continue();
+        };
+      }
+    };
     r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error);
   });
 }
-function tx(mode, fn){
+function tx(mode, fn, name = "foto"){
   return new Promise((res, rej) => {
-    const t = idb.transaction("foto", mode), s = t.objectStore("foto"); let out;
+    const t = idb.transaction(name, mode), s = t.objectStore(name); let out;
     Promise.resolve(fn(s)).then(v => out = v);
     t.oncomplete = () => res(out); t.onerror = () => rej(t.error); t.onabort = () => rej(t.error);
   });
 }
 const req = r => new Promise((res, rej) => { r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); });
 const allPhotos = () => tx("readonly", s => req(s.getAll()));
-const putPhoto = rec => tx("readwrite", s => req(s.add(rec)));
-const delPhoto = id => tx("readwrite", s => req(s.delete(id)));
+function putPhoto(rec, data){
+  return new Promise((res, rej) => {
+    const t = idb.transaction(["foto", "dati"], "readwrite");
+    const r = t.objectStore("foto").add(rec);
+    r.onsuccess = () => t.objectStore("dati").put({id: r.result, data});
+    t.oncomplete = () => res(r.result); t.onerror = () => rej(t.error); t.onabort = () => rej(t.error);
+  });
+}
+function delPhotos(ids){
+  return new Promise((res, rej) => {
+    const t = idb.transaction(["foto", "dati"], "readwrite");
+    ids.forEach(id => { t.objectStore("foto").delete(id); t.objectStore("dati").delete(id); });
+    t.oncomplete = () => res(); t.onerror = () => rej(t.error); t.onabort = () => rej(t.error);
+  });
+}
+const getData = ids => tx("readonly", s => Promise.all(ids.map(id => req(s.get(id)))), "dati");
+const allItems = () => tx("readonly", s => req(s.getAll()), "articoli");
+async function touchItem(code, thumb, arrivo){
+  const r = (await tx("readonly", s => req(s.get(code)), "articoli")) || (arrivo ? null : {codice: code, thumb: "", arrivi: 0});
+  if(!r) return;
+  if(thumb && !r.thumb) r.thumb = thumb;
+  if(arrivo) r.arrivi = (r.arrivi || 0) + 1;
+  await tx("readwrite", s => req(s.put(r)), "articoli");
+}
 async function setState(ids, stato){
   const want = new Set(ids), recs = (await allPhotos()).filter(p => want.has(p.id));
   await tx("readwrite", s => recs.forEach(r => { r.stato = stato; s.put(r); }));
@@ -277,7 +322,42 @@ $("#editSetup").addEventListener("click", () => showSetup(true));
 
 /* ---------- Scelta del tipo di foto e del codice ---------- */
 let mode = store.get("mode") || "riferimento";
-function setMode(m){ mode = m; store.set("mode", m); document.querySelectorAll(".mode").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.mode === m))); $("#codeMsg").hidden = true; }
+let free = false; // arrivo: false = si sceglie dall'elenco, true = codice scritto (fuori catalogo)
+const searching = () => mode === "arrivo" && !free;
+function setMode(m){
+  mode = m; store.set("mode", m); free = false;
+  document.querySelectorAll(".mode").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.mode === m)));
+  $("#codeMsg").hidden = true; $("#code").value = ""; codeUi();
+}
+function codeUi(){
+  const s = searching();
+  $("#codeLabTxt").textContent = s ? "Cerca l'articolo" : mode === "arrivo" ? "Codice dell'articolo fuori catalogo" : "Codice articolo";
+  $("#codeLabSmall").textContent = s ? "scrivi qualche cifra del codice e tocca l'articolo giusto" : "scrivilo o leggilo con il grilletto del palmare";
+  $("#go").hidden = s; $("#freeCode").hidden = mode !== "arrivo";
+  $("#freeCode").textContent = free ? "Cerca tra gli articoli fotografati" : "Fuori catalogo: scrivi il codice";
+  $("#pick").hidden = !s; if(s) renderPick();
+}
+const norm = t => t.toUpperCase().replace(/[\s.\-_/]+/g, "");
+async function renderPick(){
+  if(!idb) return [];
+  const box = $("#pick"), q = norm($("#code").value.trim()), items = await allItems();
+  box.innerHTML = "";
+  if(!items.length){ const p = document.createElement("p"); p.className = "msg warn"; p.textContent = "Su questo dispositivo non ci sono ancora articoli fotografati come riferimento. Per un articolo fuori catalogo, scrivi il codice."; box.append(p); return []; }
+  const hits = items.filter(it => !q || norm(it.codice).includes(q)).sort((a, b) => (a.arrivi || 0) - (b.arrivi || 0) || a.codice.localeCompare(b.codice));
+  hits.slice(0, 8).forEach(it => {
+    const b = document.createElement("button"); b.type = "button"; b.className = "item";
+    const img = document.createElement("img"); img.src = it.thumb || ""; img.alt = "";
+    const d = document.createElement("div");
+    const c = document.createElement("span"); c.className = "code"; c.textContent = it.codice;
+    d.append(c, document.createTextNode(` · foto di arrivo fatte: ${it.arrivi || 0}`));
+    b.append(img, d); b.onclick = () => startShoot(it.codice, "elenco"); box.append(b);
+  });
+  const p = document.createElement("p"); p.className = "muted";
+  p.textContent = !hits.length ? "Nessun articolo con queste cifre. Se è fuori catalogo, scrivi il codice." : hits.length > 8 ? `Altri ${hits.length - 8}: scrivi altre cifre.` : "";
+  if(p.textContent) box.append(p);
+  return hits;
+}
+$("#freeCode").addEventListener("click", () => { free = !free; $("#code").value = ""; $("#codeMsg").hidden = true; codeUi(); $("#code").focus(); });
 document.querySelectorAll(".mode").forEach(b => b.addEventListener("click", () => { setMode(b.dataset.mode); $("#code").focus(); }));
 setMode(mode);
 let confirmCode = null;
@@ -285,6 +365,11 @@ $("#codeForm").addEventListener("submit", async e => {
   e.preventDefault();
   const code = $("#code").value.trim();
   const m = $("#codeMsg");
+  if(searching()){
+    const hits = await renderPick();
+    if(hits.length === 1){ startShoot(hits[0].codice, "elenco"); return; }
+    m.className = "msg warn"; m.hidden = false; m.textContent = hits.length ? "Tocca l'articolo giusto nell'elenco." : "Nessun articolo trovato: controlla le cifre."; return;
+  }
   if(!code){ m.className = "msg bad"; m.hidden = false; m.textContent = "Scrivi il codice dell'articolo."; $("#code").focus(); return; }
   if(mode !== "arrivo" && confirmCode !== code){
     const same = (await allPhotos()).filter(p => p.meta.codice === code && p.meta.tipo === mode);
@@ -294,9 +379,9 @@ $("#codeForm").addEventListener("submit", async e => {
       return;
     }
   }
-  confirmCode = null; m.hidden = true; startShoot(code);
+  confirmCode = null; m.hidden = true; startShoot(code, "scritto");
 });
-$("#code").addEventListener("input", () => { confirmCode = null; $("#codeMsg").hidden = true; });
+$("#code").addEventListener("input", () => { confirmCode = null; $("#codeMsg").hidden = true; if(searching()) renderPick(); });
 
 /* ---------- Fotocamera ---------- */
 const video = $("#video");
@@ -332,14 +417,14 @@ function camErr(text){
 }
 document.addEventListener("visibilitychange", () => {
   if($("#shoot").hidden) return;
-  if(document.hidden) camOff(); else if(!pending) camOn();
+  if(document.hidden) camOff(); else if(!pending && !(cur && cur.waiting)) camOn();
 });
 video.addEventListener("playing", () => { $("#shutter").disabled = false; });
 
 /* ---------- Sequenza di scatto ---------- */
 let cur = null, pending = null; // cur: {code, shots, i, done}; pending: {blob, w, h}
-function startShoot(code){
-  cur = {code, shots: SHOTS[mode], i: 0, done: 0, tipo: mode};
+function startShoot(code, origine){
+  cur = {code, origine, shots: SHOTS[mode], i: 0, done: 0, tipo: mode};
   $("#home").hidden = true; $("#shoot").hidden = false; showStep(); camOn();
 }
 function showStep(){
@@ -379,21 +464,31 @@ $("#sKeep").addEventListener("click", () => {
     $("#printed").value = ""; $("#qty").value = ""; $("#labelForm").hidden = false; $("#printed").focus();
   } else savePending("", "");
 });
+$("#sameCode").addEventListener("click", () => { $("#printed").value = cur ? cur.code : ""; $("#qty").focus(); });
 $("#labelForm").addEventListener("submit", e => { e.preventDefault(); savePending($("#printed").value.trim(), $("#qty").value.trim()); });
 
 const safe = s => s.replace(/[^A-Za-z0-9.-]+/g, "_").replace(/^_+|_+$/g, "") || "senza-codice";
+let saving = false; // evita il doppio salvataggio con un doppio tocco
 async function savePending(printed, qty){
+  if(saving || !pending || !cur) return;
+  saving = true;
+  try{ await savePendingNow(printed, qty); } finally { saving = false; }
+}
+async function savePendingNow(printed, qty){
   const s = cur.shots[cur.i], now = new Date();
   const giorno = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
   const ora = `${pad(now.getHours())}${pad(now.getMinutes())}${pad(now.getSeconds())}${pad(now.getMilliseconds(),3)}`;
   const tag = cur.tipo === "riferimento" ? "rif-" + s.foto : cur.tipo === "contorno" ? "contorno-" + s.foto : "arrivo";
   const file = `${cur.tipo}/${safe(cur.code)}__${tag}__${giorno}__${cfg.nome}__${cfg.persona}__${ora}.jpg`;
-  const meta = {file, codice: cur.code, tipo: cur.tipo, foto: s.foto, giorno, ora: `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`,
+  const meta = {file, codice: cur.code, origine_codice: cur.origine, tipo: cur.tipo, foto: s.foto, giorno, ora: `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`,
     dispositivo: cfg.nome, tipo_dispositivo: cfg.tipo, persona: cfg.persona, larghezza: pending.w, altezza: pending.h,
     riquadro_x: BOX.x, riquadro_y: BOX.y, riquadro_l: BOX.w, riquadro_a: BOX.h,
     codice_stampato: printed, quantita: qty, pagina: VERSION, browser: navigator.userAgent};
   try{
-    await putPhoto({meta, data: await pending.blob.arrayBuffer(), thumb: pending.thumb, stato: "nuova"});
+    const data = await pending.blob.arrayBuffer();
+    await putPhoto({meta, thumb: pending.thumb, bytes: data.byteLength, stato: "nuova"}, data);
+    if(cur.tipo === "riferimento") await touchItem(cur.code, s.foto === "davanti" ? pending.thumb : "", false);
+    if(cur.tipo === "arrivo") await touchItem(cur.code, "", true);
     if(navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});
   }catch(err){
     camErr("Non c'è spazio per salvare la foto su questo dispositivo. Esci, esporta le foto e toglile dal dispositivo."); return;
@@ -404,11 +499,12 @@ async function savePending(printed, qty){
   finish(`${cur.code}: ${cur.done} foto salvate.`);
 }
 function askAnother(){
+  camOff(); cur.waiting = true;
   $("#frame").hidden = true; $("#sRetake").hidden = true; $("#sKeep").hidden = true;
   const box = $("#camErr"); box.innerHTML = "";
   const p = document.createElement("p"); p.textContent = `${cur.code}: foto di arrivo salvata (${cur.done} in questo passaggio).`;
   const a = document.createElement("button"); a.type = "button"; a.textContent = "Un'altra foto di arrivo";
-  a.onclick = () => { cur.i = 0; box.hidden = true; showStep(); };
+  a.onclick = () => { cur.i = 0; cur.waiting = false; box.hidden = true; showStep(); camOn(); };
   const b = document.createElement("button"); b.type = "button"; b.className = "primary"; b.textContent = "Articolo successivo";
   b.onclick = () => finish(`${cur.code}: ${cur.done} foto di arrivo salvate.`);
   box.append(p, b, a); box.hidden = false; b.focus();
@@ -417,7 +513,7 @@ function finish(text){
   camOff(); pending = null; cur = null;
   $("#shoot").hidden = true; $("#home").hidden = false; $("#camErr").hidden = true;
   const m = $("#codeMsg"); m.className = "msg ok"; m.hidden = false; m.textContent = text;
-  $("#code").value = ""; refresh(); $("#code").focus();
+  $("#code").value = ""; free = false; refresh(); codeUi(); $("#code").focus();
 }
 $("#sBack").addEventListener("click", () => {
   const left = cur ? cur.shots.length - cur.i : 0;
@@ -445,7 +541,7 @@ async function refresh(){
     d.append(c, document.createTextNode(` · ${p.meta.tipo} · ${p.meta.foto} · ${p.meta.ora}` + (p.stato === "esportata" ? " · esportata" : "")));
     const b = document.createElement("button"); b.type = "button"; b.className = "danger"; b.textContent = "Elimina";
     b.onclick = async () => {
-      if(b.dataset.sure){ await delPhoto(p.id); refresh(); return; }
+      if(b.dataset.sure){ await delPhotos([p.id]); refresh(); return; }
       b.dataset.sure = "1"; b.textContent = "Sicuro?"; setTimeout(() => { if(b.isConnected){ delete b.dataset.sure; b.textContent = "Elimina"; } }, 4000);
     };
     it.append(img, d, b); list.append(it);
@@ -478,53 +574,71 @@ function zip(files){ // files: [{name, data: Uint8Array}]
   e.setUint32(0, 0x06054b50, true); e.setUint16(8, files.length, true); e.setUint16(10, files.length, true); e.setUint32(12, cdSize, true); e.setUint32(16, off, true);
   return new Blob([...out, ...central, e.buffer], {type: "application/zip"});
 }
-const COLS = ["file","codice","tipo","foto","giorno","ora","dispositivo","tipo_dispositivo","persona","larghezza","altezza","riquadro_x","riquadro_y","riquadro_l","riquadro_a","codice_stampato","quantita","pagina","browser"];
+const COLS = ["file","codice","origine_codice","tipo","foto","giorno","ora","dispositivo","tipo_dispositivo","persona","larghezza","altezza","riquadro_x","riquadro_y","riquadro_l","riquadro_a","codice_stampato","quantita","pagina","browser"];
 const csvCell = v => { const s = String(v == null ? "" : v); return /[",\n\r;]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; };
 const csv = rows => [COLS.join(","), ...rows.map(r => COLS.map(k => csvCell(r[k])).join(","))].join("\r\n") + "\r\n";
 
-async function buildParts(photos){
+function planParts(photos){
   const now = new Date();
   const giro = `${now.getFullYear()}${pad(now.getMonth()+1)}${pad(now.getDate())}-${pad(now.getHours())}${pad(now.getMinutes())}_${cfg.nome}_${cfg.persona}`;
   const groups = []; let g = [], size = 0;
   for(const p of photos){
-    const s = p.data.byteLength + 200;
-    if(g.length && size + s > PART_MAX - 512 * 1024){ groups.push(g); g = []; size = 0; }
-    g.push(p); size += s;
+    const sz = (p.bytes || 600 * 1024) + 300;
+    if(g.length && size + sz > PART_MAX - 512 * 1024){ groups.push(g); g = []; size = 0; }
+    g.push(p); size += sz;
   }
   if(g.length) groups.push(g);
-  return groups.map((grp, i) => {
-    const name = `giro_${giro}_parte-${i + 1}-di-${groups.length}.zip`;
-    const elenco = `elenco_${giro}_parte-${i + 1}-di-${groups.length}.csv`;
-    const files = grp.map(p => ({name: p.meta.file, data: new Uint8Array(p.data)}));
-    files.push({name: elenco, data: new TextEncoder().encode(csv(grp.map(p => p.meta)))});
-    return {name, blob: zip(files), n: grp.length, ids: grp.map(p => p.id)};
-  });
+  return groups.map((grp, i) => ({
+    name: `giro_${giro}_parte-${i + 1}-di-${groups.length}.zip`,
+    elenco: `elenco_${giro}_parte-${i + 1}-di-${groups.length}.csv`,
+    photos: grp
+  }));
 }
+async function buildPart(part){ // legge dal disco solo le foto di questa parte
+  const recs = await getData(part.photos.map(p => p.id));
+  const files = part.photos.map((p, i) => {
+    if(!recs[i]) throw new Error("manca la foto " + p.meta.file);
+    return {name: p.meta.file, data: new Uint8Array(recs[i].data)};
+  });
+  files.push({name: part.elenco, data: new TextEncoder().encode(csv(part.photos.map(p => p.meta)))});
+  return new File([zip(files)], part.name, {type: "application/zip"});
+}
+let lastUrl = null;
 function offer(parts){
   const box = $("#parts"); box.innerHTML = "";
   parts.forEach((part, i) => {
     const row = document.createElement("div"); row.className = "row";
-    const file = new File([part.blob], part.name, {type: "application/zip"});
-    const dl = document.createElement("button"); dl.type = "button"; dl.className = "primary";
-    dl.textContent = `Salva parte ${i + 1} di ${parts.length} · ${part.n} foto · ${(part.blob.size/1048576).toFixed(1)} MB`;
-    dl.onclick = () => { const a = document.createElement("a"); a.href = URL.createObjectURL(file); a.download = part.name; document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 60000); dl.textContent = "Salvata: " + part.name; };
-    row.append(dl);
-    if(navigator.canShare && navigator.canShare({files: [file]})){
-      const sh = document.createElement("button"); sh.type = "button"; sh.textContent = "Condividi (AirDrop, Drive…)";
-      sh.onclick = () => navigator.share({files: [file], title: part.name}).catch(() => {});
-      row.append(sh);
-    }
-    box.append(row);
+    const prep = document.createElement("button"); prep.type = "button"; prep.className = "primary";
+    prep.textContent = `Prepara parte ${i + 1} di ${parts.length} · ${part.photos.length} foto`;
+    prep.onclick = async () => {
+      prep.disabled = true; prep.textContent = "Preparo…";
+      let file;
+      try{ file = await buildPart(part); }
+      catch(err){ prep.disabled = false; prep.textContent = `Riprova la parte ${i + 1}: ${err && err.message || err}`; return; }
+      if(lastUrl) URL.revokeObjectURL(lastUrl);
+      lastUrl = URL.createObjectURL(file);
+      const url = lastUrl;
+      const dl = document.createElement("button"); dl.type = "button"; dl.className = "primary";
+      dl.textContent = `Salva parte ${i + 1} di ${parts.length} · ${(file.size/1048576).toFixed(1)} MB`;
+      dl.onclick = () => { const a = document.createElement("a"); a.href = url; a.download = part.name; document.body.append(a); a.click(); a.remove(); dl.textContent = "Salvata: " + part.name; };
+      row.replaceChildren(dl);
+      if(navigator.canShare && navigator.canShare({files: [file]})){
+        const sh = document.createElement("button"); sh.type = "button"; sh.textContent = "Condividi (AirDrop, Drive…)";
+        sh.onclick = () => navigator.share({files: [file], title: part.name}).catch(() => {});
+        row.append(sh);
+      }
+    };
+    row.append(prep); box.append(row);
   });
 }
 async function doExport(which){
-  const m = $("#expMsg"); m.className = "msg"; m.hidden = false; m.textContent = "Preparo i file…";
+  const m = $("#expMsg"); m.className = "msg"; m.hidden = false; m.textContent = "Preparo l'elenco…";
   try{
     const photos = (await allPhotos()).filter(p => p.stato === which);
-    const parts = await buildParts(photos);
+    const parts = planParts(photos);
     if(which === "nuova") await setState(photos.map(p => p.id), "esportata");
     offer(parts);
-    m.className = "msg ok"; m.textContent = `${photos.length} foto in ${parts.length} file. Salva ogni parte; le foto restano qui finché non le togli.`;
+    m.className = "msg ok"; m.textContent = `${photos.length} foto in ${parts.length} file. Prepara e salva ogni parte, una alla volta; le foto restano qui finché non le togli.`;
   }catch(err){ m.className = "msg bad"; m.textContent = "Non sono riuscito a preparare i file: " + (err && err.message || err); }
   refresh();
 }
@@ -538,13 +652,17 @@ $("#clear").addEventListener("click", async e => {
   }
   delete b.dataset.sure; b.textContent = "Togli dal dispositivo le foto esportate";
   const ids = (await allPhotos()).filter(p => p.stato === "esportata").map(p => p.id);
-  await tx("readwrite", s => ids.forEach(id => s.delete(id)));
+  await delPhotos(ids);
   $("#parts").innerHTML = ""; const m = $("#expMsg"); m.className = "msg ok"; m.hidden = false; m.textContent = `${ids.length} foto tolte dal dispositivo.`;
   refresh();
 });
 
 /* ---------- Avvio ---------- */
-openDb().then(d => { idb = d; showSetup(!cfg); }).catch(() => {
+openDb().then(async d => {
+  idb = d;
+  for(const p of await allPhotos()) if(p.meta.tipo === "riferimento") await touchItem(p.meta.codice, p.meta.foto === "davanti" ? p.thumb : "", false);
+  showSetup(!cfg); codeUi();
+}).catch(() => {
   document.querySelector("main").insertAdjacentHTML("beforeend", '<p class="msg bad">Questo browser non permette di salvare le foto (navigazione privata?). Apri la pagina in una finestra normale.</p>');
 });
 </script>
