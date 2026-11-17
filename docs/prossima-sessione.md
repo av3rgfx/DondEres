@@ -27,7 +27,7 @@ In ordine di numero:
    su più sessioni. Il repository privato `av3rgfx/prova-visiva-foto` esiste; la pagina di scatto è pubblicata su
    https://av3rgfx.github.io/DondEres/ (ramo `gh-pages`, solo la pagina) e funziona sull'iPhone. Ora tocca all'utente:
    scegliere a caso gli articoli (200 a catalogo, 40 fuori, 300 di contorno), scattare con l'iPhone e caricare gli ZIP
-   nella cartella `da-caricare` del repository privato (decisioni 149–158). Quando ci sono ZIP da aprire, la sessione
+   nella cartella `da-caricare` del repository privato (decisioni 149–159). Quando ci sono ZIP da aprire, la sessione
    va avviata con «Lavora il ticket «Esecuzione della prova visiva e scelta del modello»» e con il repository privato
    collegato: apre gli ZIP, sistema le foto, assegna le sigle anonime (129) e prepara gli script. Se la pagina di
    scatto cambia, va copiata anche sul ramo `gh-pages`.
@@ -51,5 +51,5 @@ da scattare.
 
 ## Ultima sessione
 
-17/11/2026, sera: avviata l'esecuzione della prova visiva (decisioni 149–158). Pagina usata per le domande:
+17/11/2026, sera: avviata l'esecuzione della prova visiva (decisioni 149–159, riepilogo confermato). Pagina usata per le domande:
 https://claude.ai/artifact/52C1DcnRuhw8SBov9wvJnd (privata, la vede solo l'utente).

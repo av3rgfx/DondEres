@@ -441,9 +441,9 @@ attesi c'è un candidato solo, e con l'avviso. Non si cerca mai un codice «simi
 
 Quando il codice scritto sulla scatola è diverso, anche di poco, da quello dell'articolo che corrisponde (per esempio
 perché il fornitore lo ha cambiato), l'abbinamento lo conferma il responsabile: carica lo stesso la merce su
-quell'articolo oppure aspetta di aver aggiornato il codice nel gestionale (158). Deduzione da confermare nel ticket
-«Percorso delle schermate»: finché il responsabile non risponde, la riga resta ferma come per l'articolo provvisorio
-(112), e il codice nuovo confermato diventa un codice del fornitore dell'articolo (71).
+quell'articolo oppure aspetta di aver aggiornato il codice nel gestionale (158). Finché il responsabile non risponde, la
+riga resta ferma come per l'articolo provvisorio (112), e il codice nuovo confermato diventa un codice del fornitore
+dell'articolo (71); le schermate si disegnano nel ticket «Percorso delle schermate» (159).
 
 Nel programma finito il codice non si scrive a mano: scriverlo resta il ripiego del «non lo so» (98, 151). Il barcode
 della scatola spesso porta un codice diverso dal codice articolo e non distingue colore o variante; in UFP il codice
@@ -762,7 +762,8 @@ l'ha provata sull'iPhone il 17/11/2026: funziona (versione 1). Come lavora:
   CSV; l'utente li carica nella cartella `da-caricare` del repository privato, l'agente li apre e li sistema (153).
   Safari può cancellare i dati di un sito non usato per 7 giorni: si esporta a fine giornata.
 - Per palmare e Android, che non hanno l'elenco degli articoli fotografati sull'iPhone, servirà portarlo su quei
-  dispositivi o scrivere il codice (da decidere quando ci sono, 155).
+  dispositivi o scrivere il codice (da decidere quando ci sono, 159). Per ora scatta solo l'utente; la seconda persona
+  della 137 arriva con palmare e Android (159).
 
 Le quattro foto d'esempio mandate dall'utente (nel repository privato, cartella `esempi`, fuori dalla prova) mostrano
 etichette di fornitori con il codice preceduto da parole come «Art.» o «Articolo», la quantità con «Pz.» o «Quantità»,

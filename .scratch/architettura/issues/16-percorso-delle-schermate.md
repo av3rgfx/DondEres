@@ -42,6 +42,6 @@ Risultato atteso: il percorso in `docs/architettura.md`, con il link al prototip
 - 17/11/2026, dal ticket «Esecuzione della prova visiva e scelta del modello»: decisione 158, quando il codice scritto
   sulla scatola è diverso anche di poco da quello dell'articolo che corrisponde, l'abbinamento lo conferma il
   responsabile (caricare lo stesso o aspettare l'aggiornamento del codice nel gestionale). Da disegnare: cosa vede
-  l'operatore nell'attesa e cosa vede il responsabile; deduzioni da confermare in `docs/architettura.md`, sezione
-  «Confronto del codice stampato». Decisione 151: nel programma finito il codice non si scrive a mano, salvo il ripiego
+  l'operatore nell'attesa e cosa vede il responsabile; deduzioni confermate con la 159 (riga ferma, codice nuovo come codice del
+  fornitore) in `docs/architettura.md`, sezione «Confronto del codice stampato». Decisione 151: nel programma finito il codice non si scrive a mano, salvo il ripiego
   del «non lo so».
