@@ -29,7 +29,8 @@ In ordine di numero:
    scegliere a caso gli articoli (200 a catalogo, 40 fuori, 300 di contorno), scattare con l'iPhone e caricare gli ZIP
    nella cartella `da-caricare` del repository privato (decisioni 149–159). Quando ci sono ZIP da aprire, la sessione
    va avviata con «Lavora il ticket «Esecuzione della prova visiva e scelta del modello»» e con il repository privato
-   collegato: apre gli ZIP, sistema le foto, assegna le sigle anonime (129) e prepara gli script. Se la pagina di
+   collegato: apre gli ZIP con `prova-visiva/script/prepara.py`, poi calcola impronte e numeri con gli altri script
+   (istruzioni in `prova-visiva/script/LEGGIMI.md`). Se la pagina di
    scatto cambia, va copiata anche sul ramo `gh-pages`.
 2. «Punti di estensione per la specializzazione»: primo ticket libero della frontiera.
 3. «Nome del prodotto».

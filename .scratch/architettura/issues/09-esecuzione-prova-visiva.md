@@ -36,3 +36,10 @@ Tipo: task con l'utente (le foto le scatta l'utente). Risultato atteso: i numeri
   si sceglie dall'elenco (156). Prossimo passo: l'utente sceglie a caso gli articoli (200 a catalogo, 40 fuori, 300 di
   contorno), scatta e carica gli ZIP; poi una sessione li apre, assegna le sigle anonime e prepara gli script.
   Domande pagine: https://claude.ai/artifact/52C1DcnRuhw8SBov9wvJnd (privata).
+- 17/11/2026, seconda sessione di esecuzione: script del calcolo in `prova-visiva/script/` (prepara, impronte,
+  valuta, etichette, più `prova_sintetica.py`), con versioni esatte in `requirements.txt` e istruzioni in
+  `LEGGIMI.md`. Provati da capo a fondo su una prova sintetica ricavata dalle quattro foto d'esempio, fuori dai
+  repository: tutti e sei i modelli e OWLv2 si scaricano da Hugging Face e girano su CPU; PaddleOCR gira con
+  oneDNN spento e il testo cercato a 1.280 pixel. Due punti sulle soglie (145) da decidere con i primi numeri veri:
+  sezione «Script del calcolo» di `docs/architettura.md`.
+

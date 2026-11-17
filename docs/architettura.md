@@ -770,6 +770,34 @@ etichette di fornitori con il codice preceduto da parole come «Art.» o «Artic
 spesso un disegno del prodotto, a volte barcode e codice QR, e codici con lettere e numeri mescolati, anche minuscoli
 (deduzione: le parole di quantità della 93 e i segni che si confondono della 89 servono davvero).
 
+**Script del calcolo** (17/11/2026, in `prova-visiva/script/`, istruzioni in `LEGGIMI.md` della stessa cartella):
+`prepara.py` apre gli ZIP e assegna le sigle, `impronte.py` calcola le impronte dei sei modelli con il riquadro e con
+il ritaglio OWLv2, `valuta.py` calcola i numeri sull'aspetto e le soglie, `etichette.py` misura la lettura di codice e
+quantità con PaddleOCR. Provati su una prova sintetica ricavata dalle quattro foto d'esempio (`prova_sintetica.py`):
+la catena gira da capo a fondo e nei risultati non compaiono codici; i numeri della prova sintetica non valgono
+niente. Scelte fatte negli script (deduzioni):
+
+- Punteggio di un articolo: la somiglianza più alta tra la foto di arrivo e le sue foto di riferimento.
+- Ritaglio OWLv2 senza testo: l'oggetto più probabile con il centro nel riquadro; a volte prende un'etichetta o una
+  sola delle scatole impilate, ed è quello che la prova deve misurare.
+- Articoli attesi pescati a caso 20 volte per foto; intervallo al 95% calcolato sul numero di foto.
+- OCR sulla foto intera, con il testo cercato sulla foto ridotta a 1.280 pixel (a piena risoluzione PaddleOCR esaurisce
+  i 16 GB della sessione); con «L» uguale a 1 nel confronto dei codici, perché in maiuscolo la «l» non si distingue.
+- Tempi su CPU di questa sessione (4 processori), una foto per volta, solo per confrontare: PE-Core B 0,12 s, TIPSv2 B
+  0,6 s, SigLIP 2 B 0,6 s, DINOv2 B 0,9 s, PE-Core L 1,1 s, SigLIP 2 L 2,3 s; ritaglio OWLv2 circa 4 s; OCR circa
+  18 s per foto, con un picco di memoria di 7,7 GB. Sono tempi misurati mentre girava poco altro, sulle foto sintetiche.
+
+Due punti da decidere con i primi numeri veri:
+
+- Nella prova «cercare in tutto il catalogo» vuol dire cercare tra circa 540 articoli, non tra 35.000 (18): è molto più
+  facile che nella realtà. La regola della 145 (soglia «convincente» più severa che rispetta il traguardo) porta quindi
+  a mandare quasi tutte le foto alla ricerca in tutto il catalogo, che nella prova sembra gratis. Proposta: scegliere
+  la soglia «convincente» in modo che le foto convinte su un articolo sbagliato restino sotto una quota fissata, e
+  misurare a parte quanto peggiora la ricerca in tutto il catalogo al crescere degli articoli (500 e oltre).
+- Una soglia scelta proprio al limite sulla prima metà, sulla seconda sta sotto il traguardo circa una volta su due,
+  anche con un buon modello (visto sulla prova con impronte finte). Proposta: tenere un piccolo margine, oppure
+  giudicare il traguardo con l'intervallo al 95%.
+
 ### Modelli
 
 | Modello | Licenza | Taglie | Ruolo |

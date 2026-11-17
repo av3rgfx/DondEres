@@ -1,0 +1,14 @@
+# Versioni esatte provate il 17/11/2026 con Python 3.13, solo CPU (prova-visiva/script/LEGGIMI.md).
+# torch da PyPI porta con sé le librerie CUDA (circa 5 GB): non servono, ma il pacchetto per sola CPU
+# sta su download.pytorch.org, che dalla sessione di Claude non è raggiungibile.
+torch==2.15.0
+timm==1.0.31
+transformers==5.23.0
+huggingface_hub==2.4.0
+safetensors==0.8.0
+pillow==13.0.0
+numpy==2.3.5
+# Lettura delle etichette (etichette.py)
+paddlepaddle==3.3.1
+paddleocr==3.7.0
+paddlex==3.7.2
