@@ -32,4 +32,5 @@ nyris e ritaglio su ILIAS) sono stati ricontrollati sulle fonti.
   inquadrate al centro, il guadagno può essere minore (ipotesi).
 - Proposte all'utente (giro sulla pagina del «Piano della prova di accuratezza visiva»): elenco dei modelli, ritaglio,
   C-RADIO.
-
+- Risposte dell'utente (17/11/2026): TIPSv2 media al posto di DINOv2 grande (146); si misura anche il ritaglio automatico
+  (147); C-RADIO fuori (148).

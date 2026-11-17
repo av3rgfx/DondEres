@@ -686,12 +686,12 @@ Prima di scegliere lo stack (127):
 
 ## Prova di accuratezza visiva
 
-Dal ticket «Piano della prova di accuratezza visiva», chiuso il 17/11/2026. Decisioni 12 e 128–145. La prova decide il
+Dal ticket «Piano della prova di accuratezza visiva», chiuso il 17/11/2026. Decisioni 12 e 128–148. La prova decide il
 modello visivo (12) e dà i numeri lasciati aperti dal percorso di identificazione (sezione «Da fissare con la prova
 visiva»). La esegue il ticket «Esecuzione della prova visiva e scelta del modello». Ricerche:
 `docs/research/2026-11-15-addestramento-ed-esecuzione-locale.md` (§A, §C, §I) e
 `docs/research/2026-11-15-modelli-visivi-riconoscimento-articoli.md` (§1, raccomandazione),
-`docs/research/2026-11-17-locateanything-nvidia.md`.
+`docs/research/2026-11-17-locateanything-nvidia.md`, `docs/research/2026-11-17-modelli-visivi-recenti.md`.
 
 ### Dove stanno le foto
 
@@ -738,11 +738,14 @@ Totale stimato: 200 × 6 + 40 × 3 + 300 × 1 = 1.620 foto, circa 9 ore di scatt
 
 | Modello | Licenza | Taglie | Ruolo |
 |---|---|---|---|
-| SigLIP 2 | Apache-2.0 | media e grande | Candidato (140) |
-| PE-Core | Apache-2.0 | media e grande | Candidato (140) |
-| DINOv2 | Apache-2.0 | media e grande | Candidato e termine di paragone (140) |
+| SigLIP 2 | Apache-2.0 | media e grande | Candidato (146) |
+| PE-Core | Apache-2.0 | media e grande | Candidato (146) |
+| DINOv2 | Apache-2.0 | media | Candidato e termine di paragone (146) |
+| TIPSv2 (Google, aprile 2026) | Apache-2.0 | media | Candidato nuovo, senza risultati pubblici sui prodotti (146) |
 | DINOv3 | Licenza propria di Meta | media e grande | Solo confronto, dopo che l'utente ha letto la licenza e ottenuto l'accesso; nel prodotto solo se vince nettamente e l'utente accetta la licenza (141) |
 
+La ricerca del 17/11/2026 non ha trovato modelli recenti con licenza commerciale migliori di SigLIP 2 e PE-Core sui
+prodotti. C-RADIO di NVIDIA resta fuori per la licenza propria e la mancanza di risultati sui prodotti (148).
 LocateAnything di NVIDIA non entra: localizza oggetti descritti a parole ma non riconosce quale articolo è, e la
 licenza esclude l'uso commerciale (`docs/research/2026-11-17-locateanything-nvidia.md`).
 
@@ -772,13 +775,12 @@ Deduzioni confermate con la decisione 145.
   delle identificazioni (104).
 - **Codice stampato e quantità**: letti sul server con PaddleOCR (Apache-2.0), con il confronto dei segni che si
   confondono (89) e le parole di quantità (93); la verità è quanto scrive chi scatta (142).
-- **Ritaglio**: nessuno automatico. La pagina di scatto mostra un riquadro al centro e la prova usa quel riquadro; un
-  modello che ritaglia la scatola si studia solo se i numeri lo chiedono.
+- **Ritaglio**: ogni modello si misura con il riquadro al centro della pagina di scatto e con il ritaglio automatico
+  della scatola (OWLv2, senza addestramento). Se il ritaglio aiuta molto entra nel programma, tenendo conto del lavoro in
+  più per il server (147).
 - **Articoli attesi simulati**: per ogni foto di arrivo si cerca tra l'articolo giusto e altri articoli presi a caso,
   fino a 20, 100, 200 o 500 (di contorno compresi), oltre che tra gli articoli lasciati fuori catalogo, che non hanno un
   giusto (deduzione).
-- **Prima di iniziare**: ricerca sui modelli open source più recenti, ticket «Modelli visivi open source recenti: ce
-  ne sono di migliori?»; può aggiornare l'elenco dei modelli (140).
 
 ### Lista delle foto da scattare
 
@@ -801,7 +803,6 @@ Totale: circa 1.620 foto e 9 ore di scatti (deduzione, a 20 secondi per foto).
 
 - Pagina di scatto, script, calcolo, numeri e scelta del modello: ticket «Esecuzione della prova visiva e scelta del
   modello».
-- Modelli più recenti: ticket «Modelli visivi open source recenti: ce ne sono di migliori?».
 - Tempi sulla macchina vera e requisiti del server: «Server in sede: requisiti minimi» nella nebbia della mappa e ticket
   «Divisione tra telefono, computer e server in sede» (143).
 - Adattamento del modello, se nessun modello raggiunge il traguardo: nebbia della mappa (144).

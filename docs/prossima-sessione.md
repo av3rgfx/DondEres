@@ -25,12 +25,9 @@ In ordine di numero:
 1. «Punti di estensione per la specializzazione».
 2. «Nome del prodotto».
 3. «Percorso delle schermate»: nel ticket ci sono i commenti di tutti i ticket chiusi.
-4. «Modelli visivi open source recenti: ce ne sono di migliori?» (ricerca): avviata il 17/11/2026 nella sessione del
-   «Piano della prova di accuratezza visiva». Se il ticket risulta ancora preso ma senza risposta e senza il file
-   `docs/research/2026-11-17-modelli-visivi-recenti.md`, va ripresa.
-
-«Esecuzione della prova visiva e scelta del modello» si sblocca quando la ricerca è chiusa. Prima di iniziarla l'utente
-crea il repository privato delle foto e lo aggiunge alla sessione (decisioni 128 e 145).
+4. «Esecuzione della prova visiva e scelta del modello» (task con l'utente): sbloccata il 17/11/2026. Prima di
+   iniziarla l'utente crea il repository privato delle foto su GitHub e lo aggiunge alla sessione (decisioni 128 e 145).
+   Modelli e misure: decisioni 141 e 146–148.
 
 Si possono lavorare in parallelo in sessioni diverse.
 
@@ -42,6 +39,7 @@ Si possono lavorare in parallelo in sessioni diverse.
 
 ## Ultimo ticket chiuso
 
-17/11/2026: «Piano della prova di accuratezza visiva». Decisioni 128–145, sezione «Prova di accuratezza visiva» in
+17/11/2026: «Piano della prova di accuratezza visiva» e la ricerca «Modelli visivi open source recenti: ce ne sono di
+migliori?». Decisioni 128–148, sezione «Prova di accuratezza visiva» in
 `docs/architettura.md`, con la lista delle foto da scattare. Pagina usata per le domande:
 https://claude.ai/artifact/9fL5bbNUMMkYAzxWjECaHs (privata, la vede solo l'utente).
