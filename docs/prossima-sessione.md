@@ -7,8 +7,9 @@ per sessione.
 /wayfinder .scratch/architettura/map.md
 
 Leggi prima AGENTS.md, poi la mappa (solo map.md, non tutti i ticket). Prendi il primo ticket della frontiera:
-aperto, non bloccato, non preso. Se è il «Piano della prova di accuratezza visiva», chiedimi per prima cosa dove
-conservare le foto reali e se possono stare nel repository.
+aperto, non bloccato, non preso. Se è «Esecuzione della prova visiva e scelta del modello», controlla per prima cosa
+che il repository privato delle foto sia collegato alla sessione (decisioni 128 e 145): se non c'è, chiedimelo prima
+di tutto il resto; poi prepara la pagina di scatto e fammela provare su un telefono.
 Registra ogni mia decisione in docs/decisioni.md, con data e motivo; scrivi la tua parte in docs/architettura.md.
 Parlami in italiano, con domande semplici: cosa chiedi, perché conta, cosa comporta ogni opzione.
 Per le domande usa una pagina interattiva (Artifact) con esempi visivi che cambiano con la risposta, opzione
@@ -22,12 +23,14 @@ Per lavorare un ticket preciso in una sessione parallela, aggiungere in fondo al
 
 In ordine di numero:
 
-1. «Punti di estensione per la specializzazione».
-2. «Nome del prodotto».
-3. «Percorso delle schermate»: nel ticket ci sono i commenti di tutti i ticket chiusi.
-4. «Esecuzione della prova visiva e scelta del modello» (task con l'utente): sbloccata il 17/11/2026. Prima di
-   iniziarla l'utente crea il repository privato delle foto su GitHub e lo aggiunge alla sessione (decisioni 128 e 145).
-   Modelli e misure: decisioni 141 e 146–148.
+1. «Esecuzione della prova visiva e scelta del modello» (task con l'utente): sbloccata il 17/11/2026. Piano e lista
+   delle foto nella sezione «Prova di accuratezza visiva» di `docs/architettura.md`; modelli e misure nelle decisioni
+   141 e 146–148. Prima di iniziarla l'utente crea su GitHub il repository privato delle foto (per esempio
+   «prova-visiva-foto») e lo aggiunge alla sessione. Se l'utente vuole DINOv3, la chiave di Hugging Face si chiede con
+   il modulo sicuro, mai in chat (141). Lavoro lungo: si sviluppa in più sessioni, finché le foto non sono scattate.
+2. «Punti di estensione per la specializzazione».
+3. «Nome del prodotto».
+4. «Percorso delle schermate»: nel ticket ci sono i commenti di tutti i ticket chiusi.
 
 Si possono lavorare in parallelo in sessioni diverse.
 
