@@ -3,6 +3,7 @@
 Type: task
 Label: wayfinder:task
 Status: open
+Assignee: sessione del 17/11/2026 (Claude, con l'utente)
 Blocked by: 08, 19
 
 ## Question
