@@ -876,3 +876,56 @@ Totale: circa 1.620 foto e 9 ore di scatti con l'iPhone, più 480 foto di arrivo
 - Prove su dispositivi veri, compreso il tempo della rete dal telefono al server: sezione «Prove su dispositivi veri»
   (127).
 
+
+## Percorso delle schermate
+
+Dal ticket «Percorso delle schermate», in corso dal 17/11/2026. Decisioni 160–166 finora. Qui si decide quali
+schermate ci sono e in che ordine; colori, caratteri e stile vengono con il ticket «Aspetto grafico» (14).
+
+### Schermate della base
+
+Elenco confermato (160). Il responsabile ha le stesse schermate dell'operatore, più le sue.
+
+| Gruppo | Schermate |
+|---|---|
+| Entrare | Prima apertura dal QR (127); guida a «Fotocamera: Consenti» su iPhone, con la barra di Safari visibile (124); accesso con nome e PIN, o password per il responsabile (80); uscita dopo 30 minuti senza perdere il lavoro |
+| Ricevimento | DDT aperti e «Nuovo DDT»; schermata del DDT; registrato con «Annulla» e quantità (99); «È questo» / «No, è un altro» (90); scelta tra più articoli (91) o più codici (102); due quantità lette (93), «× colli» (94), «come l'ultima volta» (100); «non è tra gli attesi» (88); «Collego questo barcode?» (92); «codice simile, controlla» (89); «non lo so» con le sue uscite (98); «Chiudi DDT» con la scelta sulla riga ferma (82) |
+| Articolo nuovo | Righe attese senza articolo, in cima (109); tre foto guidate (106); scheda con i campi compilati (107); parole dell'etichetta da toccare (108); «È uno di questi?» (110) |
+| Dopo il ricevimento | Da mettere a posto (69); rimetti a posto (62); posto VEND, se acceso (47) |
+| Uscita | Ordini da prelevare; prelievo guidato con stop se l'articolo è un altro (97, 103); spedizione; banco (65, 58, 84) |
+| Sempre | Cerca articolo: scheda, giacenze, ubicazioni; conta un'ubicazione (77); «Aggiungi foto» (117); rete assente, operazione in attesa o persa (23, 127) |
+| Responsabile | Da controllare (86); articolo da confermare: Conferma, Unisci, Rifiuta (114); correzioni dopo la chiusura (81); scambio: avvisi e «aggiorna ora» (54); utenti; configurazione iniziale; «È disponibile un aggiornamento» (125); costo d'acquisto (85) |
+
+Fuori da questo ticket, nella nebbia della mappa: inventario periodico, catalogo visivo al banco, ingresso del DDT
+(nel prototipo il DDT si apre scegliendo fornitore e numero, come segnaposto), resi al fornitore.
+
+### Scelte fatte
+
+- **Prima schermata**: un pulsante per ogni lavoro con il numero di cose che aspettano; il responsabile ha in più «Da
+  controllare» (161).
+- **Schermata del DDT**: inquadratura in alto, sempre accesa; sotto le righe attese con contato e atteso (162). Un
+  barcode su un solo articolo si registra senza tocchi (99): si passa da una scatola all'altra senza toccare lo schermo.
+- **Messa a posto**: alla chiusura del DDT «Metti a posto adesso», altrimenti dall'elenco (163).
+- **Prelievo**: un ordine alla volta, guidato riga per riga in ordine di ubicazione (164).
+- **Ordini coperti in parte**: si prelevano o no secondo la scelta del magazzino, di serie sì; il responsabile decide
+  per il singolo ordine; in UFP decide chi crea il piano di spedizione (165).
+- **Righe che aspettano il responsabile**: la riga si ferma e l'operatore continua; il responsabile decide da «Da
+  controllare» o sul telefono dell'operatore, con la sua password. Niente notifiche sul telefono del responsabile: le
+  notifiche dei browser passano da internet e il server sta sulla rete interna (166, 121).
+
+### La preparazione oggi in UFP
+
+Fatto riferito dall'utente il 17/11/2026, nella nota alla domanda sulla prima schermata:
+
+1. Due persone al computer (supervisori o operatori) creano i **piani di spedizione**. Il titolo del piano è il nome
+   dell'agente che ha fatto la vendita, scritto da chi crea il piano.
+2. Un piano contiene più ordini ed è assegnato a un preparatore. Chi crea il piano vede subito le quantità disponibili
+   degli articoli degli ordini, e decide se dare un ordine coperto in parte (165).
+3. Il preparatore vede prima i suoi piani, poi quelli degli altri preparatori, divisi e ordinati: se serve aiuta un
+   collega facendo i suoi piani.
+4. Entrato in un piano, sceglie un ordine e parte il prelievo guidato.
+5. Alla fine conferma il numero dei colli e i chili, firma con la propria sigla (chi ha preparato) e vede con quale
+   corriere parte la merce (per esempio BARTOLINI, GLS).
+
+Nel magazzino Shopify oggi si lavora con fogli di carta; potrebbe lavorare in modo simile, con i piani gestiti in
+automatico (165). Le scelte su piani, fine della preparazione e spedizione sono nel secondo giro di domande.
