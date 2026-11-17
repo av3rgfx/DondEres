@@ -710,4 +710,23 @@ visiva»). La esegue il ticket «Esecuzione della prova visiva e scelta del mode
 - Articoli di UFP; il magazzino Shopify fa, se possibile, una seconda prova con lo stesso piano (132).
 - 200 articoli a catalogo e 40 lasciati fuori dal catalogo, fotografati solo come merce in arrivo: servono a misurare
   quante volte il programma dice «non lo so» invece di indovinare (133).
+- Scelti a caso tra gli articoli che arrivano: la prova misura il caso di tutti i giorni (134).
+
+### Foto
+
+| Foto | Quante | Come | A cosa servono |
+|---|---|---|---|
+| Di riferimento | 3 per articolo a catalogo: davanti, etichetta, altro lato (135) | Come all'inserimento guidato di un articolo nuovo (106) | Sono ciò che il programma conosce; si misura con 1 e con 3 |
+| Di arrivo | 3 per articolo, anche per quelli fuori catalogo (135) | Come in un ricevimento vero: iPhone, Android e palmare, almeno due persone, almeno due giorni, luce normale (137) | Sono ciò che il programma deve riconoscere; mai usate come riferimento |
+
+Stima con 200 + 40 articoli: 200 × 6 + 40 × 3 = 1.320 foto, circa 7 ore di scatti a 20 secondi per foto (deduzione).
+
+**Pagina di scatto** (136): una pagina web, aperta dal browser del telefono come il programma vero, quindi con la stessa
+fotocamera vista dal browser. Si legge il codice dell'articolo, si scattano le foto guidate, la pagina dà a ogni foto un
+nome con articolo, tipo di foto, giorno e dispositivo. Le foto restano sul telefono; a fine giro si passano al computer e
+si caricano nel repository privato (128). La pagina è solo codice, senza dati, su un indirizzo sicuro (per esempio
+GitHub Pages), perché il browser apre la fotocamera solo da lì. La prepara il ticket «Esecuzione della prova visiva e
+scelta del modello».
+
+**Articoli attesi**: la prova restringe la ricerca a più numeri di articoli attesi, con le stesse foto (138).
 

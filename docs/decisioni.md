@@ -139,6 +139,11 @@ Le decisioni tecniche ancora aperte non stanno qui: stanno in `docs/analisi-prog
 | 131 | 17/11/2026 | Dopo la prova le foto si tengono nel repository privato, per rifare la prova con un modello nuovo e per l'eventuale adattamento del modello; si cancellano se il magazzino che le ha fornite lo chiede. | Non indicato (proposta accettata). |
 | 132 | 17/11/2026 | La prova visiva si fa ora con gli articoli di UFP. La prova sul magazzino Shopify è una seconda prova facoltativa, con lo stesso piano, da fare se possibile. | L'utente: «principalmente da UFP, se possibile si farà anche la prova con quello di shopify. Ma per adesso solo UFP». Non segue la proposta (metà da ciascun magazzino). |
 | 133 | 17/11/2026 | Entrano nella prova 200 articoli a catalogo, più 40 articoli lasciati fuori dal catalogo e fotografati solo come merce in arrivo, per misurare il «non lo so» (24). | Non indicato (proposta accettata). |
+| 134 | 17/11/2026 | Gli articoli della prova si scelgono a caso tra quelli che arrivano: la prova misura il caso medio di tutti i giorni; i gruppi di articoli quasi uguali ci sono solo se capitano. | Non indicato. Non segue la proposta (metà in gruppi di articoli quasi uguali, metà tra i più frequenti). |
+| 135 | 17/11/2026 | Per ogni articolo a catalogo si scattano 3 foto di riferimento (davanti, etichetta, altro lato, come all'inserimento guidato, 106) e 3 foto di arrivo; per gli articoli lasciati fuori dal catalogo solo le 3 di arrivo. Le foto di arrivo non diventano mai di riferimento. La prova misura il riconoscimento sia con 1 sia con 3 foto di riferimento. | Non indicato (proposta accettata). |
+| 136 | 17/11/2026 | Le foto si scattano con una pagina di scatto preparata dall'agente e aperta dal browser del telefono, come farà il programma: si legge il codice dell'articolo, si scattano le foto guidate e la pagina dà a ogni foto il nome giusto. Le foto restano sul telefono e a fine giro si passano al computer e si caricano nel repository privato (128). La pagina è solo codice, senza dati, pubblicata su un indirizzo sicuro (per esempio GitHub Pages). | Non indicato (proposta accettata). Con l'app Fotocamera le foto sarebbero migliori di quelle del programma e i numeri più ottimisti. |
+| 137 | 17/11/2026 | Le foto di arrivo si scattano con i dispositivi che si useranno davvero (almeno un iPhone, un Android e il palmare di UFP), da almeno due persone, in almeno due giorni diversi, con la luce normale del magazzino. I risultati si danno anche divisi per dispositivo. | Non indicato (proposta accettata). |
+| 138 | 17/11/2026 | Il numero di articoli attesi da un fornitore non è noto con precisione: la prova simula più casi (proposti 20, 100 e 500 articoli attesi) con le stesse foto. | Non indicato (proposta accettata). |
 
 ## Note di lettura
 
@@ -172,4 +177,4 @@ Le decisioni tecniche ancora aperte non stanno qui: stanno in `docs/analisi-prog
   obbligatorio).
 - Decisione 23: precisata dalla 127 (l'operazione in corso resta nella memoria del browser del dispositivo).
 - Decisione 12: precisata dalle 128–131 (dove stanno le foto della prova, cosa ne entra nel repository pubblico, cosa
-  può comparire nelle foto, cosa succede dopo la prova) e dalle 132–133 (magazzino e numero di articoli).
+  può comparire nelle foto, cosa succede dopo la prova) e dalle 132–138 (magazzino, articoli, foto, pagina di scatto, dispositivi, articoli attesi).
