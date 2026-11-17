@@ -71,6 +71,9 @@ percorso delle schermate e aspetto grafico, compresi nome e brand kit (decisioni
   pubblico solo numeri anonimi; UFP, 200 articoli a caso più 40 fuori catalogo e 300 di contorno; 3 + 3 foto dalla
   pagina di scatto nel browser; SigLIP 2, PE-Core, DINOv2 (DINOv3 solo confronto); traguardo 95 su 100 tra le 5
   proposte con 100 attesi; tempi solo nella sessione; prima, ricerca sui modelli recenti (decisioni 128–145).
+- [Modelli visivi open source recenti: ce ne sono di migliori?](issues/19-ricerca-modelli-visivi-recenti.md): nessun
+  modello recente con licenza commerciale batte SigLIP 2 e PE-Core sui prodotti; TIPSv2 e C-RADIO senza risultati
+  diretti; il ritaglio automatico dell'oggetto vale più di un modello nuovo (ricerca del 17/11/2026).
 
 Prese prima della mappa, nel secondo giro di domande del 15/11/2026: decisioni 15–28 in
 [`docs/decisioni.md`](../../docs/decisioni.md) (assegnazione parziale, codice stampato come tipo di articolo,
