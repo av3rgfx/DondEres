@@ -19,18 +19,21 @@ Lavora a giri: registra le risposte di ogni giro prima del successivo e chiudi c
 
 Per lavorare un ticket preciso in una sessione parallela, aggiungere in fondo al prompt: `Lavora il ticket «<titolo>».`
 
-## Frontiera al 17/11/2026
+## Frontiera al 17/11/2026 (sera)
 
 In ordine di numero:
 
-1. «Esecuzione della prova visiva e scelta del modello» (task con l'utente): sbloccata il 17/11/2026. Piano e lista
-   delle foto nella sezione «Prova di accuratezza visiva» di `docs/architettura.md`; modelli e misure nelle decisioni
-   141 e 146–148. Prima di iniziarla l'utente crea su GitHub il repository privato delle foto (per esempio
-   «prova-visiva-foto») e lo aggiunge alla sessione. Se l'utente vuole DINOv3, la chiave di Hugging Face si chiede con
-   il modulo sicuro, mai in chat (141). Lavoro lungo: si sviluppa in più sessioni, finché le foto non sono scattate.
-2. «Punti di estensione per la specializzazione».
+1. «Esecuzione della prova visiva e scelta del modello» (task con l'utente): **in corso**, preso il 17/11/2026 e lavorato
+   su più sessioni. Il repository privato `av3rgfx/prova-visiva-foto` esiste; la pagina di scatto è pubblicata su
+   https://av3rgfx.github.io/DondEres/ (ramo `gh-pages`, solo la pagina) e funziona sull'iPhone. Ora tocca all'utente:
+   scegliere a caso gli articoli (200 a catalogo, 40 fuori, 300 di contorno), scattare con l'iPhone e caricare gli ZIP
+   nella cartella `da-caricare` del repository privato (decisioni 149–158). Quando ci sono ZIP da aprire, la sessione
+   va avviata con «Lavora il ticket «Esecuzione della prova visiva e scelta del modello»» e con il repository privato
+   collegato: apre gli ZIP, sistema le foto, assegna le sigle anonime (129) e prepara gli script. Se la pagina di
+   scatto cambia, va copiata anche sul ramo `gh-pages`.
+2. «Punti di estensione per la specializzazione»: primo ticket libero della frontiera.
 3. «Nome del prodotto».
-4. «Percorso delle schermate»: nel ticket ci sono i commenti di tutti i ticket chiusi.
+4. «Percorso delle schermate»: nel ticket ci sono i commenti di tutti i ticket chiusi, compresa la decisione 158.
 
 Si possono lavorare in parallelo in sessioni diverse.
 
@@ -43,6 +46,10 @@ Si possono lavorare in parallelo in sessioni diverse.
 ## Ultimo ticket chiuso
 
 17/11/2026: «Piano della prova di accuratezza visiva» e la ricerca «Modelli visivi open source recenti: ce ne sono di
-migliori?». Decisioni 128–148, sezione «Prova di accuratezza visiva» in
-`docs/architettura.md`, con la lista delle foto da scattare. Pagina usata per le domande:
-https://claude.ai/artifact/9fL5bbNUMMkYAzxWjECaHs (privata, la vede solo l'utente).
+migliori?». Decisioni 128–148, sezione «Prova di accuratezza visiva» in `docs/architettura.md`, con la lista delle foto
+da scattare.
+
+## Ultima sessione
+
+17/11/2026, sera: avviata l'esecuzione della prova visiva (decisioni 149–158). Pagina usata per le domande:
+https://claude.ai/artifact/52C1DcnRuhw8SBov9wvJnd (privata, la vede solo l'utente).
