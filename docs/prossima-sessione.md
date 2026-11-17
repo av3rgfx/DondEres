@@ -1,15 +1,19 @@
 # Prompt per la prossima sessione (Wayfinder sull'architettura)
 
 Da incollare all'avvio di una nuova sessione sul ramo principale aggiornato. La mappa esiste già: si lavora un ticket
-per sessione.
+per sessione. Consigliato ora: «Percorso delle schermate» (prompt A). Quando nel repository privato ci sono ZIP da
+aprire, una sessione a parte lavora la prova visiva (prompt B). Si possono avviare in parallelo.
+
+**Prompt A: percorso delle schermate** (oppure, se già preso, il primo ticket libero della frontiera)
 
 ```text
 /wayfinder .scratch/architettura/map.md
 
-Leggi prima AGENTS.md, poi la mappa (solo map.md, non tutti i ticket). Prendi il primo ticket della frontiera:
-aperto, non bloccato, non preso. Se è «Esecuzione della prova visiva e scelta del modello», controlla per prima cosa
-che il repository privato delle foto sia collegato alla sessione (decisioni 128 e 145): se non c'è, chiedimelo prima
-di tutto il resto; poi prepara la pagina di scatto e fammela provare su un telefono.
+Leggi prima AGENTS.md, poi la mappa (solo map.md, non tutti i ticket). Lavora il ticket «Percorso delle schermate»;
+se è già preso, prendi il primo ticket della frontiera: aperto, non bloccato, non preso.
+Leggi i commenti del ticket: raccolgono dai ticket chiusi i punti da tenere nelle schermate.
+Prepara un prototipo da provare sul mio telefono, poco curato nell'aspetto: ora conta il percorso, non la grafica
+(decisione 14; colori e stile vengono con il ticket «Aspetto grafico»).
 Registra ogni mia decisione in docs/decisioni.md, con data e motivo; scrivi la tua parte in docs/architettura.md.
 Parlami in italiano, con domande semplici: cosa chiedi, perché conta, cosa comporta ogni opzione.
 Per le domande usa una pagina interattiva (Artifact) con esempi visivi che cambiano con la risposta, opzione
@@ -17,9 +21,29 @@ consigliata, «Accetta tutte le consigliate», note facoltative e risposte salva
 Lavora a giri: registra le risposte di ogni giro prima del successivo e chiudi con un riepilogo da confermare.
 ```
 
-Per lavorare un ticket preciso in una sessione parallela, aggiungere in fondo al prompt: `Lavora il ticket «<titolo>».`
+Per un altro ticket preciso, sostituire il titolo nella seconda riga (per esempio «Punti di estensione per la
+specializzazione» o «Nome del prodotto»).
 
-## Frontiera al 17/11/2026 (sera)
+**Prompt B: prova visiva, quando ci sono ZIP in `da-caricare`** (collegare alla sessione il repository privato
+`av3rgfx/prova-visiva-foto`)
+
+```text
+/wayfinder .scratch/architettura/map.md
+
+Leggi prima AGENTS.md, poi la mappa (solo map.md, non tutti i ticket). Lavora il ticket «Esecuzione della prova
+visiva e scelta del modello», già in corso con me. Controlla che il repository privato prova-visiva-foto sia
+collegato alla sessione; se non c'è, chiedimelo prima di tutto il resto. Poi apri gli ZIP con
+prova-visiva/script/prepara.py, fai il commit nel repository privato e calcola i numeri seguendo
+prova-visiva/script/LEGGIMI.md. Mostrami i risultati senza abbellirli e proponimi le due scelte sulle soglie
+annotate nella sezione «Script del calcolo» di docs/architettura.md.
+Registra ogni mia decisione in docs/decisioni.md, con data e motivo; scrivi la tua parte in docs/architettura.md.
+Parlami in italiano, con domande semplici: cosa chiedi, perché conta, cosa comporta ogni opzione.
+Per le domande usa una pagina interattiva (Artifact) con esempi visivi che cambiano con la risposta, opzione
+consigliata, «Accetta tutte le consigliate», note facoltative e risposte salvate che leggi tu quando scrivo «fatto».
+Lavora a giri: registra le risposte di ogni giro prima del successivo e chiudi con un riepilogo da confermare.
+```
+
+## Frontiera al 17/11/2026 (fine sessione)
 
 In ordine di numero:
 
@@ -30,11 +54,12 @@ In ordine di numero:
    nella cartella `da-caricare` del repository privato (decisioni 149–159). Quando ci sono ZIP da aprire, la sessione
    va avviata con «Lavora il ticket «Esecuzione della prova visiva e scelta del modello»» e con il repository privato
    collegato: apre gli ZIP con `prova-visiva/script/prepara.py`, poi calcola impronte e numeri con gli altri script
-   (istruzioni in `prova-visiva/script/LEGGIMI.md`). Se la pagina di
-   scatto cambia, va copiata anche sul ramo `gh-pages`.
-2. «Punti di estensione per la specializzazione»: primo ticket libero della frontiera.
-3. «Nome del prodotto».
-4. «Percorso delle schermate»: nel ticket ci sono i commenti di tutti i ticket chiusi, compresa la decisione 158.
+   (istruzioni in `prova-visiva/script/LEGGIMI.md`); prompt B. Gli script sono pronti e provati su una prova
+   sintetica. Se la pagina di scatto cambia, va copiata anche sul ramo `gh-pages`, che non va cancellato.
+2. «Punti di estensione per la specializzazione»: primo ticket libero della frontiera in ordine di numero.
+3. «Nome del prodotto»: poi «Unicità dei nomi scelti» e «Brand kit con la skill logo-design».
+4. «Percorso delle schermate»: consigliato ora (prompt A). Nel ticket ci sono i commenti di tutti i ticket chiusi,
+   compresa la decisione 158. Decide cosa c'è e in che ordine; l'aspetto viene con «Aspetto grafico», alla fine.
 
 Si possono lavorare in parallelo in sessioni diverse.
 
@@ -52,5 +77,13 @@ da scattare.
 
 ## Ultima sessione
 
-17/11/2026, sera: avviata l'esecuzione della prova visiva (decisioni 149–159, riepilogo confermato). Pagina usata per le domande:
+17/11/2026, sera: avviata l'esecuzione della prova visiva (decisioni 149–159, riepilogo confermato); preparati e
+provati su una prova sintetica gli script del calcolo. Pagina usata per le domande:
 https://claude.ai/artifact/52C1DcnRuhw8SBov9wvJnd (privata, la vede solo l'utente).
+
+## Cose dell'utente, senza sessione
+
+- Scegliere a caso gli articoli della prova (200 a catalogo, 40 fuori, 300 di contorno) e tenere l'elenco nel
+  repository privato.
+- Primo giro piccolo di foto (10–20 articoli) con la pagina di scatto, poi gli ZIP in `da-caricare`.
+
