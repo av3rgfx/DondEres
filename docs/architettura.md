@@ -879,42 +879,100 @@ Totale: circa 1.620 foto e 9 ore di scatti con l'iPhone, più 480 foto di arrivo
 
 ## Percorso delle schermate
 
-Dal ticket «Percorso delle schermate», in corso dal 17/11/2026. Decisioni 160–172 finora. Prototipo:
-`prototipi/percorso-schermate/index.html`, pubblicato anche come pagina privata per il telefono dell'utente
-(https://claude.ai/artifact/Vb6ijyDdr4n2gsZcKhhVur). Qui si decide quali
-schermate ci sono e in che ordine; colori, caratteri e stile vengono con il ticket «Aspetto grafico» (14).
+Dal ticket «Percorso delle schermate», chiuso il 17/11/2026. Decisioni 160–179. Qui si decide quali schermate ci sono e
+in che ordine; colori, caratteri e stile vengono con il ticket «Aspetto grafico» (14).
+
+Prototipo usa e getta a fil di ferro, con dati inventati e fotocamera simulata: `prototipi/percorso-schermate/index.html`,
+pubblicato anche come pagina privata per il telefono dell'utente (https://claude.ai/artifact/Vb6ijyDdr4n2gsZcKhhVur).
+Si apre con un doppio clic o da un server locale; «Scenari» simula rete assente, uscita dopo 30 minuti, scambio bloccato
+e il passaggio tra magazzino con i piani (come UFP) e con la coda (come Shopify). Le domande dei quattro giri sono in
+una pagina privata (https://claude.ai/artifact/BpARZrpffCDENtsKzZgTSZ).
 
 ### Schermate della base
 
-Elenco confermato (160). Il responsabile ha le stesse schermate dell'operatore, più le sue.
+Elenco confermato (160), con i nomi cambiati dopo (178). Il responsabile ha le stesse schermate dell'operatore, più le
+sue.
 
 | Gruppo | Schermate |
 |---|---|
-| Entrare | Prima apertura dal QR (127); guida a «Fotocamera: Consenti» su iPhone, con la barra di Safari visibile (124); accesso con nome e PIN, o password per il responsabile (80); uscita dopo 30 minuti senza perdere il lavoro |
-| Ricevimento | DDT aperti e «Nuovo DDT»; schermata del DDT; registrato con «Annulla» e quantità (99); «È questo» / «No, è un altro» (90); scelta tra più articoli (91) o più codici (102); due quantità lette (93), «× colli» (94), «come l'ultima volta» (100); «non è tra gli attesi» (88); «Collego questo barcode?» (92); «codice simile, controlla» (89); «non lo so» con le sue uscite (98); «Chiudi DDT» con la scelta sulla riga ferma (82) |
-| Articolo nuovo | Righe attese senza articolo, in cima (109); tre foto guidate (106); scheda con i campi compilati (107); parole dell'etichetta da toccare (108); «È uno di questi?» (110) |
-| Dopo il ricevimento | Da mettere a posto (69); rimetti a posto (62); posto VEND, se acceso (47) |
-| Uscita | Ordini da prelevare; prelievo guidato con stop se l'articolo è un altro (97, 103); spedizione; banco (65, 58, 84) |
-| Sempre | Cerca articolo: scheda, giacenze, ubicazioni; conta un'ubicazione (77); «Aggiungi foto» (117); rete assente, operazione in attesa o persa (23, 127) |
-| Responsabile | Da controllare (86); articolo da confermare: Conferma, Unisci, Rifiuta (114); correzioni dopo la chiusura (81); scambio: avvisi e «aggiorna ora» (54); utenti; configurazione iniziale; «È disponibile un aggiornamento» (125); costo d'acquisto (85) |
+| Entrare | Prima apertura dal QR (127); guida a «Fotocamera: Consenti» su iPhone, con la barra di Safari visibile, e cosa fare se il permesso è negato (124); accesso con nome e PIN, o password per il responsabile (80); uscita dopo 30 minuti senza perdere il lavoro |
+| Ricevimento | DDT aperti e «Nuovo DDT», con l'avviso di possibile doppione (86); schermata del DDT; registrato con «Annulla» e quantità (99); «È questo» / «No, è un altro» (90); scelta tra più articoli (91) o più codici (102); due quantità lette (93), «× colli» (94), «come l'ultima volta» (100); «non è tra gli attesi» (88); «Collego questo barcode?» (92); «codice simile, controlla» (89); codice diverso (158, 166); unità mai vista (72); «non lo so» con le sue uscite (98); correzione a DDT aperto (81); «Chiudi DDT» con la scelta sulla riga ferma (82) |
+| Articolo nuovo | Righe attese senza articolo, in cima (109); tre foto guidate, con gli avvisi di foto mossa o buia (106); scheda con i campi compilati (107); parole dell'etichetta da toccare (108); «È uno di questi?» (110) |
+| Dopo il ricevimento | Da mettere a posto, proposto alla chiusura del DDT (69, 163); rimetti a posto (62); posto VEND, se acceso (47) |
+| Uscita | Piani di spedizione, per chi pianifica (167, 169); prelievo dai piani o dalla coda (167, 168); prelievo guidato con stop se l'articolo è un altro (97, 103, 164); fine della preparazione (171); spedizione (172, 173); vendita assistita (65, 58, 84, 178) |
+| Sempre | Cerca articolo: scheda, giacenze per ubicazione e stato, codici, prezzo; conta un'ubicazione (77); «Aggiungi foto» (117); rete assente, operazione in attesa o persa (23, 127) |
+| Responsabile | Da controllare (86), con le sue uscite: tenere o rendere la merce non prevista (45), confermare conteggi, collegamenti e codici diversi (71, 158), approvare conversioni (72); articolo da confermare: Conferma, Unisci, Rifiuta (114); correzioni dopo la chiusura (81); scambio: avvisi e «aggiorna ora» (54); utenti con ruolo, mansioni e permessi (177); configurazione iniziale; «È disponibile un aggiornamento» (125); costo d'acquisto (85) |
 
-Fuori da questo ticket, nella nebbia della mappa: inventario periodico, catalogo visivo al banco, ingresso del DDT
-(nel prototipo il DDT si apre scegliendo fornitore e numero, come segnaposto), resi al fornitore.
+Fuori da questo ticket, nella nebbia della mappa: inventario periodico, catalogo visivo nella vendita assistita,
+ingresso del DDT (nel prototipo il DDT si apre scegliendo fornitore e numero, come segnaposto), resi al fornitore. La
+procedura guidata della configurazione iniziale sta nella nebbia «Installazione e configurazione iniziale».
 
-### Scelte fatte
+### Chi vede cosa
 
-- **Prima schermata**: un pulsante per ogni lavoro con il numero di cose che aspettano; il responsabile ha in più «Da
-  controllare» (161).
-- **Schermata del DDT**: inquadratura in alto, sempre accesa; sotto le righe attese con contato e atteso (162). Un
-  barcode su un solo articolo si registra senza tocchi (99): si passa da una scatola all'altra senza toccare lo schermo.
-- **Messa a posto**: alla chiusura del DDT «Metti a posto adesso», altrimenti dall'elenco (163).
-- **Prelievo**: un ordine alla volta, guidato riga per riga in ordine di ubicazione (164); gli ordini arrivano dai
-  piani di spedizione o dalla coda (167, 168).
-- **Ordini coperti in parte**: si prelevano o no secondo la scelta del magazzino, di serie sì; il responsabile decide
-  per il singolo ordine; in UFP decide chi crea il piano di spedizione (165).
-- **Righe che aspettano il responsabile**: la riga si ferma e l'operatore continua; il responsabile decide da «Da
-  controllare» o sul telefono dell'operatore, con la sua password. Niente notifiche sul telefono del responsabile: le
-  notifiche dei browser passano da internet e il server sta sulla rete interna (166, 121).
+| Cosa | Decide | Decisioni |
+|---|---|---|
+| Cosa si può fare | Il ruolo (operatore o responsabile) | 27 |
+| Lavori in più per un operatore | I permessi «Pianifica le spedizioni» (nessuno di serie) e «Conferma le spedizioni» (tutti di serie; il responsabile lo può togliere). Senza il secondo la schermata «Spedisci» non c'è | 169, 173 |
+| Cosa si vede per primo | Le mansioni, una o più per utente: magazziniere (ricevere, mettere a posto, rimettere a posto, cercare e contare) e preparatore (prelevare, vendita assistita, cercare) | 176, 177 |
+
+**Prima schermata.** In grande un pulsante per ogni lavoro delle mansioni dell'utente, con il numero di cose che
+aspettano; sotto, «Altri lavori» con quelli che ruolo e permessi gli consentono. Con più mansioni la schermata le unisce.
+Il responsabile vede tutti i lavori, più «Da controllare», «Piani di spedizione», «Utenti» e «Configurazione», e gli
+avvisi di aggiornamento e di scambio bloccato (161, 177, 179).
+
+### Ricevimento
+
+1. **Ricevi DDT** → elenco dei DDT aperti, con quante righe sono complete; «Nuovo DDT» (segnaposto, vedi sopra). Più
+   persone lavorano sullo stesso DDT, anche in giorni diversi (68).
+2. **Schermata del DDT**: in alto l'inquadratura, sempre accesa; sotto le righe attese con contato e atteso, colorate
+   per stato (vuota, in parte, completa, ferma). In alto a destra «Chiudi DDT» (162).
+3. **A ogni inquadratura** il programma mostra solo l'esito (87). Un barcode su un solo articolo si registra senza
+   tocchi, con un avviso «Registrato … · Annulla · Modifica» (99): si passa alla scatola successiva senza toccare lo
+   schermo. Gli altri esiti aprono una scheda dal basso, sopra la schermata del DDT: proposte con foto, «È questo»,
+   due quantità, «non è tra gli attesi», «Collego questo barcode?», «non lo so» (tabella «Cosa vede l'operatore» nella
+   sezione «Percorso di identificazione»). La scheda della quantità ha più e meno, «× colli» e il consiglio «come
+   l'ultima volta».
+4. **Righe che aspettano il responsabile** (codice diverso, unità mai vista): la riga diventa ferma e l'operatore mette
+   la scatola da parte e continua; il responsabile decide da «Da controllare», oppure subito sullo stesso telefono con
+   la sua password, senza far uscire l'operatore (166).
+5. **Toccando una riga** si vede cosa è stato contato e si corregge l'ultima scansione, finché il DDT è aperto (81); su
+   una riga senza articolo a catalogo si crea l'articolo (109).
+6. **Chiudi DDT**: se c'è una riga ferma, la scelta della 82 («Chiudi con le righe pronte» proposta); poi «DDT chiuso,
+   carico mandato» e «Metti a posto adesso» oppure «Più tardi» (163).
+
+**Articolo nuovo**, dall'uscita del «non lo so» o da una riga senza articolo: righe che lo aspettano → tre foto guidate
+→ dati (codice letto, descrizione con le parole da toccare, unità) → «È uno di questi?» → salvato «da confermare» e
+torna alla scheda della quantità del DDT (105–110).
+
+**Metti a posto**: elenco dell'area di ricevimento e, sotto, «Rimetti a posto». Toccato un articolo: ubicazione
+abituale proposta → scansione dell'ubicazione vera → quantità (69, 75).
+
+### Preparazione e spedizione
+
+Cambiamenti rispetto a oggi in UFP, proposti dall'agente e accettati: la copertura di ogni ordine si vede mentre si
+crea il piano; la sigla è sostituita dal nome di chi ha fatto l'accesso; «spedito» si segna al ritiro, per corriere.
+
+| Passo | Con i piani (UFP) | Con la coda (Shopify) | Decisioni |
+|---|---|---|---|
+| Chi dà il lavoro | Chi ha il permesso «Pianifica le spedizioni» crea il piano: titolo libero (proposto dall'agente dell'ordine, se il gestionale lo manda), preparatore, ordini con la loro copertura (completo, «3 di 5», niente). Un ordine arriva ai preparatori solo dentro un piano | Nessuno: «Prossimo ordine» dà l'ordine pronto più vecchio | 165, 167–169, 175 |
+| Cosa vede il preparatore | Prima i suoi piani, poi quelli dei colleghi | Il numero di ordini in coda e «Prossimo ordine» | 167, 168 |
+| Prendere un ordine | Chi lo apre lo prende; gli altri vedono «in preparazione da…»; chi pianifica riassegna | Chi lo riceve dalla coda lo prende; il responsabile rimette in coda un ordine lasciato a metà | 170, 175 |
+| Prelievo | Riga per riga in ordine di ubicazione: scansione dell'ubicazione, inquadratura dell'articolo (stop se è un altro), quantità; la merce in VEND si prende dal suo posto; una riga coperta in parte dice «prendi 3 di 5» | Uguale | 76, 97, 103, 164 |
+| Fine | Colli, chili, «Preparato da» già compilato con chi ha fatto l'accesso e modificabile (se cambia, si registrano tutti e due i nomi), corriere in grande con l'indicazione del suo posto. L'ordine è evaso e al gestionale va il documento di prelievo | Uguale; a Shopify non si manda niente | 21, 52, 61, 171, 174, 175 |
+| Spedizione | «Spedisci», per chi ha il permesso: ordini pronti divisi per corriere (e «Senza corriere»); si toccano quelli che restano; «Ritirato da …» segna spediti gli altri | Uguale; la spedizione si segna anche su Shopify | 52, 61, 172, 173, 175 |
+
+Piani e coda seguono le stesse regole: solo ordini pagati (63), ordini coperti in parte secondo la scelta del magazzino
+(165). Un ordine pronto troppo tardi per il corriere resta pronto e parte con il ritiro successivo (172). Il corriere
+viene dall'ordine nel sistema d'origine (su Shopify il metodo di spedizione) o lo sceglie chi pianifica (175).
+
+### Vendita assistita
+
+È il lavoro che la base chiamava «banco» (178). Passi della 65: cliente (uno preciso, quello generico o nessuno) →
+inquadratura dell'articolo e scansione dell'ubicazione, con il prezzo di vendita a schermo e il costo solo per il
+responsabile (84, 85) → se la merce libera non basta, l'avviso con l'ordine a cui verrebbe tolta (58) → «Conferma: crea
+l'ordine nel gestionale». Alla conferma non si sceglie come esce la merce: in UFP l'ordine si crea in Ad Hoc, dove si
+fanno e si stampano le ricevute, e il resto si fa lì (178). In UFP la vendita assistita serve al banco e anche a
+preparare una vendita o un pacco per un agente o da spedire (176).
 
 ### La preparazione oggi in UFP
 
@@ -928,27 +986,29 @@ Fatto riferito dall'utente il 17/11/2026, nella nota alla domanda sulla prima sc
    collega facendo i suoi piani.
 4. Entrato in un piano, sceglie un ordine e parte il prelievo guidato.
 5. Alla fine conferma il numero dei colli e i chili, firma con la propria sigla (chi ha preparato) e vede con quale
-   corriere parte la merce (per esempio BARTOLINI, GLS).
+   corriere parte la merce (per esempio BARTOLINI, GLS). I colli vanno nel posto del loro corriere; la spedizione la
+   conferma l'operatore, non il preparatore, quando la merce parte davvero (172).
 
-Nel magazzino Shopify oggi si lavora con fogli di carta; potrebbe lavorare in modo simile, con i piani gestiti in
-automatico (165).
+Gli agenti portano gli ordini di persona; gli ordini degli agenti stanno in Ad Hoc, e chi crea i piani deve vederli:
+serve il collegamento con Ad Hoc della specializzazione (178). Nel magazzino Shopify oggi si lavora con fogli di carta.
 
-### Preparazione e spedizione
+### Configurazione per magazzino (aggiunte)
 
-Cambiamenti rispetto a oggi in UFP, proposti dall'agente e accettati: la copertura di ogni ordine si vede mentre si
-crea il piano; la sigla è sostituita dal nome di chi ha fatto l'accesso; «spedito» si segna al ritiro, per corriere.
-
-| Passo | Con i piani (UFP) | Con la coda (Shopify) | Decisioni |
+| Scelta | Valori | Di serie | Decisione |
 |---|---|---|---|
-| Chi dà il lavoro | Chi ha il permesso «Pianifica le spedizioni» crea il piano: titolo libero, preparatore, ordini con la loro copertura (completo, «3 di 5», niente) | Nessuno: «Prossimo ordine» dà l'ordine pronto più vecchio | 165, 167–169 |
-| Cosa vede il preparatore | Prima i suoi piani, poi quelli dei colleghi | Il numero di ordini in coda e «Prossimo ordine» | 167, 168 |
-| Prendere un ordine | Chi lo apre lo prende; gli altri vedono «in preparazione da…»; chi pianifica riassegna | Chi lo riceve dalla coda lo prende | 170 |
-| Prelievo | Riga per riga in ordine di ubicazione: scansione dell'ubicazione, inquadratura dell'articolo (stop se è un altro), quantità; la merce in VEND si prende dal suo posto | Uguale | 76, 97, 103, 164 |
-| Fine | Colli, chili, «Preparato da» già compilato con chi ha fatto l'accesso e modificabile, corriere in grande; i colli vanno nel posto del corriere. L'ordine è evaso | Uguale; a Shopify non si manda niente | 21, 52, 171, 172 |
-| Spedizione | «Spedisci»: ordini pronti divisi per corriere; si toccano quelli che restano; «Ritirato da …» segna spediti gli altri | Uguale; la spedizione si segna anche su Shopify | 52, 61, 172 |
+| Ordini coperti in parte si prelevano | sì, no | sì | 165 |
+| Piani di spedizione | accesi, spenti (si lavora con la coda) | spenti | 167, 175 |
+| Chili a fine preparazione | richiesti, facoltativi | richiesti | 171, 175 |
 
-Un ordine pronto troppo tardi per il corriere resta pronto e parte con il ritiro successivo (172). Al banco l'ordine si
-preleva e si spedisce subito, senza piano né coda (56).
+Per utente: ruolo, mansioni, permessi «Pianifica le spedizioni» e «Conferma le spedizioni» (169, 173, 177).
 
-Domande aggiunte per il rivenditore di UFP (21, 22 in `docs/domande-rivenditore-ufp.md`): agente e corriere
-sull'ordine in Ad Hoc; colli e peso restituiti oggi da ARS.
+### Rimandato ad altri ticket o alla nebbia della mappa
+
+- Colori, caratteri, disposizione e stile: ticket «Aspetto grafico».
+- Prove con la fotocamera vera su iPhone, Android e palmare: sezione «Prove su dispositivi veri» (127).
+- Agente e corriere sull'ordine in Ad Hoc, colli e peso restituiti: domande 21 e 22 per il rivenditore; collegamento con
+  Ad Hoc nella specializzazione (51, 178).
+- Cosa succede in UFP alla merce di una vendita assistita che non parte subito (pacco per un agente o da spedire): la
+  vendita si chiude in Ad Hoc (178); stato della merce nel programma da fissare con il collegamento ad Ad Hoc.
+- Inventario periodico, catalogo visivo, ingresso del DDT, resi al fornitore, procedura guidata della configurazione:
+  nebbia della mappa.

@@ -75,6 +75,10 @@ percorso delle schermate e aspetto grafico, compresi nome e brand kit (decisioni
   modello recente con licenza commerciale batte SigLIP 2 e PE-Core sui prodotti; TIPSv2 e C-RADIO senza risultati
   diretti; il ritaglio automatico dell'oggetto vale più di un modello nuovo. Esito: TIPSv2 media al posto di DINOv2
   grande, si misura anche il ritaglio, C-RADIO fuori (decisioni 146–148).
+- [Percorso delle schermate](issues/16-percorso-delle-schermate.md): prima schermata per mansione (magazziniere,
+  preparatore) con «Altri lavori»; DDT con inquadratura in alto e righe sotto; piani di spedizione o coda «Prossimo
+  ordine»; permessi per pianificare e spedire; «spedito» al ritiro del corriere; vendita assistita al posto del banco;
+  prototipo a fil di ferro (decisioni 160–179).
 
 Prese prima della mappa, nel secondo giro di domande del 15/11/2026: decisioni 15–28 in
 [`docs/decisioni.md`](../../docs/decisioni.md) (assegnazione parziale, codice stampato come tipo di articolo,
@@ -94,7 +98,7 @@ tre livelli di conferma, quantità letta dalla scatola, ubicazioni facoltative, 
   ripristino.
 - **Inventario:** conta periodica di tutto il magazzino o di una parte. Rettifica per conteggio, correzioni ed effetto
   sulle assegnazioni sono già definiti nel «Modello dei dati».
-- **Catalogo visivo per la vendita al banco** (idea dell'utente, decisioni 78 e 86): cercare un articolo e vederne
+- **Catalogo visivo per la vendita assistita** (idea dell'utente, decisioni 78 e 86; «banco» diventa «vendita assistita», 178): cercare un articolo e vederne
   disponibilità, prezzo, giacenza e ubicazione, anche quando il cliente non sa bene cosa vuole. Tocca identificazione e
   schermate.
 - **Acquisizione del DDT:** oggi il DDT arriva di carta dal corriere e viene scansionato e caricato; gli uffici hanno

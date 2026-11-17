@@ -116,7 +116,10 @@ const ARTS = {
   V13:{code:"VT-1201", desc:"Valvola a sfera 3/4\" leva blu", unit:"pz", loc:"A-05-2", price:"11,50 €", cost:"6,00 €", photo:"valvola blu"},
   N55:{code:"NB-55", desc:"Nastro butilico 50 mm", unit:"pz", loc:"D-01-3", price:"9,80 €", cost:"4,90 €", photo:"nastro"}
 };
-const USERS = [{n:"Marco",r:"op"},{n:"Luca",r:"op"},{n:"Sara",r:"op",plan:true},{n:"Anna",r:"boss"}];
+const USERS = [{n:"Marco",r:"op",m:["mag"],sped:true},{n:"Luca",r:"op",m:["prep"]},{n:"Sara",r:"op",m:["prep","mag"],plan:true,sped:true},{n:"Anna",r:"boss",m:["mag","prep"]}];
+const MANS = {mag:"magazziniere", prep:"preparatore"};
+const MLAV = {mag:["ricevi","metti","cerca"], prep:["preleva","banco","cerca"]};
+const canShip = () => S.user && (S.user.r==="boss" || S.user.sped);
 const canPlan = () => S.user && (S.user.r==="boss" || S.user.plan);
 
 function initial(){
@@ -199,7 +202,7 @@ V.camNo = () => `${hdr("Fotocamera bloccata")}<main class="main">
   <button class="btn go" data-act="primoOk">L'ho riattivata</button></main>`;
 
 V.accesso = () => `${hdr("Chi sei?","Magazzino · telefono condiviso",{noBack:1})}<main class="main"><div class="list">
-  ${USERS.map(u=>row(u.n, u.r==="boss"?`<span class="tag boss">responsabile</span>`:"", "", "who:"+u.n)).join("")}
+  ${USERS.map(u=>row(u.n, u.r==="boss"?`<span class="tag boss">responsabile</span>`:"", "", "who:"+u.n, u.m.map(x=>MANS[x]).join(" e "))).join("")}
   </div><p class="muted">Ognuno entra col suo nome: ogni movimento ricorda chi l'ha fatto.</p></main>`;
 
 V.pin = () => {
@@ -213,19 +216,19 @@ V.pin = () => {
 V.home = () => {
   const c = counts();
   const t = (n, lab, act, cls="") => `<button class="tile ${n===0?"zero":""} ${cls}" data-act="${act}"><b>${n===null?"·":n}</b><span>${lab}</span></button>`;
-  return `${hdr(`Ciao ${S.user.n}`, isBoss()?"Responsabile":"Operatore",{noBack:1,right:`<button class="ic" data-act="esci">Esci</button>`})}
+  return `${hdr(`Ciao ${S.user.n}`, (isBoss()?"Responsabile · ":"")+S.user.m.map(x=>MANS[x]).join(" e "),{noBack:1,right:`<button class="ic" data-act="esci">Esci</button>`})}
   ${isBoss() && S.update ? `<div class="banner boss"><span>È disponibile un aggiornamento. Prima si fa una copia di sicurezza.</span><div class="btns two"><button class="btn small boss" data-act="updNow">Installa stasera</button><button class="btn small" data-act="updLater">Più tardi</button></div></div>`:""}
   ${isBoss() && !S.sync ? `<div class="banner warn">Scambio con il gestionale non riuscito da 15 minuti. Si lavora con gli ultimi dati; 3 documenti aspettano in coda. <button class="btn small" data-act="syncNow">Aggiorna ora</button></div>`:""}
   <main class="main">
   ${isBoss()?t(c.controlli,"Da controllare","go:controlli","boss"):""}
-  <div class="tiles">
-    ${t(c.ricevi,"Ricevi DDT","go:ricevi")}${t(c.metti,"Metti a posto","go:metti")}
-    ${t(c.preleva,"Preleva","go:preleva")}${t(c.spedisci,"Spedisci","go:spedisci")}
-    ${t(null,"Banco","go:banco")}${t(null,"Cerca articolo","go:cerca")}
-  </div>
+  ${(()=>{ const L={ricevi:[c.ricevi,"Ricevi DDT"],metti:[c.metti,"Metti a posto"],preleva:[c.preleva,"Preleva"],spedisci:[c.spedisci,"Spedisci"],banco:[null,"Vendita assistita"],cerca:[null,"Cerca e conta"]};
+    const all=["ricevi","metti","preleva","spedisci","banco","cerca"].filter(k=>k!=="spedisci"||canShip());
+    const mine=isBoss()?all:[...new Set(S.user.m.flatMap(m=>MLAV[m]))].filter(k=>all.includes(k));
+    const rest=all.filter(k=>!mine.includes(k));
+    return `<div class="tiles">${mine.map(k=>t(L[k][0],L[k][1],"go:"+k)).join("")}</div>`+(rest.length?`<h2>Altri lavori</h2><div class="list">${rest.map(k=>row(L[k][1],L[k][0]===null?"›":L[k][0],"","go:"+k)).join("")}</div>`:""); })()}
   ${canPlan()&&!S.coda?`<button class="btn" data-act="go:piani">Piani di spedizione</button>`:""}
   ${isBoss()?`<div class="btns two"><button class="btn small" data-act="go:utenti">Utenti</button><button class="btn small" data-act="go:config">Configurazione</button></div>`:""}
-  <p class="muted">Il numero dice quante cose aspettano. ${S.coda?"Magazzino con la coda (come Shopify).":"Magazzino con i piani di spedizione (come UFP)."} Si cambia da «Scenari».</p>
+  <p class="muted">In grande i lavori delle tue mansioni; il numero dice quante cose aspettano. ${S.coda?"Magazzino con la coda (come Shopify).":"Magazzino con i piani di spedizione (come UFP)."} Si cambia da «Scenari».</p>
   </main>`;
 };
 
@@ -385,14 +388,14 @@ V.put = () => { const P=S.put, e=(P.src==="a"?S.area:S.rimetti)[P.i]; const art=
 
 /* ===== Banco ===== */
 V.banco = () => { const B=S.banco || (S.banco={cli:null, righe:[]});
-  if(!B.cli) return `${hdr("Banco","Per chi è?")}<main class="main"><div class="field"><label for="cli">Cerca un cliente</label><input id="cli" type="text" placeholder="nome o codice"></div>
-    <div class="list">${row("Rossi Srl","C0042","","cli:Rossi Srl")}${row("Cliente generico del banco","","","cli:Banco")}${row("Nessun cliente","","","cli:Nessuno")}</div></main>`;
-  return `${hdr("Banco",esc(B.cli))}<main class="main">
+  if(!B.cli) return `${hdr("Vendita assistita","Per chi è?")}<main class="main"><div class="field"><label for="cli">Cerca un cliente</label><input id="cli" type="text" placeholder="nome o codice"></div>
+    <div class="list">${row("Rossi Srl","C0042","","cli:Rossi Srl")}${row("Cliente generico del banco","","","cli:Cliente generico")}${row("Nessun cliente","","","cli:Nessuno")}</div></main>`;
+  return `${hdr("Vendita assistita",esc(B.cli))}<main class="main">
     <div class="cam"><div class="frame">Inquadra l'articolo, poi l'ubicazione da cui lo prendi</div>
     <div class="chips"><button class="chip" data-act="bancoAdd:R110">Simula: 3PR-110 libero</button><button class="chip" data-act="bancoAdd:S77">Simula: SL-77, merce di altri ordini</button></div></div>
     <div class="list">${B.righe.map(r=>row(`${A(r.a).code} · ${esc(A(r.a).desc)}`,`${r.q} × ${A(r.a).price}`,r.tolto?"part":"done","",`da ${A(r.a).loc}${r.tolto?" · tolto all'ordine 1039":""}${isBoss()?` · costo ${A(r.a).cost}`:""}`)).join("") || `<p class="muted">Nessun articolo ancora.</p>`}</div>
-    ${B.righe.length?`<button class="btn go" data-act="bancoOk">Conferma la vendita</button>`:""}
-    <p class="muted">Il prezzo è quello di vendita, uguale per tutti; listini e sconti li fa il gestionale.${isBoss()?" Il costo d'acquisto lo vede solo il responsabile.":""}</p></main>`; };
+    ${B.righe.length?`<button class="btn go" data-act="bancoOk">Conferma: crea l'ordine nel gestionale</button>`:""}
+    <p class="muted">Dopo la conferma l'ordine va al gestionale (in UFP Ad Hoc), dove si fanno e si stampano le ricevute. Il prezzo è quello di vendita, uguale per tutti; listini e sconti li fa il gestionale.${isBoss()?" Il costo d'acquisto lo vede solo il responsabile.":""}</p></main>`; };
 SH.bancoTogli = () => `<h3>Non c'è abbastanza merce libera</h3><p>SL-77: libera 0. Per venderne 2 li tolgo all'<b>ordine 1039 · Edil Po</b>, il più recente che li aspetta.</p>
   <div class="warnbox">Se confermi, l'assegnazione si rifà e il responsabile lo trova tra le cose da controllare. La merce in VEND non si tocca.</div>
   <div class="btns two"><button class="btn" data-act="closeSheet">Non vendere</button><button class="btn go" data-act="bancoTogli">Togli e vendi</button></div>`;
@@ -426,7 +429,7 @@ SH.ctl = ({id}) => { const c=S.controlli.find(x=>x.id===id); const b = (t,cls=""
     collega:[b("Conferma il collegamento","go"),b("Rifiuta: elenca i carichi da correggere","bad")]
   }[c.t];
   return `<h3>${esc(c.txt)}</h3>${c.a?photo(A(c.a).photo):""}${c.t==="nuovo"?`<div class="list">${row("Ubicazione abituale","da scegliere","part")}${row("Prezzi","da completare","part")}${row("Si tiene a magazzino","sì")}</div>`:""}<div class="btns">${opts.join("")}</div>`; };
-V.utenti = () => `${hdr("Utenti")}<main class="main"><div class="list">${USERS.map(u=>row(u.n,u.r==="boss"?"responsabile":"operatore")).join("")}</div><button class="btn">Nuovo utente</button><p class="muted">Segnaposto: per chi se ne va basta disattivare l'utente.</p></main>`;
+V.utenti = () => `${hdr("Utenti")}<main class="main"><div class="list">${USERS.map(u=>row(u.n,u.r==="boss"?"responsabile":"operatore","","",["mansioni: "+u.m.map(x=>MANS[x]).join(", "), u.r!=="boss"&&u.plan?"pianifica le spedizioni":"", u.r!=="boss"&&u.sped?"conferma le spedizioni":""].filter(Boolean).join(" · "))).join("")}</div><button class="btn">Nuovo utente</button><p class="muted">Segnaposto: per chi se ne va basta disattivare l'utente.</p></main>`;
 V.config = () => `${hdr("Configurazione")}<main class="main"><div class="warnbox boss">Segnaposto: la procedura guidata dell'installazione è ancora nella nebbia della mappa.</div><div class="list">
   ${[["Ubicazioni","sì"],["VEND","acceso"],["Posti VEND","numerati"],["Prezzi","accesi"],["Ordini parziali si prelevano","sì"],["Uscita dopo","30 min"],["Scambio ogni","5 min"]].map(([a,b])=>row(a,b)).join("")}</div></main>`;
 const cop = o => { const t=o.righe.reduce((n,r)=>n+r.q,0), a=o.righe.reduce((n,r)=>n+r.ass,0); return a>=t?["completo","done"]:a>0?[`${a} di ${t}`,"part"]:["niente","dim"]; };
@@ -566,9 +569,9 @@ function act(a, el){
     case "put": S.put={src:x, i:+y}; return go("put");
     case "putLoc": { const P=S.put, arr=P.src==="a"?S.area:S.rimetti, e=arr[P.i]; const q=+document.getElementById("pq").value||e.q; e.q-=q; if(e.q<=0) arr.splice(P.i,1); log(`Messo a posto: ${q} ${A(e.a).code} in ${x}${x!==A(e.a).loc?" (non è l'abituale)":""}${P.src==="r"?" · i pezzi tornano liberi":""}`); return back(); }
     case "cli": S.banco.cli=x; return render();
-    case "bancoAdd": if(x==="S77"){ S.banco.pend=x; return sheet("bancoTogli"); } S.banco.righe.push({a:x,q:1}); log(`Banco: 1 ${A(x).code} da ${A(x).loc}`); return render();
-    case "bancoTogli": S.sheet=null; S.banco.righe.push({a:"S77",q:2,tolto:true}); S.controlli.push({id:"c"+(++S.n), t:"conta", a:"S77", txt:"Banco: 2 SL-77 tolti all'ordine 1039 da "+S.user.n}); log("Banco: 2 SL-77 tolti all'ordine 1039, l'assegnazione si rifà"); return render();
-    case "bancoOk": log(`Vendita al banco confermata per ${S.banco.cli}: ordine «banco» prelevato e spedito, poi al gestionale`); S.banco=null; return act("home");
+    case "bancoAdd": if(x==="S77"){ S.banco.pend=x; return sheet("bancoTogli"); } S.banco.righe.push({a:x,q:1}); log(`Vendita assistita: 1 ${A(x).code} da ${A(x).loc}`); return render();
+    case "bancoTogli": S.sheet=null; S.banco.righe.push({a:"S77",q:2,tolto:true}); S.controlli.push({id:"c"+(++S.n), t:"conta", a:"S77", txt:"Vendita assistita: 2 SL-77 tolti all'ordine 1039 da "+S.user.n}); log("Vendita assistita: 2 SL-77 tolti all'ordine 1039, l'assegnazione si rifà"); return render();
+    case "bancoOk": log(`Vendita assistita confermata da ${S.user.n} per ${S.banco.cli}: l'ordine va al gestionale, dove si fanno le ricevute`); S.banco=null; return act("home");
     case "scheda": S.cerca=x; return go("scheda");
     case "conta": if(!x) return; S.cnt=x==="RIC"?"area di ricevimento":x; return go("conta");
     case "contaOk": { const n=document.getElementById("cn").value; S.controlli.push({id:"c"+(++S.n), t:"conta", a:S.cerca, txt:`Conteggio di ${S.user.n} in ${S.cnt}: ${n} ${A(S.cerca).code}`}); log(`Conteggio: ${n} ${A(S.cerca).code} in ${S.cnt}, vale subito`); return back(); }

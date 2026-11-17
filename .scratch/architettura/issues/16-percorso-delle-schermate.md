@@ -2,7 +2,7 @@
 
 Type: prototype
 Label: wayfinder:prototype
-Status: claimed
+Status: resolved
 Assignee: sessione del 17/11/2026 con l'utente
 Blocked by: 04, 05, 06, 07
 
@@ -46,3 +46,26 @@ Risultato atteso: il percorso in `docs/architettura.md`, con il link al prototip
   l'operatore nell'attesa e cosa vede il responsabile; deduzioni confermate con la 159 (riga ferma, codice nuovo come codice del
   fornitore) in `docs/architettura.md`, sezione «Confronto del codice stampato». Decisione 151: nel programma finito il codice non si scrive a mano, salvo il ripiego
   del «non lo so».
+
+## Answer
+
+17/11/2026, quattro giri di domande con l'utente e un prototipo provato sul telefono. Decisioni 160–179 in
+`docs/decisioni.md`; percorso completo in `docs/architettura.md`, sezione «Percorso delle schermate».
+
+- Elenco delle schermate confermato (160). Prima schermata con un pulsante per lavoro e il numero di cose che aspettano
+  (161), in grande i lavori delle mansioni dell'utente, magazziniere e preparatore, e sotto «Altri lavori» (176, 177).
+- DDT con l'inquadratura in alto e le righe sotto (162); «Metti a posto adesso» alla chiusura (163); le righe che
+  aspettano il responsabile non fermano il lavoro, e il responsabile può decidere sul telefono dell'operatore (166).
+- Un ordine alla volta (164); parziali per magazzino, di serie sì (165). Piani di spedizione per magazzino, con la
+  copertura degli ordini (167); coda «Prossimo ordine» per Shopify (168); permessi «Pianifica le spedizioni» (169) e
+  «Conferma le spedizioni» (173); un ordine, una persona (170); colli, chili e «Preparato da» già compilato (171);
+  «spedito» solo quando la merce parte, per corriere (172, 174).
+- La vendita assistita prende il posto del «banco»; in UFP crea l'ordine in Ad Hoc e il resto si fa lì (178).
+- Riepiloghi confermati con le deduzioni (175, 179).
+
+Asset: prototipo `prototipi/percorso-schermate/index.html` (anche https://claude.ai/artifact/Vb6ijyDdr4n2gsZcKhhVur,
+privata); pagina delle domande https://claude.ai/artifact/BpARZrpffCDENtsKzZgTSZ (privata). Domande 21 e 22 aggiunte in
+`docs/domande-rivenditore-ufp.md` (agente e corriere sull'ordine, colli e peso).
+
+Da riprendere: cosa succede in UFP alla merce di una vendita assistita che non parte subito si fissa con il
+collegamento ad Ad Hoc della specializzazione (178).
