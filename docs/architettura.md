@@ -683,3 +683,25 @@ Prima di scegliere lo stack (127):
 - Foto «di arrivo» della prova scattate dal browser dei telefoni: ticket «Piano della prova di accuratezza visiva».
 - Procedura guidata, rinnovo del certificato, copie di sicurezza, ritorno alla versione precedente: installazione e
   configurazione iniziale, sezione «Not yet specified» della mappa.
+
+## Prova di accuratezza visiva
+
+Dal ticket «Piano della prova di accuratezza visiva», in corso dal 17/11/2026. Decisioni 12 e 128–. La prova decide il
+modello visivo (12) e dà i numeri lasciati aperti dal percorso di identificazione (sezione «Da fissare con la prova
+visiva»). La esegue il ticket «Esecuzione della prova visiva e scelta del modello». Ricerche:
+`docs/research/2026-11-15-addestramento-ed-esecuzione-locale.md` (§A, §C, §I) e
+`docs/research/2026-11-15-modelli-visivi-riconoscimento-articoli.md` (§1, raccomandazione).
+
+### Dove stanno le foto
+
+| Cosa | Dove | Chi lo vede |
+|---|---|---|
+| Foto della prova | Repository GitHub privato e separato, solo per la prova (128) | Il proprietario e chi invita |
+| Tabella sigla anonima → codice vero dell'articolo | Stesso repository privato (129) | Come sopra |
+| Piano, script, risultati in numeri con le sigle anonime (A001, A002…) | Repository del progetto, pubblico (129) | Chiunque |
+
+- Nelle foto solo scatole ed etichette; una foto con un volto, un documento o il nome di un cliente si rifà da un'altra
+  faccia della scatola (130).
+- Le foto restano dopo la prova, per rifarla con un modello nuovo e per l'eventuale adattamento del modello; si
+  cancellano se il magazzino che le ha fornite lo chiede (131).
+
