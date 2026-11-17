@@ -728,5 +728,33 @@ si caricano nel repository privato (128). La pagina è solo codice, senza dati, 
 GitHub Pages), perché il browser apre la fotocamera solo da lì. La prepara il ticket «Esecuzione della prova visiva e
 scelta del modello».
 
-**Articoli attesi**: la prova restringe la ricerca a più numeri di articoli attesi, con le stesse foto (138).
+**Articoli di contorno** (139): 300 articoli in più, una sola foto davanti ciascuno; non si cercano mai, affollano la
+ricerca. Con loro si provano 20, 100, 200 e 500 articoli attesi (138, 139).
+
+Totale stimato: 200 × 6 + 40 × 3 + 300 × 1 = 1.620 foto, circa 9 ore di scatti a 20 secondi per foto (deduzione).
+
+### Modelli
+
+| Modello | Licenza | Taglie | Ruolo |
+|---|---|---|---|
+| SigLIP 2 | Apache-2.0 | media e grande | Candidato (140) |
+| PE-Core | Apache-2.0 | media e grande | Candidato (140) |
+| DINOv2 | Apache-2.0 | media e grande | Candidato e termine di paragone (140) |
+| DINOv3 | Licenza propria di Meta | media e grande | Solo confronto, dopo che l'utente ha letto la licenza e ottenuto l'accesso; nel prodotto solo se vince nettamente e l'utente accetta la licenza (141) |
+
+LocateAnything di NVIDIA non entra: localizza oggetti descritti a parole ma non riconosce quale articolo è, e la
+licenza esclude l'uso commerciale (`docs/research/2026-11-17-locateanything-nvidia.md`).
+
+### Cosa si misura
+
+- **Aspetto**: articolo giusto al primo posto e tra le prime 5 proposte, con 20, 100, 200 e 500 articoli attesi, con 1 e
+  con 3 foto di riferimento, diviso per dispositivo (135, 137, 139).
+- **Codice stampato e quantità**: quante volte si leggono giusti, confrontati con quanto scritto da chi scatta (142).
+- **Tempi**: solo nella sessione di Claude, per confrontare i modelli; la macchina vera quando si sceglie il server
+  (143).
+
+### Quando un modello basta
+
+Con 100 articoli attesi, l'articolo giusto è tra le 5 proposte in almeno 95 arrivi su 100. Tra i modelli che ci
+arrivano si sceglie il più veloce; se nessuno ci arriva, si studia l'adattamento (144).
 
