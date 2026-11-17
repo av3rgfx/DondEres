@@ -1,0 +1,670 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#14202B">
+<title>Pagina di scatto</title>
+<!--
+  Pagina di scatto della prova di accuratezza visiva (decisioni 128-148, docs/architettura.md).
+  Solo codice, nessun dato: le foto restano nel browser del dispositivo (IndexedDB) finché non si
+  esportano in file ZIP, che poi si caricano nel repository privato delle foto. Nessuna rete dopo il caricamento.
+-->
+<style>
+:root{
+  --bg:#EDF0F3; --surface:#FFFFFF; --ink:#14202B; --muted:#55636F; --line:#C9D1D9;
+  --stripe:#F2C200; --on-stripe:#14202B; --ok:#1C7F49; --ok-soft:#DFF2E7; --bad:#C8283C; --bad-soft:#F9E1E4;
+  --warn:#B4520A; --warn-soft:#FCEBDD; --focus:#2563C9;
+  --font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; --mono:ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#0E151C; --surface:#16202A; --ink:#E6ECF1; --muted:#98A6B2; --line:#2A3743;
+  --ok:#41BF79; --ok-soft:#14321F; --bad:#F05A6D; --bad-soft:#3B1C22; --warn:#F28B3E; --warn-soft:#3A2617; --focus:#6197F2;
+  color-scheme:dark}}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 var(--font);-webkit-tap-highlight-color:transparent;
+  padding:env(safe-area-inset-top,0px) max(16px,env(safe-area-inset-right,0px)) env(safe-area-inset-bottom,0px) max(16px,env(safe-area-inset-left,0px))}
+main{max-width:640px;margin:0 auto;display:grid;gap:16px;padding-block:16px 32px}
+h1{font-size:26px;line-height:1.1;margin:0}
+h2{font-size:19px;margin:0}
+p{margin:0}
+.muted{color:var(--muted);font-size:14px}
+.hazard{height:10px;margin:0 calc(-1 * max(16px,env(safe-area-inset-left,0px)));background:repeating-linear-gradient(-45deg,var(--stripe) 0 14px,var(--on-stripe) 14px 28px)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;gap:12px;min-width:0}
+label{font-weight:600;display:grid;gap:6px}
+label small{font-weight:400;color:var(--muted)}
+input,select{font:inherit;font-size:18px;padding:12px;border-radius:8px;border:2px solid var(--line);background:var(--surface);color:var(--ink);width:100%;min-width:0}
+input:focus-visible,select:focus-visible,button:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+button{font:inherit;font-weight:600;cursor:pointer;touch-action:manipulation;-webkit-user-select:none;user-select:none;
+  min-height:52px;padding:10px 16px;border-radius:10px;border:2px solid var(--ink);background:var(--surface);color:var(--ink)}
+button.primary{background:var(--stripe);color:var(--on-stripe);border-color:var(--on-stripe)}
+button.danger{border-color:var(--bad);color:var(--bad)}
+button[disabled]{opacity:.45;cursor:not-allowed}
+.row{display:flex;flex-wrap:wrap;gap:10px}
+.row > *{flex:1 1 140px}
+.modes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.mode{display:grid;gap:2px;text-align:left;padding:10px;min-height:72px;border-color:var(--line)}
+.mode small{font-weight:400;color:var(--muted);font-size:13px}
+.mode[aria-pressed="true"]{border-color:var(--ink);background:var(--stripe);color:var(--on-stripe)}
+.mode[aria-pressed="true"] small{color:var(--on-stripe)}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.stat{background:var(--bg);border-radius:8px;padding:8px;display:grid}
+.stat b{font-size:22px;font-variant-numeric:tabular-nums}
+.stat span{font-size:12px;color:var(--muted)}
+.msg{border-radius:8px;padding:10px 12px;font-size:15px}
+.msg.ok{background:var(--ok-soft);color:var(--ok)} .msg.bad{background:var(--bad-soft);color:var(--bad)} .msg.warn{background:var(--warn-soft);color:var(--warn)}
+.list{display:grid;gap:8px}
+.item{display:grid;grid-template-columns:56px 1fr auto;gap:10px;align-items:center;background:var(--bg);border-radius:8px;padding:6px}
+.item img{width:56px;height:56px;object-fit:cover;border-radius:6px;background:var(--line)}
+.item div{min-width:0;font-size:14px;overflow-wrap:anywhere}
+.item button{min-height:44px;padding:6px 10px;font-size:14px}
+button.item{width:100%;text-align:left;border:2px solid var(--line);font-weight:400;grid-template-columns:56px 1fr}
+button.item:hover{border-color:var(--ink)}
+.code{font-family:var(--mono);font-weight:700;overflow-wrap:anywhere}
+.parts{display:grid;gap:8px}
+/* Schermata di scatto: video intero (stessa inquadratura della foto salvata) con il riquadro al centro */
+#shoot{position:fixed;inset:0;background:#000;color:#fff;display:grid;grid-template-rows:auto 1fr auto;z-index:10;
+  padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)}
+#shoot[hidden]{display:none}
+.shead{padding:10px 16px;display:grid;gap:2px;background:#000}
+.shead .step{font-size:14px;color:#cfd6dc}
+.shead .what{font-size:20px;font-weight:700}
+.shead .hint{font-size:14px;color:#cfd6dc}
+.stage{display:grid;place-items:center;min-height:0;overflow:hidden}
+.frame{position:relative;max-width:100%;max-height:100%;display:inline-block;line-height:0}
+.frame video,.frame img{display:block;max-width:100vw;max-height:calc(100dvh - 230px);width:auto;height:auto}
+.box{position:absolute;left:15%;top:15%;width:70%;height:70%;border:3px solid var(--stripe);border-radius:6px;box-shadow:0 0 0 9999px rgba(0,0,0,.28);pointer-events:none}
+.sfoot{padding:12px 16px;display:flex;gap:10px;align-items:center;justify-content:space-between;background:#000}
+.sfoot button{background:transparent;color:#fff;border-color:#fff}
+.sfoot button.primary{background:var(--stripe);color:#14202B;border-color:var(--stripe)}
+.shutter{width:76px;height:76px;min-height:76px;border-radius:50%;padding:0;background:#fff !important;border:6px solid #8a949c !important}
+.shutter:active{transform:scale(.94)}
+@media (prefers-reduced-motion:reduce){.shutter:active{transform:none}}
+.flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
+.flash.on{animation:fl .18s ease-out}
+@keyframes fl{from{opacity:.7}to{opacity:0}}
+@media (prefers-reduced-motion:reduce){.flash.on{animation:none}}
+.sform{background:var(--surface);color:var(--ink);border-radius:12px;padding:16px;display:grid;gap:12px;width:min(520px,calc(100vw - 32px));max-height:100%;overflow:auto}
+.serr{background:var(--surface);color:var(--ink);border-radius:12px;padding:16px;display:grid;gap:12px;width:min(520px,calc(100vw - 32px))}
+.privacy{font-size:13px;color:#cfd6dc}
+</style>
+</head>
+<body>
+<div class="hazard" aria-hidden="true"></div>
+<main id="home">
+  <header style="display:grid;gap:4px">
+    <h1>Pagina di scatto</h1>
+    <p class="muted">Prova di accuratezza visiva · le foto restano su questo dispositivo finché non le esporti. <span id="ver"></span></p>
+  </header>
+
+  <section class="card" id="setup" aria-labelledby="h-setup">
+    <h2 id="h-setup">Questo dispositivo</h2>
+    <p class="muted">Si imposta una volta. Finisce nel nome di ogni foto e nell'elenco.</p>
+    <form id="setupForm" style="display:grid;gap:12px" novalidate>
+      <label>Tipo di dispositivo
+        <select id="devType" required>
+          <option value="">Scegli…</option>
+          <option value="iphone">iPhone</option>
+          <option value="android">Telefono Android</option>
+          <option value="palmare">Palmare con grilletto</option>
+          <option value="altro">Altro</option>
+        </select>
+      </label>
+      <label>Nome breve del dispositivo <small>per esempio iphone13 o zebra1</small>
+        <input id="devName" autocomplete="off" autocapitalize="none" spellcheck="false" maxlength="20" pattern="[A-Za-z0-9-]+" required>
+      </label>
+      <label>Chi scatta <small>iniziali o sigla, per esempio P1</small>
+        <input id="person" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="8" pattern="[A-Za-z0-9-]+" required>
+      </label>
+      <div style="display:grid;gap:8px">
+        <p id="setupMsg" class="msg bad" hidden></p>
+        <button class="primary" type="submit">Salva</button>
+      </div>
+    </form>
+  </section>
+
+  <section class="card" id="start" aria-labelledby="h-start" hidden>
+    <div style="display:flex;justify-content:space-between;gap:8px;align-items:baseline;flex-wrap:wrap">
+      <h2 id="h-start">Nuovo articolo</h2>
+      <button type="button" id="editSetup" style="min-height:40px;padding:4px 12px;font-size:14px">Dispositivo: <span id="devLabel"></span></button>
+    </div>
+    <div class="modes" role="group" aria-label="Tipo di foto">
+      <button type="button" class="mode" data-mode="riferimento" aria-pressed="true">Riferimento<small>3 foto: davanti, etichetta, altro lato</small></button>
+      <button type="button" class="mode" data-mode="arrivo" aria-pressed="false">Arrivo<small>come al ricevimento</small></button>
+      <button type="button" class="mode" data-mode="contorno" aria-pressed="false">Contorno<small>1 foto: davanti</small></button>
+    </div>
+    <form id="codeForm" style="display:grid;gap:10px" novalidate>
+      <label><span id="codeLabTxt">Codice articolo</span> <small id="codeLabSmall">scrivilo o leggilo con il grilletto del palmare</small>
+        <input id="code" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" enterkeyhint="go" maxlength="40" required>
+      </label>
+      <div class="list" id="pick" hidden></div>
+      <p id="codeMsg" class="msg" hidden></p>
+      <div class="row" id="codeActions">
+        <button class="primary" type="submit" id="go">Inizia le foto</button>
+        <button type="button" id="freeCode" hidden>Fuori catalogo: scrivi il codice</button>
+      </div>
+    </form>
+  </section>
+
+  <section class="card" id="phone" aria-labelledby="h-phone" hidden>
+    <h2 id="h-phone">Nel dispositivo</h2>
+    <div class="stats">
+      <div class="stat"><b id="nNew">0</b><span>foto da esportare</span></div>
+      <div class="stat"><b id="nExp">0</b><span>esportate, ancora qui</span></div>
+      <div class="stat"><b id="nArt">0</b><span>articoli</span></div>
+    </div>
+    <p class="muted" id="space"></p>
+    <div class="list" id="last" aria-live="polite"></div>
+  </section>
+
+  <section class="card" id="export" aria-labelledby="h-export" hidden>
+    <h2 id="h-export">Fine giro</h2>
+    <p class="muted">Prepara i file ZIP (al massimo 24 MB l'uno) con le foto e l'elenco. Salvali, passali al computer e caricali nel repository privato, nella cartella «da-caricare».</p>
+    <p class="msg warn">Esporta a fine giornata: Safari può cancellare i dati di un sito che non usi per 7 giorni.</p>
+    <div class="row">
+      <button type="button" class="primary" id="doExport">Esporta le foto nuove</button>
+      <button type="button" id="reExport">Scarica di nuovo le esportate</button>
+    </div>
+    <p id="expMsg" class="msg" hidden aria-live="polite"></p>
+    <div class="parts" id="parts"></div>
+    <div id="clearBox" class="row" hidden>
+      <button type="button" class="danger" id="clear">Togli dal dispositivo le foto esportate</button>
+    </div>
+  </section>
+</main>
+
+<section id="shoot" hidden aria-label="Scatto">
+  <div class="shead">
+    <span class="step" id="sStep"></span>
+    <span class="what" id="sWhat"></span>
+    <span class="hint" id="sHint"></span>
+  </div>
+  <div class="stage" id="stage">
+    <div class="frame" id="frame">
+      <video id="video" playsinline muted autoplay></video>
+      <img id="still" alt="Foto appena scattata" hidden>
+      <div class="box" aria-hidden="true"></div>
+      <div class="flash" id="flash"></div>
+    </div>
+    <form class="sform" id="labelForm" hidden novalidate>
+      <h2>Cosa c'è scritto sull'etichetta?</h2>
+      <p class="muted">Copia dalla scatola. Lascia vuoto se non c'è.</p>
+      <label>Codice stampato <small>il codice del prodotto scritto sull'etichetta</small>
+        <input id="printed" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" maxlength="60">
+      </label>
+      <button type="button" id="sameCode">Uguale al codice articolo</button>
+      <label>Quantità scritta sulla scatola <small>per esempio 12 o 2,5 kg</small>
+        <input id="qty" autocomplete="off" spellcheck="false" maxlength="30">
+      </label>
+      <button class="primary" type="submit">Salva e continua</button>
+    </form>
+    <div class="serr" id="camErr" hidden role="alert"></div>
+  </div>
+  <div class="sfoot">
+    <button type="button" id="sBack">Esci</button>
+    <button type="button" class="shutter" id="shutter" aria-label="Scatta"></button>
+    <button type="button" id="sRetake" hidden>Rifai</button>
+    <button type="button" class="primary" id="sKeep" hidden>Tieni</button>
+    <span id="sPad" style="width:72px"></span>
+  </div>
+  <p class="privacy" style="padding:0 16px 8px;margin:0;background:#000">Solo scatole ed etichette: niente volti, documenti o nomi di clienti. Se ne compare uno, inquadra un'altra faccia.</p>
+</section>
+
+<script>
+"use strict";
+const VERSION = "3 · 17/11/2026";
+const MAX_SIDE = 1920;            // lato lungo massimo della foto salvata
+const JPEG_Q = 0.9;
+const PART_MAX = 24 * 1024 * 1024; // il sito di GitHub accetta file fino a 25 MB
+const BOX = {x:0.15, y:0.15, w:0.7, h:0.7}; // riquadro al centro, in frazioni della foto
+const SHOTS = {
+  riferimento: [
+    {foto:"davanti", what:"Davanti", hint:"Il lato con il nome o il disegno del prodotto, dentro il riquadro."},
+    {foto:"etichetta", what:"Etichetta", hint:"L'etichetta con codici e quantità, leggibile e dentro il riquadro.", label:true},
+    {foto:"altro-lato", what:"Altro lato", hint:"Un lato diverso dai primi due."}],
+  contorno: [{foto:"davanti", what:"Davanti", hint:"Il lato con il nome o il disegno del prodotto."}],
+  arrivo: [{foto:"arrivo", what:"Come al ricevimento", hint:"Il collo come arriva, con la luce normale. Se puoi, un collo diverso da quello delle foto di riferimento."}]
+};
+const $ = s => document.querySelector(s);
+const pad = (n, l=2) => String(n).padStart(l, "0");
+const store = {
+  get(k){ try{ return JSON.parse(localStorage.getItem("pv:"+k)); }catch(e){ return null; } },
+  set(k, v){ try{ localStorage.setItem("pv:"+k, JSON.stringify(v)); }catch(e){} }
+};
+$("#ver").textContent = "Versione " + VERSION + ".";
+
+/* ---------- Archivio locale (IndexedDB)
+   foto: {id, meta, thumb, bytes, stato: "nuova"|"esportata"}, leggero, letto spesso;
+   dati: {id, data: ArrayBuffer}, la foto vera, letta solo all'esportazione;
+   articoli: {codice, thumb, arrivi}, gli articoli fotografati come riferimento. ---------- */
+let idb;
+function openDb(){
+  return new Promise((res, rej) => {
+    const r = indexedDB.open("prova-visiva", 3);
+    r.onupgradeneeded = () => {
+      const d = r.result;
+      if(!d.objectStoreNames.contains("foto")) d.createObjectStore("foto", {keyPath:"id", autoIncrement:true});
+      if(!d.objectStoreNames.contains("articoli")) d.createObjectStore("articoli", {keyPath:"codice"});
+      if(!d.objectStoreNames.contains("dati")){
+        const dati = d.createObjectStore("dati", {keyPath:"id"});
+        // Versioni 1 e 2 tenevano la foto dentro il record: la si sposta in "dati".
+        r.transaction.objectStore("foto").openCursor().onsuccess = e => {
+          const c = e.target.result; if(!c) return;
+          const v = c.value;
+          if(v.data){ dati.put({id: v.id, data: v.data}); v.bytes = v.data.byteLength; delete v.data; c.update(v); }
+          c.continue();
+        };
+      }
+    };
+    r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error);
+  });
+}
+function tx(mode, fn, name = "foto"){
+  return new Promise((res, rej) => {
+    const t = idb.transaction(name, mode), s = t.objectStore(name); let out;
+    Promise.resolve(fn(s)).then(v => out = v);
+    t.oncomplete = () => res(out); t.onerror = () => rej(t.error); t.onabort = () => rej(t.error);
+  });
+}
+const req = r => new Promise((res, rej) => { r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); });
+const allPhotos = () => tx("readonly", s => req(s.getAll()));
+function putPhoto(rec, data){
+  return new Promise((res, rej) => {
+    const t = idb.transaction(["foto", "dati"], "readwrite");
+    const r = t.objectStore("foto").add(rec);
+    r.onsuccess = () => t.objectStore("dati").put({id: r.result, data});
+    t.oncomplete = () => res(r.result); t.onerror = () => rej(t.error); t.onabort = () => rej(t.error);
+  });
+}
+function delPhotos(ids){
+  return new Promise((res, rej) => {
+    const t = idb.transaction(["foto", "dati"], "readwrite");
+    ids.forEach(id => { t.objectStore("foto").delete(id); t.objectStore("dati").delete(id); });
+    t.oncomplete = () => res(); t.onerror = () => rej(t.error); t.onabort = () => rej(t.error);
+  });
+}
+const getData = ids => tx("readonly", s => Promise.all(ids.map(id => req(s.get(id)))), "dati");
+const allItems = () => tx("readonly", s => req(s.getAll()), "articoli");
+async function touchItem(code, thumb, arrivo){
+  const r = (await tx("readonly", s => req(s.get(code)), "articoli")) || (arrivo ? null : {codice: code, thumb: "", arrivi: 0});
+  if(!r) return;
+  if(thumb && !r.thumb) r.thumb = thumb;
+  if(arrivo) r.arrivi = (r.arrivi || 0) + 1;
+  await tx("readwrite", s => req(s.put(r)), "articoli");
+}
+async function setState(ids, stato){
+  const want = new Set(ids), recs = (await allPhotos()).filter(p => want.has(p.id));
+  await tx("readwrite", s => recs.forEach(r => { r.stato = stato; s.put(r); }));
+}
+
+/* ---------- Impostazioni del dispositivo ---------- */
+let cfg = store.get("cfg");
+function showSetup(open){
+  $("#setup").hidden = !open; $("#start").hidden = open; $("#phone").hidden = open; $("#export").hidden = open;
+  if(open && cfg){ $("#devType").value = cfg.tipo; $("#devName").value = cfg.nome; $("#person").value = cfg.persona; }
+  if(!open){ $("#devLabel").textContent = `${cfg.nome} · ${cfg.persona}`; refresh(); setTimeout(() => $("#code").focus(), 50); }
+}
+$("#setupForm").addEventListener("submit", e => {
+  e.preventDefault();
+  const tipo = $("#devType").value, nome = $("#devName").value.trim(), persona = $("#person").value.trim().toUpperCase();
+  const ok = /^[A-Za-z0-9-]{1,20}$/;
+  const m = $("#setupMsg");
+  if(!tipo || !ok.test(nome) || !ok.test(persona)){
+    m.hidden = false; m.textContent = "Scegli il tipo e scrivi nome e sigla con sole lettere, numeri o trattini."; return;
+  }
+  m.hidden = true; cfg = {tipo, nome: nome.toLowerCase(), persona}; store.set("cfg", cfg); showSetup(false);
+});
+$("#editSetup").addEventListener("click", () => showSetup(true));
+
+/* ---------- Scelta del tipo di foto e del codice ---------- */
+let mode = store.get("mode") || "riferimento";
+let free = false; // arrivo: false = si sceglie dall'elenco, true = codice scritto (fuori catalogo)
+const searching = () => mode === "arrivo" && !free;
+function setMode(m){
+  mode = m; store.set("mode", m); free = false;
+  document.querySelectorAll(".mode").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.mode === m)));
+  $("#codeMsg").hidden = true; $("#code").value = ""; codeUi();
+}
+function codeUi(){
+  const s = searching();
+  $("#codeLabTxt").textContent = s ? "Cerca l'articolo" : mode === "arrivo" ? "Codice dell'articolo fuori catalogo" : "Codice articolo";
+  $("#codeLabSmall").textContent = s ? "scrivi qualche cifra del codice e tocca l'articolo giusto" : "scrivilo o leggilo con il grilletto del palmare";
+  $("#go").hidden = s; $("#freeCode").hidden = mode !== "arrivo";
+  $("#freeCode").textContent = free ? "Cerca tra gli articoli fotografati" : "Fuori catalogo: scrivi il codice";
+  $("#pick").hidden = !s; if(s) renderPick();
+}
+const norm = t => t.toUpperCase().replace(/[\s.\-_/]+/g, "");
+async function renderPick(){
+  if(!idb) return [];
+  const box = $("#pick"), q = norm($("#code").value.trim()), items = await allItems();
+  box.innerHTML = "";
+  if(!items.length){ const p = document.createElement("p"); p.className = "msg warn"; p.textContent = "Su questo dispositivo non ci sono ancora articoli fotografati come riferimento. Per un articolo fuori catalogo, scrivi il codice."; box.append(p); return []; }
+  const hits = items.filter(it => !q || norm(it.codice).includes(q)).sort((a, b) => (a.arrivi || 0) - (b.arrivi || 0) || a.codice.localeCompare(b.codice));
+  hits.slice(0, 8).forEach(it => {
+    const b = document.createElement("button"); b.type = "button"; b.className = "item";
+    const img = document.createElement("img"); img.src = it.thumb || ""; img.alt = "";
+    const d = document.createElement("div");
+    const c = document.createElement("span"); c.className = "code"; c.textContent = it.codice;
+    d.append(c, document.createTextNode(` · foto di arrivo fatte: ${it.arrivi || 0}`));
+    b.append(img, d); b.onclick = () => startShoot(it.codice, "elenco"); box.append(b);
+  });
+  const p = document.createElement("p"); p.className = "muted";
+  p.textContent = !hits.length ? "Nessun articolo con queste cifre. Se è fuori catalogo, scrivi il codice." : hits.length > 8 ? `Altri ${hits.length - 8}: scrivi altre cifre.` : "";
+  if(p.textContent) box.append(p);
+  return hits;
+}
+$("#freeCode").addEventListener("click", () => { free = !free; $("#code").value = ""; $("#codeMsg").hidden = true; codeUi(); $("#code").focus(); });
+document.querySelectorAll(".mode").forEach(b => b.addEventListener("click", () => { setMode(b.dataset.mode); $("#code").focus(); }));
+setMode(mode);
+let confirmCode = null;
+$("#codeForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const code = $("#code").value.trim();
+  const m = $("#codeMsg");
+  if(searching()){
+    const hits = await renderPick();
+    if(hits.length === 1){ startShoot(hits[0].codice, "elenco"); return; }
+    m.className = "msg warn"; m.hidden = false; m.textContent = hits.length ? "Tocca l'articolo giusto nell'elenco." : "Nessun articolo trovato: controlla le cifre."; return;
+  }
+  if(!code){ m.className = "msg bad"; m.hidden = false; m.textContent = "Scrivi il codice dell'articolo."; $("#code").focus(); return; }
+  if(mode !== "arrivo" && confirmCode !== code){
+    const same = (await allPhotos()).filter(p => p.meta.codice === code && p.meta.tipo === mode);
+    if(same.length){
+      confirmCode = code; m.className = "msg warn"; m.hidden = false;
+      m.textContent = `${code} ha già ${same.length} foto di ${mode} su questo dispositivo. Premi di nuovo «Inizia le foto» per farne altre, oppure correggi il codice.`;
+      return;
+    }
+  }
+  confirmCode = null; m.hidden = true; startShoot(code, "scritto");
+});
+$("#code").addEventListener("input", () => { confirmCode = null; $("#codeMsg").hidden = true; if(searching()) renderPick(); });
+
+/* ---------- Fotocamera ---------- */
+const video = $("#video");
+let stream = null, wake = null;
+async function camOn(){
+  camErr(null);
+  if(!window.isSecureContext || !navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+    camErr("Questo browser non apre la fotocamera da qui. La pagina va aperta dal suo indirizzo https, con Safari su iPhone o Chrome su Android."); return;
+  }
+  try{
+    stream = await navigator.mediaDevices.getUserMedia({audio:false, video:{facingMode:{ideal:"environment"}, width:{ideal:1920}, height:{ideal:1440}}});
+    video.srcObject = stream; await video.play().catch(() => {});
+  }catch(err){
+    const n = err && err.name;
+    camErr(n === "NotAllowedError" ? "La fotocamera è bloccata. Consentila nelle impostazioni del sito (icona accanto all'indirizzo) e premi «Riprova»."
+      : n === "NotFoundError" ? "Non trovo una fotocamera su questo dispositivo."
+      : n === "NotReadableError" ? "La fotocamera è usata da un'altra app. Chiudila e premi «Riprova»."
+      : "La fotocamera non si è aperta (" + (n || "errore sconosciuto") + "). Premi «Riprova».");
+  }
+  try{ if("wakeLock" in navigator) wake = await navigator.wakeLock.request("screen"); }catch(e){}
+}
+function camOff(){
+  if(stream){ stream.getTracks().forEach(t => t.stop()); stream = null; }
+  video.srcObject = null;
+  if(wake){ wake.release().catch(() => {}); wake = null; }
+}
+function camErr(text){
+  const box = $("#camErr");
+  if(!text){ box.hidden = true; $("#frame").hidden = false; return; }
+  box.innerHTML = ""; const p = document.createElement("p"); p.textContent = text;
+  const b = document.createElement("button"); b.className = "primary"; b.type = "button"; b.textContent = "Riprova"; b.onclick = camOn;
+  box.append(p, b); box.hidden = false; $("#frame").hidden = true; $("#shutter").disabled = true;
+}
+document.addEventListener("visibilitychange", () => {
+  if($("#shoot").hidden) return;
+  if(document.hidden) camOff(); else if(!pending && !(cur && cur.waiting)) camOn();
+});
+video.addEventListener("playing", () => { $("#shutter").disabled = false; });
+
+/* ---------- Sequenza di scatto ---------- */
+let cur = null, pending = null; // cur: {code, shots, i, done}; pending: {blob, w, h}
+function startShoot(code, origine){
+  cur = {code, origine, shots: SHOTS[mode], i: 0, done: 0, tipo: mode};
+  $("#home").hidden = true; $("#shoot").hidden = false; showStep(); camOn();
+}
+function showStep(){
+  const s = cur.shots[cur.i];
+  const n = cur.shots.length > 1 ? ` · ${cur.i + 1} di ${cur.shots.length}` : "";
+  $("#sStep").textContent = `${cur.code} · ${cur.tipo}${n}`;
+  $("#sWhat").textContent = s.what; $("#sHint").textContent = s.hint;
+  live(false);
+}
+function live(isStill){
+  $("#still").hidden = !isStill; video.hidden = isStill;
+  $("#shutter").hidden = isStill; $("#sPad").hidden = isStill; $("#sRetake").hidden = !isStill; $("#sKeep").hidden = !isStill;
+  $("#labelForm").hidden = true;
+  if(!isStill){ $("#frame").hidden = false; $("#shutter").disabled = !stream || video.readyState < 2; }
+}
+$("#shutter").addEventListener("click", async () => {
+  const vw = video.videoWidth, vh = video.videoHeight;
+  if(!vw || !vh) return;
+  const k = Math.min(1, MAX_SIDE / Math.max(vw, vh));
+  const w = Math.round(vw * k), h = Math.round(vh * k);
+  const c = document.createElement("canvas"); c.width = w; c.height = h;
+  c.getContext("2d").drawImage(video, 0, 0, w, h);
+  const fl = $("#flash"); fl.classList.remove("on"); void fl.offsetWidth; fl.classList.add("on");
+  const blob = await new Promise(r => c.toBlob(r, "image/jpeg", JPEG_Q));
+  if(!blob){ camErr("Non sono riuscito a salvare la foto. Premi «Riprova»."); return; }
+  const t = document.createElement("canvas"), tk = 160 / Math.max(w, h); t.width = Math.round(w * tk); t.height = Math.round(h * tk);
+  t.getContext("2d").drawImage(c, 0, 0, t.width, t.height);
+  pending = {blob, w, h, thumb: t.toDataURL("image/jpeg", 0.6)};
+  const still = $("#still"); if(still.src) URL.revokeObjectURL(still.src); still.src = URL.createObjectURL(blob);
+  live(true);
+});
+$("#sRetake").addEventListener("click", () => { pending = null; live(false); if(!stream) camOn(); });
+$("#sKeep").addEventListener("click", () => {
+  const s = cur.shots[cur.i];
+  if(s.label){
+    $("#frame").hidden = true; $("#sRetake").hidden = true; $("#sKeep").hidden = true;
+    $("#printed").value = ""; $("#qty").value = ""; $("#labelForm").hidden = false; $("#printed").focus();
+  } else savePending("", "");
+});
+$("#sameCode").addEventListener("click", () => { $("#printed").value = cur ? cur.code : ""; $("#qty").focus(); });
+$("#labelForm").addEventListener("submit", e => { e.preventDefault(); savePending($("#printed").value.trim(), $("#qty").value.trim()); });
+
+const safe = s => s.replace(/[^A-Za-z0-9.-]+/g, "_").replace(/^_+|_+$/g, "") || "senza-codice";
+let saving = false; // evita il doppio salvataggio con un doppio tocco
+async function savePending(printed, qty){
+  if(saving || !pending || !cur) return;
+  saving = true;
+  try{ await savePendingNow(printed, qty); } finally { saving = false; }
+}
+async function savePendingNow(printed, qty){
+  const s = cur.shots[cur.i], now = new Date();
+  const giorno = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
+  const ora = `${pad(now.getHours())}${pad(now.getMinutes())}${pad(now.getSeconds())}${pad(now.getMilliseconds(),3)}`;
+  const tag = cur.tipo === "riferimento" ? "rif-" + s.foto : cur.tipo === "contorno" ? "contorno-" + s.foto : "arrivo";
+  const file = `${cur.tipo}/${safe(cur.code)}__${tag}__${giorno}__${cfg.nome}__${cfg.persona}__${ora}.jpg`;
+  const meta = {file, codice: cur.code, origine_codice: cur.origine, tipo: cur.tipo, foto: s.foto, giorno, ora: `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`,
+    dispositivo: cfg.nome, tipo_dispositivo: cfg.tipo, persona: cfg.persona, larghezza: pending.w, altezza: pending.h,
+    riquadro_x: BOX.x, riquadro_y: BOX.y, riquadro_l: BOX.w, riquadro_a: BOX.h,
+    codice_stampato: printed, quantita: qty, pagina: VERSION, browser: navigator.userAgent};
+  try{
+    const data = await pending.blob.arrayBuffer();
+    await putPhoto({meta, thumb: pending.thumb, bytes: data.byteLength, stato: "nuova"}, data);
+    if(cur.tipo === "riferimento") await touchItem(cur.code, s.foto === "davanti" ? pending.thumb : "", false);
+    if(cur.tipo === "arrivo") await touchItem(cur.code, "", true);
+    if(navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});
+  }catch(err){
+    camErr("Non c'è spazio per salvare la foto su questo dispositivo. Esci, esporta le foto e toglile dal dispositivo."); return;
+  }
+  pending = null; cur.done++; cur.i++;
+  if(cur.i < cur.shots.length){ showStep(); return; }
+  if(cur.tipo === "arrivo"){ askAnother(); return; }
+  finish(`${cur.code}: ${cur.done} foto salvate.`);
+}
+function askAnother(){
+  camOff(); cur.waiting = true;
+  $("#frame").hidden = true; $("#sRetake").hidden = true; $("#sKeep").hidden = true;
+  const box = $("#camErr"); box.innerHTML = "";
+  const p = document.createElement("p"); p.textContent = `${cur.code}: foto di arrivo salvata (${cur.done} in questo passaggio).`;
+  const a = document.createElement("button"); a.type = "button"; a.textContent = "Un'altra foto di arrivo";
+  a.onclick = () => { cur.i = 0; cur.waiting = false; box.hidden = true; showStep(); camOn(); };
+  const b = document.createElement("button"); b.type = "button"; b.className = "primary"; b.textContent = "Articolo successivo";
+  b.onclick = () => finish(`${cur.code}: ${cur.done} foto di arrivo salvate.`);
+  box.append(p, b, a); box.hidden = false; b.focus();
+}
+function finish(text){
+  camOff(); pending = null; cur = null;
+  $("#shoot").hidden = true; $("#home").hidden = false; $("#camErr").hidden = true;
+  const m = $("#codeMsg"); m.className = "msg ok"; m.hidden = false; m.textContent = text;
+  $("#code").value = ""; free = false; refresh(); codeUi(); $("#code").focus();
+}
+$("#sBack").addEventListener("click", () => {
+  const left = cur ? cur.shots.length - cur.i : 0;
+  finish(cur && cur.done && left && cur.tipo !== "arrivo" ? `${cur.code}: uscito dopo ${cur.done} foto; ne mancano ${left}.` : "Uscito senza altre foto.");
+});
+
+/* ---------- Riepilogo nel dispositivo ---------- */
+async function refresh(){
+  if(!cfg) return;
+  const all = await allPhotos();
+  const nNew = all.filter(p => p.stato === "nuova").length, nExp = all.length - nNew;
+  $("#nNew").textContent = nNew; $("#nExp").textContent = nExp;
+  $("#nArt").textContent = new Set(all.map(p => p.meta.codice)).size;
+  $("#doExport").disabled = !nNew; $("#reExport").disabled = !nExp; $("#clearBox").hidden = !nExp;
+  try{
+    const e = navigator.storage && navigator.storage.estimate ? await navigator.storage.estimate() : null;
+    $("#space").textContent = e && e.quota ? `Spazio usato: ${(e.usage/1048576).toFixed(0)} MB di ${(e.quota/1048576).toFixed(0)} MB disponibili al browser.` : "";
+  }catch(err){ $("#space").textContent = ""; }
+  const list = $("#last"); list.innerHTML = "";
+  all.slice(-6).reverse().forEach(p => {
+    const it = document.createElement("div"); it.className = "item";
+    const img = document.createElement("img"); img.src = p.thumb; img.alt = "";
+    const d = document.createElement("div");
+    const c = document.createElement("span"); c.className = "code"; c.textContent = p.meta.codice;
+    d.append(c, document.createTextNode(` · ${p.meta.tipo} · ${p.meta.foto} · ${p.meta.ora}` + (p.stato === "esportata" ? " · esportata" : "")));
+    const b = document.createElement("button"); b.type = "button"; b.className = "danger"; b.textContent = "Elimina";
+    b.onclick = async () => {
+      if(b.dataset.sure){ await delPhotos([p.id]); refresh(); return; }
+      b.dataset.sure = "1"; b.textContent = "Sicuro?"; setTimeout(() => { if(b.isConnected){ delete b.dataset.sure; b.textContent = "Elimina"; } }, 4000);
+    };
+    it.append(img, d, b); list.append(it);
+  });
+  if(!all.length){ const p = document.createElement("p"); p.className = "muted"; p.textContent = "Ancora nessuna foto. Scegli il tipo di foto, scrivi il codice e premi «Inizia le foto»."; list.append(p); }
+}
+
+/* ---------- ZIP senza compressione (le JPEG non si comprimono) ---------- */
+const CRC = (() => { const t = new Uint32Array(256); for(let n = 0; n < 256; n++){ let c = n; for(let k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; } return t; })();
+function crc32(u8){ let c = 0xFFFFFFFF; for(let i = 0; i < u8.length; i++) c = CRC[(c ^ u8[i]) & 0xFF] ^ (c >>> 8); return (c ^ 0xFFFFFFFF) >>> 0; }
+function zip(files){ // files: [{name, data: Uint8Array}]
+  const enc = new TextEncoder(), out = [], central = []; let off = 0;
+  const d = new Date(), dosT = (d.getHours() << 11) | (d.getMinutes() << 5) | (d.getSeconds() >> 1), dosD = ((d.getFullYear() - 1980) << 9) | ((d.getMonth() + 1) << 5) | d.getDate();
+  for(const f of files){
+    const name = enc.encode(f.name), crc = crc32(f.data), size = f.data.length;
+    const h = new DataView(new ArrayBuffer(30));
+    h.setUint32(0, 0x04034b50, true); h.setUint16(4, 20, true); h.setUint16(6, 0x0800, true); h.setUint16(8, 0, true);
+    h.setUint16(10, dosT, true); h.setUint16(12, dosD, true); h.setUint32(14, crc, true); h.setUint32(18, size, true); h.setUint32(22, size, true);
+    h.setUint16(26, name.length, true); h.setUint16(28, 0, true);
+    out.push(h.buffer, name, f.data);
+    const c = new DataView(new ArrayBuffer(46));
+    c.setUint32(0, 0x02014b50, true); c.setUint16(4, 20, true); c.setUint16(6, 20, true); c.setUint16(8, 0x0800, true); c.setUint16(10, 0, true);
+    c.setUint16(12, dosT, true); c.setUint16(14, dosD, true); c.setUint32(16, crc, true); c.setUint32(20, size, true); c.setUint32(24, size, true);
+    c.setUint16(28, name.length, true); c.setUint32(42, off, true);
+    central.push(c.buffer, name);
+    off += 30 + name.length + size;
+  }
+  const cdSize = central.reduce((a, b) => a + b.byteLength, 0);
+  const e = new DataView(new ArrayBuffer(22));
+  e.setUint32(0, 0x06054b50, true); e.setUint16(8, files.length, true); e.setUint16(10, files.length, true); e.setUint32(12, cdSize, true); e.setUint32(16, off, true);
+  return new Blob([...out, ...central, e.buffer], {type: "application/zip"});
+}
+const COLS = ["file","codice","origine_codice","tipo","foto","giorno","ora","dispositivo","tipo_dispositivo","persona","larghezza","altezza","riquadro_x","riquadro_y","riquadro_l","riquadro_a","codice_stampato","quantita","pagina","browser"];
+const csvCell = v => { const s = String(v == null ? "" : v); return /[",\n\r;]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; };
+const csv = rows => [COLS.join(","), ...rows.map(r => COLS.map(k => csvCell(r[k])).join(","))].join("\r\n") + "\r\n";
+
+function planParts(photos){
+  const now = new Date();
+  const giro = `${now.getFullYear()}${pad(now.getMonth()+1)}${pad(now.getDate())}-${pad(now.getHours())}${pad(now.getMinutes())}_${cfg.nome}_${cfg.persona}`;
+  const groups = []; let g = [], size = 0;
+  for(const p of photos){
+    const sz = (p.bytes || 600 * 1024) + 300;
+    if(g.length && size + sz > PART_MAX - 512 * 1024){ groups.push(g); g = []; size = 0; }
+    g.push(p); size += sz;
+  }
+  if(g.length) groups.push(g);
+  return groups.map((grp, i) => ({
+    name: `giro_${giro}_parte-${i + 1}-di-${groups.length}.zip`,
+    elenco: `elenco_${giro}_parte-${i + 1}-di-${groups.length}.csv`,
+    photos: grp
+  }));
+}
+async function buildPart(part){ // legge dal disco solo le foto di questa parte
+  const recs = await getData(part.photos.map(p => p.id));
+  const files = part.photos.map((p, i) => {
+    if(!recs[i]) throw new Error("manca la foto " + p.meta.file);
+    return {name: p.meta.file, data: new Uint8Array(recs[i].data)};
+  });
+  files.push({name: part.elenco, data: new TextEncoder().encode(csv(part.photos.map(p => p.meta)))});
+  return new File([zip(files)], part.name, {type: "application/zip"});
+}
+let lastUrl = null;
+function offer(parts){
+  const box = $("#parts"); box.innerHTML = "";
+  parts.forEach((part, i) => {
+    const row = document.createElement("div"); row.className = "row";
+    const prep = document.createElement("button"); prep.type = "button"; prep.className = "primary";
+    prep.textContent = `Prepara parte ${i + 1} di ${parts.length} · ${part.photos.length} foto`;
+    prep.onclick = async () => {
+      prep.disabled = true; prep.textContent = "Preparo…";
+      let file;
+      try{ file = await buildPart(part); }
+      catch(err){ prep.disabled = false; prep.textContent = `Riprova la parte ${i + 1}: ${err && err.message || err}`; return; }
+      if(lastUrl) URL.revokeObjectURL(lastUrl);
+      lastUrl = URL.createObjectURL(file);
+      const url = lastUrl;
+      const dl = document.createElement("button"); dl.type = "button"; dl.className = "primary";
+      dl.textContent = `Salva parte ${i + 1} di ${parts.length} · ${(file.size/1048576).toFixed(1)} MB`;
+      dl.onclick = () => { const a = document.createElement("a"); a.href = url; a.download = part.name; document.body.append(a); a.click(); a.remove(); dl.textContent = "Salvata: " + part.name; };
+      row.replaceChildren(dl);
+      if(navigator.canShare && navigator.canShare({files: [file]})){
+        const sh = document.createElement("button"); sh.type = "button"; sh.textContent = "Condividi (AirDrop, Drive…)";
+        sh.onclick = () => navigator.share({files: [file], title: part.name}).catch(() => {});
+        row.append(sh);
+      }
+    };
+    row.append(prep); box.append(row);
+  });
+}
+async function doExport(which){
+  const m = $("#expMsg"); m.className = "msg"; m.hidden = false; m.textContent = "Preparo l'elenco…";
+  try{
+    const photos = (await allPhotos()).filter(p => p.stato === which);
+    const parts = planParts(photos);
+    if(which === "nuova") await setState(photos.map(p => p.id), "esportata");
+    offer(parts);
+    m.className = "msg ok"; m.textContent = `${photos.length} foto in ${parts.length} file. Prepara e salva ogni parte, una alla volta; le foto restano qui finché non le togli.`;
+  }catch(err){ m.className = "msg bad"; m.textContent = "Non sono riuscito a preparare i file: " + (err && err.message || err); }
+  refresh();
+}
+$("#doExport").addEventListener("click", () => doExport("nuova"));
+$("#reExport").addEventListener("click", () => doExport("esportata"));
+$("#clear").addEventListener("click", async e => {
+  const b = e.currentTarget;
+  if(!b.dataset.sure){
+    b.dataset.sure = "1"; b.textContent = "Hai caricato gli ZIP nel repository? Tocca di nuovo per togliere le foto";
+    setTimeout(() => { if(b.isConnected){ delete b.dataset.sure; b.textContent = "Togli dal dispositivo le foto esportate"; } }, 6000); return;
+  }
+  delete b.dataset.sure; b.textContent = "Togli dal dispositivo le foto esportate";
+  const ids = (await allPhotos()).filter(p => p.stato === "esportata").map(p => p.id);
+  await delPhotos(ids);
+  $("#parts").innerHTML = ""; const m = $("#expMsg"); m.className = "msg ok"; m.hidden = false; m.textContent = `${ids.length} foto tolte dal dispositivo.`;
+  refresh();
+});
+
+/* ---------- Avvio ---------- */
+openDb().then(async d => {
+  idb = d;
+  for(const p of await allPhotos()) if(p.meta.tipo === "riferimento") await touchItem(p.meta.codice, p.meta.foto === "davanti" ? p.thumb : "", false);
+  showSetup(!cfg); codeUi();
+}).catch(() => {
+  document.querySelector("main").insertAdjacentHTML("beforeend", '<p class="msg bad">Questo browser non permette di salvare le foto (navigazione privata?). Apri la pagina in una finestra normale.</p>');
+});
+</script>
+</body>
+</html>

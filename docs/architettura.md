@@ -439,6 +439,16 @@ Esempio: «A1O 0O1I» corrisponde ad A100011. Un carattere davvero diverso o man
 attesi c'è un candidato solo, e con l'avviso. Non si cerca mai un codice «simile» in tutto il catalogo: è il requisito
 «un codice non si indovina da uno simile» del modello dei dati. In ogni caso serve il tocco dell'operatore (24).
 
+Quando il codice scritto sulla scatola è diverso, anche di poco, da quello dell'articolo che corrisponde (per esempio
+perché il fornitore lo ha cambiato), l'abbinamento lo conferma il responsabile: carica lo stesso la merce su
+quell'articolo oppure aspetta di aver aggiornato il codice nel gestionale (158). Finché il responsabile non risponde, la
+riga resta ferma come per l'articolo provvisorio (112), e il codice nuovo confermato diventa un codice del fornitore
+dell'articolo (71); le schermate si disegnano nel ticket «Percorso delle schermate» (159).
+
+Nel programma finito il codice non si scrive a mano: scriverlo resta il ripiego del «non lo so» (98, 151). Il barcode
+della scatola spesso porta un codice diverso dal codice articolo e non distingue colore o variante; in UFP il codice
+scritto sulla scatola è quasi sempre il codice articolo (157).
+
 ### Quantità
 
 | Caso | Cosa propone il programma | Decisione |
@@ -718,7 +728,7 @@ visiva»). La esegue il ticket «Esecuzione della prova visiva e scelta del mode
 | Foto | Quante | Come | A cosa servono |
 |---|---|---|---|
 | Di riferimento | 3 per articolo a catalogo: davanti, etichetta, altro lato (135) | Come all'inserimento guidato di un articolo nuovo (106) | Sono ciò che il programma conosce; si misura con 1 e con 3 |
-| Di arrivo | 3 per articolo, anche per quelli fuori catalogo (135) | Come in un ricevimento vero: iPhone, Android e palmare, almeno due persone, almeno due giorni, luce normale (137) | Sono ciò che il programma deve riconoscere; mai usate come riferimento |
+| Di arrivo | 3 per articolo, anche per quelli fuori catalogo (135), per ora tutte con l'iPhone; poi 1 per articolo con il palmare e 1 con l'Android (155) | Come in un ricevimento vero: in giorni o momenti diversi, luce normale (137) | Sono ciò che il programma deve riconoscere; mai usate come riferimento |
 
 Stima con 200 + 40 articoli: 200 × 6 + 40 × 3 = 1.320 foto, circa 7 ore di scatti a 20 secondi per foto (deduzione).
 
@@ -732,7 +742,61 @@ scelta del modello».
 **Articoli di contorno** (139): 300 articoli in più, una sola foto davanti ciascuno; non si cercano mai, affollano la
 ricerca. Con loro si provano 20, 100, 200 e 500 articoli attesi (138, 139).
 
-Totale stimato: 200 × 6 + 40 × 3 + 300 × 1 = 1.620 foto, circa 9 ore di scatti a 20 secondi per foto (deduzione).
+Totale stimato: 200 × 6 + 40 × 3 + 300 × 1 = 1.620 foto con l'iPhone, circa 9 ore di scatti a 20 secondi per foto,
+più 240 × 2 = 480 foto di arrivo con palmare e Android quando ci sono (deduzione, 155).
+
+**Esecuzione** (decisioni 149–158). La pagina di scatto è in `prova-visiva/pagina-scatto/index.html` ed è pubblicata
+con GitHub Pages dal ramo `gh-pages`, che contiene solo la pagina: https://av3rgfx.github.io/DondEres/ (149). L'utente
+l'ha provata sull'iPhone il 17/11/2026: funziona (versione 1). Come lavora:
+
+- **Dispositivo**: tipo, nome breve e sigla di chi scatta, impostati una volta; finiscono nel nome di ogni foto.
+- **Riferimento**: si scrive il codice articolo (o lo legge il grilletto del palmare), poi tre foto guidate; dopo
+  l'etichetta la pagina chiede codice stampato e quantità, con un tasto «uguale al codice articolo» (142, 157).
+- **Arrivo**: si sceglie l'articolo dall'elenco di quelli fotografati come riferimento sullo stesso telefono, cercandolo
+  con qualche cifra; il codice si scrive solo per gli articoli fuori catalogo (156). L'elenco registra se il codice è
+  stato scelto o scritto.
+- **Contorno**: si scrive il codice, una foto davanti.
+- **Foto**: dal video del browser, lato lungo al massimo 1.920 pixel, JPEG; il riquadro al centro copre il 70% della foto
+  in larghezza e altezza e le sue misure entrano nell'elenco, per il ritaglio della prova (145, 147).
+- **Fine giro**: le foto restano nel browser del telefono finché si esportano in ZIP da al massimo 24 MB, con un elenco
+  CSV; l'utente li carica nella cartella `da-caricare` del repository privato, l'agente li apre e li sistema (153).
+  Safari può cancellare i dati di un sito non usato per 7 giorni: si esporta a fine giornata.
+- Per palmare e Android, che non hanno l'elenco degli articoli fotografati sull'iPhone, servirà portarlo su quei
+  dispositivi o scrivere il codice (da decidere quando ci sono, 159). Per ora scatta solo l'utente; la seconda persona
+  della 137 arriva con palmare e Android (159).
+
+Le quattro foto d'esempio mandate dall'utente (nel repository privato, cartella `esempi`, fuori dalla prova) mostrano
+etichette di fornitori con il codice preceduto da parole come «Art.» o «Articolo», la quantità con «Pz.» o «Quantità»,
+spesso un disegno del prodotto, a volte barcode e codice QR, e codici con lettere e numeri mescolati, anche minuscoli
+(deduzione: le parole di quantità della 93 e i segni che si confondono della 89 servono davvero).
+
+**Script del calcolo** (17/11/2026, in `prova-visiva/script/`, istruzioni in `LEGGIMI.md` della stessa cartella):
+`prepara.py` apre gli ZIP e assegna le sigle, `impronte.py` calcola le impronte dei sei modelli con il riquadro e con
+il ritaglio OWLv2, `valuta.py` calcola i numeri sull'aspetto e le soglie, `etichette.py` misura la lettura di codice e
+quantità con PaddleOCR. Provati su una prova sintetica ricavata dalle quattro foto d'esempio (`prova_sintetica.py`):
+la catena gira da capo a fondo e nei risultati non compaiono codici; i numeri della prova sintetica non valgono
+niente. Scelte fatte negli script (deduzioni):
+
+- Punteggio di un articolo: la somiglianza più alta tra la foto di arrivo e le sue foto di riferimento.
+- Ritaglio OWLv2 senza testo: l'oggetto più probabile con il centro nel riquadro; a volte prende un'etichetta o una
+  sola delle scatole impilate, ed è quello che la prova deve misurare.
+- Articoli attesi pescati a caso 20 volte per foto; intervallo al 95% calcolato sul numero di foto.
+- OCR sulla foto intera, con il testo cercato sulla foto ridotta a 1.280 pixel (a piena risoluzione PaddleOCR esaurisce
+  i 16 GB della sessione); con «L» uguale a 1 nel confronto dei codici, perché in maiuscolo la «l» non si distingue.
+- Tempi su CPU di questa sessione (4 processori), una foto per volta, solo per confrontare: PE-Core B 0,12 s, TIPSv2 B
+  0,6 s, SigLIP 2 B 0,6 s, DINOv2 B 0,9 s, PE-Core L 1,1 s, SigLIP 2 L 2,3 s; ritaglio OWLv2 circa 4 s; OCR circa
+  18 s per foto, con un picco di memoria di 7,7 GB. Sono tempi misurati mentre girava poco altro, sulle foto sintetiche.
+
+Due punti da decidere con i primi numeri veri:
+
+- Nella prova «cercare in tutto il catalogo» vuol dire cercare tra circa 540 articoli, non tra 35.000 (18): è molto più
+  facile che nella realtà. La regola della 145 (soglia «convincente» più severa che rispetta il traguardo) porta quindi
+  a mandare quasi tutte le foto alla ricerca in tutto il catalogo, che nella prova sembra gratis. Proposta: scegliere
+  la soglia «convincente» in modo che le foto convinte su un articolo sbagliato restino sotto una quota fissata, e
+  misurare a parte quanto peggiora la ricerca in tutto il catalogo al crescere degli articoli (500 e oltre).
+- Una soglia scelta proprio al limite sulla prima metà, sulla seconda sta sotto il traguardo circa una volta su due,
+  anche con un buon modello (visto sulla prova con impronte finte). Proposta: tenere un piccolo margine, oppure
+  giudicare il traguardo con l'intervallo al 95%.
 
 ### Modelli
 
@@ -784,20 +848,22 @@ Deduzioni confermate con la decisione 145.
 
 ### Lista delle foto da scattare
 
-1. **Prima.** L'utente crea il repository privato e lo aggiunge alla sessione del ticket «Esecuzione della prova visiva
-   e scelta del modello». Se vuole DINOv3, ne legge la licenza e chiede l'accesso (141). Sceglie a caso, tra gli
-   articoli che arrivano, 200 articoli da mettere a catalogo, 40 da lasciare fuori e 300 di contorno (133, 134, 139).
-   L'agente prepara e pubblica la pagina di scatto; si prova prima su un telefono (136, 145).
+1. **Prima.** Fatto il 17/11/2026: repository privato `prova-visiva-foto` creato dall'utente e collegato alla sessione,
+   pagina di scatto pubblicata e provata sull'iPhone (149). Se l'utente vuole DINOv3, ne legge la licenza e chiede
+   l'accesso quando le foto ci sono (141, 154). Resta da fare: scegliere a caso, tra gli articoli che arrivano, 200
+   articoli da mettere a catalogo, 40 da lasciare fuori e 300 di contorno (133, 134, 139).
 2. **Foto di riferimento**, dalla pagina di scatto: per ognuno dei 200, davanti, etichetta (scrivendo codice stampato e
    quantità, vuoti se non ci sono) e altro lato; per ognuno dei 300 di contorno, solo davanti (135, 139, 142).
-3. **Foto di arrivo**, in almeno due giorni e da almeno due persone: 3 per ognuno dei 200 e dei 40, divise tra iPhone,
-   Android e palmare, con la merce come arriva, la luce normale e, quando si può, un collo diverso da quello delle foto
-   di riferimento (135, 137, 145).
-4. **A fine giro**: foto dal telefono al computer, poi nel repository privato (128, 136).
+3. **Foto di arrivo**, in almeno due giorni e da almeno due persone: 3 per ognuno dei 200 e dei 40, per ora tutte con
+   l'iPhone, poi 1 con il palmare e 1 con l'Android (155); con la merce come arriva, la luce normale e, quando si può,
+   un collo diverso da quello delle foto di riferimento (135, 137, 145).
+4. **A fine giro**: «Esporta le foto nuove» nella pagina, ZIP dal telefono al computer, poi nella cartella
+   `da-caricare` del repository privato (128, 136, 153).
 5. **Sempre**: solo scatole ed etichette; con un volto, un documento o il nome di un cliente la foto si rifà da
    un'altra faccia (130).
 
-Totale: circa 1.620 foto e 9 ore di scatti (deduzione, a 20 secondi per foto).
+Totale: circa 1.620 foto e 9 ore di scatti con l'iPhone, più 480 foto di arrivo con palmare e Android quando ci sono
+(deduzione, a 20 secondi per foto).
 
 ### Rimandato ad altri ticket o alla nebbia della mappa
 
