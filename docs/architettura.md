@@ -686,11 +686,12 @@ Prima di scegliere lo stack (127):
 
 ## Prova di accuratezza visiva
 
-Dal ticket «Piano della prova di accuratezza visiva», in corso dal 17/11/2026. Decisioni 12 e 128–. La prova decide il
+Dal ticket «Piano della prova di accuratezza visiva», chiuso il 17/11/2026. Decisioni 12 e 128–145. La prova decide il
 modello visivo (12) e dà i numeri lasciati aperti dal percorso di identificazione (sezione «Da fissare con la prova
 visiva»). La esegue il ticket «Esecuzione della prova visiva e scelta del modello». Ricerche:
 `docs/research/2026-11-15-addestramento-ed-esecuzione-locale.md` (§A, §C, §I) e
-`docs/research/2026-11-15-modelli-visivi-riconoscimento-articoli.md` (§1, raccomandazione).
+`docs/research/2026-11-15-modelli-visivi-riconoscimento-articoli.md` (§1, raccomandazione),
+`docs/research/2026-11-17-locateanything-nvidia.md`.
 
 ### Dove stanno le foto
 
@@ -757,4 +758,54 @@ licenza esclude l'uso commerciale (`docs/research/2026-11-17-locateanything-nvid
 
 Con 100 articoli attesi, l'articolo giusto è tra le 5 proposte in almeno 95 arrivi su 100. Tra i modelli che ci
 arrivano si sceglie il più veloce; se nessuno ci arriva, si studia l'adattamento (144).
+
+### Come si calcola
+
+Deduzioni confermate con la decisione 145.
+
+- **Due metà.** Le foto di arrivo si dividono a caso in due metà: con la prima si scelgono le soglie, con la seconda si
+  controllano. I numeri che contano sono quelli della seconda.
+- **Soglie.** La soglia del «non lo so» (24) e quella dell'articolo «convincente» tra gli attesi (88) sono le più severe
+  che rispettano ancora il traguardo (144). Si riporta quanti dei 40 articoli fuori catalogo ricevono «non lo so» e quanti
+  articoli a catalogo lo ricevono per sbaglio.
+- **Tetto di foto per articolo** (96): la prova confronta solo 1 e 3 foto; si parte da 10 e si rivede con lo storico
+  delle identificazioni (104).
+- **Codice stampato e quantità**: letti sul server con PaddleOCR (Apache-2.0), con il confronto dei segni che si
+  confondono (89) e le parole di quantità (93); la verità è quanto scrive chi scatta (142).
+- **Ritaglio**: nessuno automatico. La pagina di scatto mostra un riquadro al centro e la prova usa quel riquadro; un
+  modello che ritaglia la scatola si studia solo se i numeri lo chiedono.
+- **Articoli attesi simulati**: per ogni foto di arrivo si cerca tra l'articolo giusto e altri articoli presi a caso,
+  fino a 20, 100, 200 o 500 (di contorno compresi), oltre che tra gli articoli lasciati fuori catalogo, che non hanno un
+  giusto (deduzione).
+- **Prima di iniziare**: ricerca sui modelli open source più recenti, ticket «Modelli visivi open source recenti: ce
+  ne sono di migliori?»; può aggiornare l'elenco dei modelli (140).
+
+### Lista delle foto da scattare
+
+1. **Prima.** L'utente crea il repository privato e lo aggiunge alla sessione del ticket «Esecuzione della prova visiva
+   e scelta del modello». Se vuole DINOv3, ne legge la licenza e chiede l'accesso (141). Sceglie a caso, tra gli
+   articoli che arrivano, 200 articoli da mettere a catalogo, 40 da lasciare fuori e 300 di contorno (133, 134, 139).
+   L'agente prepara e pubblica la pagina di scatto; si prova prima su un telefono (136, 145).
+2. **Foto di riferimento**, dalla pagina di scatto: per ognuno dei 200, davanti, etichetta (scrivendo codice stampato e
+   quantità, vuoti se non ci sono) e altro lato; per ognuno dei 300 di contorno, solo davanti (135, 139, 142).
+3. **Foto di arrivo**, in almeno due giorni e da almeno due persone: 3 per ognuno dei 200 e dei 40, divise tra iPhone,
+   Android e palmare, con la merce come arriva, la luce normale e, quando si può, un collo diverso da quello delle foto
+   di riferimento (135, 137, 145).
+4. **A fine giro**: foto dal telefono al computer, poi nel repository privato (128, 136).
+5. **Sempre**: solo scatole ed etichette; con un volto, un documento o il nome di un cliente la foto si rifà da
+   un'altra faccia (130).
+
+Totale: circa 1.620 foto e 9 ore di scatti (deduzione, a 20 secondi per foto).
+
+### Rimandato ad altri ticket o alla nebbia della mappa
+
+- Pagina di scatto, script, calcolo, numeri e scelta del modello: ticket «Esecuzione della prova visiva e scelta del
+  modello».
+- Modelli più recenti: ticket «Modelli visivi open source recenti: ce ne sono di migliori?».
+- Tempi sulla macchina vera e requisiti del server: «Server in sede: requisiti minimi» nella nebbia della mappa e ticket
+  «Divisione tra telefono, computer e server in sede» (143).
+- Adattamento del modello, se nessun modello raggiunge il traguardo: nebbia della mappa (144).
+- Seconda prova sul magazzino Shopify, facoltativa, con lo stesso piano (132).
+- Prove su dispositivi veri, compreso il tempo della rete dal telefono al server: sezione «Prove su dispositivi veri»
+  (127).
 

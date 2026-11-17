@@ -18,18 +18,19 @@ Lavora a giri: registra le risposte di ogni giro prima del successivo e chiudi c
 
 Per lavorare un ticket preciso in una sessione parallela, aggiungere in fondo al prompt: `Lavora il ticket «<titolo>».`
 
-## Frontiera al 16/11/2026
+## Frontiera al 17/11/2026
 
 In ordine di numero:
 
-1. «Piano della prova di accuratezza visiva»: conviene partire presto, perché le foto reali richiedono tempo e da
-   questa prova dipendono la scelta del modello, la divisione tra le macchine e lo stack. Deve dare anche le soglie del
-   percorso di identificazione e può misurare l'aspetto con 1 e 3 foto per articolo. Le foto «di arrivo» vanno scattate
-   dal browser dei telefoni, come farà la web app (commenti nel ticket).
-2. «Punti di estensione per la specializzazione».
-3. «Nome del prodotto».
-4. «Percorso delle schermate»: sbloccato dalla chiusura di «App nativa o web app»; nel ticket ci sono i commenti di
-   tutti i ticket chiusi.
+1. «Punti di estensione per la specializzazione».
+2. «Nome del prodotto».
+3. «Percorso delle schermate»: nel ticket ci sono i commenti di tutti i ticket chiusi.
+4. «Modelli visivi open source recenti: ce ne sono di migliori?» (ricerca): avviata il 17/11/2026 nella sessione del
+   «Piano della prova di accuratezza visiva». Se il ticket risulta ancora preso ma senza risposta e senza il file
+   `docs/research/2026-11-17-modelli-visivi-recenti.md`, va ripresa.
+
+«Esecuzione della prova visiva e scelta del modello» si sblocca quando la ricerca è chiusa. Prima di iniziarla l'utente
+crea il repository privato delle foto e lo aggiunge alla sessione (decisioni 128 e 145).
 
 Si possono lavorare in parallelo in sessioni diverse.
 
@@ -41,7 +42,6 @@ Si possono lavorare in parallelo in sessioni diverse.
 
 ## Ultimo ticket chiuso
 
-16/11/2026: «App nativa o web app». Decisioni 119–127, sezione «Dispositivi e forma del programma» in
-`docs/architettura.md`. Pagina usata per le domande: https://claude.ai/artifact/41KfvE3P7rhiPdEZLueyRw (privata, la vede
-solo l'utente). Restano da fare le prove su dispositivi veri (un iPhone, un Android, un palmare di UFP), prima dello
-stack.
+17/11/2026: «Piano della prova di accuratezza visiva». Decisioni 128–145, sezione «Prova di accuratezza visiva» in
+`docs/architettura.md`, con la lista delle foto da scattare. Pagina usata per le domande:
+https://claude.ai/artifact/9fL5bbNUMMkYAzxWjECaHs (privata, la vede solo l'utente).
