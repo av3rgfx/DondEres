@@ -71,6 +71,13 @@ Per collegarlo ad Ad Hoc vi chiediamo:
     riga sull'ordine fornitore in Ad Hoc: con un codice articolo nuovo, con un codice generico e la descrizione, o in un
     altro modo? Un articolo creato in Ad Hoc può avere anche il barcode o il codice del produttore, da leggere?
 
+**Preparazione e spedizione** (aggiunte il 17/11/2026, dal ticket «Percorso delle schermate»)
+
+21. Sull'ordine cliente in Ad Hoc ci sono l'agente che ha fatto la vendita e il corriere (o il vettore) con cui va
+    spedito? Si possono leggere? Il nostro programma li userebbe per proporre il titolo del piano di spedizione e per
+    mostrare al preparatore con quale corriere parte la merce.
+22. Quando un ordine è preparato, oggi ARS restituisce ad Ad Hoc numero dei colli e peso? In quale documento?
+
 Grazie.
 
 ---
