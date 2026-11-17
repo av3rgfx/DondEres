@@ -137,6 +137,8 @@ Le decisioni tecniche ancora aperte non stanno qui: stanno in `docs/analisi-prog
 | 129 | 17/11/2026 | Nel repository del progetto entrano solo il piano, gli script e i risultati in numeri della prova, con gli articoli indicati da sigle anonime (A001, A002…), senza foto. La tabella che lega ogni sigla al codice vero sta nel repository privato delle foto. | Non indicato (proposta accettata). |
 | 130 | 17/11/2026 | Nelle foto della prova compaiono solo scatole ed etichette: niente volti, documenti (DDT, ordini) o nomi di clienti; le mani degli operatori sono ammesse. Se compare un dato di una persona o di un cliente, la foto si rifà inquadrando un'altra faccia della scatola. | Non indicato (proposta accettata). |
 | 131 | 17/11/2026 | Dopo la prova le foto si tengono nel repository privato, per rifare la prova con un modello nuovo e per l'eventuale adattamento del modello; si cancellano se il magazzino che le ha fornite lo chiede. | Non indicato (proposta accettata). |
+| 132 | 17/11/2026 | La prova visiva si fa ora con gli articoli di UFP. La prova sul magazzino Shopify è una seconda prova facoltativa, con lo stesso piano, da fare se possibile. | L'utente: «principalmente da UFP, se possibile si farà anche la prova con quello di shopify. Ma per adesso solo UFP». Non segue la proposta (metà da ciascun magazzino). |
+| 133 | 17/11/2026 | Entrano nella prova 200 articoli a catalogo, più 40 articoli lasciati fuori dal catalogo e fotografati solo come merce in arrivo, per misurare il «non lo so» (24). | Non indicato (proposta accettata). |
 
 ## Note di lettura
 
@@ -170,4 +172,4 @@ Le decisioni tecniche ancora aperte non stanno qui: stanno in `docs/analisi-prog
   obbligatorio).
 - Decisione 23: precisata dalla 127 (l'operazione in corso resta nella memoria del browser del dispositivo).
 - Decisione 12: precisata dalle 128–131 (dove stanno le foto della prova, cosa ne entra nel repository pubblico, cosa
-  può comparire nelle foto, cosa succede dopo la prova).
+  può comparire nelle foto, cosa succede dopo la prova) e dalle 132–133 (magazzino e numero di articoli).

@@ -705,3 +705,9 @@ visiva»). La esegue il ticket «Esecuzione della prova visiva e scelta del mode
 - Le foto restano dopo la prova, per rifarla con un modello nuovo e per l'eventuale adattamento del modello; si
   cancellano se il magazzino che le ha fornite lo chiede (131).
 
+### Articoli
+
+- Articoli di UFP; il magazzino Shopify fa, se possibile, una seconda prova con lo stesso piano (132).
+- 200 articoli a catalogo e 40 lasciati fuori dal catalogo, fotografati solo come merce in arrivo: servono a misurare
+  quante volte il programma dice «non lo so» invece di indovinare (133).
+
