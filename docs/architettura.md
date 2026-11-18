@@ -344,6 +344,7 @@ decisione 23.
 
 - Ogni scansione si salva sul server appena fatta e mostra il suo esito: salvata, in attesa, non riuscita.
 - Ripetere un invio (doppio tocco, rete che torna, riapertura) non crea doppioni: ogni operazione ha la sua identità.
+- Tempi massimi con il catalogo intero: esito di una lettura entro 1 secondo, schermate e ricerche entro 2 (195).
 - Un DDT si trova sempre, in qualsiasi stato, con le sue righe, i carichi mandati e quelli in coda.
 - Lo stesso codice su due righe d'ordine resta su due righe; un codice non si «indovina» da uno simile.
 
@@ -678,6 +679,10 @@ Prima di scegliere lo stack (127):
 - un telefono Android: lettura del barcode con il lettore di Chrome;
 - un palmare di UFP: grilletto (ipotesi della tastiera) e fotocamera (119);
 - il collegamento sicuro con il router di un magazzino vero (123).
+- la ricarica della pagina a metà DDT, e la chiusura e riapertura del browser, senza perdere letture e senza doppioni
+  (201; difetto riferito da utenti di Odoo 17);
+- prima della consegna, una prova di carico sul server in sede con il catalogo intero e più telefoni insieme, per i
+  tempi massimi della 195.
 
 ### Configurazione per magazzino
 
@@ -882,7 +887,7 @@ Totale: circa 1.620 foto e 9 ore di scatti con l'iPhone, più 480 foto di arrivo
 Dal ticket «Percorso delle schermate», chiuso il 17/11/2026. Decisioni 160–179. Qui si decide quali schermate ci sono e
 in che ordine; colori, caratteri e stile vengono con il ticket «Aspetto grafico» (14).
 
-Completato il 18/11/2026 nel ticket «Completezza del percorso delle schermate» (decisioni 180–200), dopo la ricerca
+Completato il 18/11/2026 nel ticket «Completezza del percorso delle schermate» (decisioni 180–201), dopo la ricerca
 `docs/research/2026-11-18-gestionali-magazzino-esistenti.md` e l'analisi più sotto. Domande dei due giri nella pagina
 privata https://claude.ai/artifact/13EHJFJ3ZbM8QNXU1dTkag.
 
@@ -1035,8 +1040,8 @@ Regola unica (190):
 | Grave | Rifiutare un articolo (114), chiudere un residuo (33), scartare merce (191) | Solo il responsabile, con conferma |
 
 Annullare non cancella: crea una correzione collegata, visibile nel registro (74). Nessun «Sei sicuro?» generico; nessun
-tasto che riempie le quantità attese (186). «Annulla» nelle procedure a passi (nuovo DDT, nuovo piano) torna indietro
-senza creare niente.
+tasto che riempie le quantità attese (186). Ogni scheda che si apre dal basso ha il suo «Annulla»; nelle procedure a
+passi (nuovo DDT, nuovo piano) «Annulla» torna indietro senza creare niente (201).
 
 ### Merce danneggiata
 
@@ -1053,7 +1058,8 @@ renderla al fornitore o scartarla (191). Lo scarto manda uno scarico al gestiona
   ferma o errore; il messaggio a schermo c'è sempre; volume per telefono, spegnibile.
 - **Cerca** (197): in ogni lavoro un tasto apre la ricerca sopra (scheda, giacenze, conta); chiudendola si torna al
   punto.
-- **Prelievo oltre il richiesto** (198): avviso, si accetta, il di più va al responsabile.
+- **Prelievo oltre il richiesto** (198, 201): avviso, si accetta e i pezzi escono come prelevati per l'ordine; il
+  responsabile sceglie se cambiare l'ordine nel gestionale o rimettere il di più a magazzino con una correzione.
 
 ### La preparazione oggi in UFP
 

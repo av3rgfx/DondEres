@@ -2,7 +2,7 @@
 
 Type: prototype
 Label: wayfinder:prototype
-Status: in corso
+Status: resolved
 Assignee: sessione del 18/11/2026 con l'utente
 Blocked by: 20
 
@@ -40,3 +40,26 @@ Risultato atteso: la sezione «Percorso delle schermate» di `docs/architettura.
 - 18/11/2026, primo giro: accettate tutte le consigliate, con due note (quantità in bolla, «Libera» di ARS divisa per
   marca o fornitore); decisioni 184–191. Prototipo aggiornato (stesso link privato
   https://claude.ai/artifact/Vb6ijyDdr4n2gsZcKhhVur). Secondo giro di 9 domande nella stessa pagina delle domande.
+- 18/11/2026, secondo giro: consigliate tranne la 198 (al prelievo il di più si accetta e va al responsabile); nota
+  sulla lettura automatica della bolla (193). Decisioni 192–200. Terzo giro: riepilogo confermato (201).
+
+## Answer
+
+Chiuso il 18/11/2026 in tre giri, con la pagina https://claude.ai/artifact/13EHJFJ3ZbM8QNXU1dTkag (privata). Decisioni
+184–201; specifica nella sezione «Percorso delle schermate» di `docs/architettura.md` (analisi, ricevimento, cose in
+sospeso, Documenti, Annulla e Conferma, merce danneggiata, tempi, suoni e ricerca); prototipo
+`prototipi/percorso-schermate/index.html` (anche https://claude.ai/artifact/Vb6ijyDdr4n2gsZcKhhVur, privata), provato
+nel browser su tutti i flussi.
+
+- DDT: fornitore, foto della bolla, numero e data letti da confermare; righe dalle letture; «Aggiungi a mano» per
+  articolo o per ordine con il primo ordine proposto; niente «riempi con l'atteso»; alla chiusura riepilogo con
+  quantità in bolla solo dove differisce e attesi non arrivati (184–186, 192, 201).
+- Cose in sospeso in quattro gruppi in ogni sezione; vendita assistita a metà che resta e si ricontrolla (187, 188).
+- «Documenti» per categoria e registro (tutto al responsabile, le proprie operazioni all'operatore), esportazione
+  in file, niente cancellazioni automatiche (189, 199).
+- Regola unica per «Annulla» e «Conferma» in quattro livelli; «Annulla» su ogni scheda (190, 201).
+- Merce danneggiata al ricevimento e a scaffale (191); «Metti a posto» per fornitore e DDT (194); tempi 1 e 2 secondi
+  (195); suono e vibrazione (196); «Cerca» sopra ogni lavoro (197); prelievo oltre il richiesto accettato (198).
+- Nuovi ticket: «Resi», «Inventario periodico» (bloccano «Aspetto grafico») e la ricerca «Lettura automatica delle
+  bolle» (193, 200). Domande 23–26 per il rivenditore. Termini nuovi in `GLOSSARY.md`: bolla, quantità in bolla, cose
+  in sospeso, merce danneggiata, scarto, registro.

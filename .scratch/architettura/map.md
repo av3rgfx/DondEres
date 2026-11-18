@@ -83,6 +83,10 @@ percorso delle schermate e aspetto grafico, compresi nome e brand kit (decisioni
   tutti ricevono contro ordine e la 183 coincide con i PMI più completi; nessuno legge in modo affidabile le righe di un
   DDT cartaceo; mancano alla base elenchi in sospeso, «Documenti», regola Annulla/Conferma, merce danneggiata, resi,
   inventario, etichette del corriere, requisito di velocità (ricerca del 18/11/2026).
+- [Completezza del percorso delle schermate](issues/21-completezza-percorso-schermate.md): DDT con foto della bolla e
+  righe dalle letture, ripiego a mano con ordine proposto, quantità in bolla alla chiusura; cose in sospeso in quattro
+  gruppi; «Documenti» e registro; regola Annulla/Conferma; merce danneggiata; tempi 1–2 s; nuovi ticket Resi,
+  Inventario periodico e Lettura automatica delle bolle (decisioni 184–201).
 
 Prese prima della mappa, nel secondo giro di domande del 15/11/2026: decisioni 15–28 in
 [`docs/decisioni.md`](../../docs/decisioni.md) (assegnazione parziale, codice stampato come tipo di articolo,
