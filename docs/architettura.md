@@ -375,7 +375,7 @@ d'acquisto lo vede solo il responsabile (85).
 - Foto di riferimento e impronte: risolte nella sezione «Percorso di identificazione e lettura della quantità».
 - Prezzi, codici dei fornitori e conversioni da leggere in Ad Hoc: domande 17 e 18 in `docs/domande-rivenditore-ufp.md`.
 - Catalogo visivo per la vendita al banco (idea dell'utente, 78 e 86): sezione «Not yet specified» della mappa.
-- Inventario periodico: sezione «Not yet specified» della mappa; la rettifica per conteggio è già definita qui.
+- Inventario periodico: sezione «Inventario periodico» (decisioni 227–245).
 
 ## Percorso di identificazione e lettura della quantità
 
@@ -910,10 +910,10 @@ sue.
 | Articolo nuovo | Righe attese senza articolo, in cima (109); tre foto guidate, con gli avvisi di foto mossa o buia (106); scheda con i campi compilati (107); parole dell'etichetta da toccare (108); «È uno di questi?» (110) |
 | Dopo il ricevimento | Da mettere a posto, per fornitore e dentro per DDT, proposto alla chiusura del DDT (69, 163, 194); rimetti a posto (62); posto VEND, se acceso (47) |
 | Uscita | Piani di spedizione, per chi pianifica (167, 169); prelievo dai piani o dalla coda (167, 168); prelievo guidato con stop se l'articolo è un altro (97, 103, 164); fine della preparazione (171); spedizione (172, 173); vendita assistita (65, 58, 84, 178) |
-| Sempre | Cose in sospeso in cima a ogni sezione (187); «Documenti» con storico per categoria e registro (189); «Cerca» sopra ogni lavoro (197) e dalla prima schermata: scheda, giacenze per ubicazione e stato, codici, prezzo; conta un'ubicazione (77); «Aggiungi foto» (117); «Segna danneggiati» (191); rete assente, operazione in attesa o persa (23, 127) |
+| Sempre | Cose in sospeso in cima a ogni sezione (187); «Documenti» con storico per categoria e registro (189); «Cerca» sopra ogni lavoro (197) e dalla prima schermata: scheda, giacenze per ubicazione e stato, codici, prezzo; conta un'ubicazione da «Cerca e conta» (77, 244); inventario (229); «Aggiungi foto» (117); «Segna danneggiati» (191); rete assente, operazione in attesa o persa (23, 127) |
 | Responsabile | Da controllare (86), con le sue uscite: tenere o rendere la merce non prevista (45), confermare conteggi, collegamenti e codici diversi (71, 158), approvare conversioni (72); articolo da confermare: Conferma, Unisci, Rifiuta (114); correzioni dopo la chiusura (81); scambio: avvisi e «aggiorna ora» (54); utenti con ruolo, mansioni e permessi (177); configurazione iniziale; «È disponibile un aggiornamento» (125); costo d'acquisto (85) |
 
-Fuori: resi e inventario periodico hanno ticket propri (200); la lettura automatica della bolla ha un ticket di ricerca
+Fuori: resi e inventario periodico hanno sezioni proprie («Resi», «Inventario periodico», 200); la lettura automatica della bolla ha un ticket di ricerca
 (193); il catalogo visivo nella vendita assistita e la procedura guidata della configurazione iniziale restano nella
 nebbia della mappa.
 
@@ -1159,7 +1159,7 @@ telefono: volume dei suoni, spenti o accesi (196).
   Ad Hoc nella specializzazione (51, 178).
 - Cosa succede in UFP alla merce di una vendita assistita che non parte subito (pacco per un agente o da spedire): la
   vendita si chiude in Ad Hoc (178); stato della merce nel programma da fissare con il collegamento ad Ad Hoc.
-- Resi e inventario periodico: ticket «Resi» e «Inventario periodico» (200).
+- Resi e inventario periodico: sezioni «Resi» e «Inventario periodico» (200, 207–226, 227–245).
 - Lettura automatica di tutti i dati della bolla, da foto o PDF (193): ticket «Lettura automatica delle bolle».
 - Confronto tra merce caricata e fattura: collegamento con Ad Hoc della specializzazione (192).
 - Catalogo visivo nella vendita assistita, procedura guidata della configurazione: nebbia della mappa.
@@ -1343,7 +1343,8 @@ ricevimento, non solo per i resi. Primo passo: la scheda «Dalla bolla» e «Man
 
 ## Inventario periodico
 
-Dal ticket «Inventario periodico», in corso dal 18/11/2026. Decisioni 227–235 (primo giro) e 236–243 (secondo giro). Fonti: ricerca
+Dal ticket «Inventario periodico», chiuso il 18/11/2026 in tre giri. Decisioni 227–245 (la 236 e la 237 precisano la
+230 e la 231; la 238 e la 244 precisano la 77). Fonti: ricerca
 `docs/research/2026-11-18-gestionali-magazzino-esistenti.md` (§ 1.7, Odoo e Business Central) e
 `docs/research/2026-11-15-adhoc-revolution-ars-logistica.md` (rilevazioni d'inventario di ARS). Domande nella pagina
 privata https://claude.ai/artifact/QGQvc1pHzoQTsJBATiM1g5; schermate nel prototipo
@@ -1360,9 +1361,9 @@ privata https://claude.ai/artifact/QGQvc1pHzoQTsJBATiM1g5; schermate nel prototi
 
 | | Conta un'ubicazione | Inventario |
 |---|---|---|
-| Chi la avvia | L'operatore, quando la merce non torna (dalla scheda articolo) | Il responsabile (229) |
+| Chi la avvia | L'operatore, quando la merce non torna: «Conta un'ubicazione» in «Cerca e conta» (244), o «Conta» dalla scheda dell'articolo | Il responsabile (229) |
 | Cosa si conta | Un'ubicazione | Tutto (solo le ubicazioni normali, 239), alcune ubicazioni, alcuni articoli (in tutte le loro ubicazioni), la merce di un fornitore; senza ubicazioni (26) per articolo |
-| Come si conta | Come nell'inventario: cieca e con la seconda conta, secondo la Configurazione (238) | Vedi sotto |
+| Come si conta | Con la schermata dell'inventario: cieca e con la seconda conta, secondo la Configurazione (238, 244); aperta dalla scheda, chi conta ha già visto la giacenza | Vedi sotto |
 | Quando vale | Subito; il responsabile la controlla dopo (77, 238) | Quando il responsabile approva la differenza (232) |
 
 **Tutto il magazzino** (239): solo le ubicazioni normali. Area di ricevimento, area resi, posti VEND e merce prelevata
@@ -1423,7 +1424,27 @@ conta», «Chiudi l'inventario». Al prelievo e alla messa a posto: «in conta d
 | Quantità attesa a chi conta | nascosta, visibile; si cambia anche per un singolo inventario | nascosta | 230, 236 |
 | Seconda conta se il numero non torna | accesa (la stessa persona, subito), spenta; si cambia anche per un singolo inventario | accesa | 231, 236, 237 |
 
-### Deduzioni da confermare (terzo giro)
+### Casi limite
 
-Nella pagina delle domande, giro 3: aree contate con un inventario per ubicazioni, magazzini senza ubicazioni, articoli
-non attesi o sconosciuti, conta cieca anche per il responsabile quando conta, permessi, ubicazione lasciata a metà.
+Deduzioni confermate con la chiusura (245):
+
+- **Aree**: area di ricevimento, area resi e posti VEND, fuori da «tutto» (239), si contano scegliendole come
+  ubicazioni in un inventario o con «Conta un'ubicazione».
+- **Senza ubicazioni** (26): l'inventario è per articolo; «in conta da…» vale per l'articolo; stesse regole.
+- **Merce fuori posto**: un articolo trovato dove non risulta si conta e dà una differenza in più in quell'ubicazione
+  (di solito compensata da una in meno altrove); un articolo sconosciuto si inserisce come articolo nuovo «da
+  confermare» (105).
+- **Il responsabile che conta** conta cieco come gli altri; l'atteso lo vede nelle differenze.
+- **Chiusura con qualcuno che conta**: il riepilogo nomina ubicazione e persona; si chiude lo stesso e quell'ubicazione
+  passa con le non contate (240).
+- **Permessi**: creare, approvare e chiudere spetta al responsabile (27); contano i magazzinieri e chi ha il lavoro tra
+  gli «Altri lavori» (177).
+- **Lasciata a metà**: «Lascia» rimette l'ubicazione tra le libere e la conta riparte da capo; un'ubicazione in conta da
+  oltre 2 giorni va tra i vecchi delle cose in sospeso (187).
+- **Tempi** (195): valgono anche qui; la prova di carico prima della consegna comprende un inventario con più telefoni.
+
+### Rimandato
+
+- Come Ad Hoc riceve l'inventario (rettifiche o rilevazione unica) e se ne calcola il valore: domanda 28 per il
+  rivenditore; collegamento con Ad Hoc nella specializzazione.
+- Colori e stile delle schermate: ticket «Aspetto grafico».

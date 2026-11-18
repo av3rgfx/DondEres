@@ -2,7 +2,7 @@
 
 Type: grilling
 Label: wayfinder:grilling
-Status: open
+Status: resolved
 Assignee: sessione del 18/11/2026 con l'utente
 Blocked by: —
 
@@ -39,3 +39,28 @@ Risultato atteso: una sezione «Inventario periodico» in `docs/architettura.md`
 - 18/11/2026: prototipo aggiornato con il secondo giro. Rileggendo la 238 è emersa un'incongruenza: la conta fuori
   dall'inventario si apre dalla scheda dell'articolo, che mostra le giacenze, quindi non è davvero cieca. Terzo giro:
   una domanda su questo e il riepilogo con le deduzioni da confermare.
+- 18/11/2026, terzo giro: accettate le consigliate. «Conta un'ubicazione» in «Cerca e conta», con la schermata
+  dell'inventario (244); riepilogo con le deduzioni confermato senza note (245). Prototipo aggiornato e provato nel
+  browser.
+
+## Answer
+
+Chiuso il 18/11/2026 in tre giri, con la pagina https://claude.ai/artifact/QGQvc1pHzoQTsJBATiM1g5 (privata). Decisioni
+227–245; specifica nella sezione «Inventario periodico» di `docs/architettura.md`; prototipo
+`prototipi/percorso-schermate/index.html` (https://claude.ai/artifact/Vb6ijyDdr4n2gsZcKhhVur, privata), provato nel
+browser; termini nuovi in `GLOSSARY.md`: inventario, conta cieca, seconda conta, differenza d'inventario, in conta.
+
+- Oggi: in UFP e nel magazzino Shopify inventario di tutto una volta l'anno, su carta o foglio di calcolo, più
+  correzioni sul momento (227, 228).
+- Un solo lavoro «Inventario» creato dal responsabile: tutto (solo le ubicazioni normali), ubicazioni, articoli,
+  fornitore; filtri «non contate da…» e «con differenze recenti»; nessuna proposta automatica (229, 239, 241).
+- Conta cieca e seconda conta dalla stessa persona, di serie in Configurazione e cambiabili per un inventario; seconda
+  conta accesa o spenta; domanda sugli attesi non contati (230, 231, 236, 237).
+- Una persona per ubicazione, «in conta da…», lavoro che continua; confronto con la giacenza alla chiusura
+  dell'ubicazione (233, 234).
+- Differenze valide all'approvazione del responsabile, con gli ordini che perdono merce; rettifiche al gestionale o
+  variazioni a Shopify a ogni approvazione; esportazione con sole quantità; non contate lasciate come sono e messe in un
+  nuovo inventario (232, 235, 240, 242).
+- «Conta un'ubicazione» fuori dall'inventario: stesse regole, vale subito, da «Cerca e conta» (77, 238, 244).
+- Domanda 28 per il rivenditore.
+

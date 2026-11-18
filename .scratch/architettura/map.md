@@ -95,6 +95,10 @@ percorso delle schermate e aspetto grafico, compresi nome e brand kit (decisioni
   delle differenze preparate dal programma e mandate dal responsabile; reso del cliente dall'ordine spedito con
   Integro / Da controllare / Danneggiato, esiti su Shopify, documento al gestionale; collo rovinato con riserva;
   scheda «Dalla bolla» e «Manca l'ordine» per il carico a mano (decisioni 207–226).
+- [Inventario periodico](issues/23-inventario-periodico.md): un solo lavoro «Inventario» del responsabile (tutto = solo
+  scaffali, ubicazioni, articoli, fornitore); conta cieca e seconda conta, di serie e per inventario; una persona per
+  ubicazione con «in conta da…» e lavoro che continua; differenze valide all'approvazione, poi rettifiche o variazioni;
+  «Conta un'ubicazione» con le stesse regole, valida subito (decisioni 227–245).
 
 Prese prima della mappa, nel secondo giro di domande del 15/11/2026: decisioni 15–28 in
 [`docs/decisioni.md`](../../docs/decisioni.md) (assegnazione parziale, codice stampato come tipo di articolo,

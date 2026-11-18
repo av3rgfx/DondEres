@@ -119,7 +119,7 @@ details.exp .list{margin-top:8px}
 <div class="app" id="app"></div>
 
 <script>
-/* PROTOTIPO usa e getta, ticket «Completezza del percorso delle schermate» (decisioni 184–201, sopra le 160–183), poi «Resi» (207–221), poi «Inventario periodico» (229–235).
+/* PROTOTIPO usa e getta, ticket «Completezza del percorso delle schermate» (decisioni 184–201, sopra le 160–183), poi «Resi» (207–221), poi «Inventario periodico» (229–245).
    Dati d'esempio inventati, nessun dato reale. Tutto in memoria. */
 const ARTS = {
   R110:{code:"3PR-110", desc:"Raccordo a T ottone 1/2\"", unit:"pz", loc:"A-03-2", price:"4,20 €", cost:"2,10 €", photo:"raccordo"},
@@ -146,7 +146,8 @@ const NOVITA = [
   "In Configurazione: quantità attesa a chi conta (nascosta o visibile) e seconda conta (accesa o spenta); si toccano per cambiarle (230, 231). In Documenti la categoria «Inventari».",
   "Secondo giro: nel nuovo inventario le due scelte si cambiano solo per quell'inventario (236); «Tutto» sono solo le ubicazioni normali, senza aree, posti VEND e pacchi pronti (239); «Non contate da più di 180 giorni» e «Con differenze negli ultimi 30 giorni» (241).",
   "Chiudi l'inventario: le ubicazioni non contate restano come sono e diventano un nuovo inventario con un tocco (240).",
-  "«Conta» dalla scheda dell'articolo segue le stesse regole (numero da scrivere, seconda conta) ma vale subito (238); la scheda mostra la data dell'ultima conta (241)."
+  "«Conta» dalla scheda dell'articolo segue le stesse regole (numero da scrivere, seconda conta) ma vale subito (238); la scheda mostra la data dell'ultima conta (241).",
+  "Terzo giro: in «Cerca e conta» il tasto «Conta un'ubicazione» apre la conta cieca dell'inventario per una sola ubicazione, che vale subito (244)."
 ];
 
 let clockMin = 10*60;
@@ -228,7 +229,8 @@ function initial(){
         {u:"C-02-4", ass:"Marco", stato:"inconta", who:"Marco", age:"3 minuti", righe:[]},
         {u:"C-03-1", ass:"Marco", stato:"libera", righe:[]},
         {u:"C-07-2", ass:null, stato:"libera", righe:[]}],
-      diff:[{u:"C-01-2", a:"S77", giac:2, q:4, who:"Sara", at:"09:31", due:true, stato:"da approvare"}]}],
+      diff:[{u:"C-01-2", a:"S77", giac:2, q:4, who:"Sara", at:"09:31", due:true, stato:"da approvare"}]},
+      {id:"LIB", t:"fuori dall'inventario", libera:true, ubi:[], diff:[]}],
     curInv:null, curUbi:null, invN:null, cfgCieca:true, cfgSec:true,
     banco:null, cerca:"", cnt:null, put:null, newArt:null, docTab:"doc", docCat:null, docSel:null, regWho:"tutti"
   };
@@ -622,7 +624,8 @@ SH.ricontrollo = () => `<h3>Nel frattempo è cambiato qualcosa</h3><div class="w
   <div class="btns"><button class="btn go" data-act="bancoOk2:3">Vendi 3</button><button class="btn" data-act="closeSheet">Torna alla vendita</button></div>`;
 
 /* ===== Cerca e scheda articolo ===== */
-V.cerca = () => `${hdr("Cerca articolo")}<main class="main">
+V.cerca = () => `${hdr("Cerca e conta")}<main class="main">
+  ${toastHtml()}<button class="btn" data-act="go:contaUbi">Conta un'ubicazione</button>
   <div class="cam"><div class="frame">Inquadra la scatola</div><div class="chips"><button class="chip" data-act="scheda:V12">Simula: VT-1200</button></div></div>
   <div class="field"><label for="cq">Oppure scrivi codice o descrizione</label><input id="cq" type="text" placeholder="per esempio valvola"></div>
   <div class="list">${Object.keys(ARTS).map(k=>pick(k,"scheda:"+k)).join("")}</div></main>`;
@@ -643,6 +646,10 @@ V.conta = () => `${hdr("Conta",S.cnt)}<main class="main"><p>Quanti pezzi di <b>$
   <button class="btn go" data-act="contaOk">Salva il conteggio</button>
   <p class="muted">Stesse regole dell'inventario: il numero si scrive sempre${S.cfgSec?", e se non torna si riconta una volta":""}. Vale subito; il responsabile lo trova tra le cose da controllare (77, 238).</p></main>`;
 
+V.contaUbi = () => `${hdr("Conta un'ubicazione","Vale subito (77, 244)")}<main class="main">${toastHtml()}
+  <div class="cam"><div class="frame">Inquadra l'etichetta dell'ubicazione</div><div class="chips">${["C-02-4","C-07-2","D-01-3"].map(u=>`<button class="chip" data-act="cub:${u}">Simula: ${u}</button>`).join("")}</div></div>
+  <p class="muted">Conti tutto quello che c'è, come nell'inventario: senza vedere quanti dovrebbero essere${S.cfgSec?" e con la seconda conta":""}. Il numero vale subito; il responsabile lo trova tra le cose da controllare.</p></main>`;
+
 /* ===== Documenti (189) ===== */
 const CATS = [["ddt","DDT"],["prep","Preparazioni"],["sped","Spedizioni"],["vend","Vendite assistite"],["corr","Conteggi e correzioni"],["scambi","Scambi con il gestionale"],["resi","Resi"],["inv","Inventari"]];
 function catItems(c){
@@ -651,7 +658,7 @@ function catItems(c){
   if(c==="sped") return S.ritiri.map(x=>({doc:x.id, l:`${S.cour[x.cour]} · ${x.day}`, r:`${x.ord.length} ordini`, small:`segnati da ${x.who}: ${x.ord.join(", ")}`, cls:"done"}));
   if(c==="vend") return S.venduteOk.map(v=>({doc:"Vendita "+v.id, l:`Vendita ${v.id} · ${esc(v.cli)}`, r:`${v.righe.length} articoli`, small:`${v.who}, ${v.at}`, cls:"done"}));
   if(c==="resi") return [...S.resiF.map(r=>({doc:null, l:`${r.id} · al fornitore ${esc(r.forn)}`, r:(RSTATI.find(x=>x[0]===r.stato)||["","rifiutato"])[1], small:r.righe.map(x=>x.q+" "+A(x.a).code).join(", "), cls:r.stato==="partito"?"done":"part"})), ...S.resiC.filter(r=>r.stato==="chiuso").map(r=>({doc:null, l:`Reso dall'ordine ${r.ord} · ${esc(r.cli)}`, r:"chiuso", small:`${nr(r.righe.reduce((n,x)=>n+x.esiti.length,0),"pezzo","pezzi")} · ${r.who}`, cls:"done"}))];
-  if(c==="inv") return S.inv.map(I=>{ const n=I.ubi.filter(u=>u.stato==="contata").length; return {doc:null, l:`Inventario ${esc(I.t)}`, r:I.chiuso?"chiuso":"aperto", small:`${n} di ${I.ubi.length} ubicazioni contate · ${nr(I.diff.length,"differenza","differenze")} · creato da ${I.creato}${I.chiuso?" · chiuso il "+I.chiuso:""}`, cls:I.chiuso?"done":"part"}; });
+  if(c==="inv") return S.inv.filter(I=>!I.libera).map(I=>{ const n=I.ubi.filter(u=>u.stato==="contata").length; return {doc:null, l:`Inventario ${esc(I.t)}`, r:I.chiuso?"chiuso":"aperto", small:`${n} di ${I.ubi.length} ubicazioni contate · ${nr(I.diff.length,"differenza","differenze")} · creato da ${I.creato}${I.chiuso?" · chiuso il "+I.chiuso:""}`, cls:I.chiuso?"done":"part"}; });
   if(c==="corr") return S.log.filter(e=>/Conteggio|Annulla|Correzione|danneggiat/i.test(e.txt)).map(e=>({doc:null, l:esc(e.txt), r:e.at, small:e.who}));
   return S.coda_out.map(x=>({doc:null, l:esc(x.txt), r:x.stato, cls:x.stato==="inviato"?"done":"part"}));
 }
@@ -773,17 +780,17 @@ const expQ = (u, a) => ((UBI[u]||[]).find(x=>x[0]===a)||[0,0])[1];
 function inConta(u){ for(const I of S.inv){ if(I.chiuso) continue; const x=I.ubi.find(z=>z.u===u && z.stato==="inconta"); if(x && x.who!==me()) return x; } return null; }
 const invPend = I => I.diff.filter(d=>d.stato==="da approvare");
 const invCount = () => isBoss() ? S.inv.reduce((n,I)=>n+invPend(I).length,0)
-  : S.inv.filter(I=>!I.chiuso).reduce((n,I)=>n+I.ubi.filter(u=>(u.ass===me() && u.stato!=="contata") || (u.stato==="inconta" && u.who===me())).length,0);
+  : S.inv.filter(I=>!I.chiuso && !I.libera).reduce((n,I)=>n+I.ubi.filter(u=>(u.ass===me() && u.stato!=="contata") || (u.stato==="inconta" && u.who===me())).length,0);
 const signed = n => (n>0?"+":n<0?"−":"")+Math.abs(n);
 function invCtl(I){ const n=invPend(I).length; const c=S.controlli.find(z=>z.t==="inv" && z.inv===I.id);
   if(!n){ if(c) S.controlli=S.controlli.filter(z=>z!==c); return; }
   const txt=`Inventario ${I.t.toLowerCase()}: ${nr(n,"differenza","differenze")} da approvare`; c ? c.txt=txt : S.controlli.push({id:"c"+(++S.n), t:"inv", inv:I.id, txt}); }
-V.inv = () => { const open=S.inv.filter(I=>!I.chiuso);
+V.inv = () => { const open=S.inv.filter(I=>!I.chiuso && !I.libera);
   const items=[]; open.forEach(I=>I.ubi.filter(u=>u.stato==="inconta").forEach(u=>items.push({l:`${u.u} · ${esc(I.t)}`, r:u.who===me()?"riprendi":u.who, cls:"part", act:u.who===me()?`invU:${I.id}:${u.u}`:"", small:u.who===me()?`la stai contando tu`:`in conta da ${u.who}, da ${u.age||"poco"}`, who:u.who})));
   return `${hdr("Inventario")}<main class="main">${toastHtml()}${sospesi(items,"Nessuna ubicazione in conta in questo momento.")}
   <h2>Inventari aperti</h2><div class="list">${open.map(I=>{ const n=I.ubi.filter(u=>u.stato==="contata").length, mine=I.ubi.filter(u=>u.ass===me()&&u.stato!=="contata").length, p=invPend(I).length;
     return row(`Inventario ${esc(I.t)}`, `${n} di ${I.ubi.length}`, p&&isBoss()?"boss":"", "inv:"+I.id, `entro ${I.entro} · ${esc(I.cosa)}${mine?` · ${nr(mine,"ubicazione tua","ubicazioni tue")}`:""}${isBoss()&&p?` · ${nr(p,"differenza","differenze")} da approvare`:""}`); }).join("") || `<p class="muted">Nessun inventario aperto.</p>`}</div>
-  ${isBoss()?`<button class="btn go" data-act="invNuovo">Nuovo inventario</button>`:`<p class="muted">Gli inventari li crea il responsabile. Per correggere subito una giacenza sbagliata c'è «Conta» nella scheda dell'articolo (77).</p>`}
+  ${isBoss()?`<button class="btn go" data-act="invNuovo">Nuovo inventario</button>`:`<p class="muted">Gli inventari li crea il responsabile. Per correggere subito una giacenza sbagliata c'è «Conta un'ubicazione» in «Cerca e conta» (77, 244).</p>`}
   <p class="muted">Durante la conta il magazzino continua a lavorare: chi deve prelevare da un'ubicazione in conta lo vede (233).</p></main>`; };
 V.invDett = () => { const I=curInv();
   const g = {mie:[], libere:[], altri:[], contate:[]};
@@ -800,7 +807,7 @@ V.invDett = () => { const I=curInv();
 V.invConta = () => { const I=curInv(), U=curUbi(), cieca=invCieca();
   const att=(UBI[U.u]||[]).map(x=>x[0]);
   const chips=[...att, ...Object.keys(ARTS).filter(k=>!att.includes(k)).slice(0,1)];
-  return `${hdr(`Conta ${U.u}`,`Inventario ${esc(I.t)}${cieca?" · conta cieca":""}`)}<main class="main">${toastHtml()}
+  return `${hdr(`Conta ${U.u}`,`${I.libera?"Fuori dall'inventario · vale subito":"Inventario "+esc(I.t)}${cieca?" · conta cieca":""}`)}<main class="main">${toastHtml()}
   <div class="cam"><div class="frame">Inquadra ogni articolo che trovi in ${U.u}</div><div class="chips">${chips.map(k=>`<button class="chip" data-act="sheet:invQ:${k}">Simula: ${A(k).code}${att.includes(k)?"":" (non atteso qui)"}</button>`).join("")}</div></div>
   ${!cieca?`<h2>Attesi in ${U.u}</h2><div class="list">${att.map(k=>row(A(k).code,`attesi ${expQ(U.u,k)}`,"","",esc(A(k).desc))).join("")}</div>`:""}
   <h2>Contati</h2><div class="list">${U.righe.map(x=>row(`${A(x.a).code}`, `${x.q} ${A(x.a).unit}`, "", "sheet:invQ:"+x.a, `${esc(A(x.a).desc)}${x.q1!==undefined?` · contato due volte (${x.q1} e ${x.q})`:""}${!cieca?` · attesi ${expQ(U.u,x.a)}`:""}`)).join("") || `<p class="muted">Ancora niente: inquadra la prima scatola.</p>`}</div>
@@ -1155,6 +1162,9 @@ function act(a, el){
       if(miss) return sheet("invManca",{i:miss});
       U.stato="contata"; U.at=clock(); U.who=me(); U.age=null;
       const nd=U.righe.filter(r=>r.q!==expQ(U.u,r.a)).map(r=>({u:U.u, a:r.a, giac:expQ(U.u,r.a), q:r.q, who:me(), at:U.at, due:r.q1!==undefined, stato:"da approvare"}));
+      if(I.libera){ nd.forEach(d=>S.controlli.push({id:"c"+(++S.n), t:"conta", a:d.a, q:d.q, txt:`Conteggio di ${me()} in ${d.u}: ${d.q} ${A(d.a).code} invece di ${d.giac}, già valido`}));
+        log(`Conta di ${U.u} chiusa alle ${U.at}: ${nd.length?nd.map(d=>signed(d.q-d.giac)+" "+A(d.a).code).join(", ")+", valgono subito; rettifica al gestionale":"tutto torna"}`);
+        U.stato="libera"; S.screen=S.stack.pop()||"cerca"; S.toast={txt:`${U.u} contata${nd.length?": "+nr(nd.length,"rettifica fatta","rettifiche fatte")+", il responsabile le vede":": tutto torna"}`}; render(); return window.scrollTo(0,0); }
       I.diff=I.diff.filter(d=>d.u!==U.u || !d.stato.startsWith("riconta")); I.diff.push(...nd); invCtl(I);
       log(`Chiude la conta di ${U.u} alle ${U.at}: ${nd.length?nr(nd.length,"differenza","differenze")+" al responsabile":"tutto torna"}; confronto con la giacenza di quel momento`, "Inventario "+I.t);
       S.screen="invDett"; S.stack=S.stack.filter(z=>z!=="invConta"); S.toast={txt:`${U.u} contata alle ${U.at}${nd.length?`: ${nr(nd.length,"differenza","differenze")} al responsabile`:": tutto torna"}`}; render(); return window.scrollTo(0,0); }
@@ -1168,6 +1178,9 @@ function act(a, el){
       S.inv.push({id, t, cosa:{tutto:"Tutto",ubi:"Ubicazioni",art:"Articoli",forn:"Fornitore"}[N.cosa]+": "+sel, entro:document.getElementById("ie").value.slice(0,5), creato:me(), cieca:document.getElementById("icieca").value==="1", sec:document.getElementById("isec").value==="1", ubi:us.map((u,j)=>({u, ass:who.length?who[j%who.length]:null, stato:"libera", righe:[]})), diff:[]});
       log(`Crea l'inventario «${t}» (${us.length} ubicazioni${who.length?", diviso tra "+who.join(" e "):", ubicazioni libere"})`, "Inventario "+t);
       S.invN=null; S.curInv=id; S.stack=S.stack.filter(z=>z!=="invNuovo"); S.screen="inv"; return go("invDett"); }
+    case "cub": { const ic=inConta(x); if(ic){ S.toast={txt:`${x} è in conta da ${ic.who}: aspetta che finisca`}; return render(); }
+      const L=S.inv.find(I=>I.id==="LIB"); let U=L.ubi.find(u=>u.u===x); if(!U){ U={u:x}; L.ubi.push(U); } Object.assign(U,{stato:"inconta", who:me(), age:"ora", righe:[]});
+      S.curInv="LIB"; S.curUbi=x; log(`Conta un'ubicazione: ${x}, gli altri la vedono «in conta da ${me()}»`); S.screen=S.stack.pop()||"cerca"; return go("invConta"); }
     case "invDiff": S.curInv=x||S.curInv; return go("invDiff");
     case "invApprOk": { const I=curInv(); const list = x==="all" ? invPend(I) : [I.diff[+x]];
       invLoss(list).forEach(l=>{ const r=S.ordini[l.k].righe.find(z=>z.a===l.a); r.ass=Math.max(0,r.ass-l.n); });

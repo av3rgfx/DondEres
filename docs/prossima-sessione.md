@@ -1,19 +1,21 @@
 # Prompt per la prossima sessione (Wayfinder sull'architettura)
 
 Da incollare all'avvio di una nuova sessione sul ramo principale aggiornato. La mappa esiste già: si lavora un ticket
-per sessione, più le ricerche. Consigliato ora: «Inventario periodico» (prompt A), che con «Nome del prodotto» e lo
-stack sblocca «Aspetto grafico». Quando nei repository privati ci sono foto o bolle da aprire, sessioni a parte lavorano
+per sessione, più le ricerche. Consigliato ora: «Punti di estensione per la specializzazione» (prompt A), che sblocca lo
+stack con la divisione tra le macchine; in alternativa «Nome del prodotto», che porta al brand kit. «Aspetto grafico»
+aspetta ancora brand kit e stack. Quando nei repository privati ci sono foto o bolle da aprire, sessioni a parte lavorano
 la prova visiva (prompt B) e la prova di lettura delle bolle (prompt C). Si possono avviare in parallelo.
 
-**Prompt A: inventario periodico**
+**Prompt A: punti di estensione per la specializzazione**
 
 ```text
 /wayfinder .scratch/architettura/map.md
 
-Leggi prima AGENTS.md, poi la mappa (solo map.md, non tutti i ticket). Lavora il ticket «Inventario periodico»
-(grilling), che parte dalla ricerca sui gestionali esistenti (§ 1.7) e dalle decisioni 77, 190, 191, 207 e 222.
-Leggi i commenti del ticket. Aggiorna il prototipo prototipi/percorso-schermate/index.html con le schermate
-dell'inventario, senza aspetto grafico.
+Leggi prima AGENTS.md, poi la mappa (solo map.md, non tutti i ticket). Lavora il ticket «Punti di estensione per la
+specializzazione» (grilling). Raccogli anche i punti lasciati alla specializzazione nelle sezioni di
+docs/architettura.md (collegamento con Ad Hoc per ordini degli agenti e vendite assistite, 178; confronto tra merce
+caricata e fattura, 192; invio degli ordini fornitore dal programma, 226; documento di reso e «reso da cliente», domande
+24 e 27; inventario verso Ad Hoc, domanda 28). Leggi i commenti del ticket.
 Registra ogni mia decisione in docs/decisioni.md, con data e motivo; scrivi la tua parte in docs/architettura.md.
 Parlami in italiano, con domande semplici: cosa chiedi, perché conta, cosa comporta ogni opzione.
 Per le domande usa una pagina interattiva (Artifact) con esempi visivi che cambiano con la risposta, opzione
@@ -62,7 +64,7 @@ consigliata, «Accetta tutte le consigliate», note facoltative e risposte salva
 Lavora a giri: registra le risposte di ogni giro prima del successivo e chiudi con un riepilogo da confermare.
 ```
 
-## Frontiera al 18/11/2026 (fine sessione)
+## Frontiera al 18/11/2026 (fine sessione dell'inventario)
 
 In ordine di numero:
 
@@ -72,39 +74,37 @@ In ordine di numero:
    articoli, scattare e caricare gli ZIP in `da-caricare` (decisioni 149–159). Poi prompt B.
 2. «Punti di estensione per la specializzazione»: libero. Da raccogliere anche: collegamento con Ad Hoc per gli ordini
    degli agenti e le vendite assistite (178), confronto tra merce caricata e fattura (192), invio degli ordini fornitore
-   dal programma come le richieste di reso (226), documento di reso e «reso da cliente» verso Ad Hoc (24, 27).
+   dal programma come le richieste di reso (226), documento di reso e «reso da cliente» verso Ad Hoc (24, 27),
+   inventario verso Ad Hoc (domanda 28). Consigliato ora (prompt A).
 3. «Nome del prodotto»: libero; poi «Unicità dei nomi scelti» e «Brand kit con la skill logo-design».
-4. «Inventario periodico» (grilling): libero, consigliato ora (prompt A). «Aspetto grafico» aspetta ancora questo.
-5. «Esecuzione della prova di lettura delle bolle» (task con l'utente, nuovo): parte quando le bolle sono nella cartella
+4. «Esecuzione della prova di lettura delle bolle» (task con l'utente, nuovo): parte quando le bolle sono nella cartella
    `bolle/` del repository privato (prompt C).
 
 ## In sospeso fuori dalla mappa
 
-- Domande per il rivenditore di UFP in `docs/domande-rivenditore-ufp.md` (dalla 17 alla 27; la 24 annotata e la 27
-  aggiunta il 18/11/2026, sui resi): le manda l'utente (decisione 57). Le risposte si annotano in fondo al file;
+- Domande per il rivenditore di UFP in `docs/domande-rivenditore-ufp.md` (dalla 17 alla 28; la 24 annotata, la 27 sui resi
+  e la 28 sull'inventario aggiunte il 18/11/2026): le manda l'utente (decisione 57). Le risposte si annotano in fondo al file;
   servono al connettore Ad Hoc della specializzazione, non bloccano la mappa.
 - Punto tecnico aperto: mandare le mail dalla casella aziendale di ogni responsabile (223) chiede un permesso al server
   di posta dell'azienda; si sceglie con lo stack e all'installazione.
 
 ## Ultimo ticket chiuso
 
-18/11/2026: «Resi», in tre giri, con la pagina https://claude.ai/artifact/KQtNpyrXjbywxnz1iGKnGY (privata). Decisioni
-207–226, sezione «Resi» in `docs/architettura.md`, prototipo con le schermate dei resi
-(`prototipi/percorso-schermate/index.html`, anche https://claude.ai/artifact/Vb6ijyDdr4n2gsZcKhhVur, privata). Prima,
-nella stessa sessione, la ricerca «Lettura automatica delle bolle» (`docs/research/2026-11-18-lettura-automatica-bolle.md`,
-decisioni 202–206 sulla prova). Termini nuovi in `GLOSSARY.md`: reso al fornitore, reso del cliente, da rendere, area
-resi, richiesta di reso, riserva.
+18/11/2026: «Inventario periodico», in tre giri, con la pagina https://claude.ai/artifact/QGQvc1pHzoQTsJBATiM1g5
+(privata). Decisioni 227–245, sezione «Inventario periodico» in `docs/architettura.md`, prototipo con le schermate
+dell'inventario (`prototipi/percorso-schermate/index.html`, anche https://claude.ai/artifact/Vb6ijyDdr4n2gsZcKhhVur,
+privata). Termini nuovi in `GLOSSARY.md`: inventario, conta cieca, seconda conta, differenza d'inventario, in conta.
+Prima, sempre il 18/11/2026: «Resi» (207–226) e la ricerca «Lettura automatica delle bolle» (202–206).
 
 ## Ultima sessione
 
-18/11/2026: ricerca sulla lettura delle bolle con un sotto-agente; l'utente ha mostrato in chat 10 foto di bolle di UFP
-(AGB, ISEO, SAIT, più una lettera di vettura) e alcune mail di reso e di segnalazione: nel repository solo i fatti,
-senza nomi e senza le immagini. Prova con zxing-cpp sulle foto: DataMatrix di AGB con numero e data, barcode di riga di
-ISEO. Poi «Resi» in tre giri. L'utente chiede un carico semplice e veloce quando mancano codici o quantità (222, 224).
+18/11/2026: «Inventario periodico» in tre giri. Fatti dall'utente: in UFP e nel magazzino Shopify l'inventario di tutto
+si fa una volta l'anno (in UFP su carta o foglio di calcolo, ricopiato in Ad Hoc; ARS non si usa) e durante l'anno si
+corregge sul momento. Scelta dell'utente diversa dalla proposta: «tutto il magazzino» sono solo gli scaffali (239).
 
 ## Cose dell'utente, senza sessione
 
 - Scegliere a caso gli articoli della prova visiva, scattare il primo giro (10–20 articoli) e caricare gli ZIP.
 - Raccogliere il primo giro di 20 bolle per la prova di lettura, coprire i dati dei clienti e caricarle in `bolle/` nel
   repository privato (202–204); dire quali fornitori sono ricorrenti e quanti mandano il PDF.
-- Mandare al rivenditore le domande 21–27.
+- Mandare al rivenditore le domande 21–28.

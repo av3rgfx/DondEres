@@ -3,7 +3,7 @@
 Type: prototype
 Label: wayfinder:prototype
 Status: open
-Blocked by: 14, 15, 16, 21, 22, 23 (16 chiuso il 17/11/2026)
+Blocked by: 14, 15, 16, 21, 22, 23 (16 chiuso il 17/11/2026; 21, 22 e 23 chiusi il 18/11/2026)
 
 ## Question
 
