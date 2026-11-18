@@ -147,7 +147,10 @@ const NOVITA = [
   "Secondo giro: nel nuovo inventario le due scelte si cambiano solo per quell'inventario (236); «Tutto» sono solo le ubicazioni normali, senza aree, posti VEND e pacchi pronti (239); «Non contate da più di 180 giorni» e «Con differenze negli ultimi 30 giorni» (241).",
   "Chiudi l'inventario: le ubicazioni non contate restano come sono e diventano un nuovo inventario con un tocco (240).",
   "«Conta» dalla scheda dell'articolo segue le stesse regole (numero da scrivere, seconda conta) ma vale subito (238); la scheda mostra la data dell'ultima conta (241).",
-  "Terzo giro: in «Cerca e conta» il tasto «Conta un'ubicazione» apre la conta cieca dell'inventario per una sola ubicazione, che vale subito (244)."
+  "Terzo giro: in «Cerca e conta» il tasto «Conta un'ubicazione» apre la conta cieca dell'inventario per una sola ubicazione, che vale subito (244).",
+  "Correzione sulla preparazione: sulla riga che non si completa «Sospendi l'ordine» o «Concludi senza» (246); l'ordine sospeso va tra i Fermi e, quando arriva il mancante (Scenari), torna «Da riprendere» (247); il resto resta aperto e torna da preparare (248). Provalo come Luca: piano Bianchi M., ordine 1039.",
+  "Nuovo piano e anteprima del preparatore: avviso che non blocca, «N articoli non bastano», che aperto dice servono e disponibili (249).",
+  "Prima schermata: il preparatore senza permessi non vede «Altri lavori» (250); in Configurazione «I preparatori vedono il lavoro dei colleghi» e «Ubicazione per gli ordini sospesi» (247, 250)."
 ];
 
 let clockMin = 10*60;
@@ -231,7 +234,7 @@ function initial(){
         {u:"C-07-2", ass:null, stato:"libera", righe:[]}],
       diff:[{u:"C-01-2", a:"S77", giac:2, q:4, who:"Sara", at:"09:31", due:true, stato:"da approvare"}]},
       {id:"LIB", t:"fuori dall'inventario", libera:true, ubi:[], diff:[]}],
-    curInv:null, curUbi:null, invN:null, cfgCieca:true, cfgSec:true,
+    curInv:null, curUbi:null, invN:null, cfgCieca:true, cfgSec:true, cfgColl:true, cfgSosp:false,
     banco:null, cerca:"", cnt:null, put:null, newArt:null, docTab:"doc", docCat:null, docSel:null, regWho:"tutti"
   };
 }
@@ -331,7 +334,7 @@ V.home = () => {
   ${(()=>{ const L={ricevi:[c.ricevi,"Ricevi DDT"],metti:[c.metti,"Metti a posto"],preleva:[c.preleva,"Preleva"],spedisci:[c.spedisci,"Spedisci"],banco:[c.banco,"Vendita assistita"],resi:[resiCount(),"Resi"],inv:[invCount(),"Inventario"],cerca:[null,"Cerca e conta"]};
     const all=["ricevi","metti","resi","inv","preleva","spedisci","banco","cerca"].filter(k=>k!=="spedisci"||canShip());
     const mine=isBoss()?all:[...new Set(S.user.m.flatMap(m=>MLAV[m]))].filter(k=>all.includes(k));
-    const rest=all.filter(k=>!mine.includes(k));
+    const rest=all.filter(k=>!mine.includes(k) && (isBoss() || (k==="spedisci" ? canShip() : (S.user.extra||[]).includes(k))));
     return `<div class="tiles">${mine.map(k=>t(L[k][0],L[k][1],"go:"+k)).join("")}</div>`+(rest.length?`<h2>Altri lavori</h2><div class="list">${rest.map(k=>row(L[k][1],L[k][0]===null?"›":L[k][0],"","go:"+k)).join("")}</div>`:""); })()}
   <div class="list">${row(`Documenti<span class="new">nuovo</span>`,"›","","go:documenti","storico di tutto, per categoria; registro delle operazioni")}</div>
   ${canPlan()&&!S.coda?`<button class="btn" data-act="go:piani">Piani di spedizione</button>`:""}
@@ -894,16 +897,20 @@ SH.grave = ({i, x}) => { const c=S.controlli.find(z=>z.id===i); const w = x==="s
 V.utenti = () => `${hdr("Utenti")}<main class="main"><div class="list">${USERS.map(u=>row(u.n,u.r==="boss"?"responsabile":"operatore","","",["mansioni: "+u.m.map(x=>MANS[x]).join(", "), u.r!=="boss"&&u.plan?"pianifica le spedizioni":"", u.r!=="boss"&&u.sped?"conferma le spedizioni":"", u.r==="boss"?(S.mail?"mail aziendale: anna@azienda.example":"mail aziendale: non indicata"):"mail aziendale: facoltativa"].filter(Boolean).join(" · "))).join("")}</div><button class="btn">Nuovo utente</button><p class="muted">Segnaposto: per chi se ne va basta disattivare l'utente.</p></main>`;
 V.config = () => `${hdr("Configurazione")}<main class="main"><div class="warnbox boss">Segnaposto: la procedura guidata dell'installazione è ancora nella nebbia della mappa.</div><div class="list">
   ${[["Ubicazioni","sì"],["VEND","acceso"],["Posti VEND","numerati"],["Prezzi","accesi"],["Ordini parziali si prelevano","sì"],["Uscita dopo","30 min"],["Scambio ogni","5 min"],["«Vecchi» nelle cose in sospeso dopo","2 giorni"]].map(([a,b])=>row(a,b)).join("")}
-  ${row("Inventario: quantità attesa a chi conta",S.cfgCieca?"nascosta":"visibile","","cfg:cieca","di serie nascosta (230)")}${row("Inventario: seconda conta se il numero non torna",S.cfgSec?"la stessa persona, subito":"spenta","","cfg:sec","di serie accesa (231)")}</div>
-  <p class="muted">Nel prototipo le due righe dell'inventario si toccano per cambiarle.</p></main>`;
+  ${row("Inventario: quantità attesa a chi conta",S.cfgCieca?"nascosta":"visibile","","cfg:cieca","di serie nascosta (230)")}${row("Inventario: seconda conta se il numero non torna",S.cfgSec?"la stessa persona, subito":"spenta","","cfg:sec","di serie accesa (231)")}
+  ${row("I preparatori vedono il lavoro dei colleghi",S.cfgColl?"sì":"no","","cfg:coll","in UFP sì (250)")}${row("Ubicazione per gli ordini sospesi",S.cfgSosp?"accesa: si inquadra dove resta il pacco":"spenta: il pacco resta sul tavolo","","cfg:sosp","di serie spenta (247)")}</div>
+  <p class="muted">Nel prototipo le ultime righe si toccano per cambiarle.</p></main>`;
 
 /* ===== Preparazione e spedizione ===== */
+const manca = o => o.righe.filter(r=>r.ass<r.q);
+const avviso = (o, open) => { const m=manca(o); if(!m.length) return ""; return `<details class="exp" ${open?"open":""}><summary>⚠ ${nr(m.length,"articolo non basta","articoli non bastano")}</summary><div class="list">${m.map(r=>row(A(r.a).code, r.ass?`servono ${r.q} · disponibili ${r.ass}`:`servono ${r.q} · non c'è`, r.ass?"part":"halt")).join("")}</div></details>`; };
 const cop = o => { const t=o.righe.reduce((n,r)=>n+r.q,0), a=o.righe.reduce((n,r)=>n+r.ass,0); return a>=t?["completo","done"]:a>0?[`${a} di ${t}`,"part"]:["niente","dim"]; };
 const ordRow = (k, act=true) => { const o=S.ordini[k]; const [t,c]=cop(o);
   if(o.stato!=="aperto") return row(`${k} · ${esc(o.cli)}`, o.stato==="pronto"?"pronto":"spedito", "done");
   if(o.da && o.da!==me()) return row(`${k} · ${esc(o.cli)}`, `in preparazione da ${o.da}`, "dim", "", `da ${o.age||"poco"}`);
-  return row(`${k} · ${esc(o.cli)}`, t, c, act&&c!=="dim"?"ord:"+k:"", `${S.cour[o.cour]}${o.da===me()?" · lo stai preparando tu":""}`); };
-function prepSospesi(filter){ const items = Object.entries(S.ordini).filter(([k,o])=>o.stato==="aperto" && o.da && filter(o)).map(([k,o])=>({l:`${k} · ${esc(o.cli)}`, r:o.da===me()?"riprendi":o.da, cls:o.ferma?"halt":o.old?"dim":"part", act:o.da===me()?"ord:"+k:"", small:o.ferma?`fermo: ${esc(o.ferma)}`:o.da===me()?`preso da te ${o.age?o.age+" fa":"ora"}`:`preso da ${o.da} da ${o.age||"poco"}${o.old?" · chi pianifica lo può liberare":""}`, who:o.da, ferma:!!o.ferma, old:o.old}));
+  if(o.ferma) return row(`${k} · ${esc(o.cli)}`, "sospeso", "halt", act?"ord:"+k:"", `fermo: ${esc(o.ferma)}${o.posto?" · pacco in "+o.posto:""}`);
+  return row(`${k} · ${esc(o.cli)}`, o.riprendi?"da riprendere":t, o.riprendi?"part":c, act&&c!=="dim"?"ord:"+k:"", `${S.cour[o.cour]}${o.riprendi?" · "+esc(o.riprendi):o.da===me()?" · lo stai preparando tu":""}`); };
+function prepSospesi(filter){ const items = Object.entries(S.ordini).filter(([k,o])=>o.stato==="aperto" && o.da && filter(o)).map(([k,o])=>({l:`${k} · ${esc(o.cli)}`, r:o.da===me()?"riprendi":o.da, cls:o.ferma?"halt":o.old?"dim":"part", act:o.da===me()?"ord:"+k:"", small:o.ferma?`fermo: ${esc(o.ferma)}${o.posto?" · pacco in "+o.posto:""}`:o.riprendi?`da riprendere: ${esc(o.riprendi)}`:o.da===me()?`preso da te ${o.age?o.age+" fa":"ora"}`:`preso da ${o.da} da ${o.age||"poco"}${o.old?" · chi pianifica lo può liberare":""}`, who:o.da, ferma:!!o.ferma, old:o.old}));
   return sospesi(items, "Nessun ordine preso e non finito."); }
 V.preleva = () => {
   if(S.coda){ const q=Object.entries(S.ordini).filter(([k,o])=>o.shop&&o.stato==="aperto"&&!o.da);
@@ -913,12 +920,13 @@ V.preleva = () => {
     <p class="muted">Ti do l'ordine pronto più vecchio. Chi lo prende lo toglie dalla coda: nessun altro lo vede.</p></main>`; }
   const mine=S.piani.filter(p=>p.prep===me()), others=S.piani.filter(p=>p.prep!==me());
   const pr = p => row(`Piano «${esc(p.t)}»`, `${p.ord.filter(k=>S.ordini[k].stato==="aperto").length} da fare`, p.prep===me()?"boss":"", "piano:"+p.id, `${p.ord.length} ordini · ${p.prep}`);
-  return `${hdr("Preleva","Piani di spedizione")}<main class="main">${prepSospesi(o=>!o.shop)}
+  const coll = S.cfgColl || canPlan();
+  return `${hdr("Preleva","Piani di spedizione")}<main class="main">${prepSospesi(o=>!o.shop && (coll || o.da===me()))}
     <h2>I tuoi piani</h2><div class="list">${mine.map(pr).join("") || `<p class="muted">Nessun piano dato a te.</p>`}</div>
-    <h2>Piani dei colleghi</h2><div class="list">${others.map(pr).join("") || `<p class="muted">Nessun piano dei colleghi.</p>`}</div>
-    <p class="muted">Puoi aiutare un collega prendendo un suo ordine non ancora aperto.</p></main>`; };
+    ${coll?`<h2>Piani dei colleghi</h2><div class="list">${others.map(pr).join("") || `<p class="muted">Nessun piano dei colleghi.</p>`}</div>
+    <p class="muted">Puoi aiutare un collega prendendo un suo ordine non ancora aperto.</p>`:`<p class="muted">In questo magazzino il lavoro dei colleghi non si vede (250).</p>`}</main>`; };
 V.piano = () => { const p=S.piani.find(x=>x.id===S.pianoSel);
-  return `${hdr(`Piano «${esc(p.t)}»`,`di ${p.prep}`)}<main class="main"><div class="list">${p.ord.map(k=>ordRow(k)).join("")}</div>
+  return `${hdr(`Piano «${esc(p.t)}»`,`di ${p.prep}`)}<main class="main"><div class="list">${p.ord.map(k=>ordRow(k)+(S.ordini[k].stato==="aperto"?avviso(S.ordini[k]):"")).join("")}</div>
   <p class="muted">Tocca un ordine per iniziare. Chi lo apre lo prende; uscendo a metà resta tuo, tra le cose in sospeso.</p></main>`; };
 function pickRows(o){ return o.righe.map((r,i)=>({...r,i})).filter(r=>r.ass>0).sort((x,y)=>(x.vend||A(x.a).loc).localeCompare(y.vend||A(y.a).loc)); }
 V.pick = () => { const k=S.ordine, o=S.ordini[k], rows=pickRows(o), P=S.pk; const r=rows[P.n];
@@ -932,13 +940,18 @@ V.pick = () => { const k=S.ordine, o=S.ordini[k], rows=pickRows(o), P=S.pk; cons
      `<div class="qty"><button class="ic" data-act="qm" aria-label="Meno">−</button><input id="q" type="number" inputmode="numeric" value="${r.ass}"><button class="ic" data-act="qp" aria-label="Più">+</button></div><button class="btn go" data-act="pkQty">Preso</button>`}
     ${ic?`<div class="warnbox">${where} in conta da ${ic.who}, da ${ic.age||"poco"}: si sta contando (233). Prendi da un'altra ubicazione o aspetta qualche minuto.</div><div class="btns two"><button class="btn" data-act="pkAlt:C-01-2">Prendi da C-01-2</button><button class="btn" data-act="pkWait">Aspetto</button></div>`:""}
     ${P.warn?`<div class="warnbox bad">${P.warn}</div>`:""}
+    ${r.ass<r.q && !(o.resto||{})[r.a]?`<div class="warnbox">Ne servono ${r.q}, ne risultano ${r.ass}. Puoi sospendere l'ordine finché arriva il resto, o concludere senza e spedire quello che c'è (246).</div><div class="btns two"><button class="btn" data-act="sheet:sosp">Sospendi l'ordine</button><button class="btn go" data-act="senza:${r.a}">Concludi senza</button></div>`:""}
     <button class="btn" data-act="sheet:cerca">Cerca</button>
     <h2>Righe</h2><div class="list">${rows.map((x,j)=>row(`${x.vend||A(x.a).loc} · ${A(x.a).code}`,j<P.n?"preso":`${x.ass}`,j<P.n?"done":j===P.n?"part":"")).join("")}</div>
     <p class="muted">Se esci a metà l'ordine resta tuo, tra le cose in sospeso.</p></main>`; };
+SH.sosp = () => { const o=S.ordini[S.ordine], m=manca(o);
+  return `<h3>Sospendi l'ordine ${S.ordine}</h3><div class="field"><label for="sm">Motivo</label><input id="sm" type="text" value="manca ${m.map(r=>A(r.a).code+" ("+(r.q-r.ass)+")").join(", ")}"></div>
+  <p class="muted">I pezzi già presi restano prelevati per quest'ordine${S.cfgSosp?"":": lascia il pacco sul tuo tavolo con sopra il riferimento"}. L'ordine va tra i fermi; quando arriva il mancante torna «Da riprendere» (247).</p>
+  ${S.cfgSosp?`<div class="cam"><div class="frame">Inquadra dove lasci il pacco</div><div class="chips"><button class="chip" data-act="sospOk:SOSP-2">Simula: SOSP-2</button></div></div>`:`<button class="btn go" data-act="sospOk:">Sospendi</button>`}`; };
 V.fine = () => { const k=S.ordine, o=S.ordini[k]; const part=o.righe.filter(r=>r.ass<r.q);
   return `${hdr(`Ordine ${k}`,"Fine della preparazione")}<main class="main">
     <div class="card"><b>Riepilogo</b><div class="list">${o.righe.filter(r=>r.ass>0).map(r=>row(A(r.a).code,`${r.ass} di ${r.q}`,r.ass<r.q?"part":"done")).join("")}</div>
-    ${part.length?`<p class="muted">${part.length} righe coperte in parte: il resto partirà con una seconda spedizione.</p>`:""}</div>
+    ${part.length?`<p class="muted">${nr(part.length,"riga resta aperta","righe restano aperte")} (${part.map(r=>(r.q-r.ass)+" "+A(r.a).code).join(", ")}): quando arriva la merce l'ordine torna da preparare come «resto» (248).</p>`:""}</div>
     <div class="field"><label for="colli2">Colli</label><input id="colli2" type="number" inputmode="numeric" value="2"></div>
     <div class="field"><label for="kg">Chili</label><input id="kg" type="text" inputmode="decimal" value="12,5"></div>
     <div class="field"><label for="prep">Preparato da</label><select id="prep">${USERS.filter(u=>u.r==="op").map(u=>`<option ${u.n===me()?"selected":""}>${u.n}</option>`).join("")}</select></div>
@@ -961,9 +974,9 @@ V.nuovoPiano = () => { const liberi=Object.keys(S.ordini).filter(k=>!S.ordini[k]
   return `${hdr("Nuovo piano")}<main class="main">
   <div class="field"><label for="pt">Titolo</label><input id="pt" type="text" value="Verdi A."></div><p class="muted">Proposto dall'agente dell'ordine, se il gestionale lo manda.</p>
   <div class="field"><label for="pp">Preparatore</label><select id="pp">${USERS.filter(u=>u.r==="op").map(u=>`<option>${u.n}</option>`).join("")}</select></div>
-  <h2>Ordini senza piano</h2><div class="list">${liberi.map(k=>{const o=S.ordini[k],[t,c]=cop(o);return `<label class="row ${c}"><span class="l"><span><input type="checkbox" data-ord="${k}" ${c==="done"?"checked":""}> ${k} · ${esc(o.cli)}</span><small>${S.cour[o.cour]}</small></span><span class="r">${t}</span></label>`;}).join("") || `<p class="muted">Tutti gli ordini aperti sono già in un piano.</p>`}</div>
+  <h2>Ordini senza piano</h2><div class="list">${liberi.map(k=>{const o=S.ordini[k],[t,c]=cop(o);return `<label class="row ${c}"><span class="l"><span><input type="checkbox" data-ord="${k}" ${c==="done"?"checked":""}> ${k} · ${esc(o.cli)}</span><small>${S.cour[o.cour]}</small></span><span class="r">${t}</span></label>${avviso(o)}`;}).join("") || `<p class="muted">Tutti gli ordini aperti sono già in un piano.</p>`}</div>
   <div class="btns two"><button class="btn" data-act="back">Annulla</button><button class="btn go" data-act="creaPiano">Crea e dai al preparatore</button></div>
-  <p class="muted">Un ordine coperto in parte si dà solo se lo scegli: il cliente riceverà due spedizioni.</p></main>`; };
+  <p class="muted">Un ordine con articoli che non bastano si dà lo stesso: l'avviso non blocca e lo vede anche il preparatore (249). Il resto parte dopo, appena arriva (248).</p></main>`; };
 V.scenari = () => `${hdr("Scenari del prototipo")}<main class="main">
   <details class="exp" open><summary>Cosa è cambiato in questa versione</summary><ul class="muted" style="margin:8px 0 0;padding-left:20px;display:grid;gap:4px">${NOVITA.map(t=>`<li>${t}</li>`).join("")}</ul></details>
   <div class="scen">
@@ -972,6 +985,7 @@ V.scenari = () => `${hdr("Scenari del prototipo")}<main class="main">
   <button class="btn" data-act="sc:sync">${S.sync?"Simula scambio bloccato da 15 minuti":"Scambio di nuovo a posto"}</button>
   <button class="btn" data-act="sc:coda">${S.coda?"Magazzino con i piani (come UFP)":"Magazzino con la coda (come Shopify)"}</button>
   <button class="btn" data-act="sc:mail">${S.mail?"Simula responsabile senza mail aziendale":"Responsabile con la mail aziendale"}</button>
+  <button class="btn" data-act="sc:arriva">Simula: arriva la merce che mancava agli ordini sospesi</button>
   <button class="btn" data-act="sc:vuoti">Svuota gli elenchi (per vedere gli stati vuoti)</button>
   <button class="btn" data-act="sc:primo">Rivedi la prima apertura</button>
   <button class="btn" data-act="sc:boss">Entra come responsabile (Anna)</button>
@@ -1194,7 +1208,8 @@ function act(a, el){
       log(`Chiude l'inventario ${I.t}: ${nc.length?nr(nc.length,"ubicazione non contata resta","ubicazioni non contate restano")+" come sono":"tutto contato"}`, "Inventario "+I.t);
       if(x==="nuovo" && nc.length){ const id="INV-"+(4+S.n++), t=I.t+" (resto)"; S.inv.push({id, t, cosa:"Ubicazioni non contate di "+I.t, entro:"27/11", creato:me(), cieca:I.cieca, sec:I.sec, ubi:nc.map(u=>({u:u.u, ass:u.ass, stato:"libera", righe:[]})), diff:[]}); log(`Crea l'inventario «${t}» con ${nc.map(u=>u.u).join(", ")}`, "Inventario "+t); }
       S.sheet=null; S.stack=["home"]; S.screen="inv"; return render(); }
-    case "cfg": if(x==="cieca") S.cfgCieca=!S.cfgCieca; else S.cfgSec=!S.cfgSec; log(`Configurazione: ${x==="cieca"?"quantità attesa a chi conta "+(S.cfgCieca?"nascosta":"visibile"):"seconda conta "+(S.cfgSec?"accesa":"spenta")}`); return render();
+    case "cfg": if(x==="coll"||x==="sosp"){ if(x==="coll") S.cfgColl=!S.cfgColl; else S.cfgSosp=!S.cfgSosp; log(`Configurazione: ${x==="coll"?"lavoro dei colleghi "+(S.cfgColl?"visibile":"nascosto"):"ubicazione per gli ordini sospesi "+(S.cfgSosp?"accesa":"spenta")}`); return render(); }
+      if(x==="cieca") S.cfgCieca=!S.cfgCieca; else S.cfgSec=!S.cfgSec; log(`Configurazione: ${x==="cieca"?"quantità attesa a chi conta "+(S.cfgCieca?"nascosta":"visibile"):"seconda conta "+(S.cfgSec?"accesa":"spenta")}`); return render();
     case "pkAlt": S.pk.alt=x; S.pk.st=0; log(`${x} al posto di un'ubicazione in conta`, "Ordine "+S.ordine); return render();
     case "pkWait": S.toast={txt:"Va bene: riprova tra qualche minuto, la riga resta qui"}; return render();
     /* Cerca */
@@ -1228,6 +1243,9 @@ function act(a, el){
       log(`Prelevati ${q} ${A(r.a).code} da ${r.vend||A(r.a).loc} per l'ordine ${S.ordine}`, "Ordine "+S.ordine); S.pk={n:S.pk.n+1,st:0}; S.toast={txt: q>r.ass ? `♪ Presi ${q} ${A(r.a).code} su ${r.ass}: il di più lo vede il responsabile` : `♪ Presi ${q} ${A(r.a).code}`}; render(); return window.scrollTo(0,0); }
     case "pronto": { const o=S.ordini[S.ordine]; o.stato="pronto"; o.pronto="ora"; o.colli=document.getElementById("colli2").value; o.kg=document.getElementById("kg").value; o.prep=document.getElementById("prep").value;
       log(`Ordine ${S.ordine} pronto (evaso): ${o.colli} colli, ${o.kg} kg, preparato da ${o.prep}${o.prep!==me()?` (registrato da ${me()})`:""}; ${o.shop?"a Shopify non si manda niente finché non parte":"documento di prelievo al gestionale"}`, "Ordine "+S.ordine); S.ordine=null; S.pk=null; back(); return; }
+    case "senza": { const o=S.ordini[S.ordine]; o.resto=o.resto||{}; o.resto[x]=true; log(`Concludi senza: ${A(x).code} mancante resta aperto sull'ordine ${S.ordine}, partirà appena arriva`, "Ordine "+S.ordine); return render(); }
+    case "sospOk": { const o=S.ordini[S.ordine], m=document.getElementById("sm"); o.ferma=m?m.value:"manca un articolo"; o.posto=x||null; o.age="ora";
+      log(`Sospende l'ordine ${S.ordine}: ${o.ferma}${x?"; pacco in "+x:"; pacco sul tavolo"}`, "Ordine "+S.ordine); S.sheet=null; S.ordine=null; S.pk=null; S.stack=["home"]; return go("preleva", false); }
     case "pkBack": S.pk.n=Math.max(0,pickRows(S.ordini[S.ordine]).length-1); S.pk.st=2; return render();
     case "resta": S.resta=S.resta||{}; S.resta[x]=!S.resta[x]; return render();
     case "ritirato": { const ks=Object.keys(S.ordini).filter(k=>S.ordini[k].stato==="pronto"&&S.ordini[k].cour===x&&!(S.resta||{})[k]); ks.forEach(k=>S.ordini[k].stato="spedito"); const id=`Ritiro ${x} 18/11 ${clock()}`; S.ritiri.unshift({id, cour:x, day:"18/11", ord:ks, who:me()});
@@ -1240,6 +1258,7 @@ function act(a, el){
       if(x==="coda"){ S.coda=!S.coda; log(S.coda?"Ora il magazzino lavora con la coda":"Ora il magazzino lavora con i piani"); S.stack=[]; return go(S.user?"home":"accesso", false); }
       if(x==="vuoti"){ S.ddts.forEach(d=>d.open=false); S.area=[]; S.rimetti=[]; S.vendite=[]; S.controlli=[]; Object.values(S.ordini).forEach(o=>{ if(o.stato!=="spedito"){ o.stato="spedito"; o.da=null; } }); log("Scenario: elenchi svuotati"); S.stack=[]; return go(S.user?"home":"accesso", false); }
       if(x==="mail"){ S.mail=!S.mail; return back(); }
+      if(x==="arriva"){ Object.entries(S.ordini).forEach(([k,o])=>{ if(o.ferma && /manca/.test(o.ferma)){ o.riprendi="è arrivato quello che mancava"; o.ferma=null; o.righe.forEach(r=>r.ass=r.q); log(`Arrivato il mancante: l'ordine ${k} è da riprendere`, "Ordine "+k); } }); return back(); }
       if(x==="primo"){ S.stack=[]; return go("primo", false); }
       if(x==="boss"){ S.pinFor="Anna"; S.stack=[]; return go("pin", false); }
       if(x==="reset"){ S=initial(); return render(); }

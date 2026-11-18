@@ -73,3 +73,7 @@ nel browser su tutti i flussi.
   nell'anteprima dell'ordine, che aperto dice quale articolo non basta. I preparatori senza permessi non vedono «gli
   altri lavori». Tocca le decisioni 165, 170 e 177. Domande nella pagina privata
   https://claude.ai/artifact/Qft5i5wPiwfyYEQpdUz5Kq.
+- 18/11/2026, primo giro della correzione: decisioni 246–250 (consigliate per 1–4; per la 5 l'utente nasconde solo
+  «Altri lavori» e vuole una scelta per magazzino sul lavoro dei colleghi, che in UFP resta visibile). Nota dell'utente:
+  cosa fa il preparatore se la merce c'è ma non risulta, o ce n'è meno. Prototipo corretto e provato nel browser.
+  Secondo giro nella stessa pagina.
