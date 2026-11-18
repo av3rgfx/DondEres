@@ -20,11 +20,12 @@ Un pezzo presente in magazzino si trova sempre in uno di questi stati:
 | In VEND | Arrivato con un ordine fornitore fatto per quel cliente | No, salvo annullamento (34) |
 | Prelevato | Preso dall'operatore; l'ordine è evaso e la merce aspetta la spedizione (21, 36) | No |
 | In attesa di decisione | Merce non prevista, caricata ma non ubicata (45) | No, finché il responsabile non la tiene (48) |
+| Da rendere | Decisa per il reso al fornitore, in attesa di partire (207); nell'area resi se il magazzino usa le ubicazioni (217) | No, finché il reso non parte o il fornitore non lo rifiuta (214) |
 
 La spedizione fa uscire il pezzo dal magazzino. La quantità che un operatore vede come prelevabile è sempre:
 
 ```
-prelevabile = in magazzino − assegnato − in VEND − prelevato − in attesa di decisione
+prelevabile = in magazzino − assegnato − in VEND − prelevato − in attesa di decisione − da rendere
 ```
 
 ### Il ricevimento
@@ -1229,3 +1230,98 @@ automatizza ha una procedura guidata, senza passaggi ripetuti.
 - Dove gira la lettura (telefono o server) e il caso del magazzino Shopify con un solo PC fisso: secondo giro del
   ticket «Resi», nella stessa pagina (nota alla 205).
 - Requisiti minimi del server in sede: nebbia della mappa, con i numeri della prova.
+
+## Resi
+
+Dal ticket «Resi», 18/11/2026. Decisioni 207–222 (la 214 precisa la 208). Fonti: ricerca
+`docs/research/2026-11-18-gestionali-magazzino-esistenti.md` (§ 1.8), documentazione Shopify sui resi (link nel ticket),
+due mail di reso e due di segnalazione mostrate dall'utente in chat (fatti annotati sotto, senza nomi). Domande nella
+pagina privata https://claude.ai/artifact/KQtNpyrXjbywxnz1iGKnGY; schermate nel prototipo
+`prototipi/percorso-schermate/index.html` (https://claude.ai/artifact/Vb6ijyDdr4n2gsZcKhhVur, privata).
+
+### Come si lavora oggi in UFP
+
+Fatti mostrati dall'utente il 18/11/2026:
+
+- **Differenze tra bolla e merce contata** (mancanti o in più): l'ufficio scrive al fornitore con un modello fisso,
+  con una tabella «codice / quantità indicata in DDT / quantità ricevuta / differenza / note» e la richiesta di mandare
+  il mancante oppure emettere una nota di credito; allega la bolla fotografata, con le correzioni a penna.
+- **Reso per eccedenza** (arrivati 32 pezzi invece di 3): accordo per telefono, mail dell'ufficio acquisti che conferma
+  il reso dei pezzi in più; poi l'ufficio manda il DDT di restituzione in PDF (causale «Reso a fornitori», dicitura
+  «reso per accredito», riferimento al DDT del fornitore, porto assegnato, corriere del fornitore); il fornitore
+  risponde con il giorno del ritiro.
+- In magazzino c'è già un'ubicazione «RESIF» per i resi ai fornitori (nota alla 217).
+
+### Reso al fornitore
+
+**Da dove nasce** (207). «Rendi al fornitore» del responsabile, da «Da controllare» (merce non prevista, 45; articolo
+rifiutato, 114; merce danneggiata, 191; eccedenza, 32; pezzi rimasti dopo un annullamento, 37 e 41; reso di un cliente
+non rivendibile, 211) o dalla scheda di un articolo per merce libera. I pezzi passano a **Da rendere**; se erano
+assegnati, l'assegnazione si rifà e la conferma nomina gli ordini che li perdono (16, 190, deduzione). Nei magazzini con
+le ubicazioni nasce il compito «Porta nell'area resi» (217).
+
+**Stati** (214):
+
+| Stato | Cosa vuol dire | Chi lo fa avanzare |
+|---|---|---|
+| Da chiedere | Merce da rendere raccolta per fornitore | Il responsabile prepara la richiesta |
+| Chiesto | Richiesta partita, si aspetta la risposta | Il responsabile segna la risposta |
+| Autorizzato | Il fornitore accetta; «la rimanda» o «non la rimanda» (208), numero di autorizzazione se c'è | Il magazziniere prepara |
+| Pronto | Pezzi inquadrati uno per uno, colli contati (216) | Chi consegna: «Ritirato da …» o «Consegnato al fornitore» |
+| Partito | La merce esce dalla giacenza; va il documento di reso (209) | — |
+
+Se il fornitore rifiuta, la merce torna al responsabile: tenerla o scartarla (214). «La rimanda» riapre il residuo della
+riga d'ordine fornitore e i pezzi tornano attesi; eccedenze e merce senza ordine non riaprono niente (208). Un pezzo in
+VEND reso con «la rimanda» torna a quel cliente quando arriva, perché il residuo riaperto porta ancora il riferimento
+(34, deduzione da confermare nel riepilogo).
+
+**Richiesta di reso** (215). Il programma prepara la mail: destinatario dal fornitore, oggetto con il DDT, righe con
+quantità e motivo, allegati con la foto della bolla, il PDF delle righe, le foto dei danni e la riserva al corriere
+(219). Anteprima modificabile, «Invia» dalla casella dell'azienda collegata all'installazione, copia al responsabile.
+Senza casella: «Copia testo» e «Scarica allegati». Il programma non legge le risposte.
+
+**Documento di reso** (209). Gestionale principale: il programma stampa il DDT di reso con la sua numerazione, causale
+di reso e riferimento al DDT del fornitore. Accanto a un gestionale: il programma manda il documento di reso e il DDT
+lo fa il gestionale; in UFP oggi lo emette l'ufficio (fatto sopra), da confermare con la domanda 24.
+
+### Reso del cliente
+
+- **Ricevi reso** (210): si parte dall'ordine spedito, cercato per numero, cliente o inquadrando un articolo; nel
+  magazzino Shopify in cima ci sono i resi aperti sul sito. Il documento del cliente, se c'è, si fotografa. Un pacco
+  senza ordine trovato, o un articolo non spedito con quell'ordine, va al responsabile come merce non prevista (45).
+- **Per ogni pezzo** (211): «Integro» (torna libero, va in «Metti a posto», si assegna dal più vecchio), «Da
+  controllare» (al responsabile: rivendibile, da rendere al fornitore o da scartare), «Danneggiato» (191). Più pezzi di
+  quelli spediti: si accettano e il di più va al responsabile (deduzione, come la 198).
+- **Shopify** (212): alla chiusura il programma scrive sul reso del sito l'esito di ogni pezzo (rimesso a magazzino,
+  non rimesso, mancante; da controllare aspetta il responsabile) e non manda in più una variazione di giacenza. Rimborso,
+  credito e cambio restano sul sito. L'app di Shopify chiede in più i permessi `read_returns` e `write_returns` (53,
+  documentazione Shopify). Da provare su un negozio di sviluppo.
+- **Accanto a un gestionale** (220): alla chiusura va al gestionale un «reso da cliente» con il riferimento all'ordine e
+  alla vendita; nota di credito e rimborso li fa il gestionale (domanda 27 al rivenditore).
+
+### Danni al trasporto
+
+All'apertura del DDT, o con «Danneggiata», l'operatore segna «Collo rovinato all'arrivo» con una foto e «firmato con
+riserva» sì o no (219). Foto e riserva finiscono nella richiesta di reso e nei «Documenti» del DDT. Pallet e imballi a
+rendere non si contano (218).
+
+### Schermate
+
+Lavoro «Resi» della mansione magazziniere, con il numero sulla prima schermata (213): scheda «Dai clienti» (cose in
+sospeso, resi aperti sul sito, «Ricevi reso») e scheda «Al fornitore» (Da chiedere, Chiesto, Autorizzato, Pronto,
+Partito). Per il responsabile: «Rendi al fornitore» in «Da controllare» e nella scheda dell'articolo, richiesta di reso
+in anteprima, risposta del fornitore. In «Documenti» la categoria «Resi». In «Metti a posto» il compito «Porta
+nell'area resi». Nel nuovo DDT «Collo rovinato all'arrivo».
+
+### Requisito sul carico
+
+Il carico di articoli e DDT dev'essere semplice, veloce e molto più funzionale di quello di oggi in UFP; quando mancano
+codici o quantità, il carico a mano ha una procedura guidata senza passaggi ripetuti (222). Vale per tutto il
+ricevimento, non solo per i resi.
+
+### Configurazione per magazzino (aggiunte)
+
+| Scelta | Valori | Di serie | Decisione |
+|---|---|---|---|
+| Nome dell'area resi | testo | «RESI» | 217 |
+| Casella di posta per le richieste di reso | collegata, non collegata | non collegata | 215 |

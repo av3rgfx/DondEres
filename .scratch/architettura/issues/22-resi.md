@@ -36,3 +36,10 @@ Risultato atteso: una sezione «Resi» in `docs/architettura.md` e le schermate 
 - 18/11/2026: dalle bolle vere di UFP, due spunti per il secondo giro: pallet «a rendere» sulle bolle AGB (un reso di
   imballi al fornitore) e il timbro «accettato con riserva» sulla lettera del corriere (primo passo di un reso per
   danni). Primo giro di 7 domande nella pagina https://claude.ai/artifact/KQtNpyrXjbywxnz1iGKnGY.
+- 18/11/2026, primo giro: accettate tutte le consigliate (207–213), con una nota sulla 208: oggi i resi li gestisce
+  il responsabile in ufficio con una mail al fornitore; proposta dell'utente di far preparare la mail al programma.
+- 18/11/2026, secondo giro: accettate tutte le consigliate (214–221); nota: in UFP esiste già l'ubicazione «RESIF».
+  L'utente ha mostrato in chat due mail di segnalazione di differenze con la bolla e lo scambio di un reso per
+  eccedenza (fatti annotati in `docs/architettura.md`, sezione «Resi», senza nomi né indirizzi) e ha chiesto un carico
+  semplice e veloce quando mancano codici o quantità (222). Domande 24 (annotata) e 27 per il rivenditore. Prototipo
+  aggiornato con le schermate dei resi e provato nel browser.

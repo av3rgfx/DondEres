@@ -1,3 +1,4 @@
+<meta charset="utf-8">
 <title>Prototipo schermate</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>
@@ -118,7 +119,7 @@ details.exp .list{margin-top:8px}
 <div class="app" id="app"></div>
 
 <script>
-/* PROTOTIPO usa e getta, ticket «Completezza del percorso delle schermate» (decisioni 184–191, sopra le 160–183).
+/* PROTOTIPO usa e getta, ticket «Completezza del percorso delle schermate» (decisioni 184–201, sopra le 160–183), poi «Resi» (207–221).
    Dati d'esempio inventati, nessun dato reale. Tutto in memoria. */
 const ARTS = {
   R110:{code:"3PR-110", desc:"Raccordo a T ottone 1/2\"", unit:"pz", loc:"A-03-2", price:"4,20 €", cost:"2,10 €", photo:"raccordo"},
@@ -131,24 +132,18 @@ const ARTS = {
 const USERS = [{n:"Marco",r:"op",m:["mag"],sped:true},{n:"Luca",r:"op",m:["prep"]},{n:"Sara",r:"op",m:["prep","mag"],plan:true,sped:true},{n:"Paolo",r:"op",m:["prep"]},{n:"Anna",r:"boss",m:["mag","prep"]}];
 const FORN = {"Idrotecnica Nord":"IDN","Colle Sud":"CSU","Elettroforniture Est":"EFE"};
 const MANS = {mag:"magazziniere", prep:"preparatore"};
-const MLAV = {mag:["ricevi","metti","cerca"], prep:["preleva","banco","cerca"]};
+const MLAV = {mag:["ricevi","metti","resi","cerca"], prep:["preleva","banco","cerca"]};
 const canShip = () => S.user && (S.user.r==="boss" || S.user.sped);
 const canPlan = () => S.user && (S.user.r==="boss" || S.user.plan);
 const NOVITA = [
-  "Nuovo DDT: fornitore, foto della bolla, numero e data letti da confermare (184).",
-  "Le righe del DDT nascono dalle letture e si abbinano da sole agli ordini del fornitore; «Attesi dal fornitore» si apre sotto (183).",
-  "«Aggiungi a mano» con le schede Per articolo e Per ordine, primo ordine già proposto (185). Nessun tasto «riempi con l'atteso» (186).",
-  "In cima a ogni sezione le cose in sospeso: miei, di colleghi, fermi, vecchi (187).",
-  "Vendite assistite lasciate a metà, ricontrollo alla conferma, «Annulla vendita» (188).",
-  "Sezione «Documenti» con le due viste e il registro (189).",
-  "«Annulla» dopo le azioni frequenti; riepilogo e tasto con il verbo per chiudere DDT, preparazioni e ritiri; conferma per le azioni gravi (190).",
-  "«Danneggiata» al ricevimento e dalla scheda dell'articolo (191).",
-  "Chiudi DDT: con la foto della bolla davanti si tocca solo la riga dove la bolla dice un'altra quantità; anche gli attesi non arrivati, se la bolla li porta (192).",
-  "«Metti a posto» diviso per fornitore e dentro per DDT (194).",
-  "Tasto «Cerca» dentro DDT, prelievo, messa a posto e vendita: la ricerca si apre sopra e chiudendola si torna al punto (197).",
-  "Al prelievo, pezzi in più del richiesto: avviso, si accetta e va al responsabile (198).",
-  "Ogni scheda che si apre dal basso ha il suo «Annulla» (180).",
-  "Le letture riuscite mostrano ♪: nel programma vero suono breve e vibrazione; un suono diverso per righe ferme ed errori (196)."
+  "Nuovo lavoro «Resi» del magazziniere, con il numero sulla prima schermata e due schede: Dai clienti e Al fornitore (213).",
+  "Ricevi reso: si parte dall'ordine spedito (o, nel magazzino con la coda, dai resi aperti sul sito); per ogni pezzo Integro, Da controllare o Danneggiato (210, 211).",
+  "Alla chiusura del reso: su Shopify l'esito di ogni pezzo; in UFP un «reso da cliente» al gestionale (212, 220).",
+  "Da controllare e scheda articolo: «Rendi al fornitore» porta la merce in «Da rendere» e crea il compito «Porta nell'area resi» (207, 217).",
+  "Reso al fornitore: Da chiedere → Chiesto → Autorizzato → Pronto → Partito; richiesta in anteprima con «Invia»; risposta con «rimanda / non rimanda» e numero di autorizzazione (214, 215).",
+  "Prepara il reso: si inquadra ogni pezzo, stop se è un altro; «Ritirato da …» fa uscire la merce e manda il documento di reso (216, 209).",
+  "Nuovo DDT: «Collo rovinato all'arrivo», con foto e «firmato con riserva» (219).",
+  "Documenti: categoria «Resi» (213). In Scenari: casella di posta collegata o no (215)."
 ];
 
 let clockMin = 10*60;
@@ -176,7 +171,7 @@ function initial(){
     area:[{a:"N55", q:4, from:"DDT 1153", forn:"Colle Sud"},{a:"R110", q:6, from:"DDT 698/00", forn:"Idrotecnica Nord"},{a:"S77", q:12, from:"DDT 655/00", forn:"Idrotecnica Nord"},{a:"V13", q:2, from:"DDT B 2291", forn:"Elettroforniture Est"}],
     rimetti:[{a:"V12", q:2, from:"ordine 1051 annullato"}],
     controlli:[
-      {id:"c1", t:"senza", a:"V13", q:1, txt:"Merce senza ordine: 1 VT-1201 dal DDT 1153"},
+      {id:"c1", t:"senza", a:"V13", q:1, forn:"Colle Sud", from:"DDT 1153", txt:"Merce senza ordine: 1 VT-1201 dal DDT 1153"},
       {id:"c2", t:"conta", a:"S77", q:7, txt:"Conteggio di Sara in C-02-4: 7 invece di 5"},
       {id:"c3", t:"cdiff", a:"V13", txt:"Codice VT-1201B sulla scatola, VT-1201 a catalogo (DDT 1140)"}
     ],
@@ -203,8 +198,8 @@ function initial(){
       "1031":{cli:"Bianchi Edilizia", cour:"BRT", stato:"pronto", colli:2, kg:"14", prep:"Marco", pronto:"oggi", righe:[]},
       "1035":{cli:"Termo Sud", cour:"GLS", stato:"pronto", colli:1, kg:"3,5", prep:"Sara", pronto:"oggi", righe:[]},
       "1036":{cli:"Rossi Srl", cour:"BRT", stato:"pronto", colli:3, kg:"22", prep:"Luca", pronto:"3 giorni fa", old:true, righe:[]},
-      "1029":{cli:"Edil Po", cour:"BRT", stato:"spedito", colli:2, kg:"9", prep:"Luca", righe:[]},
-      "1030":{cli:"Casa e Clima", cour:"BRT", stato:"spedito", colli:2, kg:"11", prep:"Sara", righe:[]},
+      "1029":{cli:"Edil Po", cour:"BRT", stato:"spedito", colli:2, kg:"9", prep:"Luca", righe:[], sped:[{a:"N55",q:2},{a:"V12",q:1}]},
+      "1030":{cli:"Casa e Clima", cour:"BRT", stato:"spedito", colli:2, kg:"11", prep:"Sara", righe:[], sped:[{a:"V12",q:1},{a:"G44",q:10}]},
       "#5521":{cli:"Ordine del sito, 09:14", cour:"GLS", stato:"aperto", shop:true, righe:[{a:"S77",q:2,ass:2}]},
       "#5523":{cli:"Ordine del sito, 09:31", cour:"BRT", stato:"aperto", shop:true, righe:[{a:"R110",q:10,ass:10}]},
       "#5524":{cli:"Ordine del sito, 09:40", cour:"GLS", stato:"aperto", shop:true, da:"Paolo", age:"20 minuti", righe:[{a:"V12",q:1,ass:1}]}
@@ -216,6 +211,12 @@ function initial(){
     ],
     venduteOk:[{id:"V-0412", cli:"Cliente generico", who:"Luca", at:"17/11 15:10", righe:[{a:"S77",q:1}]}],
     coda_out:[{txt:"Carico del DDT 655/00", stato:"inviato"},{txt:"Prelievo dell'ordine 1029", stato:"inviato"},{txt:"Vendita assistita V-0412", stato:"inviato"}],
+    resiTab:"cli", resoSel:null, richForn:null, resoFSel:null, ubic:true, areaResi:"RESIF", mail:true, nR:31,
+    resiC:[{id:"rc1", ord:"#5498", cli:"Ordine del sito #5498", attesoSito:true, righe:[{a:"S77",q:1,esiti:[]}], stato:"aperto"},
+           {id:"rc2", ord:"1030", cli:"Casa e Clima", who:"Sara", age:"ieri", righe:[{a:"V12",q:1,esiti:["Integro"]},{a:"G44",q:10,esiti:[]}], stato:"aperto"}],
+    daRendere:[{a:"N55", q:2, forn:"Colle Sud", mot:"danneggiata, collo rovinato e firmato con riserva", from:"DDT 1153", riserva:true}],
+    resiF:[{id:"R-30", forn:"Elettroforniture Est", stato:"chiesto", chiesto:"16/11", righe:[{a:"V13",q:2,mot:"eccedenza"}], prep:{}},
+           {id:"R-29", forn:"Idrotecnica Nord", stato:"autorizzato", rma:"A-772", rimanda:false, righe:[{a:"S77",q:3,mot:"non ordinati"}], prep:{}}],
     banco:null, cerca:"", cnt:null, put:null, newArt:null, docTab:"doc", docCat:null, docSel:null, regWho:"tutti"
   };
 }
@@ -312,8 +313,8 @@ V.home = () => {
   ${isBoss() && !S.sync ? `<div class="banner warn">Scambio con il gestionale non riuscito da 15 minuti. Si lavora con gli ultimi dati; 3 documenti aspettano in coda. <button class="btn small" data-act="syncNow">Aggiorna ora</button></div>`:""}
   <main class="main">
   ${isBoss()?t(c.controlli,"Da controllare","go:controlli","boss"):""}
-  ${(()=>{ const L={ricevi:[c.ricevi,"Ricevi DDT"],metti:[c.metti,"Metti a posto"],preleva:[c.preleva,"Preleva"],spedisci:[c.spedisci,"Spedisci"],banco:[c.banco,"Vendita assistita"],cerca:[null,"Cerca e conta"]};
-    const all=["ricevi","metti","preleva","spedisci","banco","cerca"].filter(k=>k!=="spedisci"||canShip());
+  ${(()=>{ const L={ricevi:[c.ricevi,"Ricevi DDT"],metti:[c.metti,"Metti a posto"],preleva:[c.preleva,"Preleva"],spedisci:[c.spedisci,"Spedisci"],banco:[c.banco,"Vendita assistita"],resi:[resiCount(),"Resi"],cerca:[null,"Cerca e conta"]};
+    const all=["ricevi","metti","resi","preleva","spedisci","banco","cerca"].filter(k=>k!=="spedisci"||canShip());
     const mine=isBoss()?all:[...new Set(S.user.m.flatMap(m=>MLAV[m]))].filter(k=>all.includes(k));
     const rest=all.filter(k=>!mine.includes(k));
     return `<div class="tiles">${mine.map(k=>t(L[k][0],L[k][1],"go:"+k)).join("")}</div>`+(rest.length?`<h2>Altri lavori</h2><div class="list">${rest.map(k=>row(L[k][1],L[k][0]===null?"›":L[k][0],"","go:"+k)).join("")}</div>`:""); })()}
@@ -354,6 +355,7 @@ V.nuovoDdt = () => { const N=S.nd;
     <div class="field"><label for="dat">Data del DDT</label><input id="dat" type="text" inputmode="numeric" value="${esc(N.data)}" placeholder="gg/mm/aaaa"></div>
     <div class="field"><label for="ofc">Ordine citato sulla bolla (facoltativo)</label><select id="ofc"><option value="">nessuno o non lo so</option>${ofs.map(([k])=>`<option ${k===N.ofCit?"selected":""}>${k}</option>`).join("")}</select></div>
     ${N.dup?`<div class="warnbox">Possibile doppione: c'è già il DDT ${esc(N.num)} di ${esc(N.forn)}. Apri quello, oppure tocca di nuovo «Apri il DDT» per crearlo lo stesso.</div><button class="btn" data-act="ddt:${N.dup}">Apri quello già aperto</button>`:""}
+    ${N.rov?`<div class="warnbox bad">Collo rovinato all'arrivo</div>${photo("foto del collo")}<div class="tabs" role="group" aria-label="Riserva"><button data-act="ndRis:si" aria-pressed="${N.ris==="si"}">Firmato con riserva</button><button data-act="ndRis:no" aria-pressed="${N.ris==="no"}">Senza riserva</button></div>`:`<button class="btn" data-act="ndRov">Collo rovinato all'arrivo? Fotografalo</button>`}
     <div class="btns two"><button class="btn" data-act="ndAnnulla">Annulla</button><button class="btn go" data-act="ndApri">Apri il DDT</button></div>
     <p class="muted">Prova a lasciare 698/00: c'è già. Se scegli l'ordine citato, le letture vanno prima su quello.</p></main>`; };
 
@@ -560,11 +562,11 @@ V.metti = () => { const by={}; S.area.forEach((e,i)=>{ (by[e.forn]=by[e.forn]||{
   <h2>Area di ricevimento</h2>${Object.keys(by).length?Object.entries(by).map(([f,dd])=>`<div class="grp-h"><span>${esc(f)}</span><span>${Object.values(dd).flat().length} articoli</span></div><div class="sub">${Object.entries(dd).map(([from,arr])=>`<div class="muted">${esc(from)}</div><div class="list">${arr.map(([e,i])=>row(`${A(e.a).code} · ${esc(A(e.a).desc)}`,`${e.q} ${A(e.a).unit}`,"","put:a:"+i,`abituale ${A(e.a).loc}`)).join("")}</div>`).join("")}</div>`).join(""):`<p class="muted">Niente da mettere a posto: l'area di ricevimento è vuota.</p>`}
   <h2>Rimetti a posto</h2><div class="list">${S.rimetti.length?S.rimetti.map((e,i)=>row(`${A(e.a).code} · ${esc(A(e.a).desc)}`,`${e.q} ${A(e.a).unit}`,"part","put:r:"+i,e.from)).join(""):`<p class="muted">Niente da rimettere a posto.</p>`}</div>
   <p class="muted">In alternativa si inquadra una scatola qualsiasi dell'area: il programma la cerca in questo elenco.</p></main>`; };
-V.put = () => { const P=S.put, e=(P.src==="a"?S.area:S.rimetti)[P.i]; const art=A(e.a);
+V.put = () => { const P=S.put, e=(P.src==="a"?S.area:S.rimetti)[P.i]; const art=A(e.a); const dest=e.to||art.loc;
   return `${hdr("Metti a posto",art.code)}<main class="main">${photo(art.photo)}<p>${esc(art.desc)} · <b>${e.q} ${art.unit}</b></p>
-  <div class="row boss"><span class="l"><span>Ubicazione proposta</span><small>abituale</small></span><span class="r">${art.loc}</span></div>
+  <div class="row boss"><span class="l"><span>Ubicazione proposta</span><small>${e.to?"area resi (217)":"abituale"}</small></span><span class="r">${dest}</span></div>
   <div class="cam"><div class="frame">Scansiona l'etichetta dell'ubicazione dove la metti davvero</div>
-  <div class="chips"><button class="chip" data-act="putLoc:${art.loc}">Simula: ${art.loc}</button><button class="chip" data-act="putLoc:Z-09-9">Simula: Z-09-9 (un'altra)</button></div></div>
+  <div class="chips"><button class="chip" data-act="putLoc:${dest}">Simula: ${dest}</button><button class="chip" data-act="putLoc:Z-09-9">Simula: Z-09-9 (un'altra)</button></div></div>
   <div class="field"><label for="pq">Quanti ne metti qui</label><input id="pq" type="number" value="${e.q}"></div></main>`; };
 
 /* ===== Vendita assistita (178, 188) ===== */
@@ -600,7 +602,7 @@ V.scheda = () => { const k=S.cerca, a=A(k); return `${hdr(a.code,esc(a.desc))}<m
   <div class="list">${row("Prezzo di vendita",a.price)}${isBoss()?row("Costo d'acquisto",a.cost,"boss"):""}</div>
   <h2>Giacenze</h2><div class="list">${row(a.loc+" (abituale)","8 "+a.unit,"","conta:"+a.loc,"libera 5 · assegnata 3")}${row("Area di ricevimento","2 "+a.unit,"","conta:RIC","da mettere a posto")}${row("VEND3","1 "+a.unit,"","","per l'ordine 1046")}</div>
   <h2>Codici</h2><div class="list">${row("Codice articolo",a.code)}${row("Barcode","8001234567890")}</div>
-  <div class="btns"><button class="btn" data-act="aggFoto">Aggiungi foto</button><button class="btn bad" data-act="sheet:dmgCard">Segna danneggiati</button></div>
+  <div class="btns"><button class="btn" data-act="aggFoto">Aggiungi foto</button><button class="btn bad" data-act="sheet:dmgCard">Segna danneggiati</button>${isBoss()?`<button class="btn" data-act="sheet:rendiCard">Rendi al fornitore</button>`:""}</div>
   <p class="muted">Tocca un'ubicazione per contarla, se la merce non torna.</p></main>`; };
 SH.dmgCard = () => { const a=A(S.cerca); return `<h3>${a.code} danneggiati a magazzino</h3>
   <div class="field"><label for="dl">Dove sono</label><select id="dl"><option>${a.loc}</option><option>Area di ricevimento</option></select></div>
@@ -613,12 +615,13 @@ V.conta = () => `${hdr("Conta",S.cnt)}<main class="main"><p>Quanti pezzi di <b>$
   <p class="muted">Il conteggio vale subito; il responsabile lo trova tra le cose da controllare.</p></main>`;
 
 /* ===== Documenti (189) ===== */
-const CATS = [["ddt","DDT"],["prep","Preparazioni"],["sped","Spedizioni"],["vend","Vendite assistite"],["corr","Conteggi e correzioni"],["scambi","Scambi con il gestionale"]];
+const CATS = [["ddt","DDT"],["prep","Preparazioni"],["sped","Spedizioni"],["vend","Vendite assistite"],["corr","Conteggi e correzioni"],["scambi","Scambi con il gestionale"],["resi","Resi"]];
 function catItems(c){
   if(c==="ddt") return S.ddts.map(d=>({doc:"DDT "+d.num, l:`DDT ${esc(d.num)} · ${esc(d.forn)}`, r:d.open?"aperto":"chiuso", small:`del ${d.data}${d.foto?" · foto della bolla":""}`, cls:d.open?"part":"done"}));
   if(c==="prep") return Object.entries(S.ordini).filter(([k,o])=>o.stato!=="aperto").map(([k,o])=>({doc:"Ordine "+k, l:`Ordine ${k} · ${esc(o.cli)}`, r:o.stato, small:`${o.colli} colli · preparato da ${o.prep}`, cls:"done"}));
   if(c==="sped") return S.ritiri.map(x=>({doc:x.id, l:`${S.cour[x.cour]} · ${x.day}`, r:`${x.ord.length} ordini`, small:`segnati da ${x.who}: ${x.ord.join(", ")}`, cls:"done"}));
   if(c==="vend") return S.venduteOk.map(v=>({doc:"Vendita "+v.id, l:`Vendita ${v.id} · ${esc(v.cli)}`, r:`${v.righe.length} articoli`, small:`${v.who}, ${v.at}`, cls:"done"}));
+  if(c==="resi") return [...S.resiF.map(r=>({doc:null, l:`${r.id} · al fornitore ${esc(r.forn)}`, r:(RSTATI.find(x=>x[0]===r.stato)||["","rifiutato"])[1], small:r.righe.map(x=>x.q+" "+A(x.a).code).join(", "), cls:r.stato==="partito"?"done":"part"})), ...S.resiC.filter(r=>r.stato==="chiuso").map(r=>({doc:null, l:`Reso dall'ordine ${r.ord} · ${esc(r.cli)}`, r:"chiuso", small:`${nr(r.righe.reduce((n,x)=>n+x.esiti.length,0),"pezzo","pezzi")} · ${r.who}`, cls:"done"}))];
   if(c==="corr") return S.log.filter(e=>/Conteggio|Annulla|Correzione|danneggiat/i.test(e.txt)).map(e=>({doc:null, l:esc(e.txt), r:e.at, small:e.who}));
   return S.coda_out.map(x=>({doc:null, l:esc(x.txt), r:x.stato, cls:x.stato==="inviato"?"done":"part"}));
 }
@@ -647,8 +650,89 @@ V.doc = () => { const key=S.docSel; const d=S.ddts.find(x=>"DDT "+x.num===key);
   <h2>Cronologia</h2><div class="list">${cron.map(e=>row(esc(e.txt),e.esito,"","",`${e.at} · ${esc(e.who)}`)).join("") || `<p class="muted">Nessuna voce.</p>`}</div>
   ${d&&d.open?`<button class="btn go" data-act="ddt:${d.id}">Apri il DDT</button>`:""}</main>`; };
 
+/* ===== Resi (ticket «Resi», decisioni 207–221) ===== */
+const FORN_OF = {R110:"Idrotecnica Nord", G44:"Idrotecnica Nord", S77:"Idrotecnica Nord", V12:"Idrotecnica Nord", V13:"Elettroforniture Est", N55:"Colle Sud"};
+const RSTATI = [["chiedere","Da chiedere"],["chiesto","Chiesto"],["autorizzato","Autorizzato"],["pronto","Pronto"],["partito","Partito"]];
+const nr = (n, uno, molti) => `${n} ${n===1?uno:molti}`;
+const resiCount = () => S.resiC.filter(r=>r.stato!=="chiuso").length + new Set(S.daRendere.map(d=>d.forn)).size + S.resiF.filter(r=>r.stato!=="partito").length;
+function daRendere(a, q, forn, mot, from){ S.daRendere.push({a, q, forn, mot, from});
+  if(S.ubic) S.rimetti.push({a, q, from:`porta nell'area resi · ${mot}`, to:S.areaResi, resi:true});
+  log(`${q} ${A(a).code} da rendere a ${forn} (${mot}): non si assegnano e non si prelevano${S.ubic?"; compito «Porta nell'area resi»":""}`); }
+V.resi = () => { const tabs = `<div class="tabs" role="group" aria-label="Resi"><button data-act="resiTab:cli" aria-pressed="${S.resiTab==="cli"}">Dai clienti</button><button data-act="resiTab:forn" aria-pressed="${S.resiTab==="forn"}">Al fornitore</button></div>`;
+  if(S.resiTab==="cli"){
+    const items = S.resiC.filter(r=>r.stato!=="chiuso" && !r.attesoSito).map(r=>({l:`Reso dall'ordine ${r.ord} · ${esc(r.cli)}`, r:nr(r.righe.reduce((n,x)=>n+x.esiti.length,0),"pezzo","pezzi"), cls:"part", act:"resoC:"+r.id, small:r.who===me()?`aperto ${r.age}`:`${r.who}, ${r.age}`, who:r.who, old:r.old}));
+    const sito = S.resiC.filter(r=>r.attesoSito);
+    return `${hdr("Resi","Dai clienti")}<main class="main">${tabs}${toastHtml()}${sospesi(items,"Nessun reso aperto.")}
+    ${S.coda?`<h2>Resi aperti sul sito</h2><div class="list">${sito.map(r=>row(`Ordine ${r.ord} · ${r.righe.map(x=>x.q+" "+A(x.a).code).join(", ")}`,"›","part","resoSito:"+r.id,"aperto su Shopify: si aspetta il pacco")).join("")||`<p class="muted">Nessun reso aperto sul sito.</p>`}</div>`:""}
+    <button class="btn go" data-act="go:ricReso">Ricevi reso</button>
+    <p class="muted">Si parte dall'ordine spedito: il programma sa cosa può tornare (210).${S.coda?"":" In UFP, alla chiusura va ad Ad Hoc un «reso da cliente»; la nota di credito la fa l'ufficio (220)."}</p></main>`; }
+  const forn = [...new Set(S.daRendere.map(d=>d.forn))];
+  const byS = k => S.resiF.filter(r=>r.stato===k);
+  const fr = r => row(`${r.id} · ${esc(r.forn)}`, nr(r.righe.length,"riga","righe"), r.stato==="partito"?"done":r.stato==="autorizzato"||r.stato==="pronto"?"part":"", "resoF:"+r.id, r.stato==="chiesto"?`chiesto il ${r.chiesto} · si aspetta la risposta`:r.stato==="autorizzato"?`autorizzato${r.rma?" n. "+esc(r.rma):""} · ${r.rimanda?"il fornitore la rimanda":"non la rimanda"} · da preparare`:r.stato==="pronto"?`pronto · ${r.colli} colli in ${S.areaResi}`:`partito il ${r.partito}`);
+  return `${hdr("Resi","Al fornitore")}<main class="main">${tabs}${toastHtml()}
+    <div class="grp-h"><span>Da chiedere</span><span>${forn.length}</span></div><div class="list">${forn.map(f=>{ const rr=S.daRendere.filter(d=>d.forn===f); return row(esc(f), nr(rr.length,"riga","righe"), "", isBoss()?"richiesta:"+f.replace(/ /g,"_"):"", rr.map(d=>`${d.q} ${A(d.a).code} (${d.mot})`).join(" · ")+(isBoss()?"":" · la richiesta la fa il responsabile")); }).join("")||`<p class="muted">Niente da rendere.</p>`}</div>
+    ${RSTATI.slice(1).map(([k,t])=>`<div class="grp-h"><span>${t}</span><span>${byS(k).length}</span></div><div class="list">${byS(k).map(fr).join("")||`<p class="muted">Nessuno.</p>`}</div>`).join("")}
+    <p class="muted">Da chiedere → Chiesto → Autorizzato → Pronto → Partito (214). La merce esce dalla giacenza solo quando parte (216).</p></main>`; };
+V.ricReso = () => { const sped = Object.entries(S.ordini).filter(([k,o])=>o.stato==="spedito" && o.sped);
+  return `${hdr("Ricevi reso","Da quale ordine?")}<main class="main">
+  <div class="cam"><div class="frame">Inquadra un articolo del pacco: cerco gli ordini spediti che lo contengono</div>
+  <div class="chips"><button class="chip" data-act="resoNew:1029">Simula: NB-55 → ordine 1029</button><button class="chip" data-act="resoNessuno">Simula: nessun ordine trovato</button></div></div>
+  <div class="field"><label for="rq">Oppure cerca numero d'ordine o cliente</label><input id="rq" type="text"></div>
+  <h2>Ordini spediti</h2><div class="list">${sped.map(([k,o])=>row(`Ordine ${k} · ${esc(o.cli)}`, nr(o.sped.reduce((n,x)=>n+x.q,0),"pezzo","pezzi"), "", "resoNew:"+k, o.sped.map(x=>x.q+" "+A(x.a).code).join(", "))).join("")}</div>
+  <p class="muted">Se il cliente ha un suo documento di reso, lo fotografi dentro il reso, come la bolla.</p></main>`; };
+V.resoC = () => { const R=S.resiC.find(r=>r.id===S.resoSel); const o=S.ordini[R.ord]||{};
+  const righe = R.righe.map((x,i)=>{ const n=x.esiti.length, lab=["Integro","Da controllare","Danneggiato"].map(t=>{ const c=x.esiti.filter(e=>e===t).length; return c?`${c} ${t.toLowerCase()}`:""; }).filter(Boolean).join(" · ");
+    return row(`${A(x.a).code} · ${esc(A(x.a).desc)}`, `${n} / ${x.q}`, n===0?"":n<x.q?"part":"done", "", lab||`spediti ${x.q}`); }).join("");
+  return `${hdr(`Reso dall'ordine ${R.ord}`, esc(R.cli))}<main class="main">${toastHtml()}
+  <div class="cam"><div class="frame">Inquadra il pezzo che torna</div>
+  <div class="chips">${R.righe.map(x=>`<button class="chip" data-act="sheet:esito:${x.a}">Simula: ${A(x.a).code}</button>`).join("")}<button class="chip" data-act="resoFuori">Simula: un articolo non spedito con questo ordine</button></div></div>
+  <div class="list">${righe}</div>
+  ${R.foto?photo("documento del cliente"):`<button class="btn" data-act="resoFoto">Fotografa il documento del cliente (facoltativo)</button>`}
+  <div class="btns two"><button class="btn" data-act="back">Più tardi</button><button class="btn go" data-act="sheet:resoChiudi">Chiudi il reso</button></div>
+  <p class="muted">Per ogni pezzo scegli Integro, Da controllare o Danneggiato (211). «Annulla» e «Modifica» finché il reso è aperto.</p></main>`; };
+SH.esito = ({i}) => { const a=i; return `<h3>${A(a).code} · com'è tornato?</h3>${photo(A(a).photo)}
+  <div class="field"><label for="eq">Quanti pezzi</label><input id="eq" type="number" inputmode="numeric" value="1"></div>
+  <div class="btns"><button class="btn go" data-act="esitoOk:${a}:Integro">Integro: torna libero</button><button class="btn" data-act="esitoOk:${a}:Da controllare">Da controllare: al responsabile</button><button class="btn bad" data-act="esitoOk:${a}:Danneggiato">Danneggiato</button></div>`; };
+SH.resoChiudi = () => { const R=S.resiC.find(r=>r.id===S.resoSel); const cnt=t=>R.righe.reduce((n,x)=>n+x.esiti.filter(e=>e===t).length,0); const tot=R.righe.reduce((n,x)=>n+x.esiti.length,0);
+  return `<h3>Chiudi il reso dall'ordine ${R.ord}</h3>${tot?"":`<div class="warnbox">Non hai ancora registrato nessun pezzo.</div>`}
+  <div class="list">${row("Integri: tornano liberi, in «Metti a posto»",cnt("Integro"),"done")}${row("Da controllare: al responsabile",cnt("Da controllare"),"boss")}${row("Danneggiati: al responsabile",cnt("Danneggiato"),"halt")}</div>
+  <h2>Cosa succede se chiudi</h2><ul class="muted" style="margin:0;padding-left:20px">${S.coda?`<li>Su Shopify, per ogni pezzo: integro «rimesso a magazzino», danneggiato «non rimesso», da controllare quando decide il responsabile (212). Il rimborso lo fa una persona sul sito.</li>`:`<li>Al gestionale va un «reso da cliente» con il riferimento all'ordine ${R.ord}; la nota di credito la fa l'ufficio (220).</li>`}<li>I pezzi integri si assegnano dal più vecchio (16).</li><li>Il reso non si riapre: le correzioni dopo le fa il responsabile.</li></ul>
+  <div class="btns two"><button class="btn" data-act="closeSheet">Torna al reso</button><button class="btn go" data-act="resoChiudiOk" ${tot?"":"disabled"}>Chiudi il reso</button></div>`; };
+V.richiesta = () => { const f=S.richForn, rr=S.daRendere.filter(d=>d.forn===f); const dmg=rr.some(d=>/danneggiat/.test(d.mot));
+  const testo = `Buongiorno,\nchiediamo il reso della merce seguente:\n${rr.map(d=>`- ${d.q} ${A(d.a).code} ${A(d.a).desc}: ${d.mot}${d.from?" ("+d.from+")":""}`).join("\n")}\n${dmg?"In allegato le foto dei danni.\n":""}Vi chiediamo come procedere e il numero di autorizzazione al reso, se lo prevedete.\nCordiali saluti`;
+  return `${hdr("Richiesta di reso",esc(f))}<main class="main">
+  <div class="field"><label for="ma">A</label><input id="ma" type="text" value="ordini@${f.toLowerCase().replace(/ /g,"")}.example"></div>
+  <div class="field"><label for="mo">Oggetto</label><input id="mo" type="text" value="Richiesta di reso · ${rr.map(d=>d.from).filter(Boolean).filter((v,i,a)=>a.indexOf(v)===i).join(", ")||"merce da rendere"}"></div>
+  <div class="field"><label for="mt">Testo</label><textarea id="mt" rows="9">${esc(testo)}</textarea></div>
+  <div class="list">${row("Allegati","","",""," righe.pdf · foto della bolla"+(dmg?" · foto dei danni":"")+(rr.some(d=>d.riserva)?" · riserva al corriere":""))}</div>
+  ${S.mail?"":`<div class="warnbox">Casella dell'azienda non collegata: copia il testo e scarica gli allegati (215).</div>`}
+  <div class="btns two"><button class="btn" data-act="back">Annulla</button>${S.mail?`<button class="btn go" data-act="richInvia">Invia</button>`:`<button class="btn go" data-act="richInvia:copia">Copia testo e scarica allegati</button>`}</div>
+  <p class="muted">Parte dalla casella dell'azienda con copia a te; la risposta arriva nella tua posta. Quando il fornitore risponde, segni tu «Autorizzato» (214, 215).</p></main>`; };
+SH.risposta = ({i}) => { const r=S.resiF.find(z=>z.id===i); return `<h3>${r.id} · cosa ha risposto ${esc(r.forn)}?</h3>
+  <div class="field"><label for="rma">Numero di autorizzazione al reso (se c'è)</label><input id="rma" type="text" placeholder="per esempio RMA 5521"></div>
+  <div class="btns"><button class="btn go" data-act="rispOk:${i}:rimanda">Autorizzato: il fornitore la rimanda</button><button class="btn go" data-act="rispOk:${i}:accredito">Autorizzato: non la rimanda (accredito)</button><button class="btn bad" data-act="rispOk:${i}:rifiuta">Il fornitore rifiuta il reso</button></div>
+  <p class="muted">«La rimanda» riapre il residuo dell'ordine fornitore: i pezzi tornano attesi (208). Eccedenze e merce senza ordine non riaprono niente.</p>`; };
+V.prepReso = () => { const r=S.resiF.find(z=>z.id===S.resoFSel); const P=r.prep;
+  return `${hdr(`Prepara ${r.id}`,esc(r.forn))}<main class="main">${toastHtml()}
+  ${P.warn?`<div class="warnbox bad">${P.warn}</div>`:""}
+  <div class="cam"><div class="frame">Inquadra il pezzo da rendere${S.ubic?`, in ${S.areaResi}`:""}</div>
+  <div class="chips">${r.righe.map(x=>`<button class="chip" data-act="prepScan:${x.a}">Simula: ${A(x.a).code}</button>`).join("")}<button class="chip" data-act="prepScan:altro">Simula: un altro articolo</button></div></div>
+  <div class="list">${r.righe.map(x=>row(`${A(x.a).code} · ${esc(A(x.a).desc)}`,`${P[x.a]||0} / ${x.q}`,(P[x.a]||0)>=x.q?"done":(P[x.a]||0)?"part":"","",x.mot)).join("")}</div>
+  <div class="field"><label for="rc">Colli</label><input id="rc" type="number" inputmode="numeric" value="1"></div>
+  <button class="btn go" data-act="prepPronto" ${r.righe.every(x=>(P[x.a]||0)>=x.q)?"":"disabled"}>Reso pronto</button>
+  <p class="muted">Stesso controllo del prelievo: un articolo diverso ferma con un avviso (216).</p></main>`; };
+SH.partenza = ({i}) => { const r=S.resiF.find(z=>z.id===i); return `<h3>${r.id} parte</h3><p>${r.righe.map(x=>x.q+" "+A(x.a).code).join(", ")} · ${r.colli} colli</p>
+  <h2>Cosa succede</h2><ul class="muted" style="margin:0;padding-left:20px"><li>La merce esce dalla giacenza.</li><li>${S.coda?"Il programma stampa il DDT di reso, con la sua numerazione (209).":"Al gestionale va il documento di reso; il DDT di reso lo fa il gestionale (209)."}</li>${r.rimanda?`<li>I pezzi restano attesi dal fornitore: residuo riaperto.</li>`:""}</ul>
+  <div class="btns"><button class="btn go" data-act="partito:${i}:Ritirato da BRT">Ritirato da BRT</button><button class="btn" data-act="partito:${i}:Consegnato al fornitore">Consegnato al fornitore</button></div>`; };
+SH.rendiCard = () => { const a=A(S.cerca); return `<h3>Rendi al fornitore ${a.code}</h3>
+  <div class="field"><label for="rq2">Quanti pezzi</label><input id="rq2" type="number" inputmode="numeric" value="1"></div>
+  <div class="field"><label for="rf2">Fornitore</label><select id="rf2">${Object.keys(FORN).map(f=>`<option ${f===FORN_OF[S.cerca]?"selected":""}>${esc(f)}</option>`).join("")}</select></div>
+  <div class="field"><label for="rm2">Motivo</label><input id="rm2" type="text" value="non si vende più"></div>
+  <div class="warnbox">Se i pezzi erano assegnati a un ordine, l'assegnazione si rifà e il programma nomina gli ordini che li perdono (190).</div>
+  <div class="btns two"><button class="btn" data-act="closeSheet">Annulla</button><button class="btn go" data-act="rendiCardOk">Da rendere</button></div>`; };
+
 /* ===== Responsabile ===== */
-V.controlli = () => `${hdr("Da controllare",`${S.controlli.length} cose`)}<main class="main"><div class="list">
+V.controlli = () => `${hdr("Da controllare",`${S.controlli.length} cose`)}<main class="main">${toastHtml()}<div class="list">
   ${S.controlli.map(c=>row(esc(c.txt),"›",c.t==="cdiff"||c.t==="unit"||c.t==="dmg"?"halt":c.t==="nuovo"?"part":"","ctl:"+c.id)).join("") || `<p class="muted">Niente da controllare.</p>`}</div></main>`;
 SH.ctl = ({id}) => { const c=S.controlli.find(x=>x.id===id); const b = (t,cls="")=>`<button class="btn ${cls}" data-act="ctlDone:${id}:${esc(t)}">${t}</button>`;
   const opts = {
@@ -661,7 +745,9 @@ SH.ctl = ({id}) => { const c=S.controlli.find(x=>x.id===id); const b = (t,cls=""
     dmg:[b("Tieni: torna merce buona","go"),b("Rendi al fornitore"),`<button class="btn bad" data-act="sheet:grave:${id}:scarta">Scarta</button>`],
     bolla:[b("Va bene così","go"),b("Segnala al fornitore")],
     ecc:[b("Tieni l'eccedenza","go"),b("Rendi al fornitore")],
-    prel:[b("Va bene: si cambia l'ordine nel gestionale","go"),b("Correggi: il di più torna a magazzino")]
+    prel:[b("Va bene: si cambia l'ordine nel gestionale","go"),b("Correggi: il di più torna a magazzino")],
+    resoc:[b("Rivendibile: torna libero","go"),b("Rendi al fornitore"),`<button class="btn bad" data-act="sheet:grave:${id}:scarta">Scarta</button>`],
+    rifiuto:[b("Tieni: va in ubicazione e diventa libera","go"),`<button class="btn bad" data-act="sheet:grave:${id}:scarta">Scarta</button>`]
   }[c.t];
   return `<h3>${esc(c.txt)}</h3>${c.a?photo(A(c.a).photo):""}${c.t==="nuovo"?`<div class="list">${row("Ubicazione abituale","da scegliere","part")}${row("Prezzi","da completare","part")}${row("Si tiene a magazzino","sì")}</div>`:""}<div class="btns">${opts.join("")}</div>`; };
 SH.grave = ({i, x}) => { const c=S.controlli.find(z=>z.id===i); const w = x==="scarta" ? "Scartare questa merce? Esce dal magazzino e al gestionale va uno scarico. Non si torna indietro." : "Rifiutare l'articolo? I carichi fatti con lui vanno corretti e la merce va resa o tenuta come merce non prevista (114).";
@@ -744,6 +830,7 @@ V.scenari = () => `${hdr("Scenari del prototipo")}<main class="main">
   <button class="btn" data-act="sc:timeout">Simula 30 minuti senza uso</button>
   <button class="btn" data-act="sc:sync">${S.sync?"Simula scambio bloccato da 15 minuti":"Scambio di nuovo a posto"}</button>
   <button class="btn" data-act="sc:coda">${S.coda?"Magazzino con i piani (come UFP)":"Magazzino con la coda (come Shopify)"}</button>
+  <button class="btn" data-act="sc:mail">${S.mail?"Simula casella di posta non collegata":"Casella di posta collegata"}</button>
   <button class="btn" data-act="sc:vuoti">Svuota gli elenchi (per vedere gli stati vuoti)</button>
   <button class="btn" data-act="sc:primo">Rivedi la prima apertura</button>
   <button class="btn" data-act="sc:boss">Entra come responsabile (Anna)</button>
@@ -792,13 +879,56 @@ function act(a, el){
       const dup=S.ddts.find(d=>d.forn===N.forn && d.num===N.num);
       if(dup && N.dup!==dup.id){ N.dup=dup.id; return render(); }
       const id=Date.now(); S.ddts.push({id, num:N.num, forn:N.forn, data:N.data||"18/11/2026", open:true, foto:N.foto, ofCit:N.ofCit||null, who:me(), age:"ora", lines:[]}); S.lastDdt=id;
-      log(`Apre il DDT ${N.num} di ${N.forn}${N.foto?", foto della bolla salvata":", senza foto"}${N.letto?"; numero e data letti dalla foto, confermati":""}`, "DDT "+N.num);
+      log(`Apre il DDT ${N.num} di ${N.forn}${N.foto?", foto della bolla salvata":", senza foto"}${N.letto?"; numero e data letti dalla foto, confermati":""}${N.rov?`; collo rovinato all'arrivo, foto salvata, ${N.ris==="si"?"firmato con riserva":"senza riserva"}`:""}`, "DDT "+N.num);
       S.nd=null; S.stack=S.stack.filter(s=>s!=="nuovoDdt"); S.screen="ricevi"; return go("ddt"); }
+    /* Resi */
+    case "resiTab": S.resiTab=x; return render();
+    case "resoNew": { const o=S.ordini[x]; const id="rc"+(++S.n); S.resiC.unshift({id, ord:x, cli:o.cli, who:me(), age:"ora", righe:o.sped.map(z=>({a:z.a,q:z.q,esiti:[]})), stato:"aperto"}); S.resoSel=id; log(`Apre il reso dall'ordine ${x} (${o.cli})`, "Reso "+x); S.stack=S.stack.filter(s=>s!=="ricReso"); S.screen="resi"; return go("resoC"); }
+    case "resoNessuno": S.controlli.push({id:"c"+(++S.n), t:"senza", a:"R110", q:1, forn:FORN_OF.R110, txt:"Pacco reso senza ordine trovato: 1 3PR-110, da decidere"}); log("Pacco reso senza ordine trovato: registrato come merce non prevista, al responsabile (45)"); S.screen=S.stack.pop()||"resi"; S.toast={txt:"Nessun ordine spedito con questo articolo: messo da parte come merce non prevista, al responsabile"}; return render();
+    case "resoSito": { const R=S.resiC.find(r=>r.id===x); R.attesoSito=false; R.who=me(); R.age="ora"; S.resoSel=x; log(`Arriva il pacco del reso ${R.ord} aperto sul sito`, "Reso "+R.ord); return go("resoC"); }
+    case "resoC": S.resoSel=x; return go("resoC");
+    case "resoFoto": S.resiC.find(r=>r.id===S.resoSel).foto=true; log("Foto del documento del cliente salvata con il reso"); return render();
+    case "resoFuori": { const R=S.resiC.find(r=>r.id===S.resoSel); S.controlli.push({id:"c"+(++S.n), t:"senza", a:"N55", q:1, forn:FORN_OF.N55, txt:`Nel reso dall'ordine ${R.ord} un NB-55 non spedito con quell'ordine`}); log(`Reso ${R.ord}: un articolo non spedito con l'ordine, al responsabile`); S.toast={txt:"Non è tra i pezzi spediti con questo ordine: mettilo da parte, lo vede il responsabile"}; return render(); }
+    case "esitoOk": { const R=S.resiC.find(r=>r.id===S.resoSel), z=R.righe.find(w=>w.a===x), q=+document.getElementById("eq").value||1; const t=[y,...rest].join(":"); const oltre=z.esiti.length+q>z.q;
+      for(let k=0;k<q;k++) z.esiti.push(t); S.sheet=null; log(`Reso ${R.ord}: ${q} ${A(x).code} ${t.toLowerCase()}`, "Reso "+R.ord);
+      if(oltre) S.controlli.push({id:"c"+(++S.n), t:"resoc", a:x, q:z.esiti.length-z.q, forn:FORN_OF[x], txt:`Reso ${R.ord}: tornati ${z.esiti.length} ${A(x).code} su ${z.q} spediti`});
+      S.toast={kind:"esito", id:R.id, a:x, q, txt: oltre?`♪ ${q} ${A(x).code} ${t.toLowerCase()}: più di quelli spediti, il di più lo vede il responsabile`:`♪ ${q} ${A(x).code} ${t.toLowerCase()}`}; return render(); }
+    case "resoChiudiOk": { const R=S.resiC.find(r=>r.id===S.resoSel); S.sheet=null; R.stato="chiuso";
+      R.righe.forEach(z=>{ const n=t=>z.esiti.filter(e=>e===t).length;
+        if(n("Integro")) S.area.push({a:z.a, q:n("Integro"), from:"Reso ordine "+R.ord, forn:"Resi dei clienti"});
+        if(n("Da controllare")) S.controlli.push({id:"c"+(++S.n), t:"resoc", a:z.a, q:n("Da controllare"), forn:FORN_OF[z.a], from:"reso "+R.ord, txt:`Reso ${R.ord}: ${n("Da controllare")} ${A(z.a).code} da controllare`});
+        if(n("Danneggiato")) S.controlli.push({id:"c"+(++S.n), t:"dmg", a:z.a, q:n("Danneggiato"), forn:FORN_OF[z.a], from:"reso "+R.ord, txt:`Reso ${R.ord}: ${n("Danneggiato")} ${A(z.a).code} danneggiati`}); });
+      const txt = S.coda ? `Reso ${R.ord} chiuso: esiti scritti sul reso di Shopify; il rimborso lo fa una persona sul sito` : `Reso ${R.ord} chiuso: «reso da cliente» al gestionale con il riferimento all'ordine`;
+      log(txt, "Reso "+R.ord); S.coda_out.unshift({txt:S.coda?`Esiti del reso ${R.ord} a Shopify`:`Reso da cliente dell'ordine ${R.ord}`, stato:S.online?"inviato":"in coda"});
+      S.screen=S.stack.pop()||"resi"; S.toast={txt}; render(); return window.scrollTo(0,0); }
+    case "richiesta": S.richForn=[x,y,...rest].filter(v=>v!==undefined).join(":").replace(/_/g," "); return go("richiesta");
+    case "richInvia": { const f=S.richForn, rr=S.daRendere.filter(d=>d.forn===f); const id="R-"+(S.nR++);
+      S.resiF.unshift({id, forn:f, stato:"chiesto", chiesto:"18/11", righe:rr.map(d=>({a:d.a,q:d.q,mot:d.mot})), prep:{}}); S.daRendere=S.daRendere.filter(d=>d.forn!==f);
+      log(x==="copia"?`Richiesta di reso ${id} a ${f}: testo copiato e allegati scaricati, la manda il responsabile`:`Richiesta di reso ${id} inviata a ${f} dalla casella dell'azienda, copia al responsabile`, "Reso "+id);
+      S.screen=S.stack.pop()||"resi"; S.resiTab="forn"; S.toast={txt:`${id} chiesto a ${f}: quando risponde, tocca il reso e segna la risposta`}; render(); return window.scrollTo(0,0); }
+    case "resoF": { const r=S.resiF.find(z=>z.id===x);
+      if(r.stato==="chiesto"){ if(!isBoss()){ S.toast={txt:"Si aspetta la risposta del fornitore: la segna il responsabile"}; return render(); } return sheet("risposta",{i:x}); }
+      if(r.stato==="autorizzato"){ S.resoFSel=x; return go("prepReso"); }
+      if(r.stato==="pronto") return sheet("partenza",{i:x});
+      S.toast={txt:`${r.id} è partito il ${r.partito}: lo trovi in Documenti → Resi`}; return render(); }
+    case "rispOk": { const r=S.resiF.find(z=>z.id===x); const rma=document.getElementById("rma").value.trim(); S.sheet=null;
+      if(y==="rifiuta"){ r.stato="rifiutato"; r.righe.forEach(z=>S.controlli.push({id:"c"+(++S.n), t:"rifiuto", a:z.a, q:z.q, txt:`${r.forn} ha rifiutato il reso ${r.id}: ${z.q} ${A(z.a).code} da decidere`})); log(`${r.forn} rifiuta il reso ${r.id}: la merce torna da decidere`, "Reso "+r.id); return render(); }
+      r.stato="autorizzato"; r.rma=rma; r.rimanda=y==="rimanda"; log(`Reso ${r.id} autorizzato da ${r.forn}${rma?" (n. "+rma+")":""}: ${r.rimanda?"il fornitore la rimanda; residuo dell'ordine riaperto, i pezzi tornano attesi":"non la rimanda (accredito)"}`, "Reso "+r.id); S.toast={txt:`${r.id} autorizzato: ora il magazziniere lo prepara`}; return render(); }
+    case "prepScan": { const r=S.resiF.find(z=>z.id===S.resoFSel); if(x==="altro"){ r.prep.warn="Stop: questo articolo non è nel reso. Rimettilo dov'era e inquadra quello giusto."; return render(); }
+      r.prep.warn=null; const z=r.righe.find(w=>w.a===x); r.prep[x]=Math.min(z.q,(r.prep[x]||0)+1); S.toast={txt:`♪ ${A(x).code} ${r.prep[x]} di ${z.q}`}; return render(); }
+    case "prepPronto": { const r=S.resiF.find(z=>z.id===S.resoFSel); r.colli=document.getElementById("rc").value||1; r.stato="pronto"; log(`Reso ${r.id} pronto: ${r.colli} colli in ${S.areaResi}`, "Reso "+r.id); S.screen=S.stack.pop()||"resi"; S.toast={txt:`${r.id} pronto: alla partenza tocca «Ritirato da …»`}; return render(); }
+    case "partito": { const r=S.resiF.find(z=>z.id===x); r.stato="partito"; r.partito="18/11"; S.sheet=null; const how=[y,...rest].join(":");
+      log(`${how}: reso ${r.id} partito; la merce esce dalla giacenza; ${S.coda?"DDT di reso stampato dal programma":"documento di reso al gestionale, che fa il DDT di reso"}`, "Reso "+r.id);
+      S.coda_out.unshift({txt:`Reso ${r.id} a ${r.forn}`, stato:S.online?"inviato":"in coda"}); S.toast={txt:`${r.id} partito`}; return render(); }
+    case "rendiCardOk": { const q=+document.getElementById("rq2").value||1, f=document.getElementById("rf2").value, m=document.getElementById("rm2").value||"da rendere"; daRendere(S.cerca, q, f, m, "scheda articolo"); S.sheet=null; S.toast={txt:`${q} ${A(S.cerca).code} da rendere a ${f}`}; return render(); }
+    case "ndRov": S.nd.rov=true; S.nd.ris=S.nd.ris||"si"; return render();
+    case "ndRis": S.nd.ris=x; return render();
     case "sim": return sim(x);
     case "annulla": { const t=S.toast; S.toast=null;
       if(t.kind==="scan") undoScan(t);
       if(t.kind==="put"){ (t.src==="a"?S.area:S.rimetti).splice(t.i,0,t.e); log(`Annulla: ${t.e.a?A(t.e.a).code:""} torna da mettere a posto (correzione collegata)`); }
       if(t.kind==="take"){ const o=S.ordini[t.k]; o.da=null; S.ordine=null; S.pk=null; log(`Annulla: lascia l'ordine ${t.k}, torna disponibile`, "Ordine "+t.k); return back(); }
+      if(t.kind==="esito"){ const R=S.resiC.find(r=>r.id===t.id), x=R.righe.find(z=>z.a===t.a); for(let k=0;k<t.q;k++) x.esiti.pop(); log(`Annulla: −${t.q} ${A(t.a).code} dal reso dell'ordine ${R.ord} (correzione collegata)`); }
       if(t.kind==="ship"){ t.ks.forEach(k=>S.ordini[k].stato="pronto"); S.ritiri.shift(); log(`Annulla: ${t.ks.join(", ")} tornano pronti (correzione collegata)`); }
       return render(); }
     case "line": return sheet("line",{i:+x});
@@ -877,7 +1007,9 @@ function act(a, el){
     case "regWho": S.regWho=x; return render();
     /* Responsabile */
     case "ctl": return sheet("ctl",{id:x});
-    case "ctlDone": { const c=S.controlli.find(z=>z.id===x); S.controlli=S.controlli.filter(z=>z.id!==x); log(`«${[y,...rest].join(":")}» per ${c.txt}`); S.sheet=null; return render(); }
+    case "ctlDone": { const c=S.controlli.find(z=>z.id===x); S.controlli=S.controlli.filter(z=>z.id!==x); log(`«${[y,...rest].join(":")}» per ${c.txt}`); S.sheet=null;
+      if(/^Rendi al fornitore/.test(y) && c.a){ daRendere(c.a, c.q||1, c.forn||FORN_OF[c.a], {senza:"non ordinata", dmg:"danneggiata", ecc:"eccedenza", resoc:"reso di un cliente, non rivendibile"}[c.t]||"da rendere", c.from||""); S.toast={txt:`${A(c.a).code} da rendere a ${c.forn||FORN_OF[c.a]}: lo trovi in Resi → Al fornitore`}; }
+      return render(); }
     /* Prelievo */
     case "piano": S.pianoSel=x; return go("piano");
     case "ord": { const o=S.ordini[x]; const nuovo=o.da!==me(); o.da=me(); o.age=o.age||"poco"; S.ordine=x; S.pk=S.pk&&S.pkOrd===x?S.pk:{n:0,st:0}; S.pkOrd=x; if(nuovo) log(`Prende l'ordine ${x}: gli altri lo vedono in preparazione`, "Ordine "+x); go("pick"); if(nuovo){ S.toast={kind:"take", txt:`Hai preso l'ordine ${x}`, k:x}; render(); } return; }
@@ -900,6 +1032,7 @@ function act(a, el){
       if(x==="sync"){ S.sync=!S.sync; return back(); }
       if(x==="coda"){ S.coda=!S.coda; log(S.coda?"Ora il magazzino lavora con la coda":"Ora il magazzino lavora con i piani"); S.stack=[]; return go(S.user?"home":"accesso", false); }
       if(x==="vuoti"){ S.ddts.forEach(d=>d.open=false); S.area=[]; S.rimetti=[]; S.vendite=[]; S.controlli=[]; Object.values(S.ordini).forEach(o=>{ if(o.stato!=="spedito"){ o.stato="spedito"; o.da=null; } }); log("Scenario: elenchi svuotati"); S.stack=[]; return go(S.user?"home":"accesso", false); }
+      if(x==="mail"){ S.mail=!S.mail; return back(); }
       if(x==="primo"){ S.stack=[]; return go("primo", false); }
       if(x==="boss"){ S.pinFor="Anna"; S.stack=[]; return go("pin", false); }
       if(x==="reset"){ S=initial(); return render(); }
