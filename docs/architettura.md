@@ -882,6 +882,11 @@ Totale: circa 1.620 foto e 9 ore di scatti con l'iPhone, più 480 foto di arrivo
 Dal ticket «Percorso delle schermate», chiuso il 17/11/2026. Decisioni 160–179. Qui si decide quali schermate ci sono e
 in che ordine; colori, caratteri e stile vengono con il ticket «Aspetto grafico» (14).
 
+Da completare (18/11/2026): l'utente trova il percorso giusto ma non completo (180). Elenchi delle cose in sospeso per
+sezione (181), sezione «Documenti» con storico e log (182) e DDT con le righe create dalle letture e il ripiego a mano
+per articolo o per ordine (183) si disegnano nel ticket «Completezza del percorso delle schermate», dopo la ricerca
+«Gestionali di magazzino esistenti: funzioni in più e difetti da evitare».
+
 Prototipo usa e getta a fil di ferro, con dati inventati e fotocamera simulata: `prototipi/percorso-schermate/index.html`,
 pubblicato anche come pagina privata per il telefono dell'utente (https://claude.ai/artifact/Vb6ijyDdr4n2gsZcKhhVur).
 Si apre con un doppio clic o da un server locale; «Scenari» simula rete assente, uscita dopo 30 minuti, scambio bloccato
