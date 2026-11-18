@@ -87,6 +87,10 @@ percorso delle schermate e aspetto grafico, compresi nome e brand kit (decisioni
   righe dalle letture, ripiego a mano con ordine proposto, quantità in bolla alla chiusura; cose in sospeso in quattro
   gruppi; «Documenti» e registro; regola Annulla/Conferma; merce danneggiata; tempi 1–2 s; nuovi ticket Resi,
   Inventario periodico e Lettura automatica delle bolle (decisioni 184–201).
+- [Lettura automatica delle bolle](issues/24-ricerca-lettura-bolle.md): in parte sì; testata leggibile in sede, righe da
+  misurare su bolle vere; codici stampati (DataMatrix, EAN per riga) letti senza OCR; esclusi i modelli a licenza non
+  commerciale. Prova accettata: bolle nel privato, clienti coperti, 100–120 bolle, sistemi A–D, accesa per fornitore
+  (decisioni 202–206).
 
 Prese prima della mappa, nel secondo giro di domande del 15/11/2026: decisioni 15–28 in
 [`docs/decisioni.md`](../../docs/decisioni.md) (assegnazione parziale, codice stampato come tipo di articolo,
@@ -107,8 +111,6 @@ tre livelli di conferma, quantità letta dalla scatola, ubicazioni facoltative, 
 - **Catalogo visivo per la vendita assistita** (idea dell'utente, decisioni 78 e 86; «banco» diventa «vendita assistita», 178): cercare un articolo e vederne
   disponibilità, prezzo, giacenza e ubicazione, anche quando il cliente non sa bene cosa vuole. Tocca identificazione e
   schermate.
-- **Prova di lettura delle bolle su bolle vere:** dopo la ricerca «Lettura automatica delle bolle» (193), una prova su
-  bolle di UFP con i dati dei clienti coperti, come la prova visiva; dove conservarle va chiesto all'utente.
 - **Etichette e distinta del corriere:** chi le stampa in UFP (domande 21 e 22 al rivenditore) e nel magazzino Shopify;
   la ricerca del 18/11/2026 le trova in quasi tutti i gestionali.
 - **Ottimizzazione del venduto (VEND):** l'utente vuole un'analisi a parte, soprattutto per UFP, che vende anche al

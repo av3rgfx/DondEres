@@ -1158,3 +1158,74 @@ telefono: volume dei suoni, spenti o accesi (196).
 - Lettura automatica di tutti i dati della bolla, da foto o PDF (193): ticket «Lettura automatica delle bolle».
 - Confronto tra merce caricata e fattura: collegamento con Ad Hoc della specializzazione (192).
 - Catalogo visivo nella vendita assistita, procedura guidata della configurazione: nebbia della mappa.
+
+## Lettura automatica delle bolle
+
+Dalla ricerca «Lettura automatica delle bolle», chiusa il 18/11/2026: `docs/research/2026-11-18-lettura-automatica-bolle.md`.
+Decisioni 192, 193 e 202–206. La prova la esegue il ticket «Esecuzione della prova di lettura delle bolle». Domande
+nella pagina privata https://claude.ai/artifact/KQtNpyrXjbywxnz1iGKnGY.
+
+### Cosa si sa
+
+- Testata (fornitore, numero, data, ordine citato): leggibile in sede con strumenti a licenza commerciale. Righe con
+  codice e quantità: leggibili da modelli recenti in sede, ma nessuna fonte li misura su bolle italiane. Finché la prova
+  non dice il contrario, le quantità in bolla entrano come nella 192; quelle lette restano «quantità in bolla», mai
+  contate (183, 193).
+- Sulle bolle vere di UFP (3 fornitori, viste il 18/11/2026) una parte dei dati è già in codici stampati: il DataMatrix
+  di AGB porta numero e data del DDT, i barcode di ISEO l'EAN di ogni riga. Si leggono senza riconoscere il testo
+  (zxing-cpp, Apache-2.0); il DataMatrix tiene anche insieme le pagine dello stesso DDT.
+- Ogni bolla porta due numeri d'ordine: la conferma del fornitore e l'ordine di UFP, scritto in posti diversi per ogni
+  fornitore. L'abbinamento usa quello di UFP (70).
+- Righe che non sono merce, da scartare: intestazioni «Saldo» e «Acconto», righe con il solo numero d'ordine,
+  riferimenti del cliente, pallet a rendere, testi legali, merce in sconto (da distinguere o sommare: da chiarire).
+- Strumenti esclusi per licenza: LayoutLMv3, DocTr, Qwen2.5-VL-3B e derivati (Nanonets-OCR, OCRFlux), Marker, Surya e
+  Chandra (soglia di ricavi), HunyuanOCR (esclude l'UE), jina-ocr. Da evitare dentro il programma: PyMuPDF (AGPL),
+  Poppler (GPL).
+- Gli scanner di documenti di Android e iPhone funzionano solo nelle app native: nella web app (121) ritaglio e
+  raddrizzamento si fanno con OpenCV.js o jscanify.
+
+### Come si legge una bolla (proposta da provare)
+
+1. **Codici stampati** su ogni pagina (zxing): numero e data dal DataMatrix, EAN delle righe. Dove ci sono, valgono più
+   del testo letto.
+2. **Foto o PDF.** Dal PDF con testo si legge il testo senza riconoscimento (pdfplumber, MIT). Dalla foto: ritaglio,
+   raddrizzamento, contrasto, poi uno dei sistemi della prova.
+3. **Uscita in uno schema fisso** (tipo di documento, testata, righe con il loro tipo, ordine di UFP, Saldo/Acconto,
+   segni a mano), vincolato in JSON dove il sistema lo permette.
+4. **Controlli sugli ordini aperti** del fornitore scelto: numero d'ordine di UFP per gruppo di righe, poi codice o EAN,
+   poi quantità residua. Un codice che non c'è negli ordini aperti è un avviso, non una riga.
+5. **Numero e data** si propongono all'apertura del DDT (184); **le righe** alla chiusura (192), quindi il server ha il
+   tempo del conteggio per leggerle.
+
+Addestrare un modello non è il primo passo: modello generale, controlli e «memoria» delle correzioni per fornitore;
+un adattamento solo se la prova mostra errori ripetuti (ricerca, §4).
+
+### Piano della prova
+
+| Cosa | Scelta | Decisione |
+|---|---|---|
+| Dove stanno le bolle | Cartella «bolle» del repository privato `prova-visiva-foto`; nel pubblico solo script e numeri, con sigle F01, B001…; tabella delle sigle nel privato; tenute dopo la prova, cancellate su richiesta di UFP | 202 (eccezione alla 130) |
+| Cosa si copre | Nomi e riferimenti dei clienti finali, firme, targhe, con un rettangolo pieno nell'immagine; del PDF si tiene l'immagine; le zone coperte non si misurano | 203 |
+| Quante | 100–120 bolle scelte a caso: 8–12 fornitori ricorrenti (circa 8 bolle ciascuno) più 20–30 bolle di occasionali; due foto per bolla («bene» e «come capita»), tutte le pagine; PDF quando c'è; 5–10 lettere di vettura; bolle d'archivio con segni a penna in un gruppo a parte; un terzo dei ricorrenti fuori dalla prima metà; primo giro di 20 | 204 |
+| Sistemi | Passo comune: codici stampati (zxing-cpp). A PaddleOCR con regole; B PaddleOCR-VL-1.6; C Qwen3-VL-8B con schema JSON (e 4B per i tempi); D pdfplumber per i PDF con testo. Stesso abbinamento per tutti | 205 |
+| Traguardi | Numero e data giusti in 95 bolle su 100 dalla foto «come capita»; righe: codice e quantità giusti in 95 su 100 e al massimo 1 errore senza avviso su 100. Solo il primo: lettura solo della testata. Righe buone solo per alcuni fornitori: si accende per fornitore | 206 |
+| Dove si calcola | Nella sessione di Claude, come la prova visiva; si riportano tempi e memoria di ogni sistema | 143 (per analogia) |
+
+**Verità scritta a mano**, guardando la bolla: testata (fornitore, numero com'è stampato, data, ordini citati, pagine);
+per ogni riga tipo di riga, codice, EAN, descrizione, quantità, unità, ordine di UFP, conferma del fornitore, Saldo o
+Acconto, pagina, «scritto o corretto a mano», «coperto da timbro»; se l'articolo era in un ordine aperto quel giorno.
+Una seconda persona ricontrolla il 10% (proposta della ricerca).
+
+**Cosa si misura**: testata per campo; righe (trovate, giuste, quantità giusta); errori senza avviso dopo i controlli;
+righe non di merce scartate bene; pagine rimesse insieme; lettere di vettura riconosciute; quanto si legge dai soli
+codici stampati. Tutto diviso per foto «bene», «come capita» e PDF, per fornitore visto o mai visto, per bolle con o
+senza segni.
+
+**Principio dell'utente** (nota alla 206): conta che il carico dei DDT in Ad Hoc diventi veloce; ciò che non si
+automatizza ha una procedura guidata, senza passaggi ripetuti.
+
+### Rimandato
+
+- Dove gira la lettura (telefono o server) e il caso del magazzino Shopify con un solo PC fisso: secondo giro del
+  ticket «Resi», nella stessa pagina (nota alla 205).
+- Requisiti minimi del server in sede: nebbia della mappa, con i numeri della prova.
