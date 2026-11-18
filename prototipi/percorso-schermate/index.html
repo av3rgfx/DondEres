@@ -143,7 +143,9 @@ const NOVITA = [
   "Reso al fornitore: Da chiedere → Chiesto → Autorizzato → Pronto → Partito; richiesta in anteprima con «Invia»; risposta con «rimanda / non rimanda» e numero di autorizzazione (214, 215).",
   "Prepara il reso: si inquadra ogni pezzo, stop se è un altro; «Ritirato da …» fa uscire la merce e manda il documento di reso (216, 209).",
   "Nuovo DDT: «Collo rovinato all'arrivo», con foto e «firmato con riserva» (219).",
-  "Documenti: categoria «Resi» (213). In Scenari: casella di posta collegata o no (215)."
+  "Documenti: categoria «Resi» (213). Le mail partono solo dal responsabile, dalla sua mail aziendale salvata nell'utente (223); in Scenari si prova senza.",
+  "Aggiungi a mano: prima scheda «Dalla bolla», righe nell'ordine del foglio; se l'ordine non c'è, «Manca l'ordine» e la riga aspetta il responsabile (224).",
+  "Da controllare: «Scrivi al fornitore» per le differenze con la bolla, con la tabella che usate oggi, e la risposta riga per riga (223)."
 ];
 
 let clockMin = 10*60;
@@ -173,7 +175,8 @@ function initial(){
     controlli:[
       {id:"c1", t:"senza", a:"V13", q:1, forn:"Colle Sud", from:"DDT 1153", txt:"Merce senza ordine: 1 VT-1201 dal DDT 1153"},
       {id:"c2", t:"conta", a:"S77", q:7, txt:"Conteggio di Sara in C-02-4: 7 invece di 5"},
-      {id:"c3", t:"cdiff", a:"V13", txt:"Codice VT-1201B sulla scatola, VT-1201 a catalogo (DDT 1140)"}
+      {id:"c3", t:"cdiff", a:"V13", txt:"Codice VT-1201B sulla scatola, VT-1201 a catalogo (DDT 1140)"},
+      {id:"c4", t:"bolla", a:"N55", ddt:"DDT 1153", riga:"NB-55 · 6 · 4 · −2", txt:"Differenza con la bolla: NB-55 contati 4, in bolla 6 (DDT 1153)"}
     ],
     log:[
       {at:"10/11 09:02", who:"Marco", txt:"Apre il DDT 655/00 di Idrotecnica Nord, foto della bolla salvata", doc:"DDT 655/00", esito:"salvata"},
@@ -377,7 +380,7 @@ V.ddt = () => {
     <div class="cam"><div class="frame">Inquadratura sempre accesa<br>inquadra la scatola</div>
       <div class="chips"><button class="chip" data-act="sheet:simList">Simula cosa inquadri ▾</button></div></div>
     ${toastHtml()}
-    <div class="btns two"><button class="btn" data-act="mano:art">Aggiungi a mano</button><button class="btn" data-act="sheet:cerca">Cerca</button></div>
+    <div class="btns two"><button class="btn" data-act="mano:bolla">Aggiungi a mano</button><button class="btn" data-act="sheet:cerca">Cerca</button></div>
     <h2>Righe lette</h2><div class="list">${lines || `<p class="muted">Ancora niente. Inquadra la prima scatola: la riga nasce dalla lettura e si abbina da sola all'ordine giusto.</p>`}</div>
     ${dm.length?`<h2>Danneggiati, da parte</h2><div class="list">${dm.map(x=>row(`${A(x.a).code} · ${esc(A(x.a).desc)}`,`${x.q}`,"halt","","aspetta il responsabile")).join("")}</div>`:""}
     <details class="exp"><summary>Attesi dal fornitore: ${att.length} righe in ${new Set(att.map(x=>x.k)).size} ordini</summary><div class="list">
@@ -436,11 +439,16 @@ SH.bossUnit = () => `<h3>Responsabile · conversione</h3><div class="field"><lab
   <button class="btn boss" data-act="convOk">Approva: 2 RT = 50 m</button>`;
 SH.nls = () => `<h3>Non lo so</h3><p class="muted">Non riconosco questa scatola.</p>
   <div class="btns"><button class="btn" data-act="closeSheet">Riprova: avvicinati e cerca più luce</button>
-  <button class="btn" data-act="mano:art">Aggiungi a mano: cerca articolo o ordine</button>
+  <button class="btn" data-act="mano:bolla">Aggiungi a mano: dalla bolla, per articolo o per ordine</button>
   <button class="btn go" data-act="nuovo:start">Articolo nuovo</button></div>`;
 /* Aggiungi a mano (185) */
 SH.mano = ({tab, a, of}) => { const d=ddt();
-  const tabs = `<div class="tabs" role="group" aria-label="Come cerchi"><button data-act="mano:art" aria-pressed="${tab==="art"}">Per articolo</button><button data-act="mano:ord" aria-pressed="${tab==="ord"}">Per ordine</button></div>`;
+  const tabs = `<div class="tabs" role="group" aria-label="Come cerchi"><button data-act="mano:bolla" aria-pressed="${tab==="bolla"}">Dalla bolla</button><button data-act="mano:art" aria-pressed="${tab==="art"}">Per articolo</button><button data-act="mano:ord" aria-pressed="${tab==="ord"}">Per ordine</button></div>`;
+  if(tab==="bolla"){ const rows = Object.entries(S.ofs).filter(([k,o])=>o.forn===d.forn).sort(([k1],[k2])=>(k2===d.ofCit)-(k1===d.ofCit)).flatMap(([k,o])=>o.righe.filter(r=>r.a && r.ric<r.q).map(r=>({k,r})));
+    return `<h3>Aggiungi a mano · dalla bolla</h3>${tabs}<p class="muted">Le righe della bolla non ancora trovate, nell'ordine del foglio${d.ofCit?"":" (senza lettura della bolla: dall'ordine citato)"}. Tocca la riga e scrivi quanti ne hai contati (224).</p>
+    <div class="list">${rows.map(({k,r})=>row(`${A(r.a).code} · ${esc(A(r.a).desc)}`,`in bolla ${r.q-r.ric}`,"",`qtyA:${r.a}:${k.replace(" ","_")}`,`${k}`)).join("")}
+    ${row("GT-4410 · Guaina corrugata 20 mm","in bolla 30","part","sheet:noOrd","nessun ordine aperto trovato")}</div>
+    <p class="muted">Il numero contato si scrive sempre: nessun tasto riempie la quantità della bolla (186).</p>`; }
   if(tab==="art" && !a){ const arts=Object.keys(ARTS).filter(k=>candidates(d,k).length);
     return `<h3>Aggiungi a mano</h3>${tabs}<div class="field"><label for="ma">Codice o parte della descrizione</label><input id="ma" type="text" placeholder="per esempio valvola"></div>
     <div class="list">${arts.map(k=>pick(k,"manoArt:"+k,`<small>${candidates(d,k).length} ordini aperti</small>`)).join("")}</div>
@@ -455,6 +463,16 @@ SH.mano = ({tab, a, of}) => { const d=ddt();
   const o=S.ofs[of];
   return `<h3>${of} · quale articolo?</h3>${tabs}<div class="list">${o.righe.map((r,ri)=>r.ric>=r.q?"":r.a?row(`${A(r.a).code} · ${esc(A(r.a).desc)}`,`mancano ${r.q-r.ric}`,"",`qtyA:${r.a}:${of.replace(" ","_")}`):row(`${esc(r.code)} · ${esc(r.desc)}`,`mancano ${r.q-r.ric}`,"part",`nuovo:of:${of.replace(" ","_")}:${ri}`,"senza articolo a catalogo: crealo")).join("")}</div>
   <p class="muted">Tocca l'articolo, poi scrivi o leggi la quantità. Nessun «prendi tutto l'ordine» (186).</p>`; };
+SH.noOrd = () => `<h3>GT-4410 · nessun ordine trovato</h3><p>La bolla porta 30 GT-4410, ma non trovo un ordine aperto di ${esc(ddt().forn)} che li aspetta.</p>
+  <div class="btns"><button class="btn" data-act="mano:art">Cerca per articolo</button><button class="btn" data-act="mano:ord">Cerca per ordine</button></div>
+  <p class="muted">Se l'ordine manca davvero (per esempio chiesto per mail e non scritto nel gestionale):</p>
+  <div class="field"><label for="noq">Quanti ne hai contati</label><input id="noq" type="number" inputmode="numeric" value=""></div>
+  <button class="btn go" data-act="noOrdOk">Manca l'ordine: la riga aspetta il responsabile</button>`;
+SH.segnala = ({i}) => { const c=S.controlli.find(z=>z.id===i); return `<h3>Scrivi al fornitore</h3>
+  <div class="kv"><span>Da</span><span>${S.mail?"la tua mail aziendale (dal tuo utente)":"nessuna mail nel tuo utente"}</span><span>A</span><span>il contatto del fornitore</span><span>Oggetto</span><span>Differenze ${esc(c.ddt||"DDT")}</span></div>
+  <div class="m-doc" style="border:1px solid var(--line);border-radius:8px;padding:8px;font-size:13px;display:grid;gap:2px"><b>Codice · In DDT · Ricevuta · Differenza · Note</b><span>${esc(c.riga||c.txt)}</span></div>
+  <p class="muted">Testo come quello che usate oggi: «inviare il materiale mancante oppure emettere una nota di credito». Allegata la foto della bolla (223).</p>
+  <div class="btns two"><button class="btn" data-act="closeSheet">Annulla</button>${S.mail?`<button class="btn go" data-act="segnalaOk:${i}">Invia</button>`:`<button class="btn go" data-act="segnalaOk:${i}:copia">Copia testo</button>`}</div>`; };
 SH.line = ({i}) => { const l=ddt().lines[i]; return `<h3>${A(l.a).code}</h3>
   <p class="muted">${l.cnt} registrati su ${l.of}. ${l.ferma?`Ferma: ${esc(l.ferma)}.`:""}</p>
   <div class="btns"><button class="btn" data-act="qtyA:${l.a}:${l.of.replace(" ","_")}">Registra un'altra quantità</button>
@@ -510,7 +528,7 @@ V.chiudi = () => { const d=ddt(); const ferme=d.lines.filter(l=>l.ferma), pronte
   <div class="btns two"><button class="btn" data-act="back">Torna al DDT</button><button class="btn go" data-act="chiudiOk" ${pronte.length?"":"disabled"}>${ferme.length?"Chiudi con le righe pronte":"Chiudi DDT"}</button></div>
   </main>`; };
 function closeDdt(){ const d=ddt(); d.open=false; d.chiuso="18/11 "+clock();
-  d.lines.filter(l=>!l.ferma && l.bolla!==undefined && l.bolla!==l.cnt).forEach(l=>S.controlli.push({id:"c"+(++S.n), t:"bolla", a:l.a, txt:`Differenza con la bolla: ${A(l.a).code} contati ${l.cnt}, in bolla ${l.bolla} (DDT ${d.num})`}));
+  d.lines.filter(l=>!l.ferma && l.bolla!==undefined && l.bolla!==l.cnt).forEach(l=>S.controlli.push({id:"c"+(++S.n), t:"bolla", a:l.a, ddt:"DDT "+d.num, riga:`${A(l.a).code} · ${l.bolla} · ${l.cnt} · ${l.cnt-l.bolla>0?"+":""}${l.cnt-l.bolla}`, txt:`Differenza con la bolla: ${A(l.a).code} contati ${l.cnt}, in bolla ${l.bolla} (DDT ${d.num})`}));
   (d.nonArr||[]).forEach(x=>S.controlli.push({id:"c"+(++S.n), t:"bolla", a:x.a||null, txt:`In bolla ma non arrivati: ${x.q} ${x.code} (${x.of}, DDT ${d.num})`}));
   log(`Chiude il DDT ${d.num}: un carico al gestionale`+(d.lines.some(l=>l.ferma)?"; la riga ferma avrà un carico suo":""), "DDT "+d.num);
   S.coda_out.unshift({txt:`Carico del DDT ${d.num}`, stato: S.online?"inviato":"in coda"}); }
@@ -705,9 +723,10 @@ V.richiesta = () => { const f=S.richForn, rr=S.daRendere.filter(d=>d.forn===f); 
   <div class="field"><label for="mo">Oggetto</label><input id="mo" type="text" value="Richiesta di reso · ${rr.map(d=>d.from).filter(Boolean).filter((v,i,a)=>a.indexOf(v)===i).join(", ")||"merce da rendere"}"></div>
   <div class="field"><label for="mt">Testo</label><textarea id="mt" rows="9">${esc(testo)}</textarea></div>
   <div class="list">${row("Allegati","","",""," righe.pdf · foto della bolla"+(dmg?" · foto dei danni":"")+(rr.some(d=>d.riserva)?" · riserva al corriere":""))}</div>
-  ${S.mail?"":`<div class="warnbox">Casella dell'azienda non collegata: copia il testo e scarica gli allegati (215).</div>`}
+  <div class="kv"><span>Da</span><span>${S.mail?"la tua mail aziendale (dal tuo utente)":"nessuna mail nel tuo utente"}</span></div>
+  ${S.mail?"":`<div class="warnbox">Il tuo utente non ha la mail aziendale: copia il testo e scarica gli allegati, oppure aggiungila in Utenti (223).</div>`}
   <div class="btns two"><button class="btn" data-act="back">Annulla</button>${S.mail?`<button class="btn go" data-act="richInvia">Invia</button>`:`<button class="btn go" data-act="richInvia:copia">Copia testo e scarica allegati</button>`}</div>
-  <p class="muted">Parte dalla casella dell'azienda con copia a te; la risposta arriva nella tua posta. Quando il fornitore risponde, segni tu «Autorizzato» (214, 215).</p></main>`; };
+  <p class="muted">Parte dalla tua mail aziendale; la risposta arriva nella tua posta. Quando il fornitore risponde, segni tu «Autorizzato» (214, 215).</p></main>`; };
 SH.risposta = ({i}) => { const r=S.resiF.find(z=>z.id===i); return `<h3>${r.id} · cosa ha risposto ${esc(r.forn)}?</h3>
   <div class="field"><label for="rma">Numero di autorizzazione al reso (se c'è)</label><input id="rma" type="text" placeholder="per esempio RMA 5521"></div>
   <div class="btns"><button class="btn go" data-act="rispOk:${i}:rimanda">Autorizzato: il fornitore la rimanda</button><button class="btn go" data-act="rispOk:${i}:accredito">Autorizzato: non la rimanda (accredito)</button><button class="btn bad" data-act="rispOk:${i}:rifiuta">Il fornitore rifiuta il reso</button></div>
@@ -743,7 +762,9 @@ SH.ctl = ({id}) => { const c=S.controlli.find(x=>x.id===id); const b = (t,cls=""
     nuovo:[b("Conferma (dopo aver completato i dati)","go"),b("Unisci a un articolo esistente"),`<button class="btn bad" data-act="sheet:grave:${id}:rifiuta">Rifiuta</button>`],
     collega:[b("Conferma il collegamento","go"),b("Rifiuta: elenca i carichi da correggere","bad")],
     dmg:[b("Tieni: torna merce buona","go"),b("Rendi al fornitore"),`<button class="btn bad" data-act="sheet:grave:${id}:scarta">Scarta</button>`],
-    bolla:[b("Va bene così","go"),b("Segnala al fornitore")],
+    bolla:[b("Va bene così","go"),`<button class="btn boss" data-act="sheet:segnala:${id}">Scrivi al fornitore</button>`],
+    bollaAtt:[b("Manda il mancante: il residuo resta aperto","go"),b("Nota di credito: il residuo si chiude"),b("Pezzi in più: rendi al fornitore"),b("Pezzi in più: teniamo")],
+    noord:[b("Ho creato l'ordine nel gestionale: la riga riparte","go"),b("Non c'è un ordine: è merce non prevista")],
     ecc:[b("Tieni l'eccedenza","go"),b("Rendi al fornitore")],
     prel:[b("Va bene: si cambia l'ordine nel gestionale","go"),b("Correggi: il di più torna a magazzino")],
     resoc:[b("Rivendibile: torna libero","go"),b("Rendi al fornitore"),`<button class="btn bad" data-act="sheet:grave:${id}:scarta">Scarta</button>`],
@@ -753,7 +774,7 @@ SH.ctl = ({id}) => { const c=S.controlli.find(x=>x.id===id); const b = (t,cls=""
 SH.grave = ({i, x}) => { const c=S.controlli.find(z=>z.id===i); const w = x==="scarta" ? "Scartare questa merce? Esce dal magazzino e al gestionale va uno scarico. Non si torna indietro." : "Rifiutare l'articolo? I carichi fatti con lui vanno corretti e la merce va resa o tenuta come merce non prevista (114).";
   return `<h3>${x==="scarta"?"Scarta":"Rifiuta"}</h3><p>${esc(c.txt)}</p><div class="warnbox bad">${w}</div>
   <div class="btns two"><button class="btn" data-act="closeSheet">Torna indietro</button><button class="btn bad" data-act="ctlDone:${i}:${x==="scarta"?"Scarta":"Rifiuta"}">${x==="scarta"?"Scarta":"Rifiuta"}</button></div>`; };
-V.utenti = () => `${hdr("Utenti")}<main class="main"><div class="list">${USERS.map(u=>row(u.n,u.r==="boss"?"responsabile":"operatore","","",["mansioni: "+u.m.map(x=>MANS[x]).join(", "), u.r!=="boss"&&u.plan?"pianifica le spedizioni":"", u.r!=="boss"&&u.sped?"conferma le spedizioni":""].filter(Boolean).join(" · "))).join("")}</div><button class="btn">Nuovo utente</button><p class="muted">Segnaposto: per chi se ne va basta disattivare l'utente.</p></main>`;
+V.utenti = () => `${hdr("Utenti")}<main class="main"><div class="list">${USERS.map(u=>row(u.n,u.r==="boss"?"responsabile":"operatore","","",["mansioni: "+u.m.map(x=>MANS[x]).join(", "), u.r!=="boss"&&u.plan?"pianifica le spedizioni":"", u.r!=="boss"&&u.sped?"conferma le spedizioni":"", u.r==="boss"?(S.mail?"mail aziendale: anna@azienda.example":"mail aziendale: non indicata"):"mail aziendale: facoltativa"].filter(Boolean).join(" · "))).join("")}</div><button class="btn">Nuovo utente</button><p class="muted">Segnaposto: per chi se ne va basta disattivare l'utente.</p></main>`;
 V.config = () => `${hdr("Configurazione")}<main class="main"><div class="warnbox boss">Segnaposto: la procedura guidata dell'installazione è ancora nella nebbia della mappa.</div><div class="list">
   ${[["Ubicazioni","sì"],["VEND","acceso"],["Posti VEND","numerati"],["Prezzi","accesi"],["Ordini parziali si prelevano","sì"],["Uscita dopo","30 min"],["Scambio ogni","5 min"],["«Vecchi» nelle cose in sospeso dopo","2 giorni"]].map(([a,b])=>row(a,b)).join("")}</div></main>`;
 
@@ -830,7 +851,7 @@ V.scenari = () => `${hdr("Scenari del prototipo")}<main class="main">
   <button class="btn" data-act="sc:timeout">Simula 30 minuti senza uso</button>
   <button class="btn" data-act="sc:sync">${S.sync?"Simula scambio bloccato da 15 minuti":"Scambio di nuovo a posto"}</button>
   <button class="btn" data-act="sc:coda">${S.coda?"Magazzino con i piani (come UFP)":"Magazzino con la coda (come Shopify)"}</button>
-  <button class="btn" data-act="sc:mail">${S.mail?"Simula casella di posta non collegata":"Casella di posta collegata"}</button>
+  <button class="btn" data-act="sc:mail">${S.mail?"Simula responsabile senza mail aziendale":"Responsabile con la mail aziendale"}</button>
   <button class="btn" data-act="sc:vuoti">Svuota gli elenchi (per vedere gli stati vuoti)</button>
   <button class="btn" data-act="sc:primo">Rivedi la prima apertura</button>
   <button class="btn" data-act="sc:boss">Entra come responsabile (Anna)</button>
@@ -881,6 +902,13 @@ function act(a, el){
       const id=Date.now(); S.ddts.push({id, num:N.num, forn:N.forn, data:N.data||"18/11/2026", open:true, foto:N.foto, ofCit:N.ofCit||null, who:me(), age:"ora", lines:[]}); S.lastDdt=id;
       log(`Apre il DDT ${N.num} di ${N.forn}${N.foto?", foto della bolla salvata":", senza foto"}${N.letto?"; numero e data letti dalla foto, confermati":""}${N.rov?`; collo rovinato all'arrivo, foto salvata, ${N.ris==="si"?"firmato con riserva":"senza riserva"}`:""}`, "DDT "+N.num);
       S.nd=null; S.stack=S.stack.filter(s=>s!=="nuovoDdt"); S.screen="ricevi"; return go("ddt"); }
+    /* Dalla bolla, ordine mancante, segnalazione (223, 224) */
+    case "noOrdOk": { const d=ddt(), q=+document.getElementById("noq").value; if(!q){ S.toast={txt:"Scrivi quanti ne hai contati"}; S.sheet=null; return render(); }
+      d.lines.push({a:"G44", of:"ordine mancante", cnt:q, lastQ:q, ferma:"ordine mancante: il responsabile crea l'ordine nel gestionale, poi la riga riparte"});
+      S.controlli.push({id:"c"+(++S.n), t:"noord", a:"G44", q, txt:`DDT ${d.num}: ${q} GT-4410 senza ordine aperto, l'operatore dice che manca l'ordine`});
+      log(`${q} GT-4410 contati senza ordine: riga ferma, al responsabile`, "DDT "+d.num); S.sheet=null; S.toast={txt:`♪ ${q} GT-4410 contati: la riga aspetta l'ordine, continua con le altre scatole`}; return render(); }
+    case "segnalaOk": { const c=S.controlli.find(z=>z.id===x); c.t="bollaAtt"; c.txt=c.txt+" · scritto al fornitore, si aspetta la risposta"; S.sheet=null;
+      log(y==="copia"?`Differenze di ${c.ddt||"un DDT"}: testo copiato, la mail la manda il responsabile`:`Differenze di ${c.ddt||"un DDT"} scritte al fornitore dalla mail aziendale di ${me()}`); S.toast={txt:"Scritto al fornitore: quando risponde, tocca la riga e segna la risposta"}; return render(); }
     /* Resi */
     case "resiTab": S.resiTab=x; return render();
     case "resoNew": { const o=S.ordini[x]; const id="rc"+(++S.n); S.resiC.unshift({id, ord:x, cli:o.cli, who:me(), age:"ora", righe:o.sped.map(z=>({a:z.a,q:z.q,esiti:[]})), stato:"aperto"}); S.resoSel=id; log(`Apre il reso dall'ordine ${x} (${o.cli})`, "Reso "+x); S.stack=S.stack.filter(s=>s!=="ricReso"); S.screen="resi"; return go("resoC"); }
@@ -904,7 +932,7 @@ function act(a, el){
     case "richiesta": S.richForn=[x,y,...rest].filter(v=>v!==undefined).join(":").replace(/_/g," "); return go("richiesta");
     case "richInvia": { const f=S.richForn, rr=S.daRendere.filter(d=>d.forn===f); const id="R-"+(S.nR++);
       S.resiF.unshift({id, forn:f, stato:"chiesto", chiesto:"18/11", righe:rr.map(d=>({a:d.a,q:d.q,mot:d.mot})), prep:{}}); S.daRendere=S.daRendere.filter(d=>d.forn!==f);
-      log(x==="copia"?`Richiesta di reso ${id} a ${f}: testo copiato e allegati scaricati, la manda il responsabile`:`Richiesta di reso ${id} inviata a ${f} dalla casella dell'azienda, copia al responsabile`, "Reso "+id);
+      log(x==="copia"?`Richiesta di reso ${id} a ${f}: testo copiato e allegati scaricati, la manda il responsabile`:`Richiesta di reso ${id} inviata a ${f} dalla mail aziendale di ${me()}`, "Reso "+id);
       S.screen=S.stack.pop()||"resi"; S.resiTab="forn"; S.toast={txt:`${id} chiesto a ${f}: quando risponde, tocca il reso e segna la risposta`}; render(); return window.scrollTo(0,0); }
     case "resoF": { const r=S.resiF.find(z=>z.id===x);
       if(r.stato==="chiesto"){ if(!isBoss()){ S.toast={txt:"Si aspetta la risposta del fornitore: la segna il responsabile"}; return render(); } return sheet("risposta",{i:x}); }
@@ -1008,7 +1036,8 @@ function act(a, el){
     /* Responsabile */
     case "ctl": return sheet("ctl",{id:x});
     case "ctlDone": { const c=S.controlli.find(z=>z.id===x); S.controlli=S.controlli.filter(z=>z.id!==x); log(`«${[y,...rest].join(":")}» per ${c.txt}`); S.sheet=null;
-      if(/^Rendi al fornitore/.test(y) && c.a){ daRendere(c.a, c.q||1, c.forn||FORN_OF[c.a], {senza:"non ordinata", dmg:"danneggiata", ecc:"eccedenza", resoc:"reso di un cliente, non rivendibile"}[c.t]||"da rendere", c.from||""); S.toast={txt:`${A(c.a).code} da rendere a ${c.forn||FORN_OF[c.a]}: lo trovi in Resi → Al fornitore`}; }
+      if(c.t==="noord" && /^Ho creato/.test(y)){ S.ddts.forEach(d=>d.lines.forEach(l=>{ if(l.of==="ordine mancante" && l.a===c.a){ l.of="OF 1220"; l.ferma=null; } })); S.ofs["OF 1220"]={forn:"Idrotecnica Nord", data:"18/11/2026", righe:[{a:"G44",q:c.q,ric:c.q}]}; log("Ordine OF 1220 creato nel gestionale e letto allo scambio: la riga ferma riparte con un carico suo (82)"); }
+      if(/^(Rendi al fornitore|Pezzi in più: rendi)/.test(y) && c.a){ daRendere(c.a, c.q||1, c.forn||FORN_OF[c.a], {senza:"non ordinata", dmg:"danneggiata", ecc:"eccedenza", bollaAtt:"eccedenza", resoc:"reso di un cliente, non rivendibile"}[c.t]||"da rendere", c.from||""); S.toast={txt:`${A(c.a).code} da rendere a ${c.forn||FORN_OF[c.a]}: lo trovi in Resi → Al fornitore`}; }
       return render(); }
     /* Prelievo */
     case "piano": S.pianoSel=x; return go("piano");

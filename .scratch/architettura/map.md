@@ -91,6 +91,10 @@ percorso delle schermate e aspetto grafico, compresi nome e brand kit (decisioni
   misurare su bolle vere; codici stampati (DataMatrix, EAN per riga) letti senza OCR; esclusi i modelli a licenza non
   commerciale. Prova accettata: bolle nel privato, clienti coperti, 100–120 bolle, sistemi A–D, accesa per fornitore
   (decisioni 202–206).
+- [Resi](issues/22-resi.md): «Da rendere» e area resi; reso al fornitore in cinque stati con richiesta e segnalazione
+  delle differenze preparate dal programma e mandate dal responsabile; reso del cliente dall'ordine spedito con
+  Integro / Da controllare / Danneggiato, esiti su Shopify, documento al gestionale; collo rovinato con riserva;
+  scheda «Dalla bolla» e «Manca l'ordine» per il carico a mano (decisioni 207–226).
 
 Prese prima della mappa, nel secondo giro di domande del 15/11/2026: decisioni 15–28 in
 [`docs/decisioni.md`](../../docs/decisioni.md) (assegnazione parziale, codice stampato come tipo di articolo,

@@ -25,3 +25,6 @@ Risultato atteso: l'elenco dei punti di estensione e il loro contratto in `docs/
 - 16/11/2026, dal ticket «Percorso di identificazione»: le parole che indicano la quantità sulle etichette (93) si
   possono ampliare con i termini dei fornitori di un magazzino; i formati di etichetta dei fornitori con regole proprie
   sono un candidato a punto di estensione.
+- 18/11/2026, dal ticket «Resi» (226): proporre all'utente di far partire anche gli ordini fornitore dal programma,
+  come le richieste di reso (223), dalla mail aziendale del responsabile; oggi li manda una persona (64). Anche come
+  Ad Hoc riceve il documento di reso e il «reso da cliente» (domande 24 e 27).

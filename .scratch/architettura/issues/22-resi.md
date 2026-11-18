@@ -2,7 +2,7 @@
 
 Type: grilling
 Label: wayfinder:grilling
-Status: claimed
+Status: resolved
 Blocked by: —
 
 ## Question
@@ -43,3 +43,23 @@ Risultato atteso: una sezione «Resi» in `docs/architettura.md` e le schermate 
   eccedenza (fatti annotati in `docs/architettura.md`, sezione «Resi», senza nomi né indirizzi) e ha chiesto un carico
   semplice e veloce quando mancano codici o quantità (222). Domande 24 (annotata) e 27 per il rivenditore. Prototipo
   aggiornato con le schermate dei resi e provato nel browser.
+- 18/11/2026, terzo giro: accettate tutte le consigliate; DDT di reso in UFP fatto con Ad Hoc. Note: le mail le
+  manda solo il responsabile dalla sua mail aziendale (223); a volte l'ordine non è citato o manca del tutto (224).
+
+## Answer
+
+Chiuso il 18/11/2026 in tre giri, con la pagina https://claude.ai/artifact/KQtNpyrXjbywxnz1iGKnGY (privata). Decisioni
+207–226; specifica nella sezione «Resi» di `docs/architettura.md` (e «Ricevimento» per la scheda «Dalla bolla»);
+prototipo `prototipi/percorso-schermate/index.html` (https://claude.ai/artifact/Vb6ijyDdr4n2gsZcKhhVur, privata),
+provato nel browser.
+
+- Reso al fornitore: «Rendi al fornitore» → «Da rendere», area resi, Da chiedere → Chiesto → Autorizzato → Pronto →
+  Partito; richiesta e segnalazione delle differenze preparate dal programma e mandate dal responsabile dalla sua
+  mail; preparazione con l'inquadratura di ogni pezzo; DDT di reso al gestionale (in UFP Ad Hoc) o stampato dal
+  programma (207–209, 214–217, 223, 225).
+- Reso del cliente: «Ricevi reso» dall'ordine spedito o dai resi aperti su Shopify; Integro, Da controllare,
+  Danneggiato; esiti su Shopify; «reso da cliente» al gestionale (210–212, 220).
+- Collo rovinato con riserva (219); pallet a rendere esclusi (218); lettura della bolla divisa tra telefono e server
+  (221); carico a mano veloce con «Dalla bolla» e «Manca l'ordine» (222, 224).
+- Domande 24 (annotata) e 27 per il rivenditore. Termini nuovi in `GLOSSARY.md`: reso al fornitore, reso del cliente,
+  da rendere, area resi, richiesta di reso, riserva.

@@ -301,7 +301,7 @@ I nomi delle entità sono quelli di `GLOSSARY.md`.
 | Compito | Tipo (da mettere a posto, rimetti a posto), articolo, quantità, da dove | 62, 69 |
 | Da controllare | Movimenti e avvisi per il responsabile: merce senza ordine, eccedenze, conteggi, collegamenti da confermare, differenze con la bolla, unità mai viste, possibili doppioni, differenze con il sistema d'origine | 31, 32, 45, 49, 71–73, 77, 86 |
 | Coda di uscita | Documenti da mandare a gestionale o Shopify, con stato e tentativi | 54, 61 |
-| Utente | Nome, ruolo (operatore o responsabile), PIN o password, attivo sì o no | 27, 80 |
+| Utente | Nome, ruolo (operatore o responsabile), PIN o password, mail aziendale facoltativa, attivo sì o no | 27, 80, 223 |
 | Configurazione | Le scelte per magazzino delle tabelle «Configurazione per magazzino» | |
 
 **Provenienza.** Articoli, fornitori, clienti e ordini importati portano il sistema d'origine e il codice che hanno lì
@@ -948,7 +948,11 @@ avvisi di aggiornamento e di scambio bloccato (161, 177, 179).
    due quantità, «non è tra gli attesi», «Collego questo barcode?», «non lo so» (tabella «Cosa vede l'operatore» nella
    sezione «Percorso di identificazione»). La scheda della quantità ha più e meno, «× colli» e il consiglio «come
    l'ultima volta».
-4. **Aggiungi a mano** (185), quando una scatola non si legge: scheda «Per articolo» (gli articoli che il fornitore deve
+4. **Aggiungi a mano** (185, 224), quando una scatola non si legge. Prima scheda **«Dalla bolla»**: le righe della
+   bolla non ancora trovate, nell'ordine del foglio (dalla lettura della bolla dove è accesa, altrove dall'ordine
+   citato); si tocca la riga e si scrive il contato. Una riga senza ordine aperto si cerca a mano; se l'ordine manca
+   davvero, «Manca l'ordine»: la riga diventa ferma (82) e va al responsabile, che crea l'ordine nel gestionale; al
+   primo scambio la riga riparte con un carico suo, il resto del DDT si chiude con le righe pronte. Poi scheda «Per articolo» (gli articoli che il fornitore deve
    ancora mandare; toccato uno, gli ordini che lo contengono nell'ordine dell'abbinamento, con data, quantità mancante e
    cliente, il primo già proposto) e scheda «Per ordine» (gli ordini aperti del fornitore; dentro, gli articoli). Se la
    scatola aveva un barcode non riconosciuto, alla registrazione si propone di collegarlo (92).
@@ -1233,7 +1237,7 @@ automatizza ha una procedura guidata, senza passaggi ripetuti.
 
 ## Resi
 
-Dal ticket «Resi», 18/11/2026. Decisioni 207–222 (la 214 precisa la 208). Fonti: ricerca
+Dal ticket «Resi», chiuso il 18/11/2026. Decisioni 207–226 (la 214 precisa la 208, la 223 precisa la 215). Fonti: ricerca
 `docs/research/2026-11-18-gestionali-magazzino-esistenti.md` (§ 1.8), documentazione Shopify sui resi (link nel ticket),
 due mail di reso e due di segnalazione mostrate dall'utente in chat (fatti annotati sotto, senza nomi). Domande nella
 pagina privata https://claude.ai/artifact/KQtNpyrXjbywxnz1iGKnGY; schermate nel prototipo
@@ -1273,16 +1277,26 @@ le ubicazioni nasce il compito «Porta nell'area resi» (217).
 Se il fornitore rifiuta, la merce torna al responsabile: tenerla o scartarla (214). «La rimanda» riapre il residuo della
 riga d'ordine fornitore e i pezzi tornano attesi; eccedenze e merce senza ordine non riaprono niente (208). Un pezzo in
 VEND reso con «la rimanda» torna a quel cliente quando arriva, perché il residuo riaperto porta ancora il riferimento
-(34, deduzione da confermare nel riepilogo).
+(34, 226).
 
-**Richiesta di reso** (215). Il programma prepara la mail: destinatario dal fornitore, oggetto con il DDT, righe con
-quantità e motivo, allegati con la foto della bolla, il PDF delle righe, le foto dei danni e la riserva al corriere
-(219). Anteprima modificabile, «Invia» dalla casella dell'azienda collegata all'installazione, copia al responsabile.
-Senza casella: «Copia testo» e «Scarica allegati». Il programma non legge le risposte.
+**Richiesta di reso** (215, 223). Il programma prepara la mail: destinatario dal fornitore, oggetto con il DDT, righe
+con quantità e motivo, allegati con la foto della bolla, il PDF delle righe, le foto dei danni e la riserva al corriere
+(219). Anteprima modificabile; «Invia» la manda solo il responsabile, dalla sua mail aziendale salvata nel suo utente
+(campo facoltativo). Senza mail nell'utente: «Copia testo» e «Scarica allegati». Il programma non legge le risposte.
+Punto tecnico aperto (deduzione): mandare a nome di ogni responsabile chiede al server di posta dell'azienda il permesso
+di inviare da quell'indirizzo (per esempio un accesso per utente o un invio autorizzato «per conto di»); si sceglie con
+lo stack e all'installazione.
+
+**Segnalazione delle differenze** (223). Le differenze di un DDT (bolla, contato, ordine) stanno insieme in «Da
+controllare» con «Scrivi al fornitore»: la stessa tabella di oggi (codice, quantità indicata in DDT, ricevuta,
+differenza, note), la foto della bolla, la richiesta di mandare il mancante o di una nota di credito. Alla risposta,
+per riga: «Manda il mancante» (residuo aperto, 33), «Nota di credito» (residuo chiuso), per i pezzi in più «Rendi»
+(207) o «Teniamo» (32).
 
 **Documento di reso** (209). Gestionale principale: il programma stampa il DDT di reso con la sua numerazione, causale
 di reso e riferimento al DDT del fornitore. Accanto a un gestionale: il programma manda il documento di reso e il DDT
-lo fa il gestionale; in UFP oggi lo emette l'ufficio (fatto sopra), da confermare con la domanda 24.
+lo fa il gestionale; in UFP lo fa l'ufficio con Ad Hoc (225); resta da sapere come Ad Hoc riceve il documento già
+pronto (domanda 24).
 
 ### Reso del cliente
 
@@ -1317,11 +1331,12 @@ nell'area resi». Nel nuovo DDT «Collo rovinato all'arrivo».
 
 Il carico di articoli e DDT dev'essere semplice, veloce e molto più funzionale di quello di oggi in UFP; quando mancano
 codici o quantità, il carico a mano ha una procedura guidata senza passaggi ripetuti (222). Vale per tutto il
-ricevimento, non solo per i resi.
+ricevimento, non solo per i resi. Primo passo: la scheda «Dalla bolla» e «Manca l'ordine» (224), nella sezione
+«Percorso delle schermate» → «Ricevimento».
 
 ### Configurazione per magazzino (aggiunte)
 
 | Scelta | Valori | Di serie | Decisione |
 |---|---|---|---|
 | Nome dell'area resi | testo | «RESI» | 217 |
-| Casella di posta per le richieste di reso | collegata, non collegata | non collegata | 215 |
+| Invio delle mail ai fornitori | dalla mail aziendale del responsabile, solo testo da copiare | solo testo da copiare finché non si collega il server di posta | 215, 223 |

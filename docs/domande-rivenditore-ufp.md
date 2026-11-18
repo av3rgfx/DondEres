@@ -81,9 +81,9 @@ Per collegarlo ad Ad Hoc vi chiediamo:
     nota di credito, rettifica di magazzino separata)?
 24. Quando si rende merce al fornitore, chi emette il DDT di reso: Ad Hoc, ARS o un'altra persona? Il nostro programma
     dovrebbe mandare ad Ad Hoc un documento di reso già pronto?
-    (Fatto visto il 18/11/2026: l'ufficio di UFP emette già un DDT di reso con causale «RESFO Reso a Fornitori» e
-    dicitura «Reso per accredito», con il riferimento al DDT del fornitore. Resta da sapere se lo emette Ad Hoc e
-    se Ad Hoc può riceverlo già pronto dal nostro programma.)
+    (Fatto del 18/11/2026: l'ufficio di UFP fa già il DDT di reso con Ad Hoc, causale «RESFO Reso a Fornitori» e
+    dicitura «Reso per accredito», con il riferimento al DDT del fornitore. Resta da sapere se Ad Hoc può riceverlo
+    già pronto dal nostro programma, e in che forma.)
 25. Chi stampa oggi le etichette e la distinta di ritiro dei corrieri (BRT, GLS): ARS, Ad Hoc, il programma del
     corriere?
 26. Ad Hoc riceve dai fornitori fatture elettroniche con i riferimenti ai DDT (blocco DatiDDT della fattura)? Si
