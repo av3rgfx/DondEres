@@ -63,3 +63,13 @@ nel browser su tutti i flussi.
 - Nuovi ticket: «Resi», «Inventario periodico» (bloccano «Aspetto grafico») e la ricerca «Lettura automatica delle
   bolle» (193, 200). Domande 23–26 per il rivenditore. Termini nuovi in `GLOSSARY.md`: bolla, quantità in bolla, cose
   in sospeso, merce danneggiata, scarto, registro.
+
+## Correzione dopo la chiusura
+
+- 18/11/2026, sera: l'utente corregge la preparazione, guardando il prototipo da telefono («ho fatto un errore e mi
+  sono spiegato male»). Se manca qualcosa, la preparazione si sospende (anche per giorni) o si conclude senza
+  quell'articolo e si spedisce; il mancante parte appena arriva. Nel nuovo piano, un ordine con un articolo assente o
+  con quantità superiore alla disponibilità dà un avviso che non blocca; il preparatore vede lo stesso avviso
+  nell'anteprima dell'ordine, che aperto dice quale articolo non basta. I preparatori senza permessi non vedono «gli
+  altri lavori». Tocca le decisioni 165, 170 e 177. Domande nella pagina privata
+  https://claude.ai/artifact/Qft5i5wPiwfyYEQpdUz5Kq.
