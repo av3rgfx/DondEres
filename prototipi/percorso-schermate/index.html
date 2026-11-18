@@ -1,0 +1,628 @@
+<title>Prototipo schermate</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* PROTOTIPO usa e getta (ticket «Percorso delle schermate»): fil di ferro grigio, conta il percorso, non l'aspetto.
+   Colori e stile si decidono nel ticket «Aspetto grafico». Una colonna larga come un telefono. */
+:root{
+  --bg:#F2F3F5; --surface:#FFFFFF; --ink:#1B1F24; --muted:#5E6670; --line:#C8CDD3;
+  --accent:#1B1F24; --on-accent:#FFFFFF; --ok:#1F7A45; --ok-soft:#E1F1E7; --warn:#A35A00; --warn-soft:#FBEBD6;
+  --bad:#B42335; --bad-soft:#F8E0E3; --boss:#2257B5; --boss-soft:#E2EAF8; --cam:#3A4048; --on-cam:#E8EAED;
+  --font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; --mono:ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#121417; --surface:#1C1F23; --ink:#E8EAED; --muted:#9AA1AA; --line:#353A41;
+  --accent:#E8EAED; --on-accent:#121417; --ok:#4CC27F; --ok-soft:#173222; --warn:#F0A04B; --warn-soft:#3A2A15;
+  --bad:#F06375; --bad-soft:#3C1A20; --boss:#7FA6F0; --boss-soft:#1B2840; --cam:#000000; --on-cam:#C9CDD2; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121417; --surface:#1C1F23; --ink:#E8EAED; --muted:#9AA1AA; --line:#353A41;
+  --accent:#E8EAED; --on-accent:#121417; --ok:#4CC27F; --ok-soft:#173222; --warn:#F0A04B; --warn-soft:#3A2A15;
+  --bad:#F06375; --bad-soft:#3C1A20; --boss:#7FA6F0; --boss-soft:#1B2840; --cam:#000000; --on-cam:#C9CDD2; color-scheme:dark}
+*{box-sizing:border-box}
+html,body{min-height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.4;
+  padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px));padding-block:0}
+.app{max-width:480px;margin:0 auto;min-height:100vh;background:var(--surface);display:flex;flex-direction:column;
+  border-left:1px solid var(--line);border-right:1px solid var(--line)}
+.proto{background:repeating-linear-gradient(-45deg,var(--warn-soft) 0 10px,var(--surface) 10px 20px);font-size:12px;color:var(--muted);
+  padding:4px max(16px,env(safe-area-inset-left,0px));display:flex;justify-content:space-between;gap:8px;align-items:center;border-bottom:1px solid var(--line)}
+.proto button{font:inherit;font-size:12px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:3px 10px;cursor:pointer}
+.top{display:flex;align-items:center;gap:8px;padding:10px 16px;border-bottom:1px solid var(--line);min-height:52px;position:sticky;top:env(safe-area-inset-top,0px);background:var(--surface);z-index:3}
+.top h1{font-size:18px;margin:0;flex:1;min-width:0;overflow-wrap:anywhere}
+.top small{display:block;font-size:12px;color:var(--muted);font-weight:400}
+.ic{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;min-width:44px;min-height:40px;font:inherit;font-size:15px;cursor:pointer;padding:0 10px}
+.main{padding:14px 16px 28px;display:grid;gap:12px;align-content:start;flex:1}
+.banner{padding:10px 16px;font-size:14px;display:grid;gap:6px}
+.banner.bad{background:var(--bad-soft);color:var(--bad)} .banner.boss{background:var(--boss-soft);color:var(--boss)} .banner.warn{background:var(--warn-soft);color:var(--warn)}
+button{font:inherit;cursor:pointer;color:inherit}
+.btn{border:2px solid var(--ink);background:var(--surface);color:var(--ink);border-radius:10px;padding:12px 14px;font-weight:600;min-height:48px;width:100%;text-align:center}
+.btn.go{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.btn.boss{border-color:var(--boss);color:var(--boss)}
+.btn.bad{border-color:var(--bad);color:var(--bad)}
+.btn.small{min-height:40px;padding:8px 10px;font-size:14px;width:auto}
+.btn:focus-visible,.ic:focus-visible,.tile:focus-visible,.row:focus-visible,.chip:focus-visible,input:focus-visible,.key:focus-visible{outline:3px solid var(--boss);outline-offset:2px}
+.btns{display:grid;gap:8px}
+.btns.two{grid-template-columns:1fr 1fr}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tile{border:2px solid var(--ink);border-radius:12px;background:var(--surface);padding:14px 10px;display:grid;gap:2px;text-align:left;min-height:88px;align-content:start}
+.tile b{font-size:28px;line-height:1;font-variant-numeric:tabular-nums}
+.tile span{font-weight:600}
+.tile.zero{border-color:var(--line)} .tile.zero b{color:var(--muted)}
+.tile.boss{border-color:var(--boss);color:var(--boss)}
+.list{display:grid;gap:8px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--surface);text-align:left;width:100%;min-height:48px}
+.row .l{min-width:0;overflow-wrap:anywhere;display:grid;gap:2px}
+.row .l small{color:var(--muted);font-size:13px}
+.row .r{font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap;text-align:right}
+.row.done{background:var(--ok-soft);border-color:var(--ok)} .row.part{background:var(--warn-soft);border-color:var(--warn)}
+.row.halt{background:var(--bad-soft);border-color:var(--bad)} .row.boss{background:var(--boss-soft);border-color:var(--boss)}
+.row.dim{opacity:.6}
+h2{font-size:13px;margin:6px 0 -4px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+p{margin:0}
+.muted{color:var(--muted);font-size:14px}
+.tag{display:inline-block;font-size:12px;font-weight:600;border-radius:999px;padding:1px 8px;background:var(--warn-soft);color:var(--warn)}
+.tag.boss{background:var(--boss-soft);color:var(--boss)} .tag.ok{background:var(--ok-soft);color:var(--ok)} .tag.bad{background:var(--bad-soft);color:var(--bad)}
+.cam{background:var(--cam);color:var(--on-cam);border-radius:12px;padding:10px;display:grid;gap:8px;position:relative}
+.cam .frame{border:2px dashed var(--on-cam);border-radius:8px;min-height:110px;display:grid;place-items:center;text-align:center;font-size:13px;opacity:.85;padding:8px}
+.cam .frame.big{min-height:260px}
+.cam .sim{font-size:12px;opacity:.8}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:6px 10px;font-size:13px;min-height:34px}
+.cam .chip{background:transparent;color:var(--on-cam);border-color:var(--on-cam)}
+.toast{background:var(--ink);color:var(--surface);border-radius:10px;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.toast span{min-width:0;overflow-wrap:anywhere}
+.toast button{background:transparent;border:1px solid var(--surface);color:var(--surface);border-radius:8px;padding:6px 10px;font-weight:600;white-space:nowrap}
+.card{border:1px solid var(--line);border-radius:12px;padding:12px;display:grid;gap:10px}
+.photo{background:repeating-linear-gradient(45deg,var(--line) 0 2px,transparent 2px 10px);border:1px solid var(--line);border-radius:8px;aspect-ratio:4/3;max-width:100%;display:grid;place-items:center;color:var(--muted);font-size:13px;text-align:center;padding:6px}
+.photo.sm{aspect-ratio:1;width:64px;flex:none;font-size:11px}
+.pick{display:flex;gap:10px;align-items:center;border:2px solid var(--line);border-radius:12px;padding:8px;background:var(--surface);text-align:left;width:100%}
+.pick .l{min-width:0;display:grid;gap:2px;overflow-wrap:anywhere}
+.pick .l small{color:var(--muted);font-size:13px}
+.field{display:grid;gap:4px}
+.field label{font-size:13px;color:var(--muted)}
+input[type=text],input[type=password],input[type=number],select{font:inherit;font-size:16px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;background:var(--surface);color:var(--ink);width:100%;min-height:46px}
+.qty{display:grid;grid-template-columns:48px 1fr 48px;gap:8px;align-items:center}
+.qty .ic{min-height:48px;font-size:22px}
+.qty input{text-align:center;font-size:22px;font-weight:600}
+.pin{display:flex;gap:8px;justify-content:center;margin:6px 0}
+.pin i{width:14px;height:14px;border-radius:50%;border:2px solid var(--ink)}
+.pin i.on{background:var(--ink)}
+.keys{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.key{min-height:56px;border:1px solid var(--line);border-radius:10px;background:var(--surface);font-size:22px;font-weight:600}
+.sheet-bg{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:10;display:flex;align-items:flex-end;justify-content:center}
+.sheet{background:var(--surface);width:100%;max-width:480px;border-radius:16px 16px 0 0;max-height:88vh;overflow:auto;
+  padding:16px max(16px,env(safe-area-inset-right,0px)) calc(20px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));display:grid;gap:12px}
+.sheet h3{margin:0;font-size:19px}
+.warnbox{border-radius:10px;padding:10px 12px;font-size:14px;background:var(--warn-soft);color:var(--warn)}
+.warnbox.bad{background:var(--bad-soft);color:var(--bad)} .warnbox.boss{background:var(--boss-soft);color:var(--boss)} .warnbox.ok{background:var(--ok-soft);color:var(--ok)}
+.steps{display:flex;gap:6px}
+.steps i{flex:1;height:6px;border-radius:3px;background:var(--line)}
+.steps i.on{background:var(--ink)}
+.log{border-top:1px solid var(--line);padding:10px 16px calc(14px + env(safe-area-inset-bottom,0px));font-size:13px;color:var(--muted)}
+.log summary{cursor:pointer;font-weight:600}
+.log ol{margin:8px 0 0;padding-left:20px;display:grid;gap:3px}
+.scen{display:grid;gap:6px}
+@media (prefers-reduced-motion:no-preference){.sheet{animation:up .2s ease-out}@keyframes up{from{transform:translateY(30px);opacity:.4}to{transform:none;opacity:1}}}
+</style>
+
+<div class="app" id="app"></div>
+
+<script>
+/* ===== Dati d'esempio inventati (nessun dato reale) e modello ===== */
+const ARTS = {
+  R110:{code:"3PR-110", desc:"Raccordo a T ottone 1/2\"", unit:"pz", loc:"A-03-2", price:"4,20 €", cost:"2,10 €", photo:"raccordo"},
+  G44:{code:"GT-4410", desc:"Guaina corrugata 20 mm, rotolo", unit:"m", loc:"B-11-1", price:"0,85 €/m", cost:"0,40 €/m", photo:"guaina"},
+  S77:{code:"SL-77", desc:"Silicone neutro trasparente 300 ml", unit:"pz", loc:"C-02-4", price:"6,90 €", cost:"3,30 €", photo:"cartuccia"},
+  V12:{code:"VT-1200", desc:"Valvola a sfera 3/4\" leva rossa", unit:"pz", loc:"A-05-1", price:"11,50 €", cost:"6,00 €", photo:"valvola rossa"},
+  V13:{code:"VT-1201", desc:"Valvola a sfera 3/4\" leva blu", unit:"pz", loc:"A-05-2", price:"11,50 €", cost:"6,00 €", photo:"valvola blu"},
+  N55:{code:"NB-55", desc:"Nastro butilico 50 mm", unit:"pz", loc:"D-01-3", price:"9,80 €", cost:"4,90 €", photo:"nastro"}
+};
+const USERS = [{n:"Marco",r:"op",m:["mag"],sped:true},{n:"Luca",r:"op",m:["prep"]},{n:"Sara",r:"op",m:["prep","mag"],plan:true,sped:true},{n:"Anna",r:"boss",m:["mag","prep"]}];
+const MANS = {mag:"magazziniere", prep:"preparatore"};
+const MLAV = {mag:["ricevi","metti","cerca"], prep:["preleva","banco","cerca"]};
+const canShip = () => S.user && (S.user.r==="boss" || S.user.sped);
+const canPlan = () => S.user && (S.user.r==="boss" || S.user.plan);
+
+function initial(){
+  return {
+    firstRun:true, user:null, pinFor:null, pin:"", screen:"primo", stack:[], online:true, pendingOffline:0,
+    sheet:null, toast:null, update:true, sync:true,
+    ddts:[
+      {id:1, num:"698/00", forn:"Idrotecnica Nord", data:"17/11/2026", open:true, lines:[
+        {a:"R110", att:12, cnt:0}, {a:"G44", att:50, cnt:0}, {a:"S77", att:24, cnt:0}, {a:null, desc:"Valvola 3/4\" leva gialla (non a catalogo)", code:"VT-1202", att:6, cnt:0}
+      ]},
+      {id:2, num:"1153", forn:"Colle Sud", data:"16/11/2026", open:true, lines:[{a:"N55", att:10, cnt:4}]}
+    ],
+    area:[{a:"N55", q:4, from:"DDT 1153"}],
+    rimetti:[{a:"V12", q:2, from:"ordine 1051 annullato"}],
+    controlli:[
+      {id:"c1", t:"senza", a:"V13", q:1, txt:"Merce senza ordine: 1 VT-1201 dal DDT 1153"},
+      {id:"c2", t:"conta", a:"S77", q:7, txt:"Conteggio di Sara in C-02-4: 7 invece di 5"}
+    ],
+    log:["Prototipo avviato con dati d'esempio inventati."],
+    lastDdt:null, collo:{S77:24},
+    coda:false, ordine:null, pk:null, cour:{BRT:"Bartolini", GLS:"GLS"},
+    piani:[{id:"p1", t:"Bianchi M.", prep:"Luca", ord:["1042","1039"]},{id:"p2", t:"Ferri G.", prep:"Paolo", ord:["1050","1053"]}],
+    ordini:{
+      "1042":{cli:"Rossi Srl", cour:"BRT", stato:"aperto", righe:[{a:"R110",q:4,ass:4},{a:"G44",q:20,ass:20},{a:"S77",q:6,ass:6}]},
+      "1039":{cli:"Edil Po", cour:"BRT", stato:"aperto", righe:[{a:"N55",q:5,ass:3},{a:"V12",q:2,ass:2}]},
+      "1050":{cli:"Termo Sud", cour:"GLS", stato:"aperto", da:"Paolo", righe:[{a:"V13",q:1,ass:1,vend:"VEND3"},{a:"R110",q:2,ass:2}]},
+      "1053":{cli:"Idraulica Ponte", cour:"GLS", stato:"aperto", righe:[{a:"S77",q:3,ass:3}]},
+      "1044":{cli:"Verdi Impianti", cour:"BRT", stato:"aperto", righe:[{a:"N55",q:4,ass:0}]},
+      "1048":{cli:"Casa e Clima", cour:"GLS", stato:"aperto", righe:[{a:"G44",q:15,ass:15},{a:"V12",q:1,ass:1}]},
+      "1031":{cli:"Bianchi Edilizia", cour:"BRT", stato:"pronto", colli:2, kg:"14", prep:"Marco", righe:[]},
+      "1035":{cli:"Termo Sud", cour:"GLS", stato:"pronto", colli:1, kg:"3,5", prep:"Sara", righe:[]},
+      "1036":{cli:"Rossi Srl", cour:"BRT", stato:"pronto", colli:3, kg:"22", prep:"Luca", righe:[]},
+      "#5521":{cli:"Ordine del sito, 09:14", cour:"GLS", stato:"aperto", shop:true, righe:[{a:"S77",q:2,ass:2}]},
+      "#5523":{cli:"Ordine del sito, 09:31", cour:"BRT", stato:"aperto", shop:true, righe:[{a:"R110",q:10,ass:10}]},
+      "#5524":{cli:"Ordine del sito, 09:40", cour:"GLS", stato:"aperto", shop:true, righe:[{a:"V12",q:1,ass:1}]}
+    }, newArt:null, put:null, banco:null, cerca:"", cnt:null, ddtDraft:{forn:"Idrotecnica Nord", num:""}, n:0
+  };
+}
+let S = initial();
+const isBoss = () => S.user && S.user.r==="boss";
+const A = k => ARTS[k];
+const log = t => { S.log.unshift(t); };
+function go(screen, push=true){ if(push && S.screen!==screen) S.stack.push(S.screen); S.screen=screen; S.sheet=null; S.toast=null; render(); window.scrollTo(0,0); }
+function back(){ S.sheet=null; S.toast=null; S.screen = S.stack.pop() || "home"; render(); }
+const ddt = () => S.ddts.find(d => d.id===S.lastDdt);
+const counts = () => ({
+  ricevi:S.ddts.filter(d=>d.open).length, metti:S.area.length + S.rimetti.length,
+  preleva: S.coda ? Object.values(S.ordini).filter(o=>o.shop&&o.stato==="aperto").length : S.piani.filter(p=>p.prep===(S.user&&S.user.n)).reduce((n,p)=>n+p.ord.filter(k=>S.ordini[k].stato==="aperto").length,0),
+  spedisci: Object.values(S.ordini).filter(o=>o.stato==="pronto").length, controlli:S.controlli.length
+});
+function register(lineIdx, q, how){
+  const d = ddt(); const l = d.lines[lineIdx]; l.cnt += q; l.lastQ = q;
+  const name = l.a ? A(l.a).code : l.code;
+  S.toast = {txt:`Registrato ${q} ${l.a?A(l.a).unit:"pz"} · ${name}`, line:lineIdx, q};
+  if(l.a) { const e=S.area.find(x=>x.a===l.a && x.from==="DDT "+d.num); e? e.q+=q : S.area.push({a:l.a,q,from:"DDT "+d.num}); }
+  log(`DDT ${d.num}: +${q} ${name} (${how}) da ${S.user.n}`);
+  if(!S.online){ S.pendingOffline++; }
+}
+
+/* ===== Viste ===== */
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const hdr = (title, sub, opts={}) => `<header class="top">${opts.noBack?"":`<button class="ic" data-act="back" aria-label="Indietro">‹</button>`}<h1>${title}${sub?`<small>${sub}</small>`:""}</h1>${opts.right||""}</header>`;
+const row = (l, r, cls="", act="", small="") => act ? `<button class="row ${cls}" data-act="${act}"><span class="l"><span>${l}</span>${small?`<small>${small}</small>`:""}</span><span class="r">${r}</span></button>` : `<div class="row ${cls}"><span class="l"><span>${l}</span>${small?`<small>${small}</small>`:""}</span><span class="r">${r}</span></div>`;
+const photo = (t, sm) => `<div class="photo ${sm?"sm":""}">foto: ${esc(t)}</div>`;
+const pick = (k, act, extra="") => `<button class="pick" data-act="${act}">${photo(A(k).photo,1)}<span class="l"><b>${A(k).code}</b><small>${esc(A(k).desc)}</small>${extra}</span></button>`;
+
+const V = {};
+
+V.primo = () => `${hdr("Prima apertura","Dal QR stampato in magazzino",{noBack:1})}<main class="main">
+  <div class="card"><b>Su iPhone, una volta sola</b>
+  <ol class="muted" style="margin:0;padding-left:20px;display:grid;gap:4px"><li>Nella barra di Safari tocca «aA».</li><li>Tocca «Impostazioni sito web».</li><li>Fotocamera: scegli «Consenti».</li></ol>
+  <div class="photo">immagine della barra di Safari con «aA» evidenziato</div></div>
+  <div class="card"><b>Su Android e sul palmare</b><p class="muted">Alla prima inquadratura il browser chiede la fotocamera: tocca «Consenti». Il barcode del palmare si legge col grilletto.</p></div>
+  <div class="btns"><button class="btn go" data-act="primoOk">Fatto, continua</button><button class="btn" data-act="camNo">Ho toccato «Non consentire»</button></div>
+</main>`;
+
+V.camNo = () => `${hdr("Fotocamera bloccata")}<main class="main">
+  <div class="warnbox bad">Senza fotocamera si può lavorare solo col grilletto del palmare o cercando a mano.</div>
+  <p class="muted">Per riattivarla: «aA» nella barra di Safari, «Impostazioni sito web», Fotocamera: «Consenti». Poi ricarica la pagina.</p>
+  <button class="btn go" data-act="primoOk">L'ho riattivata</button></main>`;
+
+V.accesso = () => `${hdr("Chi sei?","Magazzino · telefono condiviso",{noBack:1})}<main class="main"><div class="list">
+  ${USERS.map(u=>row(u.n, u.r==="boss"?`<span class="tag boss">responsabile</span>`:"", "", "who:"+u.n, u.m.map(x=>MANS[x]).join(" e "))).join("")}
+  </div><p class="muted">Ognuno entra col suo nome: ogni movimento ricorda chi l'ha fatto.</p></main>`;
+
+V.pin = () => {
+  const u = USERS.find(x=>x.n===S.pinFor);
+  if(u.r==="boss") return `${hdr(u.n,"Password del responsabile")}<main class="main"><div class="field"><label for="pw">Password</label><input id="pw" type="password" autocomplete="off" value="prototipo"></div><button class="btn go" data-act="login">Entra</button><p class="muted">Nel prototipo va bene qualsiasi password.</p></main>`;
+  const dots = Array.from({length:6},(_,i)=>`<i class="${i<S.pin.length?"on":""}"></i>`).join("");
+  const keys = ["1","2","3","4","5","6","7","8","9","","0","⌫"].map(k=>k?`<button class="key" data-act="key:${k}" aria-label="${k==="⌫"?"Cancella":k}">${k}</button>`:"<span></span>").join("");
+  return `${hdr(u.n,"PIN di 6 cifre")}<main class="main"><div class="pin" aria-label="${S.pin.length} cifre su 6">${dots}</div><div class="keys">${keys}</div><p class="muted">Nel prototipo va bene qualsiasi PIN.</p></main>`;
+};
+
+V.home = () => {
+  const c = counts();
+  const t = (n, lab, act, cls="") => `<button class="tile ${n===0?"zero":""} ${cls}" data-act="${act}"><b>${n===null?"·":n}</b><span>${lab}</span></button>`;
+  return `${hdr(`Ciao ${S.user.n}`, (isBoss()?"Responsabile · ":"")+S.user.m.map(x=>MANS[x]).join(" e "),{noBack:1,right:`<button class="ic" data-act="esci">Esci</button>`})}
+  ${isBoss() && S.update ? `<div class="banner boss"><span>È disponibile un aggiornamento. Prima si fa una copia di sicurezza.</span><div class="btns two"><button class="btn small boss" data-act="updNow">Installa stasera</button><button class="btn small" data-act="updLater">Più tardi</button></div></div>`:""}
+  ${isBoss() && !S.sync ? `<div class="banner warn">Scambio con il gestionale non riuscito da 15 minuti. Si lavora con gli ultimi dati; 3 documenti aspettano in coda. <button class="btn small" data-act="syncNow">Aggiorna ora</button></div>`:""}
+  <main class="main">
+  ${isBoss()?t(c.controlli,"Da controllare","go:controlli","boss"):""}
+  ${(()=>{ const L={ricevi:[c.ricevi,"Ricevi DDT"],metti:[c.metti,"Metti a posto"],preleva:[c.preleva,"Preleva"],spedisci:[c.spedisci,"Spedisci"],banco:[null,"Vendita assistita"],cerca:[null,"Cerca e conta"]};
+    const all=["ricevi","metti","preleva","spedisci","banco","cerca"].filter(k=>k!=="spedisci"||canShip());
+    const mine=isBoss()?all:[...new Set(S.user.m.flatMap(m=>MLAV[m]))].filter(k=>all.includes(k));
+    const rest=all.filter(k=>!mine.includes(k));
+    return `<div class="tiles">${mine.map(k=>t(L[k][0],L[k][1],"go:"+k)).join("")}</div>`+(rest.length?`<h2>Altri lavori</h2><div class="list">${rest.map(k=>row(L[k][1],L[k][0]===null?"›":L[k][0],"","go:"+k)).join("")}</div>`:""); })()}
+  ${canPlan()&&!S.coda?`<button class="btn" data-act="go:piani">Piani di spedizione</button>`:""}
+  ${isBoss()?`<div class="btns two"><button class="btn small" data-act="go:utenti">Utenti</button><button class="btn small" data-act="go:config">Configurazione</button></div>`:""}
+  <p class="muted">In grande i lavori delle tue mansioni; il numero dice quante cose aspettano. ${S.coda?"Magazzino con la coda (come Shopify).":"Magazzino con i piani di spedizione (come UFP)."} Si cambia da «Scenari».</p>
+  </main>`;
+};
+
+V.ricevi = () => `${hdr("Ricevi","DDT aperti")}<main class="main"><div class="list">
+  ${S.ddts.filter(d=>d.open).map(d=>{const tot=d.lines.length, ok=d.lines.filter(l=>l.cnt>=l.att).length;return row(`DDT ${d.num} · ${esc(d.forn)}`, `${ok} di ${tot}`, ok===tot?"done":ok?"part":"", "ddt:"+d.id, `del ${d.data} · si continua da dove si era rimasti`);}).join("")}
+  </div><button class="btn go" data-act="go:nuovoDdt">Nuovo DDT</button>
+  <p class="muted">Più persone possono lavorare sullo stesso DDT, anche in giorni diversi: ogni scansione è già salvata.</p></main>`;
+
+V.nuovoDdt = () => `${hdr("Nuovo DDT")}<main class="main">
+  <div class="warnbox boss">Segnaposto: come entra il DDT (foto, file o solo numero) è ancora da decidere nella mappa.</div>
+  <div class="field"><label for="forn">Fornitore</label><select id="forn">${["Idrotecnica Nord","Colle Sud","Elettroforniture Est"].map(f=>`<option ${f===S.ddtDraft.forn?"selected":""}>${f}</option>`).join("")}</select></div>
+  <div class="field"><label for="num">Numero del DDT, com'è scritto</label><input id="num" type="text" inputmode="text" value="${esc(S.ddtDraft.num)}" placeholder="per esempio 698/00"></div>
+  <button class="btn go" data-act="creaDdt">Apri il DDT</button>
+  <p class="muted">Prova a scrivere 698/00 con Idrotecnica Nord: c'è già.</p></main>`;
+
+const SIMS = [
+  ["bc","Barcode noto"],["bcq","Barcode, quantità sulla scatola"],["bc2","Barcode su 2 articoli"],["bcx","Barcode sconosciuto"],
+  ["cs","Codice stampato"],["csim","Codice simile"],["cdiff","Codice diverso (158)"],["asp","Solo aspetto"],
+  ["multi","Due codici diversi"],["q2","Due quantità"],["fuori","Non è tra gli attesi"],["unit","Unità mai vista"],["nls","Non lo so"]
+];
+V.ddt = () => {
+  const d = ddt();
+  const lines = d.lines.map((l,i)=>{
+    const name = l.a ? `${A(l.a).code} · ${esc(A(l.a).desc)}` : `${esc(l.code)} · ${esc(l.desc)}`;
+    const cls = l.ferma ? "halt" : l.cnt>=l.att ? "done" : l.cnt>0 ? "part" : "";
+    const small = l.ferma ? `Ferma: ${l.ferma}` : !l.a ? "Riga senza articolo a catalogo" : "";
+    return row(name, `${l.cnt} di ${l.att}`, cls, "line:"+i, small);
+  }).join("");
+  return `${hdr(`DDT ${d.num}`, esc(d.forn),{right:`<button class="ic" data-act="go:chiudi">Chiudi DDT</button>`})}
+  <main class="main">
+    <div class="cam"><div class="frame">Inquadratura sempre accesa<br>inquadra la scatola</div>
+      <div class="chips"><button class="chip" data-act="sheet:simList">Simula cosa inquadri ▾</button></div></div>
+    ${S.toast?`<div class="toast" role="status"><span>${S.toast.txt}</span><button data-act="annulla">Annulla</button><button data-act="line:${S.toast.line}">Modifica</button></div>`:""}
+    <h2>Righe attese</h2><div class="list">${lines}</div>
+  </main>`;
+};
+
+/* ===== Schede che si aprono sopra la schermata del DDT ===== */
+const SH = {};
+SH.simList = () => `<h3>Cosa inquadri?</h3><p class="muted">Solo nel prototipo: nel programma vero la fotocamera lo capisce da sola.</p><div class="list">${SIMS.map(([k,t])=>`<button class="row" data-act="sim:${k}"><span class="l">${t}</span><span class="r">›</span></button>`).join("")}</div>`;
+SH.qty = ({i, sugg, note}) => { const l=ddt().lines[i]; const k=l.a;
+  if(sugg===undefined){ if(k && S.collo[k]){ sugg=S.collo[k]; note=note||`${sugg} come l'ultima volta per questo fornitore: correggi se il collo è diverso.`; } else sugg = (k && A(k).unit!=="pz") ? "" : 1; }
+  if(sugg==="" && !note) note=`Si conta a ${A(k).unit==="m"?"metri":"chili"}: scrivi la quantità.`;
+  return `<h3>${k?A(k).code:l.code} · quanti?</h3>
+  ${k?photo(A(k).photo):""}
+  ${note?`<div class="warnbox">${note}</div>`:""}
+  <div class="qty"><button class="ic" data-act="qm" aria-label="Meno">−</button><input id="q" type="number" inputmode="numeric" value="${sugg}"><button class="ic" data-act="qp" aria-label="Più">+</button></div>
+  <div class="field"><label for="colli">Colli uguali (× colli)</label><input id="colli" type="number" inputmode="numeric" value="1"></div>
+  <div class="btns"><button class="btn go" data-act="qok:${i}">Registra</button></div>`; };
+SH.questo = ({i, warn}) => { const k=ddt().lines[i].a; return `<h3>È questo?</h3>${warn?`<div class="warnbox">${warn}</div>`:""}
+  ${photo(A(k).photo)}<p><b>${A(k).code}</b> · ${esc(A(k).desc)}</p>
+  <div class="btns two"><button class="btn" data-act="sheet:aspetto:${i}">No, è un altro</button><button class="btn go" data-act="sheet:qty:${i}">È questo</button></div>`; };
+SH.aspetto = ({i}) => `<h3>Quale di questi?</h3><p class="muted">Proposte dall'aspetto, prima gli attesi.</p>
+  <div class="list">${["R110","S77","G44"].map(k=>pick(k,"pickLine:"+k)).join("")}${pick("V13","fuoriPick:V13",`<span class="tag">non è tra gli attesi</span>`)}</div>
+  <button class="btn" data-act="sheet:nls">Nessuno di questi</button>`;
+SH.bc2 = () => `<h3>Questo barcode è su 2 articoli</h3><div class="list">${pick("V12","fuoriPick:V12",`<span class="tag">non è tra gli attesi</span>`)}${pick("V13","fuoriPick:V13",`<span class="tag">non è tra gli attesi</span>`)}</div><p class="muted">Tocca quello giusto.</p>`;
+SH.bcx = () => `<h3>Barcode sconosciuto</h3><p class="muted">L'ho trovato dal codice stampato.</p>${photo(A("S77").photo)}<p><b>SL-77</b> · ${esc(A("S77").desc)}</p>
+  <div class="warnbox boss">Collego questo barcode a SL-77? Vale subito; il responsabile lo conferma dopo.</div>
+  <div class="btns two"><button class="btn" data-act="sheet:qty:2">Non collegare</button><button class="btn go" data-act="collega">Collega e continua</button></div>`;
+SH.multi = () => `<h3>Ci sono due codici diversi</h3><p class="muted">Tocca quello della scatola che stai ricevendo. Non registro niente da solo.</p>
+  <div class="list">${pick("R110","sheet:qty:0")}${pick("G44","sheet:qty:1")}</div>`;
+SH.q2 = () => `<h3>Ho letto due quantità</h3>${photo(A("R110").photo)}<p class="muted">Sulla scatola di 3PR-110 ci sono «12 PZ» e «Q.TY 6». Quale vale?</p>
+  <div class="btns two"><button class="btn" data-act="qpick:6">6</button><button class="btn" data-act="qpick:12">12</button></div>`;
+SH.fuori = ({k}) => `<h3>Non è tra gli attesi</h3>${photo(A(k).photo)}<p><b>${A(k).code}</b> · ${esc(A(k).desc)}</p>
+  <div class="warnbox">Nessun ordine fornitore aperto lo prevede. Si carica, ma resta senza ubicazione finché il responsabile non decide se tenerlo o renderlo.</div>
+  <div class="btns two"><button class="btn" data-act="closeSheet">Annulla</button><button class="btn go" data-act="fuoriOk:${k}">Registra senza ordine</button></div>`;
+SH.cdiff = () => `<h3>Codice diverso</h3>${photo(A("G44").photo)}
+  <p>Sulla scatola c'è <b>GT-4410N</b>; l'articolo che corrisponde è <b>GT-4410</b>.</p>
+  <div class="warnbox bad">Lo decide il responsabile. Metti la scatola da parte nell'area di ricevimento e continua con le altre.</div>
+  <div class="btns"><button class="btn go" data-act="ferma:1:codice GT-4410N da confermare">Metti da parte e continua</button>
+  <button class="btn boss" data-act="sheet:bossHere">Decide qui il responsabile</button></div>`;
+SH.bossHere = () => `<h3>Responsabile</h3><p class="muted">Entra con la tua password su questo telefono. Il lavoro di ${S.user.n} resta com'è.</p>
+  <div class="field"><label for="pw2">Password del responsabile</label><input id="pw2" type="password" value="prototipo"></div>
+  <p>GT-4410N sulla scatola, GT-4410 a catalogo.</p>
+  <div class="btns"><button class="btn boss" data-act="bossCarica">Carica su GT-4410 (il codice nuovo diventa codice del fornitore)</button>
+  <button class="btn" data-act="ferma:1:aspetta l'aggiornamento del codice nel gestionale">Aspetta: aggiorno il codice nel gestionale</button></div>`;
+SH.unit = () => `<h3>Unità mai vista</h3><p>La bolla dice <b>2 RT</b> (rotoli) di GT-4410; l'articolo si conta a metri.</p>
+  <div class="warnbox bad">Serve una conversione approvata dal responsabile. La riga si ferma; continua con le altre.</div>
+  <div class="btns"><button class="btn go" data-act="ferma:1:unità RT mai vista">Continua con le altre</button><button class="btn boss" data-act="sheet:bossUnit">Decide qui il responsabile</button></div>`;
+SH.bossUnit = () => `<h3>Responsabile · conversione</h3><div class="field"><label for="pw3">Password</label><input id="pw3" type="password" value="prototipo"></div>
+  <div class="field"><label for="conv">1 RT di Idrotecnica Nord = quanti metri?</label><input id="conv" type="number" value="25"></div>
+  <button class="btn boss" data-act="convOk">Approva: 2 RT = 50 m</button>`;
+SH.nls = () => `<h3>Non lo so</h3><p class="muted">Non riconosco questa scatola.</p>
+  <div class="btns"><button class="btn" data-act="closeSheet">Riprova: avvicinati e cerca più luce</button>
+  <button class="btn" data-act="sheet:cercaMano">Cerca scrivendo codice o descrizione</button>
+  <button class="btn go" data-act="nuovo:start">Articolo nuovo</button></div>`;
+SH.cercaMano = () => `<h3>Cerca</h3><div class="field"><label for="cm">Codice o parte della descrizione</label><input id="cm" type="text" value="silicone"></div>
+  <div class="list">${pick("S77","pickLine:S77")}</div>`;
+SH.line = ({i}) => { const l=ddt().lines[i]; const name=l.a?A(l.a).code:l.code; return `<h3>${name}</h3>
+  <p class="muted">Contati ${l.cnt} di ${l.att}. ${l.ferma?`Ferma: ${l.ferma}.`:""}</p>
+  <div class="btns">${l.a?`<button class="btn" data-act="sheet:qty:${i}">Registra a mano una quantità</button>`:`<button class="btn go" data-act="nuovo:riga:${i}">Crea l'articolo per questa riga</button>`}
+  ${l.cnt>0?`<button class="btn bad" data-act="corr:${i}">Correggi: togli l'ultima scansione</button>`:""}
+  <button class="btn" data-act="closeSheet">Chiudi</button></div>
+  <p class="muted">Finché il DDT è aperto corregge chi ha fatto la scansione; dopo, solo il responsabile.</p>`; };
+SH.chiudiFerma = () => { const n=ddt().lines.filter(l=>l.ferma).length; return `<h3>${n} riga ferma</h3>
+  <p class="muted">Aspetta il responsabile. Come chiudo il DDT?</p>
+  <div class="btns"><button class="btn go" data-act="chiudiOk:ready">Chiudi con le righe pronte (la riga ferma avrà poi un carico suo)</button>
+  <button class="btn" data-act="closeSheet">Aspetta: un solo carico per questa bolla</button></div>`; };
+SH.mettiOra = ({n}) => `<h3>DDT chiuso</h3><div class="warnbox ok">Carico mandato al gestionale.</div>
+  <p>${n} articoli sono nell'area di ricevimento.</p>
+  <div class="btns"><button class="btn go" data-act="mettiOra">Metti a posto adesso</button><button class="btn" data-act="home">Più tardi</button></div>
+  <p class="muted">La merce è già in giacenza e si assegna agli ordini anche prima di metterla a posto.</p>`;
+SH.offline = () => `<h3>Rete assente</h3><div class="warnbox bad">Il lavoro si ferma finché torna la rete. Le ${S.pendingOffline} scansioni fatte sono salvate su questo telefono e partono appena torna, una volta sola.</div>
+  <p class="muted">Non cancellare i dati del browser: le scansioni in attesa andrebbero perse.</p><button class="btn" data-act="closeSheet">Ho capito</button>`;
+
+function closeDdt(){ const d=ddt(); d.open=false; log(`DDT ${d.num} chiuso da ${S.user.n}: un carico al gestionale`+(d.lines.some(l=>l.ferma)?", la riga ferma avrà un carico suo":"")); S.toast=null; S.sheet={sk:"mettiOra", n:S.area.length}; }
+
+/* ===== Articolo nuovo ===== */
+V.nuovo = () => {
+  const N = S.newArt, d = ddt();
+  const steps = `<div class="steps">${[0,1,2,3].map(s=>`<i class="${s<=N.step?"on":""}"></i>`).join("")}</div>`;
+  if(N.step===0){
+    const righe = d.lines.map((l,i)=>[l,i]).filter(([l])=>!l.a);
+    return `${hdr("Articolo nuovo","Prima le righe che lo aspettano")}<main class="main">${steps}
+      <p class="muted">Sul DDT ci sono righe senza articolo a catalogo. Se la scatola è una di queste, codice e descrizione sono già pronti.</p>
+      <div class="list">${righe.map(([l,i])=>row(`${esc(l.code)} · ${esc(l.desc)}`,`${l.att} attesi`,"part","nuovo:riga:"+i)).join("")}</div>
+      <button class="btn" data-act="nuovo:libero">Nessuna di queste</button></main>`;
+  }
+  if(N.step===1){
+    const shots=["davanti","etichetta con il codice","un altro lato"];
+    return `${hdr("Articolo nuovo","Tre foto guidate")}<main class="main">${steps}
+      <div class="cam"><div class="frame big">Foto ${N.shots+1 > 3 ? 3 : N.shots+1} di 3: ${shots[Math.min(N.shots,2)]}<br>metti la scatola nel riquadro</div></div>
+      ${N.blur?`<div class="warnbox">La foto è mossa: rifalla tenendo fermo il telefono.</div>`:""}
+      <div class="btns two"><button class="btn" data-act="shotBlur">Scatta (esce mossa)</button><button class="btn go" data-act="shot">Scatta</button></div>
+      ${N.shots>=1?`<button class="btn" data-act="shotsDone">${N.shots>=3?"Avanti":"Salta le altre e vai avanti"}</button>`:`<p class="muted">La prima foto è obbligatoria.</p>`}
+      <div class="chips">${shots.map((s,i)=>`<span class="tag ${i<N.shots?"ok":""}">${i<N.shots?"✓ ":""}${s}</span>`).join("")}</div></main>`;
+  }
+  if(N.step===2){
+    const words=["Valvola","sfera","3/4\"","leva","gialla","ottone","PN25"];
+    return `${hdr("Articolo nuovo","Dati")}<main class="main">${steps}
+      <div class="field"><label for="nc">Codice letto dalla foto (correggibile)</label><input id="nc" type="text" value="${esc(N.code)}"></div>
+      <div class="field"><label for="nd">Descrizione</label><input id="nd" type="text" value="${esc(N.desc)}"></div>
+      <p class="muted">Parole lette sull'etichetta, tocca per aggiungerle:</p>
+      <div class="chips">${words.map(w=>`<button class="chip" data-act="word:${esc(w)}">${esc(w)}</button>`).join("")}</div>
+      <div class="field"><label for="nu">Unità di magazzino</label><select id="nu"><option selected>pezzo</option><option>metro</option><option>chilo</option></select></div>
+      <p class="muted">Fornitore: ${esc(d.forn)} (dal DDT). Ubicazione abituale, prezzi e «si tiene a magazzino» li completa il responsabile.</p>
+      <button class="btn go" data-act="datiOk">Avanti</button></main>`;
+  }
+  return `${hdr("Articolo nuovo","Prima di salvare")}<main class="main">${steps}
+    <h3 style="margin:0">È uno di questi?</h3><p class="muted">Ho cercato in tutto il catalogo con codice, descrizione e aspetto.</p>
+    <div class="list">${pick("V12","simile:V12")}${pick("V13","simile:V13")}</div>
+    <button class="btn go" data-act="salvaNuovo">No, è un articolo nuovo</button>
+    <p class="muted">Se ne scegli uno non creo niente: foto e codice nuovo si collegano a quell'articolo, da confermare.</p></main>`;
+};
+
+/* ===== Messa a posto ===== */
+V.metti = () => `${hdr("Metti a posto",`${S.area.length+S.rimetti.length} da sistemare`)}<main class="main">
+  <h2>Area di ricevimento</h2><div class="list">${S.area.length?S.area.map((e,i)=>row(`${A(e.a).code} · ${esc(A(e.a).desc)}`,`${e.q} ${A(e.a).unit}`,"","put:a:"+i,`da ${e.from} · abituale ${A(e.a).loc}`)).join(""):`<p class="muted">Niente da mettere a posto.</p>`}</div>
+  <h2>Rimetti a posto</h2><div class="list">${S.rimetti.length?S.rimetti.map((e,i)=>row(`${A(e.a).code} · ${esc(A(e.a).desc)}`,`${e.q} ${A(e.a).unit}`,"part","put:r:"+i,e.from)).join(""):`<p class="muted">Niente da rimettere a posto.</p>`}</div>
+  <p class="muted">In alternativa si inquadra una scatola qualsiasi dell'area: il programma la cerca in questo elenco.</p></main>`;
+V.put = () => { const P=S.put, e=(P.src==="a"?S.area:S.rimetti)[P.i]; const art=A(e.a);
+  return `${hdr("Metti a posto",art.code)}<main class="main">${photo(art.photo)}<p>${esc(art.desc)} · <b>${e.q} ${art.unit}</b></p>
+  <div class="row boss"><span class="l"><span>Ubicazione proposta</span><small>abituale</small></span><span class="r">${art.loc}</span></div>
+  <div class="cam"><div class="frame">Scansiona l'etichetta dell'ubicazione dove la metti davvero</div>
+  <div class="chips"><button class="chip" data-act="putLoc:${art.loc}">Simula: ${art.loc}</button><button class="chip" data-act="putLoc:Z-09-9">Simula: Z-09-9 (un'altra)</button></div></div>
+  <div class="field"><label for="pq">Quanti ne metti qui</label><input id="pq" type="number" value="${e.q}"></div></main>`; };
+
+/* ===== Banco ===== */
+V.banco = () => { const B=S.banco || (S.banco={cli:null, righe:[]});
+  if(!B.cli) return `${hdr("Vendita assistita","Per chi è?")}<main class="main"><div class="field"><label for="cli">Cerca un cliente</label><input id="cli" type="text" placeholder="nome o codice"></div>
+    <div class="list">${row("Rossi Srl","C0042","","cli:Rossi Srl")}${row("Cliente generico del banco","","","cli:Cliente generico")}${row("Nessun cliente","","","cli:Nessuno")}</div></main>`;
+  return `${hdr("Vendita assistita",esc(B.cli))}<main class="main">
+    <div class="cam"><div class="frame">Inquadra l'articolo, poi l'ubicazione da cui lo prendi</div>
+    <div class="chips"><button class="chip" data-act="bancoAdd:R110">Simula: 3PR-110 libero</button><button class="chip" data-act="bancoAdd:S77">Simula: SL-77, merce di altri ordini</button></div></div>
+    <div class="list">${B.righe.map(r=>row(`${A(r.a).code} · ${esc(A(r.a).desc)}`,`${r.q} × ${A(r.a).price}`,r.tolto?"part":"done","",`da ${A(r.a).loc}${r.tolto?" · tolto all'ordine 1039":""}${isBoss()?` · costo ${A(r.a).cost}`:""}`)).join("") || `<p class="muted">Nessun articolo ancora.</p>`}</div>
+    ${B.righe.length?`<button class="btn go" data-act="bancoOk">Conferma: crea l'ordine nel gestionale</button>`:""}
+    <p class="muted">Dopo la conferma l'ordine va al gestionale (in UFP Ad Hoc), dove si fanno e si stampano le ricevute. Il prezzo è quello di vendita, uguale per tutti; listini e sconti li fa il gestionale.${isBoss()?" Il costo d'acquisto lo vede solo il responsabile.":""}</p></main>`; };
+SH.bancoTogli = () => `<h3>Non c'è abbastanza merce libera</h3><p>SL-77: libera 0. Per venderne 2 li tolgo all'<b>ordine 1039 · Edil Po</b>, il più recente che li aspetta.</p>
+  <div class="warnbox">Se confermi, l'assegnazione si rifà e il responsabile lo trova tra le cose da controllare. La merce in VEND non si tocca.</div>
+  <div class="btns two"><button class="btn" data-act="closeSheet">Non vendere</button><button class="btn go" data-act="bancoTogli">Togli e vendi</button></div>`;
+
+/* ===== Cerca e scheda articolo ===== */
+V.cerca = () => `${hdr("Cerca articolo")}<main class="main">
+  <div class="cam"><div class="frame">Inquadra la scatola</div><div class="chips"><button class="chip" data-act="scheda:V12">Simula: VT-1200</button></div></div>
+  <div class="field"><label for="cq">Oppure scrivi codice o descrizione</label><input id="cq" type="text" placeholder="per esempio valvola"></div>
+  <div class="list">${Object.keys(ARTS).map(k=>pick(k,"scheda:"+k)).join("")}</div></main>`;
+V.scheda = () => { const k=S.cerca, a=A(k); return `${hdr(a.code,esc(a.desc))}<main class="main">${photo(a.photo)}
+  <div class="list">${row("Prezzo di vendita",a.price)}${isBoss()?row("Costo d'acquisto",a.cost,"boss"):""}</div>
+  <h2>Giacenze</h2><div class="list">${row(a.loc+" (abituale)","8 "+a.unit,"","conta:"+a.loc,"libera 5 · assegnata 3")}${row("Area di ricevimento","2 "+a.unit,"","conta:RIC","da mettere a posto")}${row("VEND3","1 "+a.unit,"","","per l'ordine 1046")}</div>
+  <h2>Codici</h2><div class="list">${row("Codice articolo",a.code)}${row("Barcode","8001234567890")}</div>
+  <div class="btns"><button class="btn" data-act="aggFoto">Aggiungi foto</button></div>
+  <p class="muted">Tocca un'ubicazione per contarla, se la merce non torna.</p></main>`; };
+V.conta = () => `${hdr("Conta",S.cnt)}<main class="main"><p>Quanti pezzi di <b>${A(S.cerca).code}</b> ci sono in ${S.cnt}?</p>
+  <div class="field"><label for="cn">Pezzi contati</label><input id="cn" type="number" inputmode="numeric" value="7"></div>
+  <button class="btn go" data-act="contaOk">Salva il conteggio</button>
+  <p class="muted">Il conteggio vale subito; il responsabile lo trova tra le cose da controllare.</p></main>`;
+
+/* ===== Responsabile ===== */
+V.controlli = () => `${hdr("Da controllare",`${S.controlli.length} cose`)}<main class="main"><div class="list">
+  ${S.controlli.map(c=>row(esc(c.txt),"›",c.t==="cdiff"||c.t==="unit"?"halt":c.t==="nuovo"?"part":"","ctl:"+c.id)).join("") || `<p class="muted">Niente da controllare.</p>`}</div></main>`;
+SH.ctl = ({id}) => { const c=S.controlli.find(x=>x.id===id); const b = (t,cls="")=>`<button class="btn ${cls}" data-act="ctlDone:${id}:${esc(t)}">${t}</button>`;
+  const opts = {
+    senza:[b("Tieni: va in ubicazione e diventa libera","go"),b("Rendi al fornitore")],
+    conta:[b("Va bene","go"),b("Ricontrolla: chiedi un nuovo conteggio")],
+    cdiff:[b("Carica su GT-4410","go"),b("Aspetto: aggiorno il codice nel gestionale")],
+    unit:[b("Approva la conversione","go")],
+    nuovo:[b("Conferma (dopo aver completato i dati)","go"),b("Unisci a un articolo esistente"),b("Rifiuta","bad")],
+    collega:[b("Conferma il collegamento","go"),b("Rifiuta: elenca i carichi da correggere","bad")]
+  }[c.t];
+  return `<h3>${esc(c.txt)}</h3>${c.a?photo(A(c.a).photo):""}${c.t==="nuovo"?`<div class="list">${row("Ubicazione abituale","da scegliere","part")}${row("Prezzi","da completare","part")}${row("Si tiene a magazzino","sì")}</div>`:""}<div class="btns">${opts.join("")}</div>`; };
+V.utenti = () => `${hdr("Utenti")}<main class="main"><div class="list">${USERS.map(u=>row(u.n,u.r==="boss"?"responsabile":"operatore","","",["mansioni: "+u.m.map(x=>MANS[x]).join(", "), u.r!=="boss"&&u.plan?"pianifica le spedizioni":"", u.r!=="boss"&&u.sped?"conferma le spedizioni":""].filter(Boolean).join(" · "))).join("")}</div><button class="btn">Nuovo utente</button><p class="muted">Segnaposto: per chi se ne va basta disattivare l'utente.</p></main>`;
+V.config = () => `${hdr("Configurazione")}<main class="main"><div class="warnbox boss">Segnaposto: la procedura guidata dell'installazione è ancora nella nebbia della mappa.</div><div class="list">
+  ${[["Ubicazioni","sì"],["VEND","acceso"],["Posti VEND","numerati"],["Prezzi","accesi"],["Ordini parziali si prelevano","sì"],["Uscita dopo","30 min"],["Scambio ogni","5 min"]].map(([a,b])=>row(a,b)).join("")}</div></main>`;
+const cop = o => { const t=o.righe.reduce((n,r)=>n+r.q,0), a=o.righe.reduce((n,r)=>n+r.ass,0); return a>=t?["completo","done"]:a>0?[`${a} di ${t}`,"part"]:["niente","dim"]; };
+const ordRow = (k, act=true) => { const o=S.ordini[k]; const [t,c]=cop(o);
+  if(o.stato!=="aperto") return row(`${k} · ${esc(o.cli)}`, o.stato==="pronto"?"pronto":"spedito", "done");
+  if(o.da && o.da!==S.user.n) return row(`${k} · ${esc(o.cli)}`, `in preparazione da ${o.da}`, "dim");
+  return row(`${k} · ${esc(o.cli)}`, t, c, act&&c!=="dim"?"ord:"+k:"", `${S.cour[o.cour]}${o.da===S.user.n?" · lo stai preparando tu":""}`); };
+V.preleva = () => {
+  if(S.coda){ const q=Object.entries(S.ordini).filter(([k,o])=>o.shop&&o.stato==="aperto");
+    return `${hdr("Preleva","Coda degli ordini del sito")}<main class="main"><div class="tile"><b>${q.length}</b><span>ordini pronti da prelevare</span></div>
+    ${q.length?`<button class="btn go" data-act="prossimo">Prossimo ordine</button>`:""}
+    <p class="muted">Ti do l'ordine pronto più vecchio. Chi lo prende lo toglie dalla coda: nessun altro lo vede.</p>
+    <h2>In coda</h2><div class="list">${q.map(([k,o])=>row(`${k}`,o.da?`preso da ${o.da}`:esc(o.cli.replace("Ordine del sito, ","")),o.da?"dim":"")).join("")}</div></main>`; }
+  const mine=S.piani.filter(p=>p.prep===S.user.n), others=S.piani.filter(p=>p.prep!==S.user.n);
+  const pr = p => row(`Piano «${esc(p.t)}»`, `${p.ord.filter(k=>S.ordini[k].stato==="aperto").length} da fare`, p.prep===S.user.n?"boss":"", "piano:"+p.id, `${p.ord.length} ordini · ${p.prep}`);
+  return `${hdr("Preleva","Piani di spedizione")}<main class="main">
+    <h2>I tuoi piani</h2><div class="list">${mine.map(pr).join("") || `<p class="muted">Nessun piano dato a te.</p>`}</div>
+    <h2>Piani dei colleghi</h2><div class="list">${others.map(pr).join("")}</div>
+    <p class="muted">Puoi aiutare un collega prendendo un suo ordine non ancora aperto.</p></main>`; };
+V.piano = () => { const p=S.piani.find(x=>x.id===S.pianoSel);
+  return `${hdr(`Piano «${esc(p.t)}»`,`di ${p.prep}`)}<main class="main"><div class="list">${p.ord.map(k=>ordRow(k)).join("")}</div>
+  <p class="muted">Tocca un ordine per iniziare. Chi lo apre lo prende.</p></main>`; };
+function pickRows(o){ return o.righe.map((r,i)=>({...r,i})).filter(r=>r.ass>0).sort((x,y)=>(x.vend||A(x.a).loc).localeCompare(y.vend||A(y.a).loc)); }
+V.pick = () => { const k=S.ordine, o=S.ordini[k], rows=pickRows(o), P=S.pk; const r=rows[P.n];
+  if(!r) return V.fine();
+  const where = r.vend || A(r.a).loc;
+  const stepTxt = P.st===0?`Vai a <b>${where}</b> e scansiona l'ubicazione`:P.st===1?`Inquadra la scatola di <b>${A(r.a).code}</b>`:`Quanti ne prendi?`;
+  return `${hdr(`Ordine ${k}`,`${esc(o.cli)} · riga ${P.n+1} di ${rows.length}`)}<main class="main">
+    <div class="row boss"><span class="l"><span>${A(r.a).code} · ${esc(A(r.a).desc)}</span><small>${r.ass<r.q?`prendi ${r.ass} di ${r.q}: il resto non c'è ancora`:`prendi ${r.ass} ${A(r.a).unit}`}${r.vend?" · merce venduta, nel suo posto VEND":""}</small></span><span class="r">${where}</span></div>
+    ${P.st<2?`<div class="cam"><div class="frame">${stepTxt}</div><div class="chips">${P.st===0?`<button class="chip" data-act="pkLoc:ok">Simula: ${where}</button><button class="chip" data-act="pkLoc:no">Simula: un'altra ubicazione</button>`:`<button class="chip" data-act="pkArt:ok">Simula: ${A(r.a).code}</button><button class="chip" data-act="pkArt:no">Simula: un altro articolo</button>`}</div></div>`:
+     `<div class="qty"><button class="ic" data-act="qm" aria-label="Meno">−</button><input id="q" type="number" inputmode="numeric" value="${r.ass}"><button class="ic" data-act="qp" aria-label="Più">+</button></div><button class="btn go" data-act="pkQty">Preso</button>`}
+    ${P.warn?`<div class="warnbox bad">${P.warn}</div>`:""}
+    <h2>Righe</h2><div class="list">${rows.map((x,j)=>row(`${x.vend||A(x.a).loc} · ${A(x.a).code}`,j<P.n?"preso":`${x.ass}`,j<P.n?"done":j===P.n?"part":"")).join("")}</div></main>`; };
+V.fine = () => { const k=S.ordine, o=S.ordini[k];
+  return `${hdr(`Ordine ${k}`,"Fine della preparazione")}<main class="main">
+    <div class="field"><label for="colli2">Colli</label><input id="colli2" type="number" inputmode="numeric" value="2"></div>
+    <div class="field"><label for="kg">Chili</label><input id="kg" type="text" inputmode="decimal" value="12,5"></div>
+    <div class="field"><label for="prep">Preparato da</label><select id="prep">${USERS.filter(u=>u.r==="op").map(u=>`<option ${u.n===S.user.n?"selected":""}>${u.n}</option>`).join("")}</select></div>
+    <div class="tile" style="text-align:center"><b>${o.cour}</b><span>${S.cour[o.cour]}: metti i colli nel suo posto</span></div>
+    <button class="btn go" data-act="pronto">Ordine pronto</button>
+    <p class="muted">Il nome è quello di chi ha fatto l'accesso; cambialo solo se ha preparato un altro. Pronto vuol dire evaso: «spedito» si segna quando parte davvero.</p></main>`; };
+V.spedisci = () => { const by={}; Object.entries(S.ordini).filter(([k,o])=>o.stato==="pronto").forEach(([k,o])=>{(by[o.cour]=by[o.cour]||[]).push(k);});
+  S.resta = S.resta || {};
+  return `${hdr("Spedisci","Ordini pronti, per corriere")}<main class="main">${Object.keys(by).length?Object.entries(by).map(([c,ks])=>{ const go=ks.filter(k=>!S.resta[k]);
+    return `<h2>${S.cour[c]}</h2><div class="list">${ks.map(k=>{const o=S.ordini[k]; return row(`${k} · ${esc(o.cli)}`, S.resta[k]?"resta":`${o.colli} colli`, S.resta[k]?"dim":"done", "resta:"+k, `${o.kg} kg · preparato da ${o.prep}`);}).join("")}</div>
+    <button class="btn go" data-act="ritirato:${c}" ${go.length?"":"disabled"}>Ritirato da ${S.cour[c]} (${go.length})</button>`; }).join(""):`<p class="muted">Nessun ordine pronto.</p>`}
+    <p class="muted">Tocca un ordine che non parte oggi: resta pronto e parte con il prossimo ritiro.</p></main>`; };
+V.piani = () => `${hdr("Piani di spedizione","Chi pianifica")}<main class="main"><div class="list">${S.piani.map(p=>row(`«${esc(p.t)}»`,p.prep,"","",`${p.ord.join(", ")}`)).join("")}</div>
+  <button class="btn go" data-act="go:nuovoPiano">Nuovo piano</button></main>`;
+V.nuovoPiano = () => { const liberi=Object.keys(S.ordini).filter(k=>!S.ordini[k].shop && S.ordini[k].stato==="aperto" && !S.piani.some(p=>p.ord.includes(k)));
+  return `${hdr("Nuovo piano")}<main class="main">
+  <div class="field"><label for="pt">Titolo</label><input id="pt" type="text" value="Verdi A."></div><p class="muted">Proposto dall'agente dell'ordine, se il gestionale lo manda.</p>
+  <div class="field"><label for="pp">Preparatore</label><select id="pp">${USERS.filter(u=>u.r==="op").map(u=>`<option>${u.n}</option>`).join("")}</select></div>
+  <h2>Ordini senza piano</h2><div class="list">${liberi.map(k=>{const o=S.ordini[k],[t,c]=cop(o);return `<label class="row ${c}"><span class="l"><span><input type="checkbox" data-ord="${k}" ${c==="done"?"checked":""}> ${k} · ${esc(o.cli)}</span><small>${S.cour[o.cour]}</small></span><span class="r">${t}</span></label>`;}).join("")}</div>
+  <button class="btn go" data-act="creaPiano">Crea e dai al preparatore</button>
+  <p class="muted">Un ordine coperto in parte si dà solo se lo scegli: il cliente riceverà due spedizioni.</p></main>`; };
+V.scenari = () => `${hdr("Scenari del prototipo")}<main class="main"><div class="scen">
+  <button class="btn" data-act="sc:rete">${S.online?"Simula rete assente":"Torna la rete"}</button>
+  <button class="btn" data-act="sc:timeout">Simula 30 minuti senza uso</button>
+  <button class="btn" data-act="sc:sync">${S.sync?"Simula scambio bloccato da 15 minuti":"Scambio di nuovo a posto"}</button>
+  <button class="btn" data-act="sc:coda">${S.coda?"Magazzino con i piani (come UFP)":"Magazzino con la coda (come Shopify)"}</button>
+  <button class="btn" data-act="sc:primo">Rivedi la prima apertura</button>
+  <button class="btn" data-act="sc:boss">Entra come responsabile (Anna)</button>
+  <button class="btn bad" data-act="sc:reset">Ricomincia da capo</button></div>
+  <p class="muted">Tutto resta in memoria: ricaricando la pagina si riparte dai dati d'esempio.</p></main>`;
+
+/* ===== Disegno ===== */
+function render(){
+  const app = document.getElementById("app");
+  const view = (V[S.screen]||V.home)();
+  const offline = !S.online ? `<div class="banner bad">Rete assente: il lavoro è fermo. ${S.pendingOffline} scansioni salvate sul telefono, partiranno appena torna la rete.</div>` : "";
+  app.innerHTML = `<div class="proto"><span>PROTOTIPO · dati inventati${S.user?` · ${S.user.n}`:""}</span><button data-act="go:scenari">Scenari</button></div>${offline}${view}
+    <details class="log"><summary>Cosa è successo (${S.log.length})</summary><ol>${S.log.slice(0,30).map(l=>`<li>${esc(l)}</li>`).join("")}</ol></details>
+    ${S.sheet?`<div class="sheet-bg" data-act="bg"><div class="sheet" role="dialog" aria-modal="true">${SH[S.sheet.sk](S.sheet)}</div></div>`:""}`;
+}
+
+/* ===== Azioni ===== */
+function sheet(sk, extra={}){ S.sheet = Object.assign({}, extra, {sk}); render(); }
+function act(a, el){
+  const [c, x, y, ...rest] = a.split(":");
+  switch(c){
+    case "back": return back();
+    case "home": S.stack=[]; return go("home", false);
+    case "go": if(x==="chiudi"){ if(ddt().lines.some(l=>l.ferma)) return sheet("chiudiFerma"); closeDdt(); return render(); }
+      if(x==="ricevi"||x==="metti") S.sheet=null; if(x==="banco") S.banco=null; return go(x);
+    case "primoOk": S.firstRun=false; S.stack=[]; return go(S.user?"home":"accesso", false);
+    case "camNo": return go("camNo");
+    case "who": S.pinFor=x; S.pin=""; return go("pin");
+    case "key": if(x==="⌫") S.pin=S.pin.slice(0,-1); else if(S.pin.length<6) S.pin+=x; if(S.pin.length===6) return act("login"); return render();
+    case "login": { S.user=USERS.find(u=>u.n===S.pinFor); log(`Accesso: ${S.user.n}`); S.stack=[]; const r=S.resume; S.resume=null; if(r){ S.screen=r; S.stack=["home"]; log("Ripreso il lavoro lasciato a metà"); return render(); } return go("home", false); }
+    case "esci": log(`Uscita: ${S.user.n}`); S.user=null; S.stack=[]; return go("accesso", false);
+    case "updNow": S.update=false; log("Aggiornamento programmato per stasera, dopo la copia di sicurezza"); return render();
+    case "updLater": S.update=false; return render();
+    case "syncNow": S.sync=true; log("Aggiorna ora: scambio riuscito, coda vuota"); return render();
+    case "ddt": S.lastDdt=+x; return go("ddt");
+    case "creaDdt": { const f=document.getElementById("forn").value, n=document.getElementById("num").value.trim(); S.ddtDraft={forn:f,num:n};
+      if(!n) return render();
+      const dup=S.ddts.find(d=>d.forn===f && d.num===n);
+      if(dup && !S.dupOk){ S.dupOk=true; document.querySelector(".main").insertAdjacentHTML("afterbegin",`<div class="warnbox">Possibile doppione: c'è già il DDT ${esc(n)} di ${esc(f)} del ${dup.data}. Premi di nuovo «Apri il DDT» per crearlo lo stesso, o torna indietro e apri quello.</div>`); return; }
+      S.dupOk=false; const id=Date.now(); S.ddts.push({id,num:n,forn:f,data:"17/11/2026",open:true,lines:[{a:"V12",att:4,cnt:0},{a:"N55",att:6,cnt:0}]}); S.lastDdt=id; log(`DDT ${n} di ${f} aperto da ${S.user.n}`); S.screen="ricevi"; return go("ddt"); }
+    case "sim": return sim(x);
+    case "annulla": { const t=S.toast, d=ddt(); d.lines[t.line].cnt-=t.q; const l=d.lines[t.line]; const e=S.area.find(z=>z.a===l.a && z.from==="DDT "+d.num); if(e){ e.q-=t.q; if(e.q<=0) S.area.splice(S.area.indexOf(e),1);} log(`Annullata l'ultima scansione (${t.txt})`); S.toast=null; return render(); }
+    case "line": return sheet("line",{i:+x});
+    case "sheet": return sheet(x, y!==undefined?{i:+y}:{});
+    case "closeSheet": case "bg": if(c==="bg" && el!==EV.target) return; S.sheet=null; return render();
+    case "qm": case "qp": { const q=document.getElementById("q"); q.value=Math.max(0,(+q.value||0)+(c==="qp"?1:-1)); return; }
+    case "qok": { const q=(+document.getElementById("q").value||0)*(+document.getElementById("colli").value||1); S.sheet=null; if(q>0) register(+x,q,"confermata dall'operatore"); return render(); }
+    case "qpick": S.sheet=null; register(0,+x,"barcode, quantità scelta tra due"); return render();
+    case "pickLine": { const i=ddt().lines.findIndex(l=>l.a===x); if(i<0) return sheet("fuori",{k:x}); return sheet("qty",{i}); }
+    case "fuoriPick": return sheet("fuori",{k:x});
+    case "fuoriOk": { S.sheet=null; S.controlli.push({id:"c"+(++S.n), t:"senza", a:x, q:1, txt:`Merce senza ordine: 1 ${A(x).code} dal DDT ${ddt().num}`}); S.toast={txt:`Registrato 1 ${A(x).code} senza ordine`, line:0, q:0}; log(`DDT ${ddt().num}: 1 ${A(x).code} senza ordine, in attesa di decisione`); return render(); }
+    case "collega": S.controlli.push({id:"c"+(++S.n), t:"collega", a:"S77", txt:"Barcode 8009876 collegato a SL-77 da "+S.user.n}); log("Barcode collegato a SL-77, da confermare"); return sheet("qty",{i:2, sugg:1});
+    case "ferma": { const l=ddt().lines[+x]; l.ferma=rest.length?[y,...rest].join(":"):y; S.sheet=null;
+      if(/codice/.test(l.ferma) && /da confermare/.test(l.ferma)) S.controlli.push({id:"c"+(++S.n), t:"cdiff", a:"G44", txt:`Codice GT-4410N sulla scatola, GT-4410 a catalogo (DDT ${ddt().num})`});
+      if(/unità/.test(l.ferma)) S.controlli.push({id:"c"+(++S.n), t:"unit", a:"G44", txt:`Unità RT mai vista per GT-4410 (DDT ${ddt().num})`});
+      log(`Riga GT-4410 ferma: ${l.ferma}`); return render(); }
+    case "bossCarica": { S.sheet=null; const l=ddt().lines[1]; l.ferma=null; log("Anna, sul telefono di "+S.user.n+": carica su GT-4410; GT-4410N diventa codice del fornitore"); register(1,10,"confermato dal responsabile"); return render(); }
+    case "convOk": { S.sheet=null; ddt().lines[1].ferma=null; log("Anna approva: 1 RT = 25 m per Idrotecnica Nord"); register(1,50,"2 RT convertiti"); return render(); }
+    case "corr": { const l=ddt().lines[+x]; const q=Math.min(l.cnt, l.lastQ||l.cnt); l.cnt-=q; S.sheet=null; log(`Correzione di ${S.user.n}: −${q} ${l.a?A(l.a).code:l.code} (collegata alla scansione, niente si cancella)`); return render(); }
+    case "chiudiOk": closeDdt(); return render();
+    case "mettiOra": S.stack=["home"]; S.screen="metti"; S.sheet=null; render(); return window.scrollTo(0,0);
+    case "nuovo":
+      if(x==="start"){ S.newArt={step:0, shots:0, code:"", desc:"", line:null}; S.sheet=null; return go("nuovo"); }
+      if(x==="riga"){ const l=ddt().lines[+y]; S.newArt={step:1, shots:0, code:l.code, desc:l.desc.replace(/ \(.*\)/,""), line:+y}; S.sheet=null; if(S.screen!=="nuovo") return go("nuovo"); return render(); }
+      if(x==="libero"){ S.newArt.step=1; S.newArt.code="VT-1202"; return render(); }
+      return;
+    case "shot": S.newArt.shots=Math.min(3,S.newArt.shots+1); S.newArt.blur=false; if(S.newArt.shots>=3){ S.newArt.step=2; } return render();
+    case "shotBlur": S.newArt.blur=true; return render();
+    case "shotsDone": S.newArt.step=2; return render();
+    case "word": { const d=document.getElementById("nd"); d.value=(d.value+" "+x).trim(); S.newArt.desc=d.value; return; }
+    case "datiOk": S.newArt.code=document.getElementById("nc").value; S.newArt.desc=document.getElementById("nd").value; S.newArt.step=3; return render();
+    case "simile": log(`Foto e codice ${S.newArt.code} collegati a ${A(x).code}, da confermare`); S.controlli.push({id:"c"+(++S.n), t:"collega", a:x, txt:`Codice ${S.newArt.code} collegato a ${A(x).code} da ${S.user.n}`}); S.newArt=null; return back();
+    case "salvaNuovo": { const N=S.newArt; const k="NEW"+(++S.n); ARTS[k]={code:N.code||"senza codice", desc:N.desc||"articolo nuovo", unit:"pz", loc:"—", price:"da completare", cost:"da completare", photo:"articolo nuovo"};
+      const d=ddt(); let i=N.line; if(i===null||i===undefined){ d.lines.push({a:k, att:0, cnt:0}); i=d.lines.length-1; log(`${ARTS[k].code} non era atteso: segue la strada della merce non prevista`);} else d.lines[i].a=k;
+      S.controlli.push({id:"c"+(++S.n), t:"nuovo", a:k, txt:`Articolo da confermare: ${ARTS[k].code} · ${ARTS[k].desc}, creato da ${S.user.n}`});
+      log(`Articolo nuovo ${ARTS[k].code} creato da ${S.user.n}, da confermare`); S.newArt=null; S.screen=S.stack.pop()||"ddt"; S.sheet={sk:"qty", i, sugg:1, note:"Articolo nuovo, «da confermare»: si riceve subito."}; return render(); }
+    case "put": S.put={src:x, i:+y}; return go("put");
+    case "putLoc": { const P=S.put, arr=P.src==="a"?S.area:S.rimetti, e=arr[P.i]; const q=+document.getElementById("pq").value||e.q; e.q-=q; if(e.q<=0) arr.splice(P.i,1); log(`Messo a posto: ${q} ${A(e.a).code} in ${x}${x!==A(e.a).loc?" (non è l'abituale)":""}${P.src==="r"?" · i pezzi tornano liberi":""}`); return back(); }
+    case "cli": S.banco.cli=x; return render();
+    case "bancoAdd": if(x==="S77"){ S.banco.pend=x; return sheet("bancoTogli"); } S.banco.righe.push({a:x,q:1}); log(`Vendita assistita: 1 ${A(x).code} da ${A(x).loc}`); return render();
+    case "bancoTogli": S.sheet=null; S.banco.righe.push({a:"S77",q:2,tolto:true}); S.controlli.push({id:"c"+(++S.n), t:"conta", a:"S77", txt:"Vendita assistita: 2 SL-77 tolti all'ordine 1039 da "+S.user.n}); log("Vendita assistita: 2 SL-77 tolti all'ordine 1039, l'assegnazione si rifà"); return render();
+    case "bancoOk": log(`Vendita assistita confermata da ${S.user.n} per ${S.banco.cli}: l'ordine va al gestionale, dove si fanno le ricevute`); S.banco=null; return act("home");
+    case "scheda": S.cerca=x; return go("scheda");
+    case "conta": if(!x) return; S.cnt=x==="RIC"?"area di ricevimento":x; return go("conta");
+    case "contaOk": { const n=document.getElementById("cn").value; S.controlli.push({id:"c"+(++S.n), t:"conta", a:S.cerca, txt:`Conteggio di ${S.user.n} in ${S.cnt}: ${n} ${A(S.cerca).code}`}); log(`Conteggio: ${n} ${A(S.cerca).code} in ${S.cnt}, vale subito`); return back(); }
+    case "aggFoto": S.newArt={step:1, shots:0, code:A(S.cerca).code, desc:A(S.cerca).desc, line:null, agg:true}; log("Aggiungi foto: stessa guida dell'inserimento"); return go("nuovoFoto");
+    case "ctl": return sheet("ctl",{id:x});
+    case "piano": S.pianoSel=x; return go("piano");
+    case "ord": { const o=S.ordini[x]; o.da=S.user.n; S.ordine=x; S.pk={n:0,st:0}; log(`${S.user.n} prende l'ordine ${x}: gli altri lo vedono in preparazione`); return go("pick"); }
+    case "prossimo": { const k=Object.keys(S.ordini).find(k=>S.ordini[k].shop&&S.ordini[k].stato==="aperto"&&!S.ordini[k].da); if(!k) return; return act("ord:"+k); }
+    case "pkLoc": if(x==="no"){ S.pk.warn="Non è l'ubicazione proposta. Prendi da qui solo se l'articolo c'è: il programma la cambia."; } else { S.pk.warn=null; S.pk.st=1; } return render();
+    case "pkArt": if(x==="no"){ S.pk.warn="Stop: non è l'articolo di questa riga. Rimettilo a posto e inquadra quello giusto."; } else { S.pk.warn=null; S.pk.st=2; } return render();
+    case "pkQty": { const o=S.ordini[S.ordine], r=pickRows(o)[S.pk.n]; const q=+document.getElementById("q").value; log(`Prelevati ${q} ${A(r.a).code} da ${r.vend||A(r.a).loc} per l'ordine ${S.ordine}`); S.pk={n:S.pk.n+1,st:0}; render(); return window.scrollTo(0,0); }
+    case "pronto": { const o=S.ordini[S.ordine]; o.stato="pronto"; o.colli=document.getElementById("colli2").value; o.kg=document.getElementById("kg").value; o.prep=document.getElementById("prep").value;
+      log(`Ordine ${S.ordine} pronto (evaso): ${o.colli} colli, ${o.kg} kg, preparato da ${o.prep}${o.prep!==S.user.n?` (registrato da ${S.user.n})`:""}; ${o.shop?"a Shopify non si manda niente finché non parte":"documento di prelievo al gestionale"}`); S.ordine=null; S.pk=null; back(); return; }
+    case "resta": S.resta=S.resta||{}; S.resta[x]=!S.resta[x]; return render();
+    case "ritirato": { const ks=Object.keys(S.ordini).filter(k=>S.ordini[k].stato==="pronto"&&S.ordini[k].cour===x&&!(S.resta||{})[k]); ks.forEach(k=>S.ordini[k].stato="spedito"); log(`Ritirato da ${S.cour[x]}: spediti ${ks.join(", ")} (${S.user.n}); documenti di spedizione al gestionale o a Shopify`); return render(); }
+    case "creaPiano": { const ks=[...document.querySelectorAll("[data-ord]")].filter(i=>i.checked).map(i=>i.dataset.ord); if(!ks.length) return; const t=document.getElementById("pt").value, pp=document.getElementById("pp").value; S.piani.push({id:"p"+(++S.n), t, prep:pp, ord:ks}); log(`${S.user.n} crea il piano «${t}» per ${pp}: ${ks.join(", ")}`); return back(); }
+    case "ctlDone": { const c=S.controlli.find(z=>z.id===x); S.controlli=S.controlli.filter(z=>z.id!==x); log(`${S.user.n}: «${[y,...rest].join(":")}» per ${c.txt}`); S.sheet=null; return render(); }
+    case "sc":
+      if(x==="rete"){ S.online=!S.online; log(S.online?`Rete tornata: partite ${S.pendingOffline} scansioni`:"Rete assente"); if(S.online) S.pendingOffline=0; return back(); }
+      if(x==="timeout"){ if(!S.user) return back(); S.resume=S.stack[S.stack.length-1]||"home"; log(`Uscita automatica di ${S.user.n} dopo 30 minuti senza uso: il lavoro a metà resta`); S.user=null; S.stack=[]; return go("accesso", false); }
+      if(x==="sync"){ S.sync=!S.sync; return back(); }
+      if(x==="primo"){ S.stack=[]; return go("primo", false); }
+      if(x==="coda"){ S.coda=!S.coda; log(S.coda?"Ora il magazzino lavora con la coda":"Ora il magazzino lavora con i piani"); S.stack=[]; return go("home", false); }
+      if(x==="boss"){ S.pinFor="Anna"; S.stack=[]; return go("pin", false); }
+      if(x==="reset"){ S=initial(); return render(); }
+  }
+}
+V.nuovoFoto = () => { const N=S.newArt; return N.step>=2 ? `${hdr("Aggiungi foto",N.code)}<main class="main"><div class="warnbox ok">${N.shots} foto aggiunte a ${esc(N.code)}. Diventano foto di riferimento con le loro regole.</div><button class="btn go" data-act="back">Fatto</button></main>` : V.nuovo().replace(/Articolo nuovo/g,"Aggiungi foto"); };
+
+function sim(k){ S.sheet=null;
+  if(!S.online){ S.pendingOffline++; return sheet("offline"); }
+  const d=ddt(); const iR=d.lines.findIndex(l=>l.a==="R110"), iS=d.lines.findIndex(l=>l.a==="S77"), iG=d.lines.findIndex(l=>l.a==="G44");
+  const need = i => { if(i<0){ S.toast={txt:"Questo esempio vale per il DDT 698/00",line:0,q:0}; render(); return false; } return true; };
+  switch(k){
+    case "bc": if(!need(iR)) return; register(iR,1,"barcode"); return render();
+    case "bcq": if(!need(iR)) return; register(iR,12,"barcode, 12 letto sulla scatola"); return render();
+    case "bc2": return sheet("bc2");
+    case "bcx": if(!need(iS)) return; return sheet("bcx");
+    case "cs": if(!need(iS)) return; return sheet("questo",{i:iS});
+    case "csim": if(!need(iS)) return; return sheet("questo",{i:iS, warn:"Codice simile, controlla: sulla scatola «SL-7» , a catalogo «SL-77»."});
+    case "cdiff": if(!need(iG)) return; return sheet("cdiff");
+    case "asp": if(!need(iR)) return; return sheet("aspetto",{i:iR});
+    case "multi": if(!need(iR)) return; return sheet("multi");
+    case "q2": if(!need(iR)) return; return sheet("q2");
+    case "fuori": return sheet("fuori",{k:"V12"});
+    case "unit": if(!need(iG)) return; return sheet("unit");
+    case "nls": return sheet("nls");
+  }
+}
+
+let EV = null;
+document.addEventListener("click", e => { const b=e.target.closest("[data-act]"); if(!b) return; EV = e; act(b.dataset.act, b); });
+render();
+</script>

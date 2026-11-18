@@ -99,9 +99,14 @@ _Evitare_: bozza d'ordine, suggerimento
 La merce da consegnare a un cliente, divisa in righe; è aperto finché non è evaso.
 _Evitare_: ordine di vendita, ordine (da solo)
 
-**Vendita al banco**:
-Un ordine cliente creato nel momento in cui il cliente è in magazzino e porta via subito la merce.
-_Evitare_: vendita assistita, vendita diretta
+**Vendita assistita**:
+Un ordine cliente creato sul posto da chi vende, scegliendo cliente, articoli e ubicazione; comprende la vendita al banco
+e quella preparata per un agente o da spedire. Con un gestionale accanto, il resto della vendita si fa nel gestionale.
+_Evitare_: vendita diretta; «banco» solo per il caso in cui il cliente porta via subito la merce
+
+**Agente**:
+Chi ha fatto la vendita per conto dell'azienda e porta gli ordini; in UFP dà il titolo al piano di spedizione.
+_Evitare_: venditore, commerciale (da solo)
 
 **In attesa di pagamento**:
 Stato di un ordine cliente non ancora pagato, che non riceve merce finché il pagamento non arriva.
@@ -112,8 +117,22 @@ Stato di un ordine cliente la cui merce è stata prelevata ed è pronta a partir
 _Evitare_: completato, chiuso
 
 **Spedito**:
-Stato di un ordine cliente la cui merce è uscita dal magazzino.
+Stato di un ordine cliente la cui merce è uscita dal magazzino; si segna quando la merce parte davvero, non quando è
+pronta.
 _Evitare_: consegnato
+
+**Piano di spedizione**:
+Un gruppo di ordini cliente con un titolo, dato a un preparatore da chi pianifica.
+_Evitare_: giro, lista di prelievo, batch
+
+**Coda di prelievo**:
+Gli ordini pronti da prelevare in ordine di data, dati uno alla volta a chi preme «Prossimo ordine», quando il
+magazzino non usa i piani di spedizione.
+_Evitare_: piano automatico
+
+**Corriere**:
+Chi ritira i colli e porta la merce al cliente; ogni ordine da spedire ne ha uno.
+_Evitare_: vettore, spedizioniere
 
 ## Merce e scorte
 
@@ -228,7 +247,16 @@ _Evitare_: terminale, PDA, scanner (lo scanner è solo il lettore)
 
 **Operatore**:
 Chi riceve, identifica, preleva e spedisce la merce.
-_Evitare_: magazziniere, utente (da solo)
+_Evitare_: utente (da solo)
+
+**Mansione**:
+Il lavoro di tutti i giorni di una persona, che decide cosa vede per primo: magazziniere (riceve e mette a posto) o
+preparatore (prepara gli ordini e fa le vendite assistite). Una persona può averne più d'una; non cambia cosa può fare.
+_Evitare_: ruolo, profilo
+
+**Permesso**:
+Un lavoro in più che il responsabile dà a un operatore: pianificare le spedizioni, confermare le spedizioni.
+_Evitare_: ruolo, diritto
 
 **Responsabile**:
 Chi, oltre al lavoro dell'operatore, gestisce catalogo, rettifiche, annullamenti e utenti.
