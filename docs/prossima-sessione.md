@@ -101,6 +101,12 @@ Prima, sempre il 18/11/2026: «Resi» (207–226) e la ricerca «Lettura automat
 18/11/2026: «Inventario periodico» in tre giri. Fatti dall'utente: in UFP e nel magazzino Shopify l'inventario di tutto
 si fa una volta l'anno (in UFP su carta o foglio di calcolo, ricopiato in Ad Hoc; ARS non si usa) e durante l'anno si
 corregge sul momento. Scelta dell'utente diversa dalla proposta: «tutto il magazzino» sono solo gli scaffali (239).
+Poi, guardando il prototipo da telefono, l'utente ha corretto la preparazione (decisioni 246–257, pagina privata
+https://claude.ai/artifact/Qft5i5wPiwfyYEQpdUz5Kq): sospendere o concludere senza l'articolo mancante, resto che parte
+dopo, avvisi che non bloccano nel piano e nell'anteprima, «Ne trovo di più/meno» in un passo solo, righe che non
+risultano in fondo al prelievo, «Altri lavori» solo con lavori dati in più e permessi, lavoro dei colleghi per
+magazzino. Specifica in «Percorso delle schermate» → «Preparazione e spedizione». Deduzione ancora da confermare: un
+ordine senza nessun pezzo preso non diventa pronto.
 
 ## Cose dell'utente, senza sessione
 

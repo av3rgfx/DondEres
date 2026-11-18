@@ -80,3 +80,8 @@ nel browser su tutti i flussi.
 - 18/11/2026, secondo giro della correzione: accettate le consigliate (251–255); specifica scritta nella sezione
   «Percorso delle schermate» → «Preparazione e spedizione» e «Chi vede cosa». Domanda dell'utente alla 251 («basta
   aggiornare la giacenza?»): analisi e due domande nel terzo giro, con la riga a zero nel prelievo.
+- 18/11/2026, terzo giro della correzione: accettate le due consigliate; nota dell'utente: aveva letto «ordine» come
+  ordine al fornitore. Per il preparatore «Ne trovo di più/meno» è un passo solo e si torna alla riga a prelevare (256);
+  righe che non risultano in fondo al prelievo (257). Deduzione nel prototipo, da confermare: un ordine senza nessun
+  pezzo preso non diventa pronto. Pagina delle domande: https://claude.ai/artifact/Qft5i5wPiwfyYEQpdUz5Kq. Correzione
+  chiusa (decisioni 246–257).

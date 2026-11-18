@@ -996,7 +996,7 @@ Piani e coda seguono le stesse regole: solo ordini pagati (63), ordini coperti i
 chiuso dice quanti articoli non bastano, aperto dice per ognuno servono e disponibili; l'ordine si aggiunge lo stesso
 (249).
 
-**Quando manca qualcosa al prelievo** (246–248, 251, 252, 255; correzione dell'utente del 18/11/2026):
+**Quando manca qualcosa al prelievo** (246–248, 251, 252, 255–257; correzione dell'utente del 18/11/2026):
 
 - Sulla riga che non si completa il preparatore sceglie **«Sospendi l'ordine»** o **«Concludi senza»**. Se l'articolo
   risultava e non c'è, lo vede anche il responsabile, con la proposta di contare l'ubicazione (244).
@@ -1009,11 +1009,16 @@ chiuso dice quanti articoli non bastano, aperto dice per ognuno servono e dispon
   (16). Quando è coperto l'ordine torna da preparare: con i piani tra gli ordini da pianificare, segnato «resto»; con la
   coda di nuovo in coda. Al gestionale e a Shopify parte una spedizione per volta (su Shopify due evasioni dello stesso
   ordine).
-- **Ne trovo di più** (251): il preparatore scrive quanti pezzi ci sono nell'ubicazione; vale subito come «Conta
-  un'ubicazione». I pezzi trovati vanno all'ordine in preparazione, eccezione alla regola del più vecchio perché la
-  merce è già in mano; il responsabile lo vede con gli ordini più vecchi che li aspettavano.
-- **Ne trovo meno** (252): scrive quanti ce ne sono; vale subito, l'assegnazione si rifà e, se non bastano, sospende o
-  conclude senza.
+- **Ne trovo di più e Ne trovo meno** (251, 252, 256): un passo solo per il preparatore. Scrive quanti pezzi ci sono
+  nell'ubicazione; la giacenza si corregge subito, come con «Conta un'ubicazione», e lui torna alla stessa riga, al
+  punto della quantità, e preleva. Se ne restano meno di quelli che servono, sospende o conclude senza. Dietro, i pezzi
+  trovati vanno all'ordine in preparazione (eccezione alla regola del più vecchio, perché la merce è già in mano); il
+  responsabile trova la conta tra le cose da controllare, con gli ordini più vecchi che quei pezzi li aspettavano.
+- **Righe che non risultano** (257): compaiono in fondo al prelievo, con «Non risulta: se lo trovi, inquadralo»; un
+  ordine con un articolo che non risulta si apre lo stesso.
+- **Niente da prendere** (deduzione dell'agente, da confermare): se a fine prelievo non si è preso nessun pezzo,
+  l'ordine non può diventare pronto; il preparatore lo lascia (torna da preparare quando arriva la merce) o lo
+  sospende.
 - La scelta «Ordini coperti in parte si prelevano» (165) resta: se è «no», un ordine coperto in parte non entra in coda;
   con i piani chi pianifica vede l'avviso e decide (255). Un ordine pronto troppo tardi per il corriere resta pronto e parte con il ritiro successivo (172). Il corriere
 viene dall'ordine nel sistema d'origine (su Shopify il metodo di spedizione) o lo sceglie chi pianifica (175).
