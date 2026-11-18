@@ -33,3 +33,7 @@ Risultato atteso: la sezione «Percorso delle schermate» di `docs/architettura.
   mostra nomi di clienti o altri dati reali non entra nel repository; si annotano solo i fatti.
 - Punto aperto dal ticket precedente: cosa succede nel programma alla merce di una vendita assistita che non parte
   subito (178).
+- 18/11/2026, inizio del ticket: analisi scritta in `docs/architettura.md` («Analisi del 18/11/2026: cosa manca alla
+  base»), dalla ricerca `docs/research/2026-11-18-gestionali-magazzino-esistenti.md`. Primo giro di 8 domande nella
+  pagina https://claude.ai/artifact/13EHJFJ3ZbM8QNXU1dTkag (privata): bolla del DDT, ripiego a mano, «riempi con
+  l'atteso», cose in sospeso, vendita assistita a metà, chi vede i Documenti, Annulla e Conferma, merce danneggiata.
