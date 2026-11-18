@@ -31,3 +31,6 @@ Risultato atteso: una sezione «Inventario periodico» in `docs/architettura.md`
   (229–235), con due fatti (227: in UFP inventario annuale su carta o foglio di calcolo ricopiato in Ad Hoc, ARS non si
   usa, correzioni sul momento; 228: nel magazzino Shopify lo stesso) e due note: conta cieca e seconda conta si
   cambiano nelle impostazioni del responsabile (230, 231). Domanda 28 per il rivenditore.
+- 18/11/2026: prototipo aggiornato con le schermate dell'inventario e provato nel browser (conta cieca, seconda conta,
+  articoli attesi non contati, «in conta da…» al prelievo, approvazione con gli ordini che perdono merce, nuovo
+  inventario, configurazione). Secondo giro di 8 domande nella stessa pagina.
