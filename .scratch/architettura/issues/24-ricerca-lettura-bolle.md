@@ -2,7 +2,7 @@
 
 Type: research
 Label: wayfinder:research
-Status: open
+Status: claimed
 Blocked by: —
 
 ## Question
