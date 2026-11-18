@@ -2,7 +2,8 @@
 
 Type: research
 Label: wayfinder:research
-Status: open
+Status: in corso
+Assignee: agente (sessione del 18/11/2026)
 Blocked by: —
 
 ## Question
