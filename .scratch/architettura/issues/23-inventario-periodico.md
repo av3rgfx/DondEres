@@ -3,6 +3,7 @@
 Type: grilling
 Label: wayfinder:grilling
 Status: open
+Assignee: sessione del 18/11/2026 con l'utente
 Blocked by: —
 
 ## Question
@@ -20,3 +21,9 @@ correzioni ed effetto sulle assegnazioni sono già definiti nel «Modello dei da
 Si parte dalla ricerca `docs/research/2026-11-18-gestionali-magazzino-esistenti.md` (§ 1.7).
 
 Risultato atteso: una sezione «Inventario periodico» in `docs/architettura.md` e le schermate aggiunte al prototipo.
+
+## Comments
+
+- 18/11/2026, inizio: il ticket non aveva commenti. Fatti già noti: in UFP ARS fa le rilevazioni d'inventario anche
+  in una versione senza rete e le scrive in Ad Hoc (ricerca `docs/research/2026-11-15-adhoc-revolution-ars-logistica.md`);
+  se UFP la usi davvero va chiesto all'utente.
