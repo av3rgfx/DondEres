@@ -37,3 +37,6 @@ Risultato atteso: la sezione «Percorso delle schermate» di `docs/architettura.
   base»), dalla ricerca `docs/research/2026-11-18-gestionali-magazzino-esistenti.md`. Primo giro di 8 domande nella
   pagina https://claude.ai/artifact/13EHJFJ3ZbM8QNXU1dTkag (privata): bolla del DDT, ripiego a mano, «riempi con
   l'atteso», cose in sospeso, vendita assistita a metà, chi vede i Documenti, Annulla e Conferma, merce danneggiata.
+- 18/11/2026, primo giro: accettate tutte le consigliate, con due note (quantità in bolla, «Libera» di ARS divisa per
+  marca o fornitore); decisioni 184–191. Prototipo aggiornato (stesso link privato
+  https://claude.ai/artifact/Vb6ijyDdr4n2gsZcKhhVur). Secondo giro di 9 domande nella stessa pagina delle domande.
