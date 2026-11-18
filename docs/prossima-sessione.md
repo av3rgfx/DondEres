@@ -108,5 +108,3 @@ ISEO. Poi «Resi» in tre giri. L'utente chiede un carico semplice e veloce quan
 - Raccogliere il primo giro di 20 bolle per la prova di lettura, coprire i dati dei clienti e caricarle in `bolle/` nel
   repository privato (202–204); dire quali fornitori sono ricorrenti e quanti mandano il PDF.
 - Mandare al rivenditore le domande 21–27.
-- Se le etichette sotto il monitor dell'ufficio contengono password vere, cambiarle e toglierle (si vedevano nelle foto
-  delle mail).
