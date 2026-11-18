@@ -27,3 +27,7 @@ Risultato atteso: una sezione «Inventario periodico» in `docs/architettura.md`
 - 18/11/2026, inizio: il ticket non aveva commenti. Fatti già noti: in UFP ARS fa le rilevazioni d'inventario anche
   in una versione senza rete e le scrive in Ad Hoc (ricerca `docs/research/2026-11-15-adhoc-revolution-ars-logistica.md`);
   se UFP la usi davvero va chiesto all'utente.
+- 18/11/2026, primo giro (pagina https://claude.ai/artifact/QGQvc1pHzoQTsJBATiM1g5): accettate tutte le consigliate
+  (229–235), con due fatti (227: in UFP inventario annuale su carta o foglio di calcolo ricopiato in Ad Hoc, ARS non si
+  usa, correzioni sul momento; 228: nel magazzino Shopify lo stesso) e due note: conta cieca e seconda conta si
+  cambiano nelle impostazioni del responsabile (230, 231). Domanda 28 per il rivenditore.

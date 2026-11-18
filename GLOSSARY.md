@@ -208,6 +208,28 @@ _Evitare_: storno, annullamento (da solo), cancellazione
 Il movimento che porta la giacenza di un'ubicazione alla quantità contata.
 _Evitare_: aggiustamento, inventario (da solo)
 
+**Inventario**:
+La conta di tutto il magazzino o di una parte (alcune ubicazioni, alcuni articoli, la merce di un fornitore), chiesta
+dal responsabile ed eventualmente divisa tra più persone; serve sia a fine anno sia durante l'anno.
+_Evitare_: conta ciclica, rilevazione, inventario a rotazione
+
+**Conta cieca**:
+Il modo di contare in cui chi conta non vede quanti pezzi dovrebbero esserci.
+_Evitare_: conta al buio, conta senza atteso
+
+**Seconda conta**:
+La conta ripetuta subito dalla stessa persona quando il primo numero non torna con la giacenza.
+_Evitare_: riconteggio, verifica
+
+**Differenza d'inventario**:
+Lo scarto tra la quantità contata in un'ubicazione e la giacenza nel momento in cui la conta si è chiusa; diventa una
+rettifica solo quando il responsabile la approva.
+_Evitare_: ammanco, discrepanza, scostamento
+
+**In conta**:
+Lo stato di un'ubicazione che qualcuno sta contando: gli altri la vedono e non la aprono.
+_Evitare_: bloccata, occupata
+
 **Ubicazione**:
 Il punto del magazzino in cui sta la merce, come uno scaffale o una corsia; si usa solo se il magazzino lo sceglie.
 _Evitare_: posizione, locazione, buca (è il nome usato in UFP)

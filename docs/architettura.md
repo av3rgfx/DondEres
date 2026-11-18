@@ -1340,3 +1340,70 @@ ricevimento, non solo per i resi. Primo passo: la scheda «Dalla bolla» e «Man
 |---|---|---|---|
 | Nome dell'area resi | testo | «RESI» | 217 |
 | Invio delle mail ai fornitori | dalla mail aziendale del responsabile, solo testo da copiare | solo testo da copiare finché non si collega il server di posta | 215, 223 |
+
+## Inventario periodico
+
+Dal ticket «Inventario periodico», in corso dal 18/11/2026. Decisioni 227–235 (primo giro). Fonti: ricerca
+`docs/research/2026-11-18-gestionali-magazzino-esistenti.md` (§ 1.7, Odoo e Business Central) e
+`docs/research/2026-11-15-adhoc-revolution-ars-logistica.md` (rilevazioni d'inventario di ARS). Domande nella pagina
+privata https://claude.ai/artifact/QGQvc1pHzoQTsJBATiM1g5; schermate nel prototipo
+`prototipi/percorso-schermate/index.html` (https://claude.ai/artifact/Vb6ijyDdr4n2gsZcKhhVur, privata).
+
+### Come si lavora oggi
+
+- **UFP** (227): l'inventario di tutto il magazzino si fa una volta l'anno, su carta o foglio di calcolo, e i numeri si
+  ricopiano a mano in Ad Hoc. ARS non si usa per l'inventario. Durante l'anno una giacenza sbagliata si corregge sul
+  momento, quando si può.
+- **Magazzino Shopify** (228): lo stesso, con le giacenze corrette a mano su Shopify.
+
+### Due modi di contare
+
+| | Conta un'ubicazione | Inventario |
+|---|---|---|
+| Chi la avvia | L'operatore, quando la merce non torna (dalla scheda articolo) | Il responsabile (229) |
+| Cosa si conta | Un'ubicazione | Tutto, alcune ubicazioni, alcuni articoli (in tutte le loro ubicazioni), la merce di un fornitore; senza ubicazioni (26) per articolo |
+| Quando vale | Subito; il responsabile la controlla dopo (77) | Quando il responsabile approva la differenza (232) |
+
+### Come si conta
+
+1. **Si prende un'ubicazione** (234). Il responsabile può dare gruppi di ubicazioni a persone; ogni ubicazione la conta
+   una persona sola: chi la apre la prende e gli altri la vedono **in conta da…**; chi finisce prende le libere.
+2. **Conta cieca** (230): si inquadra ogni articolo trovato (stesso percorso di identificazione del ricevimento) e si
+   scrive quanti pezzi; la quantità attesa non si vede. Il numero si scrive sempre (186).
+3. **Seconda conta** (231): se il numero non torna con la giacenza, il programma chiede subito alla stessa persona di
+   ricontare quell'articolo, senza dire l'atteso né il verso della differenza. Due numeri uguali: la differenza va al
+   responsabile; diversi: vale il secondo.
+4. **Articoli attesi non contati** (230): finita l'ubicazione, il programma chiede di ognuno «ce n'è?»: «Nessuno» vale
+   come conta di zero (con la sua seconda conta), «Lo conto» riapre la conta.
+5. **Chiusura dell'ubicazione** (233): il numero si confronta con la giacenza di quel momento; i movimenti successivi
+   non creano differenze finte. Le conte che tornano segnano solo l'ubicazione come contata.
+
+### Il lavoro continua
+
+Durante un inventario si riceve, si mette a posto e si preleva (233). Chi deve prelevare o mettere a posto in
+un'ubicazione in conta lo vede («C-02-4 in conta da Marco, da 3 minuti») e prende da un'altra ubicazione o aspetta.
+Fermare il magazzino per l'inventario di fine anno resta una scelta di chi lo organizza, non del programma.
+
+### Approvazione e documenti
+
+- **Differenze d'inventario** (232): stanno nell'inventario e in «Da controllare». Il responsabile le approva una per
+  una o tutte insieme; il riepilogo (190) dice le rettifiche e nomina gli ordini che perdono merce, perché
+  l'assegnazione si rifà dal più vecchio (16). In alternativa chiede una nuova conta a un collega (231).
+- **Cosa parte** (235): a ogni approvazione una rettifica per articolo al gestionale, o una variazione di quantità a
+  Shopify (52, 61). In «Documenti» la categoria «Inventari» raccoglie conte, differenze, chi ha contato e chi ha
+  approvato; si esporta (189, 199). Come Ad Hoc vuole ricevere l'inventario: domanda 28 per il rivenditore.
+
+### Configurazione per magazzino (aggiunte)
+
+| Scelta | Valori | Di serie | Decisione |
+|---|---|---|---|
+| Quantità attesa a chi conta | nascosta, visibile | nascosta | 230 |
+| Seconda conta se il numero non torna | accesa, spenta | accesa | 231 |
+
+### Ancora da decidere (secondo giro)
+
+Dove si cambiano conta cieca e seconda conta (solo in configurazione o anche per un singolo inventario); se la conta di
+un'ubicazione fuori dall'inventario segue le stesse regole; cosa comprende «tutto il magazzino» (aree, posti VEND,
+merce prelevata); ubicazioni non contate alla chiusura; proposte di conta dal programma; valore dell'inventario;
+schermate e cose in sospeso.
+
