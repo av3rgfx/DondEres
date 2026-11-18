@@ -997,6 +997,61 @@ Fatto riferito dall'utente il 17/11/2026, nella nota alla domanda sulla prima sc
 Gli agenti portano gli ordini di persona; gli ordini degli agenti stanno in Ad Hoc, e chi crea i piani deve vederli:
 serve il collegamento con Ad Hoc della specializzazione (178). Nel magazzino Shopify oggi si lavora con fogli di carta.
 
+### Analisi del 18/11/2026: cosa manca alla base
+
+Scritta dall'agente all'inizio del ticket «Completezza del percorso delle schermate», sulla base della ricerca
+`docs/research/2026-11-18-gestionali-magazzino-esistenti.md` e dei fatti riferiti dall'utente su UFP. Non contiene
+decisioni: le scelte dell'utente sono nei giri di domande del ticket e in `docs/decisioni.md`. Priorità = deduzione
+dell'agente.
+
+**Come si lavora oggi in UFP e cosa cambia** (fatti riferiti dall'utente, ticket «Modello dei dati» e «Percorso delle
+schermate»):
+
+| Oggi con ARS | Nella base | Stato |
+|---|---|---|
+| Controllo a penna sulla bolla, poi DDT al computer importando a mano le righe dagli ordini, poi lista «Libera» al palmare: la stessa merce si registra due volte | Un passaggio dal telefono: le righe nascono dalle letture (68, 183) | Deciso |
+| Scansioni perse dopo «Sospendi»; un DDT corretto cancellandolo e rifacendolo | Salvataggio immediato con esito, correzioni collegate, DDT sempre ritrovabile (74, 81) | Deciso; da provare |
+| Piani di spedizione per agente, firma con la sigla, spedizione confermata dall'operatore | Piani con copertura visibile, nome di chi ha fatto l'accesso, «Spedisci» per corriere (167–174) | Deciso |
+| Vendita al banco da telefono: cliente, articoli e ubicazione, conferma; ricevute in Ad Hoc | Vendita assistita con gli stessi passi (178) | Deciso; manca cosa succede se resta a metà |
+| La bolla di carta si scansiona e si carica in ufficio | Nessuna decisione su foto o archivio della bolla | Manca |
+
+**Cosa manca rispetto ai gestionali esistenti.** Le funzioni ricorrenti nei prodotti letti che la base non ha:
+
+| Mancanza | Dove nei prodotti | Priorità UFP / Shopify |
+|---|---|---|
+| Elenchi delle cose in sospeso per sezione (181) | Cruscotto di Odoo: da fare, in ritardo, senza responsabile, i più vecchi | Alta / Alta |
+| «Documenti» con storico per documento e registro delle operazioni (182) | «Moves History» di Odoo, «Change Log» di Business Central | Alta / Alta |
+| Regola unica per «Annulla» e «Conferma» (180) | Contro-registrazioni in Business Central e SAP B1; «Annulla» prima della validazione in Odoo | Alta / Alta |
+| Foto e archivio della bolla | Nessun prodotto la legge in modo affidabile; servizi solo in cloud e solo per la testata | Alta / Media |
+| Merce danneggiata e scarto | «Scrap» di Odoo; reso del danneggiato in SAP B1 | Media / Media |
+| Resi da cliente e al fornitore | In tutti i prodotti | Media / Alta |
+| Inventario periodico con conta cieca | Odoo, Business Central | Media / Media |
+| Etichette e distinta del corriere | ShipStation, Odoo | Media / Media (dipende dalle domande 21–22 al rivenditore) |
+| Requisito di velocità con 35.000 articoli | Lentezza riferita in Odoo con cataloghi grandi | Alta / Media |
+| Avviso se Shopify cambia una giacenza che la base non ha mandato | Giacenze sovrascritte da altre app, riferito | — / Alta |
+
+**Difetti riferiti da non ripetere** (esperienze di utenti, non fatti verificati):
+
+- Validare senza aver scansionato, ignorando l'avviso (Odoo): la base non ha un tasto «riempi con l'atteso».
+- Residuo chiuso per sbaglio senza ritorno (Odoo): nella base lo chiude solo il responsabile (33).
+- Dopo una ricarica a metà la quantità attesa si riscrive (Odoo 17): nella base l'atteso viene dall'ordine; da provare.
+- Lentezza con molti articoli (Odoo): serve un tempo massimo misurabile per l'esito di una scansione.
+- Ordini «presi» e mai finiti (NetSuite, blocchi che restano): mostrare da quanto un ordine è preso (170).
+- Giacenze Shopify riportate a zero o scritte sul valore sbagliato da altre app: la base manda variazioni (52).
+
+**DDT: soluzioni migliori di quella attuale (183).** La 183 coincide già con le soluzioni dei prodotti per PMI più
+completi (Business Central mette più ordini in un'entrata, NetSuite cerca l'ordine per articolo). Ciò che si può
+aggiungere, dal più economico:
+
+1. Foto della bolla all'apertura del DDT, salvata con il DDT e visibile in «Documenti»: archivio e controllo delle
+   differenze con la bolla (73) senza scansioni in ufficio.
+2. Numero e data proposti dalla foto, letti in sede (PaddleOCR, 145), confermati dall'operatore; servono anche all'avviso
+   di doppione (86). Da provare su DDT veri.
+3. Numero d'ordine stampato sulla bolla, se c'è: le letture vanno prima su quell'ordine (70).
+4. Righe della bolla lette solo come «quantità in bolla», mai come quantità contata: da provare fornitore per fornitore.
+5. Avvisi di spedizione elettronici dei fornitori (EDI, Peppol) e riconciliazione con la fattura differita: punti
+   d'estensione e specializzazione, non base.
+
 ### Configurazione per magazzino (aggiunte)
 
 | Scelta | Valori | Di serie | Decisione |

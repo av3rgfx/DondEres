@@ -2,7 +2,8 @@
 
 Type: prototype
 Label: wayfinder:prototype
-Status: open
+Status: in corso
+Assignee: sessione del 18/11/2026 con l'utente
 Blocked by: 20
 
 ## Question

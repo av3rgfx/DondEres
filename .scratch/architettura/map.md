@@ -79,6 +79,10 @@ percorso delle schermate e aspetto grafico, compresi nome e brand kit (decisioni
   preparatore) con «Altri lavori»; DDT con inquadratura in alto e righe sotto; piani di spedizione o coda «Prossimo
   ordine»; permessi per pianificare e spedire; «spedito» al ritiro del corriere; vendita assistita al posto del banco;
   prototipo a fil di ferro (decisioni 160–179).
+- [Gestionali di magazzino esistenti: funzioni in più e difetti da evitare](issues/20-ricerca-gestionali-esistenti.md):
+  tutti ricevono contro ordine e la 183 coincide con i PMI più completi; nessuno legge in modo affidabile le righe di un
+  DDT cartaceo; mancano alla base elenchi in sospeso, «Documenti», regola Annulla/Conferma, merce danneggiata, resi,
+  inventario, etichette del corriere, requisito di velocità (ricerca del 18/11/2026).
 
 Prese prima della mappa, nel secondo giro di domande del 15/11/2026: decisioni 15–28 in
 [`docs/decisioni.md`](../../docs/decisioni.md) (assegnazione parziale, codice stampato come tipo di articolo,
