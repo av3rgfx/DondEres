@@ -26,3 +26,14 @@ bolla», mai quantità contate (183, 192).
 
 Risultato atteso: `docs/research/<data>-lettura-automatica-bolle.md`, con data e link alle fonti primarie, e la
 proposta di una prova su bolle vere da portare all'utente.
+
+## Comments
+
+- 18/11/2026, inizio: il ticket non aveva commenti. Ricerca affidata a un sotto-agente con la skill research; file
+  `docs/research/2026-11-18-lettura-automatica-bolle.md`.
+- 18/11/2026: l'utente ha mostrato in chat 10 foto di bolle vere di UFP (AGB/Alban Giacomo, ISEO Serrature, SAIT
+  Abrasivi, più una lettera di vettura SUSA). Le foto non entrano nel repository; i fatti sono nella sezione «Cosa
+  mostrano le bolle vere di UFP» della ricerca, senza riferimenti dei clienti. Prova dell'agente con zxing-cpp 3.1.1
+  sulle foto: DataMatrix di AGB con numero e data del DDT (letto su 3 pagine su 4), barcode di riga di ISEO (8 su 9).
+- 18/11/2026: domande sulla prova (dove conservare le bolle, cosa coprire, quante, quali sistemi, traguardi) nel primo
+  giro della pagina privata https://claude.ai/artifact/KQtNpyrXjbywxnz1iGKnGY, insieme al primo giro di «Resi».

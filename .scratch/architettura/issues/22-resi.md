@@ -2,7 +2,7 @@
 
 Type: grilling
 Label: wayfinder:grilling
-Status: open
+Status: claimed
 Blocked by: —
 
 ## Question
@@ -22,3 +22,17 @@ Si parte dalla ricerca `docs/research/2026-11-18-gestionali-magazzino-esistenti.
 
 Risultato atteso: una sezione «Resi» in `docs/architettura.md` e le schermate aggiunte al prototipo
 `prototipi/percorso-schermate/index.html`.
+
+## Comments
+
+- 18/11/2026, inizio: il ticket non aveva commenti. Fatti su Shopify letti nella documentazione ufficiale (API
+  2026-10): resi solo di merce spedita; stati richiesto, aperto, rifiutato, chiuso, annullato; esito per pezzo con
+  `reverseFulfillmentOrderDispose` (RESTOCKED, NOT_RESTOCKED, MISSING, PROCESSING_REQUIRED), dato una volta sola;
+  `returnProcess` dalla 2025-07; permessi `read_returns` e `write_returns`.
+  Fonti: https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps,
+  https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/manage-reverse-fulfillment-orders,
+  https://shopify.dev/docs/api/admin-graphql/latest/enums/ReverseFulfillmentOrderDispositionType,
+  https://shopify.dev/docs/api/admin-graphql/latest/mutations/returnProcess (consultate il 18/11/2026).
+- 18/11/2026: dalle bolle vere di UFP, due spunti per il secondo giro: pallet «a rendere» sulle bolle AGB (un reso di
+  imballi al fornitore) e il timbro «accettato con riserva» sulla lettera del corriere (primo passo di un reso per
+  danni). Primo giro di 7 domande nella pagina https://claude.ai/artifact/KQtNpyrXjbywxnz1iGKnGY.
