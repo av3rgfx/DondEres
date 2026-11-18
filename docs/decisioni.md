@@ -241,6 +241,14 @@ Le decisioni tecniche ancora aperte non stanno qui: stanno in `docs/analisi-prog
 | 233 | 18/11/2026 | Durante un inventario il magazzino continua a lavorare. Un'ubicazione aperta per la conta è segnata «In conta da…»: chi ci deve prelevare o mettere a posto lo vede e può prendere da un'altra ubicazione o aspettare. Il numero contato si confronta con la giacenza del momento in cui l'ubicazione è stata chiusa, così i movimenti successivi non creano differenze finte. | Proposta accettata. |
 | 234 | 18/11/2026 | Un inventario si divide tra più persone: il responsabile può assegnare gruppi di ubicazioni a persone; ogni ubicazione la conta una persona sola: chi la apre la prende, come un ordine (170), e gli altri la vedono «in conta da…»; chi finisce prende quelle libere. | Proposta accettata. Business Central impedisce di contare due volte lo stesso articolo. |
 | 235 | 18/11/2026 | A ogni approvazione di differenze parte una rettifica per articolo verso il gestionale, o una variazione di quantità verso Shopify (52, 61). In «Documenti» l'inventario raccoglie conte, differenze, chi ha contato e chi ha approvato, ed è esportabile (189, 199). Come Ad Hoc vuole ricevere l'inventario: domanda 28 al rivenditore. | Proposta accettata. |
+| 236 | 18/11/2026 | Conta cieca e seconda conta hanno il valore di serie in Configurazione; quando crea un inventario il responsabile può cambiarli solo per quell'inventario. Precisa le 230 e 231. | Proposta accettata. |
+| 237 | 18/11/2026 | La seconda conta ha due valori: accesa (la stessa persona, subito) o spenta. Per far ricontare un collega c'è «Chiedi una nuova conta» del responsabile (231). | Proposta accettata. |
+| 238 | 18/11/2026 | «Conta un'ubicazione» fuori dall'inventario segue le stesse regole di conta (cieca e con la seconda conta, secondo la Configurazione), ma vale subito come prima: il responsabile la trova dopo tra le cose da controllare. Precisa la 77. | Proposta accettata. |
+| 239 | 18/11/2026 | Un inventario di «tutto il magazzino» comprende solo le ubicazioni normali: area di ricevimento, area resi, posti VEND e merce prelevata in attesa del corriere restano fuori. | Scelta dell'utente, diversa dalla proposta (comprendere anche aree, posti VEND e pacchi pronti confermati per ordine). Motivo non indicato. |
+| 240 | 18/11/2026 | Alla chiusura di un inventario le ubicazioni non contate restano come sono, senza rettifiche; il riepilogo le elenca e con un tocco diventano un nuovo inventario. Le differenze non ancora approvate restano in «Da controllare». | Proposta accettata. |
+| 241 | 18/11/2026 | Il programma non propone conte da solo. Ogni ubicazione mostra la data dell'ultima conta; quando crea un inventario il responsabile può scegliere le ubicazioni «non contate da più di … giorni» o «con differenze negli ultimi … giorni». | Proposta accettata. |
+| 242 | 18/11/2026 | L'inventario esportato porta solo quantità (articolo, ubicazione, contato, differenza); il valore lo calcola il gestionale o chi fa il bilancio. | Proposta accettata. |
+| 243 | 18/11/2026 | Il percorso dell'inventario nel prototipo va bene: lavoro «Inventario» del magazziniere con il numero sulla prima schermata, ubicazioni in conta in cima, dentro ogni inventario le tue, libere, di colleghi e contate; il responsabile crea, approva e chiude; differenze anche in «Da controllare»; categoria «Inventari» in «Documenti». | Proposta accettata. |
 
 ## Note di lettura
 
@@ -308,3 +316,5 @@ Le decisioni tecniche ancora aperte non stanno qui: stanno in `docs/analisi-prog
 - Decisione 215: precisata dalla 223 (le mail partono dalla mail aziendale del responsabile che gestisce la pratica, salvata nel suo utente).
 - Decisione 185: precisata dalla 224 (prima scheda «Dalla bolla»; «Manca l'ordine» con la riga ferma).
 - Decisione 77: precisata dalle 229 e 232 (resta per la correzione sul momento; nell'inventario le differenze valgono all'approvazione).
+- Decisioni 230 e 231: precisate dalle 236 (valore di serie e scelta per inventario) e 237 (due valori della seconda conta).
+- Decisione 77: precisata anche dalla 238 (stesse regole di conta dell'inventario, ma vale subito).

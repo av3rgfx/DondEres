@@ -143,7 +143,10 @@ const NOVITA = [
   "Se il numero non torna, si riconta subito una volta, senza aiuti; due numeri uguali vanno al responsabile (231).",
   "Durante la conta si continua a lavorare: chi preleva SL-77 da C-02-4 vede «in conta da Marco» e può prendere da un'altra ubicazione (233). Provalo entrando come Luca: ordine 1042.",
   "Le differenze valgono solo quando il responsabile le approva, con un riepilogo che nomina gli ordini che perdono merce; poi partono rettifiche al gestionale o variazioni a Shopify (232, 235).",
-  "In Configurazione: quantità attesa a chi conta (nascosta o visibile) e seconda conta (accesa o spenta); si toccano per cambiarle (230, 231). In Documenti la categoria «Inventari»."
+  "In Configurazione: quantità attesa a chi conta (nascosta o visibile) e seconda conta (accesa o spenta); si toccano per cambiarle (230, 231). In Documenti la categoria «Inventari».",
+  "Secondo giro: nel nuovo inventario le due scelte si cambiano solo per quell'inventario (236); «Tutto» sono solo le ubicazioni normali, senza aree, posti VEND e pacchi pronti (239); «Non contate da più di 180 giorni» e «Con differenze negli ultimi 30 giorni» (241).",
+  "Chiudi l'inventario: le ubicazioni non contate restano come sono e diventano un nuovo inventario con un tocco (240).",
+  "«Conta» dalla scheda dell'articolo segue le stesse regole (numero da scrivere, seconda conta) ma vale subito (238); la scheda mostra la data dell'ultima conta (241)."
 ];
 
 let clockMin = 10*60;
@@ -625,7 +628,7 @@ V.cerca = () => `${hdr("Cerca articolo")}<main class="main">
   <div class="list">${Object.keys(ARTS).map(k=>pick(k,"scheda:"+k)).join("")}</div></main>`;
 V.scheda = () => { const k=S.cerca, a=A(k); return `${hdr(a.code,esc(a.desc))}<main class="main">${photo(a.photo)}
   <div class="list">${row("Prezzo di vendita",a.price)}${isBoss()?row("Costo d'acquisto",a.cost,"boss"):""}</div>
-  <h2>Giacenze</h2><div class="list">${row(a.loc+" (abituale)","8 "+a.unit,"","conta:"+a.loc,"libera 5 · assegnata 3")}${row("Area di ricevimento","2 "+a.unit,"","conta:RIC","da mettere a posto")}${row("VEND3","1 "+a.unit,"","","per l'ordine 1046")}</div>
+  <h2>Giacenze</h2><div class="list">${row(a.loc+" (abituale)","8 "+a.unit,"","conta:"+a.loc,"libera 5 · assegnata 3 · ultima conta 12/03/2026")}${row("Area di ricevimento","2 "+a.unit,"","conta:RIC","da mettere a posto")}${row("VEND3","1 "+a.unit,"","","per l'ordine 1046")}</div>
   <h2>Codici</h2><div class="list">${row("Codice articolo",a.code)}${row("Barcode","8001234567890")}</div>
   <div class="btns"><button class="btn" data-act="aggFoto">Aggiungi foto</button><button class="btn bad" data-act="sheet:dmgCard">Segna danneggiati</button>${isBoss()?`<button class="btn" data-act="sheet:rendiCard">Rendi al fornitore</button>`:""}</div>
   <p class="muted">Tocca un'ubicazione per contarla, se la merce non torna.</p></main>`; };
@@ -635,9 +638,10 @@ SH.dmgCard = () => { const a=A(S.cerca); return `<h3>${a.code} danneggiati a mag
   <p class="muted">Escono dalla merce assegnabile subito; il responsabile decide se tenerli, renderli al fornitore o scartarli.</p>
   <div class="btns two"><button class="btn" data-act="closeSheet">Annulla</button><button class="btn go" data-act="dmgCardOk">Segna danneggiati</button></div>`; };
 V.conta = () => `${hdr("Conta",S.cnt)}<main class="main"><p>Quanti pezzi di <b>${A(S.cerca).code}</b> ci sono in ${S.cnt}?</p>
-  <div class="field"><label for="cn">Pezzi contati</label><input id="cn" type="number" inputmode="numeric" value="7"></div>
+  ${S.cnt1!==undefined?`<div class="warnbox">Riconta, per sicurezza. Non ti dico quanti dovrebbero essere (231, 238).</div>`:""}
+  <div class="field"><label for="cn">${S.cnt1!==undefined?"Seconda conta":"Pezzi contati"}</label><input id="cn" type="number" inputmode="numeric" value=""></div>
   <button class="btn go" data-act="contaOk">Salva il conteggio</button>
-  <p class="muted">Il conteggio vale subito; il responsabile lo trova tra le cose da controllare.</p></main>`;
+  <p class="muted">Stesse regole dell'inventario: il numero si scrive sempre${S.cfgSec?", e se non torna si riconta una volta":""}. Vale subito; il responsabile lo trova tra le cose da controllare (77, 238).</p></main>`;
 
 /* ===== Documenti (189) ===== */
 const CATS = [["ddt","DDT"],["prep","Preparazioni"],["sped","Spedizioni"],["vend","Vendite assistite"],["corr","Conteggi e correzioni"],["scambi","Scambi con il gestionale"],["resi","Resi"],["inv","Inventari"]];
@@ -763,6 +767,8 @@ const UBI = {"C-01-1":[["N55",3]], "C-01-2":[["S77",2]], "C-02-4":[["S77",5],["N
   "D-01-3":[["N55",6]], "D-02-1":[["N55",2],["R110",10]], "A-05-1":[["V12",8]], "A-05-2":[["V13",4]], "B-11-1":[["G44",50]]};
 const curInv = () => S.inv.find(I=>I.id===S.curInv);
 const curUbi = () => curInv().ubi.find(u=>u.u===S.curUbi);
+const invCieca = () => { const I=curInv(); return I && I.cieca!==undefined ? I.cieca : S.cfgCieca; };
+const invSec = () => { const I=curInv(); return I && I.sec!==undefined ? I.sec : S.cfgSec; };
 const expQ = (u, a) => ((UBI[u]||[]).find(x=>x[0]===a)||[0,0])[1];
 function inConta(u){ for(const I of S.inv){ if(I.chiuso) continue; const x=I.ubi.find(z=>z.u===u && z.stato==="inconta"); if(x && x.who!==me()) return x; } return null; }
 const invPend = I => I.diff.filter(d=>d.stato==="da approvare");
@@ -791,7 +797,7 @@ V.invDett = () => { const I=curInv();
   ${blk("Le tue", g.mie)}${blk("Libere", g.libere)}${blk("Di colleghi", g.altri)}${blk("Contate", g.contate)}
   ${isBoss()?`<button class="btn ${p?"boss":""}" data-act="invDiff:${I.id}">Differenze da approvare (${p})</button><button class="btn" data-act="sheet:invChiudi">Chiudi l'inventario</button>`:""}
   <p class="muted">Ogni ubicazione la conta una persona sola: chi la apre la prende (234).</p></main>`; };
-V.invConta = () => { const I=curInv(), U=curUbi(), cieca=S.cfgCieca;
+V.invConta = () => { const I=curInv(), U=curUbi(), cieca=invCieca();
   const att=(UBI[U.u]||[]).map(x=>x[0]);
   const chips=[...att, ...Object.keys(ARTS).filter(k=>!att.includes(k)).slice(0,1)];
   return `${hdr(`Conta ${U.u}`,`Inventario ${esc(I.t)}${cieca?" · conta cieca":""}`)}<main class="main">${toastHtml()}
@@ -802,7 +808,7 @@ V.invConta = () => { const I=curInv(), U=curUbi(), cieca=S.cfgCieca;
   <button class="btn" data-act="invLascia">Lascia: torna libera</button>
   <p class="muted">${cieca?"Non vedi quanti pezzi dovrebbero esserci: conta quello che c'è (230). ":""}Tocca un articolo contato per correggerlo.</p></main>`; };
 SH.invQ = ({i}) => { const a=i, U=curUbi(), r=U.righe.find(x=>x.a===a);
-  return `<h3>${A(a).code} in ${U.u}</h3><p class="muted">${esc(A(a).desc)}${S.cfgCieca?"":` · attesi ${expQ(U.u,a)}`}</p>
+  return `<h3>${A(a).code} in ${U.u}</h3><p class="muted">${esc(A(a).desc)}${invCieca()?"":` · attesi ${expQ(U.u,a)}`}</p>
   <div class="field"><label for="iq">Quanti ${A(a).unit==="m"?"metri":"pezzi"} hai contato</label><input id="iq" type="number" inputmode="numeric" value="${r?r.q:""}"></div>
   <p class="muted">Il numero si scrive sempre: nessun tasto lo riempie (186).</p>
   <div class="btns two"><button class="btn" data-act="closeSheet">Annulla</button><button class="btn go" data-act="invQOk:${a}">Registra</button></div>`; };
@@ -815,8 +821,8 @@ SH.invManca = ({i}) => { const U=curUbi(); const k=i; return `<h3>Non hai contat
   <div class="btns two"><button class="btn" data-act="invZero:${k}">Nessuno</button><button class="btn go" data-act="sheet:invQ:${k}">Lo conto</button></div>`; };
 V.invNuovo = () => { const N=S.invN; const ops=USERS.filter(u=>u.r==="op" && u.m.includes("mag"));
   const cosa = [["tutto","Tutto"],["ubi","Ubicazioni"],["art","Articoli"],["forn","Fornitore"]];
-  const det = N.cosa==="tutto" ? `<p class="muted">Tutte le ubicazioni, comprese area di ricevimento, area resi e posti VEND (nel prototipo 5).</p>`
-    : N.cosa==="ubi" ? `<div class="field"><label for="iu">Quali ubicazioni</label><select id="iu"><option>Corsia D</option><option>Scaffale A-05</option></select></div>`
+  const det = N.cosa==="tutto" ? `<p class="muted">Tutte le ubicazioni normali (nel prototipo 5). Area di ricevimento, area resi, posti VEND e pacchi pronti restano fuori (239).</p>`
+    : N.cosa==="ubi" ? `<div class="field"><label for="iu">Quali ubicazioni</label><select id="iu"><option>Corsia D</option><option>Scaffale A-05</option><option>Non contate da più di 180 giorni</option><option>Con differenze negli ultimi 30 giorni</option></select></div><p class="muted">Le ultime due scelgono da sole, dalla data dell'ultima conta di ogni ubicazione (241).</p>`
     : N.cosa==="art" ? `<div class="field"><label for="ia">Quali articoli</label><input id="ia" type="text" value="NB-55"></div><p class="muted">Si contano in tutte le ubicazioni dove stanno.</p>`
     : `<div class="field"><label for="if">Fornitore</label><select id="if">${Object.keys(FORN).map(f=>`<option>${esc(f)}</option>`).join("")}</select></div><p class="muted">Tutta la sua merce, ovunque sia.</p>`;
   return `${hdr("Nuovo inventario","Lo crea il responsabile")}<main class="main">
@@ -824,7 +830,10 @@ V.invNuovo = () => { const N=S.invN; const ops=USERS.filter(u=>u.r==="op" && u.m
   <div class="field"><label for="ie">Entro</label><input id="ie" type="text" value="27/11/2026"></div>
   <h2>A chi lo dai (facoltativo)</h2><div class="list">${ops.map(u=>`<label class="row"><span class="l"><span><input type="checkbox" data-iuser="${u.n}"> ${u.n}</span><small>${u.m.map(x=>MANS[x]).join(" e ")}</small></span></label>`).join("")}</div>
   <p class="muted">Le ubicazioni si dividono tra chi scegli; senza nessuno restano libere. In ogni caso chi apre un'ubicazione la prende (234).</p>
-  <div class="kv"><span>Quantità attesa</span><span>${S.cfgCieca?"nascosta a chi conta":"visibile"} (Configurazione)</span><span>Seconda conta</span><span>${S.cfgSec?"accesa":"spenta"} (Configurazione)</span></div>
+  <h2>Solo per questo inventario</h2>
+  <div class="field"><label for="icieca">Quantità attesa a chi conta</label><select id="icieca"><option value="1" ${S.cfgCieca?"selected":""}>nascosta${S.cfgCieca?" (come in Configurazione)":""}</option><option value="0" ${S.cfgCieca?"":"selected"}>visibile${S.cfgCieca?"":" (come in Configurazione)"}</option></select></div>
+  <div class="field"><label for="isec">Seconda conta</label><select id="isec"><option value="1" ${S.cfgSec?"selected":""}>accesa${S.cfgSec?" (come in Configurazione)":""}</option><option value="0" ${S.cfgSec?"":"selected"}>spenta${S.cfgSec?"":" (come in Configurazione)"}</option></select></div>
+  <p class="muted">Cambiarle qui non tocca gli altri inventari (236).</p>
   <div class="btns two"><button class="btn" data-act="back">Annulla</button><button class="btn go" data-act="invCrea">Crea inventario</button></div></main>`; };
 V.invDiff = () => { const I=curInv(); const pend=invPend(I), done=I.diff.filter(d=>d.stato!=="da approvare");
   const dr = d => row(`${A(d.a).code} · ${d.u}`, signed(d.q-d.giac), d.stato==="da approvare"?"boss":d.stato==="approvata"?"done":"part", d.stato==="da approvare"?"sheet:invD:"+I.diff.indexOf(d):"", `giacenza ${d.giac} alle ${d.at} · contati ${d.q}${d.due?" due volte":""} da ${d.who}${d.stato!=="da approvare"?" · "+d.stato:""}`);
@@ -846,9 +855,9 @@ SH.invD = ({i}) => { const I=curInv(), d=I.diff[i]; const ops=USERS.filter(u=>u.
 SH.invChiudi = () => { const I=curInv(); const nc=I.ubi.filter(u=>u.stato!=="contata"), p=invPend(I);
   return `<h3>Chiudi l'inventario ${esc(I.t)}</h3><ul class="muted" style="margin:0;padding-left:20px">
   <li>${nc.length?`${nr(nc.length,"ubicazione non contata","ubicazioni non contate")} (${nc.map(u=>u.u).join(", ")}): restano come sono, nessuna rettifica.`:"Tutte le ubicazioni sono contate."}</li>
-  <li>${p.length?`${nr(p.length,"differenza","differenze")} ancora da approvare: restano in «Da controllare».`:"Nessuna differenza in sospeso."}</li>
+  <li>${p.length?`${nr(p.length,"differenza","differenze")} ancora da approvare: ${p.length===1?"resta":"restano"} in «Da controllare».`:"Nessuna differenza in sospeso."}</li>
   <li>L'inventario resta in «Documenti», esportabile (199).</li></ul>
-  <div class="warnbox boss">Cosa fare con le ubicazioni non contate si decide nel secondo giro di domande.</div>
+  ${nc.length?`<button class="btn" data-act="invChiudiOk:nuovo">Chiudi e crea un inventario con ${nc.length===1?"quella non contata":"le "+nc.length+" non contate"}</button>`:""}
   <div class="btns two"><button class="btn" data-act="closeSheet">Torna indietro</button><button class="btn go" data-act="invChiudiOk">Chiudi l'inventario</button></div>`; };
 
 /* ===== Responsabile ===== */
@@ -974,7 +983,7 @@ function render(){
 
 /* ===== Azioni ===== */
 function invReg(a, q){ const U=curUbi(), g=expQ(U.u,a), r=U.righe.find(z=>z.a===a);
-  if(S.cfgSec && q!==g && !(r && r.q1!==undefined)) return sheet("invRic",{i:a, x:q});
+  if(invSec() && q!==g && !(r && r.q1!==undefined)) return sheet("invRic",{i:a, x:q});
   r ? (r.q=q) : U.righe.push({a,q}); log(`${A(a).code} in ${U.u}: contati ${q}`, "Inventario "+curInv().t);
   S.sheet=null; S.toast={txt:`♪ ${q} ${A(a).code} contati in ${U.u}`}; return render(); }
 function sheet(sk, extra={}){ S.sheet = Object.assign({}, extra, {sk}); render(); }
@@ -1154,9 +1163,9 @@ function act(a, el){
     case "invCosa": S.invN.cosa=x; return render();
     case "invCrea": { const N=S.invN, who=[...document.querySelectorAll("[data-iuser]")].filter(z=>z.checked).map(z=>z.dataset.iuser);
       const sel = N.cosa==="ubi" ? document.getElementById("iu").value : N.cosa==="art" ? document.getElementById("ia").value : N.cosa==="forn" ? document.getElementById("if").value : "tutto il magazzino";
-      const us = N.cosa==="tutto" ? ["D-01-3","D-02-1","A-05-1","A-05-2","B-11-1"] : N.cosa==="ubi" ? (sel==="Corsia D"?["D-01-3","D-02-1"]:["A-05-1","A-05-2"]) : N.cosa==="art" ? ["D-01-3","D-02-1"] : ["A-05-1","D-02-1"];
+      const us = N.cosa==="tutto" ? ["D-01-3","D-02-1","A-05-1","A-05-2","B-11-1"] : N.cosa==="ubi" ? ({"Corsia D":["D-01-3","D-02-1"],"Scaffale A-05":["A-05-1","A-05-2"],"Non contate da più di 180 giorni":["B-11-1","D-02-1"],"Con differenze negli ultimi 30 giorni":["C-01-2"]}[sel]) : N.cosa==="art" ? ["D-01-3","D-02-1"] : ["A-05-1","D-02-1"];
       const id="INV-"+(4+S.n++); const t = N.cosa==="tutto" ? "Tutto il magazzino" : N.cosa==="forn" ? "Merce di "+sel : sel;
-      S.inv.push({id, t, cosa:{tutto:"Tutto",ubi:"Ubicazioni",art:"Articoli",forn:"Fornitore"}[N.cosa]+": "+sel, entro:document.getElementById("ie").value.slice(0,5), creato:me(), ubi:us.map((u,j)=>({u, ass:who.length?who[j%who.length]:null, stato:"libera", righe:[]})), diff:[]});
+      S.inv.push({id, t, cosa:{tutto:"Tutto",ubi:"Ubicazioni",art:"Articoli",forn:"Fornitore"}[N.cosa]+": "+sel, entro:document.getElementById("ie").value.slice(0,5), creato:me(), cieca:document.getElementById("icieca").value==="1", sec:document.getElementById("isec").value==="1", ubi:us.map((u,j)=>({u, ass:who.length?who[j%who.length]:null, stato:"libera", righe:[]})), diff:[]});
       log(`Crea l'inventario «${t}» (${us.length} ubicazioni${who.length?", diviso tra "+who.join(" e "):", ubicazioni libere"})`, "Inventario "+t);
       S.invN=null; S.curInv=id; S.stack=S.stack.filter(z=>z!=="invNuovo"); S.screen="inv"; return go("invDett"); }
     case "invDiff": S.curInv=x||S.curInv; return go("invDiff");
@@ -1168,14 +1177,20 @@ function act(a, el){
     case "invColl": { const I=curInv(), d=I.diff[+x], who=document.getElementById("ic2").value; d.stato="riconta da "+who;
       const U=I.ubi.find(u=>u.u===d.u); U.stato="libera"; U.ass=who; U.who=null; U.righe=[];
       log(`Chiede a ${who} di ricontare ${d.u} (${A(d.a).code})`, "Inventario "+I.t); invCtl(I); S.sheet=null; S.toast={txt:`${d.u} tocca a ${who}: la trova tra le sue ubicazioni`}; return render(); }
-    case "invChiudiOk": { const I=curInv(); I.chiuso="18/11 "+clock(); log(`Chiude l'inventario ${I.t}`, "Inventario "+I.t); S.sheet=null; S.stack=["home"]; S.screen="inv"; return render(); }
+    case "invChiudiOk": { const I=curInv(); I.chiuso="18/11 "+clock(); const nc=I.ubi.filter(u=>u.stato!=="contata");
+      log(`Chiude l'inventario ${I.t}: ${nc.length?nr(nc.length,"ubicazione non contata resta","ubicazioni non contate restano")+" come sono":"tutto contato"}`, "Inventario "+I.t);
+      if(x==="nuovo" && nc.length){ const id="INV-"+(4+S.n++), t=I.t+" (resto)"; S.inv.push({id, t, cosa:"Ubicazioni non contate di "+I.t, entro:"27/11", creato:me(), cieca:I.cieca, sec:I.sec, ubi:nc.map(u=>({u:u.u, ass:u.ass, stato:"libera", righe:[]})), diff:[]}); log(`Crea l'inventario «${t}» con ${nc.map(u=>u.u).join(", ")}`, "Inventario "+t); }
+      S.sheet=null; S.stack=["home"]; S.screen="inv"; return render(); }
     case "cfg": if(x==="cieca") S.cfgCieca=!S.cfgCieca; else S.cfgSec=!S.cfgSec; log(`Configurazione: ${x==="cieca"?"quantità attesa a chi conta "+(S.cfgCieca?"nascosta":"visibile"):"seconda conta "+(S.cfgSec?"accesa":"spenta")}`); return render();
     case "pkAlt": S.pk.alt=x; S.pk.st=0; log(`${x} al posto di un'ubicazione in conta`, "Ordine "+S.ordine); return render();
     case "pkWait": S.toast={txt:"Va bene: riprova tra qualche minuto, la riga resta qui"}; return render();
     /* Cerca */
     case "scheda": S.cerca=x; return go("scheda");
-    case "conta": if(!x) return; S.cnt=x==="RIC"?"area di ricevimento":x; return go("conta");
-    case "contaOk": { const n=document.getElementById("cn").value; S.controlli.push({id:"c"+(++S.n), t:"conta", a:S.cerca, txt:`Conteggio di ${me()} in ${S.cnt}: ${n} ${A(S.cerca).code}`}); log(`Conteggio: ${n} ${A(S.cerca).code} in ${S.cnt}, vale subito`); return back(); }
+    case "conta": if(!x) return; S.cnt=x==="RIC"?"area di ricevimento":x; S.cnt1=undefined; return go("conta");
+    case "contaOk": { const n=document.getElementById("cn").value; if(n===""){ S.toast={txt:"Scrivi quanti ne hai contati"}; return render(); }
+      if(S.cfgSec && S.cnt1===undefined && +n!==(S.cnt==="area di ricevimento"?2:8)){ S.cnt1=+n; return render(); }
+      if(S.cnt1!==undefined) log(`Conteggio: prima ${S.cnt1}, poi ${n}${S.cnt1===+n?"":"; vale il secondo"}`); S.cnt1=undefined;
+      S.controlli.push({id:"c"+(++S.n), t:"conta", a:S.cerca, txt:`Conteggio di ${me()} in ${S.cnt}: ${n} ${A(S.cerca).code}`}); log(`Conteggio: ${n} ${A(S.cerca).code} in ${S.cnt}, vale subito`); return back(); }
     case "dmgCardOk": { const q=+document.getElementById("dq2").value||1, where=document.getElementById("dl").value; S.controlli.push({id:"c"+(++S.n), t:"dmg", a:S.cerca, txt:`${q} ${A(S.cerca).code} danneggiati in ${where}, segnati da ${me()}`}); log(`${q} ${A(S.cerca).code} danneggiati in ${where}: escono dalla merce assegnabile, al responsabile`); S.sheet=null; return render(); }
     case "aggFoto": S.newArt={step:1, shots:0, code:A(S.cerca).code, desc:A(S.cerca).desc, agg:true}; log("Aggiungi foto: stessa guida dell'inserimento"); return go("nuovo");
     /* Documenti */

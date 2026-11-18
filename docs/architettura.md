@@ -1343,7 +1343,7 @@ ricevimento, non solo per i resi. Primo passo: la scheda «Dalla bolla» e «Man
 
 ## Inventario periodico
 
-Dal ticket «Inventario periodico», in corso dal 18/11/2026. Decisioni 227–235 (primo giro). Fonti: ricerca
+Dal ticket «Inventario periodico», in corso dal 18/11/2026. Decisioni 227–235 (primo giro) e 236–243 (secondo giro). Fonti: ricerca
 `docs/research/2026-11-18-gestionali-magazzino-esistenti.md` (§ 1.7, Odoo e Business Central) e
 `docs/research/2026-11-15-adhoc-revolution-ars-logistica.md` (rilevazioni d'inventario di ARS). Domande nella pagina
 privata https://claude.ai/artifact/QGQvc1pHzoQTsJBATiM1g5; schermate nel prototipo
@@ -1361,8 +1361,16 @@ privata https://claude.ai/artifact/QGQvc1pHzoQTsJBATiM1g5; schermate nel prototi
 | | Conta un'ubicazione | Inventario |
 |---|---|---|
 | Chi la avvia | L'operatore, quando la merce non torna (dalla scheda articolo) | Il responsabile (229) |
-| Cosa si conta | Un'ubicazione | Tutto, alcune ubicazioni, alcuni articoli (in tutte le loro ubicazioni), la merce di un fornitore; senza ubicazioni (26) per articolo |
-| Quando vale | Subito; il responsabile la controlla dopo (77) | Quando il responsabile approva la differenza (232) |
+| Cosa si conta | Un'ubicazione | Tutto (solo le ubicazioni normali, 239), alcune ubicazioni, alcuni articoli (in tutte le loro ubicazioni), la merce di un fornitore; senza ubicazioni (26) per articolo |
+| Come si conta | Come nell'inventario: cieca e con la seconda conta, secondo la Configurazione (238) | Vedi sotto |
+| Quando vale | Subito; il responsabile la controlla dopo (77, 238) | Quando il responsabile approva la differenza (232) |
+
+**Tutto il magazzino** (239): solo le ubicazioni normali. Area di ricevimento, area resi, posti VEND e merce prelevata
+in attesa del corriere non entrano in un inventario di tutto.
+
+**Scegliere cosa contare** (241): il programma non propone conte da solo. Ogni ubicazione mostra la data dell'ultima
+conta; nel nuovo inventario il responsabile può prendere le ubicazioni «non contate da più di … giorni» o «con
+differenze negli ultimi … giorni».
 
 ### Come si conta
 
@@ -1391,19 +1399,31 @@ Fermare il magazzino per l'inventario di fine anno resta una scelta di chi lo or
   l'assegnazione si rifà dal più vecchio (16). In alternativa chiede una nuova conta a un collega (231).
 - **Cosa parte** (235): a ogni approvazione una rettifica per articolo al gestionale, o una variazione di quantità a
   Shopify (52, 61). In «Documenti» la categoria «Inventari» raccoglie conte, differenze, chi ha contato e chi ha
-  approvato; si esporta (189, 199). Come Ad Hoc vuole ricevere l'inventario: domanda 28 per il rivenditore.
+  approvato; si esporta (189, 199) con le sole quantità: articolo, ubicazione, contato, differenza. Il valore lo
+  calcola il gestionale o chi fa il bilancio (242). Come Ad Hoc vuole ricevere l'inventario: domanda 28 per il
+  rivenditore.
+- **Chiusura** (240): le ubicazioni non contate restano come sono, senza rettifiche; il riepilogo le elenca e con un
+  tocco diventano un nuovo inventario. Le differenze non ancora approvate restano in «Da controllare».
+
+### Schermate
+
+Confermate sul prototipo (243). Lavoro «Inventario» della mansione magazziniere, con il numero sulla prima schermata
+(le ubicazioni che toccano a chi ha fatto l'accesso; per il responsabile le differenze da approvare). In cima le
+ubicazioni in conta (le mie, di colleghi, 187); per ogni inventario aperto: le tue, libere, di colleghi, contate. Conta
+di un'ubicazione con inquadratura, numero da scrivere, seconda conta, domanda sugli attesi non contati, «Ho finito
+questa ubicazione» e «Lascia: torna libera». Il responsabile: «Nuovo inventario» (cosa contare, entro quando, a chi,
+quantità attesa e seconda conta per quell'inventario), «Differenze da approvare» con il riepilogo, «Chiedi una nuova
+conta», «Chiudi l'inventario». Al prelievo e alla messa a posto: «in conta da…» con un'altra ubicazione proposta. In
+«Documenti» la categoria «Inventari».
 
 ### Configurazione per magazzino (aggiunte)
 
 | Scelta | Valori | Di serie | Decisione |
 |---|---|---|---|
-| Quantità attesa a chi conta | nascosta, visibile | nascosta | 230 |
-| Seconda conta se il numero non torna | accesa, spenta | accesa | 231 |
+| Quantità attesa a chi conta | nascosta, visibile; si cambia anche per un singolo inventario | nascosta | 230, 236 |
+| Seconda conta se il numero non torna | accesa (la stessa persona, subito), spenta; si cambia anche per un singolo inventario | accesa | 231, 236, 237 |
 
-### Ancora da decidere (secondo giro)
+### Deduzioni da confermare (terzo giro)
 
-Dove si cambiano conta cieca e seconda conta (solo in configurazione o anche per un singolo inventario); se la conta di
-un'ubicazione fuori dall'inventario segue le stesse regole; cosa comprende «tutto il magazzino» (aree, posti VEND,
-merce prelevata); ubicazioni non contate alla chiusura; proposte di conta dal programma; valore dell'inventario;
-schermate e cose in sospeso.
-
+Nella pagina delle domande, giro 3: aree contate con un inventario per ubicazioni, magazzini senza ubicazioni, articoli
+non attesi o sconosciuti, conta cieca anche per il responsabile quando conta, permessi, ubicazione lasciata a metà.

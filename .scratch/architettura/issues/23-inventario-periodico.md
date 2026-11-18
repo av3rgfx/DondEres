@@ -34,3 +34,8 @@ Risultato atteso: una sezione «Inventario periodico» in `docs/architettura.md`
 - 18/11/2026: prototipo aggiornato con le schermate dell'inventario e provato nel browser (conta cieca, seconda conta,
   articoli attesi non contati, «in conta da…» al prelievo, approvazione con gli ordini che perdono merce, nuovo
   inventario, configurazione). Secondo giro di 8 domande nella stessa pagina.
+- 18/11/2026, secondo giro: accettate le consigliate (236–238, 240–243) tranne la 4: «tutto il magazzino» sono solo le
+  ubicazioni normali (239, scelta dell'utente, motivo non indicato). Nessuna nota. Prototipo confermato (243).
+- 18/11/2026: prototipo aggiornato con il secondo giro. Rileggendo la 238 è emersa un'incongruenza: la conta fuori
+  dall'inventario si apre dalla scheda dell'articolo, che mostra le giacenze, quindi non è davvero cieca. Terzo giro:
+  una domanda su questo e il riepilogo con le deduzioni da confermare.
