@@ -79,6 +79,14 @@ percorso delle schermate e aspetto grafico, compresi nome e brand kit (decisioni
   preparatore) con «Altri lavori»; DDT con inquadratura in alto e righe sotto; piani di spedizione o coda «Prossimo
   ordine»; permessi per pianificare e spedire; «spedito» al ritiro del corriere; vendita assistita al posto del banco;
   prototipo a fil di ferro (decisioni 160–179).
+- [Gestionali di magazzino esistenti: funzioni in più e difetti da evitare](issues/20-ricerca-gestionali-esistenti.md):
+  tutti ricevono contro ordine e la 183 coincide con i PMI più completi; nessuno legge in modo affidabile le righe di un
+  DDT cartaceo; mancano alla base elenchi in sospeso, «Documenti», regola Annulla/Conferma, merce danneggiata, resi,
+  inventario, etichette del corriere, requisito di velocità (ricerca del 18/11/2026).
+- [Completezza del percorso delle schermate](issues/21-completezza-percorso-schermate.md): DDT con foto della bolla e
+  righe dalle letture, ripiego a mano con ordine proposto, quantità in bolla alla chiusura; cose in sospeso in quattro
+  gruppi; «Documenti» e registro; regola Annulla/Conferma; merce danneggiata; tempi 1–2 s; nuovi ticket Resi,
+  Inventario periodico e Lettura automatica delle bolle (decisioni 184–201).
 
 Prese prima della mappa, nel secondo giro di domande del 15/11/2026: decisioni 15–28 in
 [`docs/decisioni.md`](../../docs/decisioni.md) (assegnazione parziale, codice stampato come tipo di articolo,
@@ -96,16 +104,13 @@ tre livelli di conferma, quantità letta dalla scatola, ubicazioni facoltative, 
   ubicazioni, decisione 26, e dominio o certificato interno, 123), rinnovo del certificato, aggiornamenti (chi segna
   quelli obbligatori, ritorno alla versione precedente se il programma non riparte, 125), copie di sicurezza e
   ripristino.
-- **Inventario:** conta periodica di tutto il magazzino o di una parte. Rettifica per conteggio, correzioni ed effetto
-  sulle assegnazioni sono già definiti nel «Modello dei dati».
 - **Catalogo visivo per la vendita assistita** (idea dell'utente, decisioni 78 e 86; «banco» diventa «vendita assistita», 178): cercare un articolo e vederne
   disponibilità, prezzo, giacenza e ubicazione, anche quando il cliente non sa bene cosa vuole. Tocca identificazione e
   schermate.
-- **Acquisizione del DDT:** oggi il DDT arriva di carta dal corriere e viene scansionato e caricato; gli uffici hanno
-  spesso anche la versione digitale, che in magazzino non si usa. Da capire se la base legge la foto del DDT, importa
-  la versione digitale o chiede solo il numero (tocca identificazione, fonti degli ordini e schermate).
-- **Resi al fornitore:** compaiono con gli annullamenti, con la merce non prevista e con gli articoli nuovi rifiutati
-  dal responsabile (decisioni 41, 45 e 114); quando e come si registrano.
+- **Prova di lettura delle bolle su bolle vere:** dopo la ricerca «Lettura automatica delle bolle» (193), una prova su
+  bolle di UFP con i dati dei clienti coperti, come la prova visiva; dove conservarle va chiesto all'utente.
+- **Etichette e distinta del corriere:** chi le stampa in UFP (domande 21 e 22 al rivenditore) e nel magazzino Shopify;
+  la ricerca del 18/11/2026 le trova in quasi tutti i gestionali.
 - **Ottimizzazione del venduto (VEND):** l'utente vuole un'analisi a parte, soprattutto per UFP, che vende anche al
   banco e ha più casi particolari da controllare.
 - **Descrizione proposta da un modello che legge immagini e scrive testo** per l'articolo nuovo: se tenerla, e quale

@@ -77,6 +77,14 @@ Per collegarlo ad Ad Hoc vi chiediamo:
     spedito? Si possono leggere? Il nostro programma li userebbe per proporre il titolo del piano di spedizione e per
     mostrare al preparatore con quale corriere parte la merce.
 22. Quando un ordine è preparato, oggi ARS restituisce ad Ad Hoc numero dei colli e peso? In quale documento?
+23. Se il nostro programma manda una rettifica su un carico già fatturato, Ad Hoc la accetta? Cosa succede (blocco,
+    nota di credito, rettifica di magazzino separata)?
+24. Quando si rende merce al fornitore, chi emette il DDT di reso: Ad Hoc, ARS o un'altra persona? Il nostro programma
+    dovrebbe mandare ad Ad Hoc un documento di reso già pronto?
+25. Chi stampa oggi le etichette e la distinta di ritiro dei corrieri (BRT, GLS): ARS, Ad Hoc, il programma del
+    corriere?
+26. Ad Hoc riceve dai fornitori fatture elettroniche con i riferimenti ai DDT (blocco DatiDDT della fattura)? Si
+    possono leggere, per confrontare la merce caricata con quella fatturata?
 
 Grazie.
 

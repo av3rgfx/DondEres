@@ -137,8 +137,18 @@ _Evitare_: vettore, spedizioniere
 ## Merce e scorte
 
 **DDT**:
-Il documento di trasporto che accompagna una consegna del fornitore e rimanda agli ordini fornitore a cui appartiene.
-_Evitare_: bolla
+Il documento di trasporto che accompagna una consegna del fornitore e rimanda agli ordini fornitore a cui appartiene;
+nel programma, la sua registrazione con le righe nate dalle letture.
+_Evitare_: bolla (per la registrazione), entrata merci
+
+**Bolla**:
+Il foglio di carta (o il PDF) del DDT consegnato dal fornitore; il programma ne conserva la foto con il DDT.
+_Evitare_: DDT (per il foglio), documento
+
+**Quantità in bolla**:
+La quantità che la bolla dichiara per un articolo; si confronta con la quantità contata e con quella ordinata, senza
+mai sostituire la contata.
+_Evitare_: quantità attesa (è quella dell'ordine fornitore), quantità dichiarata
 
 **Ricevimento**:
 L'arrivo di una consegna in magazzino, con le identificazioni fatte sulla merce.
@@ -222,6 +232,25 @@ _Evitare_: missione, task, lista (da sola)
 **Da controllare**:
 L'elenco dei movimenti e degli avvisi che il responsabile deve guardare e approvare o correggere.
 _Evitare_: anomalie, eccezioni, coda (da sola)
+
+**Cose in sospeso**:
+Il lavoro iniziato e non chiuso di una sezione (un DDT aperto, un ordine preso, una vendita non confermata), diviso in
+miei, di colleghi, fermi e vecchi.
+_Evitare_: pendenti, backlog, da fare (da solo)
+
+**Merce danneggiata**:
+Merce contata che non si può usare: non si assegna a nessun ordine finché il responsabile non decide se tenerla,
+renderla al fornitore o scartarla.
+_Evitare_: merce difettosa, scarto (è una delle decisioni)
+
+**Scarto**:
+L'uscita definitiva dal magazzino di merce danneggiata, decisa dal responsabile.
+_Evitare_: rottamazione, perdita, scrap
+
+**Registro**:
+L'elenco in ordine di tempo di tutte le operazioni, con chi, quando, da quale dispositivo ed esito; si consulta nella
+sezione «Documenti».
+_Evitare_: log, storico (da solo), cronologia (è quella di un singolo documento)
 
 ## Sistemi
 

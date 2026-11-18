@@ -344,6 +344,7 @@ decisione 23.
 
 - Ogni scansione si salva sul server appena fatta e mostra il suo esito: salvata, in attesa, non riuscita.
 - Ripetere un invio (doppio tocco, rete che torna, riapertura) non crea doppioni: ogni operazione ha la sua identità.
+- Tempi massimi con il catalogo intero: esito di una lettura entro 1 secondo, schermate e ricerche entro 2 (195).
 - Un DDT si trova sempre, in qualsiasi stato, con le sue righe, i carichi mandati e quelli in coda.
 - Lo stesso codice su due righe d'ordine resta su due righe; un codice non si «indovina» da uno simile.
 
@@ -678,6 +679,10 @@ Prima di scegliere lo stack (127):
 - un telefono Android: lettura del barcode con il lettore di Chrome;
 - un palmare di UFP: grilletto (ipotesi della tastiera) e fotocamera (119);
 - il collegamento sicuro con il router di un magazzino vero (123).
+- la ricarica della pagina a metà DDT, e la chiusura e riapertura del browser, senza perdere letture e senza doppioni
+  (201; difetto riferito da utenti di Odoo 17);
+- prima della consegna, una prova di carico sul server in sede con il catalogo intero e più telefoni insieme, per i
+  tempi massimi della 195.
 
 ### Configurazione per magazzino
 
@@ -882,10 +887,9 @@ Totale: circa 1.620 foto e 9 ore di scatti con l'iPhone, più 480 foto di arrivo
 Dal ticket «Percorso delle schermate», chiuso il 17/11/2026. Decisioni 160–179. Qui si decide quali schermate ci sono e
 in che ordine; colori, caratteri e stile vengono con il ticket «Aspetto grafico» (14).
 
-Da completare (18/11/2026): l'utente trova il percorso giusto ma non completo (180). Elenchi delle cose in sospeso per
-sezione (181), sezione «Documenti» con storico e log (182) e DDT con le righe create dalle letture e il ripiego a mano
-per articolo o per ordine (183) si disegnano nel ticket «Completezza del percorso delle schermate», dopo la ricerca
-«Gestionali di magazzino esistenti: funzioni in più e difetti da evitare».
+Completato il 18/11/2026 nel ticket «Completezza del percorso delle schermate» (decisioni 180–201), dopo la ricerca
+`docs/research/2026-11-18-gestionali-magazzino-esistenti.md` e l'analisi più sotto. Domande dei due giri nella pagina
+privata https://claude.ai/artifact/13EHJFJ3ZbM8QNXU1dTkag.
 
 Prototipo usa e getta a fil di ferro, con dati inventati e fotocamera simulata: `prototipi/percorso-schermate/index.html`,
 pubblicato anche come pagina privata per il telefono dell'utente (https://claude.ai/artifact/Vb6ijyDdr4n2gsZcKhhVur).
@@ -901,16 +905,16 @@ sue.
 | Gruppo | Schermate |
 |---|---|
 | Entrare | Prima apertura dal QR (127); guida a «Fotocamera: Consenti» su iPhone, con la barra di Safari visibile, e cosa fare se il permesso è negato (124); accesso con nome e PIN, o password per il responsabile (80); uscita dopo 30 minuti senza perdere il lavoro |
-| Ricevimento | DDT aperti e «Nuovo DDT», con l'avviso di possibile doppione (86); schermata del DDT; registrato con «Annulla» e quantità (99); «È questo» / «No, è un altro» (90); scelta tra più articoli (91) o più codici (102); due quantità lette (93), «× colli» (94), «come l'ultima volta» (100); «non è tra gli attesi» (88); «Collego questo barcode?» (92); «codice simile, controlla» (89); codice diverso (158, 166); unità mai vista (72); «non lo so» con le sue uscite (98); correzione a DDT aperto (81); «Chiudi DDT» con la scelta sulla riga ferma (82) |
+| Ricevimento | DDT in sospeso e «Nuovo DDT»: fornitore, foto della bolla, numero e data letti da confermare, ordine citato, avviso di possibile doppione (86, 184); schermata del DDT con le righe nate dalle letture e «Attesi dal fornitore» da guardare (183, 186); «Aggiungi a mano» per articolo o per ordine (185); «Danneggiata» (191); registrato con «Annulla» e quantità (99); «È questo» / «No, è un altro» (90); scelta tra più articoli (91) o più codici (102); due quantità lette (93), «× colli» (94), «come l'ultima volta» (100); «non è tra gli attesi» (88); «Collego questo barcode?» (92); «codice simile, controlla» (89); codice diverso (158, 166); unità mai vista (72); «non lo so» con le sue uscite (98); correzione a DDT aperto (81); «Chiudi DDT» con riepilogo, quantità in bolla e scelta sulla riga ferma (82, 190, 192) |
 | Articolo nuovo | Righe attese senza articolo, in cima (109); tre foto guidate, con gli avvisi di foto mossa o buia (106); scheda con i campi compilati (107); parole dell'etichetta da toccare (108); «È uno di questi?» (110) |
-| Dopo il ricevimento | Da mettere a posto, proposto alla chiusura del DDT (69, 163); rimetti a posto (62); posto VEND, se acceso (47) |
+| Dopo il ricevimento | Da mettere a posto, per fornitore e dentro per DDT, proposto alla chiusura del DDT (69, 163, 194); rimetti a posto (62); posto VEND, se acceso (47) |
 | Uscita | Piani di spedizione, per chi pianifica (167, 169); prelievo dai piani o dalla coda (167, 168); prelievo guidato con stop se l'articolo è un altro (97, 103, 164); fine della preparazione (171); spedizione (172, 173); vendita assistita (65, 58, 84, 178) |
-| Sempre | Cerca articolo: scheda, giacenze per ubicazione e stato, codici, prezzo; conta un'ubicazione (77); «Aggiungi foto» (117); rete assente, operazione in attesa o persa (23, 127) |
+| Sempre | Cose in sospeso in cima a ogni sezione (187); «Documenti» con storico per categoria e registro (189); «Cerca» sopra ogni lavoro (197) e dalla prima schermata: scheda, giacenze per ubicazione e stato, codici, prezzo; conta un'ubicazione (77); «Aggiungi foto» (117); «Segna danneggiati» (191); rete assente, operazione in attesa o persa (23, 127) |
 | Responsabile | Da controllare (86), con le sue uscite: tenere o rendere la merce non prevista (45), confermare conteggi, collegamenti e codici diversi (71, 158), approvare conversioni (72); articolo da confermare: Conferma, Unisci, Rifiuta (114); correzioni dopo la chiusura (81); scambio: avvisi e «aggiorna ora» (54); utenti con ruolo, mansioni e permessi (177); configurazione iniziale; «È disponibile un aggiornamento» (125); costo d'acquisto (85) |
 
-Fuori da questo ticket, nella nebbia della mappa: inventario periodico, catalogo visivo nella vendita assistita,
-ingresso del DDT (nel prototipo il DDT si apre scegliendo fornitore e numero, come segnaposto), resi al fornitore. La
-procedura guidata della configurazione iniziale sta nella nebbia «Installazione e configurazione iniziale».
+Fuori: resi e inventario periodico hanno ticket propri (200); la lettura automatica della bolla ha un ticket di ricerca
+(193); il catalogo visivo nella vendita assistita e la procedura guidata della configurazione iniziale restano nella
+nebbia della mappa.
 
 ### Chi vede cosa
 
@@ -927,29 +931,43 @@ avvisi di aggiornamento e di scambio bloccato (161, 177, 179).
 
 ### Ricevimento
 
-1. **Ricevi DDT** → elenco dei DDT aperti, con quante righe sono complete; «Nuovo DDT» (segnaposto, vedi sopra). Più
-   persone lavorano sullo stesso DDT, anche in giorni diversi (68).
-2. **Schermata del DDT**: in alto l'inquadratura, sempre accesa; sotto le righe attese con contato e atteso, colorate
-   per stato (vuota, in parte, completa, ferma). In alto a destra «Chiudi DDT» (162).
+1. **Ricevi DDT** → cose in sospeso (DDT miei, di colleghi, fermi, vecchi) e «Nuovo DDT» (187). Più persone lavorano
+   sullo stesso DDT, anche in giorni diversi (68).
+2. **Nuovo DDT** (184): si sceglie il fornitore (prima quelli con ordini aperti), si fotografa la bolla, il programma
+   propone numero e data letti dalla foto e l'ordine citato; l'operatore li conferma o li scrive se la lettura non
+   riesce. Senza bolla si continua senza foto. «Annulla» torna indietro senza creare niente.
+3. **Schermata del DDT**: in alto l'inquadratura, sempre accesa; sotto le righe nate dalle letture, ognuna con l'ordine
+   fornitore su cui è andata (prima l'ordine citato dalla bolla, poi quelli con il riferimento di un cliente, poi il più
+   vecchio, 70), il cliente se c'è e la quantità ordinata, colorate per stato (in parte, completa, ferma). «Attesi dal
+   fornitore» si apre per guardare le righe ancora attese; non riempie niente (186). In alto a destra «Chiudi DDT»
+   (162, 183).
 3. **A ogni inquadratura** il programma mostra solo l'esito (87). Un barcode su un solo articolo si registra senza
    tocchi, con un avviso «Registrato … · Annulla · Modifica» (99): si passa alla scatola successiva senza toccare lo
    schermo. Gli altri esiti aprono una scheda dal basso, sopra la schermata del DDT: proposte con foto, «È questo»,
    due quantità, «non è tra gli attesi», «Collego questo barcode?», «non lo so» (tabella «Cosa vede l'operatore» nella
    sezione «Percorso di identificazione»). La scheda della quantità ha più e meno, «× colli» e il consiglio «come
    l'ultima volta».
-4. **Righe che aspettano il responsabile** (codice diverso, unità mai vista): la riga diventa ferma e l'operatore mette
+4. **Aggiungi a mano** (185), quando una scatola non si legge: scheda «Per articolo» (gli articoli che il fornitore deve
+   ancora mandare; toccato uno, gli ordini che lo contengono nell'ordine dell'abbinamento, con data, quantità mancante e
+   cliente, il primo già proposto) e scheda «Per ordine» (gli ordini aperti del fornitore; dentro, gli articoli). Se la
+   scatola aveva un barcode non riconosciuto, alla registrazione si propone di collegarlo (92).
+5. **Danneggiata** (191), nella scheda della quantità: si conta, va da parte, non si assegna e va al responsabile.
+6. **Righe che aspettano il responsabile** (codice diverso, unità mai vista): la riga diventa ferma e l'operatore mette
    la scatola da parte e continua; il responsabile decide da «Da controllare», oppure subito sullo stesso telefono con
    la sua password, senza far uscire l'operatore (166).
-5. **Toccando una riga** si vede cosa è stato contato e si corregge l'ultima scansione, finché il DDT è aperto (81); su
-   una riga senza articolo a catalogo si crea l'articolo (109).
-6. **Chiudi DDT**: se c'è una riga ferma, la scelta della 82 («Chiudi con le righe pronte» proposta); poi «DDT chiuso,
-   carico mandato» e «Metti a posto adesso» oppure «Più tardi» (163).
+7. **Toccando una riga** si vede cosa è stato contato e si corregge l'ultima lettura, finché il DDT è aperto (81); una
+   riga attesa senza articolo a catalogo si tocca in «Attesi dal fornitore» per creare l'articolo (109).
+8. **Chiudi DDT** è una schermata di riepilogo (190, 192): foto della bolla; righe pronte con contati, ordinati e in
+   bolla; righe ferme; danneggiati; attesi non arrivati. Guardando la bolla si tocca solo la riga dove la bolla dice
+   un'altra quantità, e un atteso non arrivato se la bolla lo porta. Sotto, «Cosa succede se chiudi»: carico al
+   gestionale, carico a parte per la riga ferma (82), differenze al responsabile, DDT che non si riapre (81). Tasti
+   «Torna al DDT» e «Chiudi DDT» (o «Chiudi con le righe pronte»); poi «Metti a posto adesso» oppure «Più tardi» (163).
 
 **Articolo nuovo**, dall'uscita del «non lo so» o da una riga senza articolo: righe che lo aspettano → tre foto guidate
 → dati (codice letto, descrizione con le parole da toccare, unità) → «È uno di questi?» → salvato «da confermare» e
 torna alla scheda della quantità del DDT (105–110).
 
-**Metti a posto**: elenco dell'area di ricevimento e, sotto, «Rimetti a posto». Toccato un articolo: ubicazione
+**Metti a posto**: area di ricevimento divisa per fornitore e dentro per DDT (194) e, sotto, «Rimetti a posto». Toccato un articolo: ubicazione
 abituale proposta → scansione dell'ubicazione vera → quantità (69, 75).
 
 ### Preparazione e spedizione
@@ -975,9 +993,73 @@ viene dall'ordine nel sistema d'origine (su Shopify il metodo di spedizione) o l
 È il lavoro che la base chiamava «banco» (178). Passi della 65: cliente (uno preciso, quello generico o nessuno) →
 inquadratura dell'articolo e scansione dell'ubicazione, con il prezzo di vendita a schermo e il costo solo per il
 responsabile (84, 85) → se la merce libera non basta, l'avviso con l'ordine a cui verrebbe tolta (58) → «Conferma: crea
-l'ordine nel gestionale». Alla conferma non si sceglie come esce la merce: in UFP l'ordine si crea in Ad Hoc, dove si
+l'ordine nel gestionale». Una vendita non confermata resta tra le cose in sospeso con cliente e articoli; la merce non
+si toglie a nessuno finché non si conferma; alla conferma il programma ricontrolla la disponibilità e avvisa se nel
+frattempo qualcosa è finito; «Annulla vendita» la toglie con una conferma (188). Alla conferma non si sceglie come esce la merce: in UFP l'ordine si crea in Ad Hoc, dove si
 fanno e si stampano le ricevute, e il resto si fa lì (178). In UFP la vendita assistita serve al banco e anche a
 preparare una vendita o un pacco per un agente o da spedire (176).
+
+### Cose in sospeso
+
+In cima a ogni sezione (181, 187), quattro gruppi, ognuno dal più vecchio: **i miei, in corso**; **di colleghi**, con
+chi e da quanto; **fermi**, con il motivo; **vecchi**, oltre 2 giorni (si cambia per magazzino). Il numero sul pulsante
+della prima schermata conta ciò che tocca a chi ha fatto l'accesso.
+
+| Sezione | Cosa è in sospeso |
+|---|---|
+| Ricevi | DDT aperti; fermi se hanno una riga che aspetta il responsabile |
+| Metti a posto | L'area di ricevimento, per fornitore e DDT (194), e «Rimetti a posto» |
+| Preleva | Ordini presi e non finiti, con da quanto; fermi con il motivo; vecchi da liberare (170, 175) |
+| Spedisci | Ordini pronti per corriere, con da quando; vecchi da controllare |
+| Vendita assistita | Vendite non confermate (188) |
+| Da controllare (responsabile) | Tutto ciò che aspetta una sua decisione (86) |
+
+### Documenti
+
+Due viste dello stesso storico (182, 189):
+
+- **Documenti**, per categoria: DDT (con foto della bolla, righe, cronologia), preparazioni, spedizioni per corriere e
+  giorno, vendite assistite, conteggi e correzioni, scambi con il gestionale. Ricerca per numero, articolo, cliente.
+- **Registro**: ogni operazione in ordine di tempo, con chi, quando, da quale dispositivo ed esito (salvata, in attesa,
+  non riuscita, inviata), compresi accessi, uscite, decisioni del responsabile e modifiche di configurazione. Filtri per
+  persona, dispositivo, articolo, documento, esito.
+
+Tutti vedono i documenti; il registro completo lo vede il responsabile, l'operatore vede le sue operazioni. Il costo
+d'acquisto resta al responsabile (85). Il responsabile esporta in file (foglio di calcolo e PDF) un periodo o una
+categoria; niente si cancella da solo (199).
+
+### Annulla e Conferma
+
+Regola unica (190):
+
+| Tipo di azione | Esempi | Comportamento |
+|---|---|---|
+| Frequente | Lettura, quantità, messa a posto, presa di un ordine | Si registra subito; «Annulla» per qualche secondo, poi «Modifica» dalla riga finché il documento è aperto |
+| Chiude un documento | «Chiudi DDT», «Ordine pronto», «Ritirato da…» | Riepilogo delle conseguenze e tasto con il verbo; «Torna indietro» |
+| Tocca altri ordini o il lavoro di altri | Togliere merce a un altro ordine (58), riassegnare un ordine (170) | Conferma che nomina ciò che si tocca |
+| Grave | Rifiutare un articolo (114), chiudere un residuo (33), scartare merce (191) | Solo il responsabile, con conferma |
+
+Annullare non cancella: crea una correzione collegata, visibile nel registro (74). Nessun «Sei sicuro?» generico; nessun
+tasto che riempie le quantità attese (186). Ogni scheda che si apre dal basso ha il suo «Annulla»; nelle procedure a
+passi (nuovo DDT, nuovo piano) «Annulla» torna indietro senza creare niente (201).
+
+### Merce danneggiata
+
+Si segna al ricevimento («Danneggiata» nella scheda della quantità) e dalla scheda dell'articolo («Segna danneggiati»)
+per la merce già a magazzino: si conta, non si assegna a nessun ordine e va al responsabile, che decide se tenerla,
+renderla al fornitore o scartarla (191). Lo scarto manda uno scarico al gestionale.
+
+### Tempi, suoni e ricerca durante il lavoro
+
+- **Tempi massimi** (195), con il catalogo intero e più telefoni insieme, misurati sul server in sede prima della
+  consegna: esito di un barcode o di un codice entro 1 secondo; schermate e ricerche entro 2 secondi. Il riconoscimento
+  dall'immagine ha i suoi tempi nella prova visiva (143).
+- **Suoni** (196): lettura riuscita con suono breve e vibrazione dove il telefono la permette; suono diverso per riga
+  ferma o errore; il messaggio a schermo c'è sempre; volume per telefono, spegnibile.
+- **Cerca** (197): in ogni lavoro un tasto apre la ricerca sopra (scheda, giacenze, conta); chiudendola si torna al
+  punto.
+- **Prelievo oltre il richiesto** (198, 201): avviso, si accetta e i pezzi escono come prelevati per l'ordine; il
+  responsabile sceglie se cambiare l'ordine nel gestionale o rimettere il di più a magazzino con una correzione.
 
 ### La preparazione oggi in UFP
 
@@ -997,6 +1079,61 @@ Fatto riferito dall'utente il 17/11/2026, nella nota alla domanda sulla prima sc
 Gli agenti portano gli ordini di persona; gli ordini degli agenti stanno in Ad Hoc, e chi crea i piani deve vederli:
 serve il collegamento con Ad Hoc della specializzazione (178). Nel magazzino Shopify oggi si lavora con fogli di carta.
 
+### Analisi del 18/11/2026: cosa manca alla base
+
+Scritta dall'agente all'inizio del ticket «Completezza del percorso delle schermate», sulla base della ricerca
+`docs/research/2026-11-18-gestionali-magazzino-esistenti.md` e dei fatti riferiti dall'utente su UFP. Non contiene
+decisioni: le scelte dell'utente sono nei giri di domande del ticket e in `docs/decisioni.md`. Priorità = deduzione
+dell'agente.
+
+**Come si lavora oggi in UFP e cosa cambia** (fatti riferiti dall'utente, ticket «Modello dei dati» e «Percorso delle
+schermate»):
+
+| Oggi con ARS | Nella base | Stato |
+|---|---|---|
+| Controllo a penna sulla bolla, poi DDT al computer importando a mano le righe dagli ordini, poi lista «Libera» al palmare: la stessa merce si registra due volte | Un passaggio dal telefono: le righe nascono dalle letture (68, 183) | Deciso |
+| Scansioni perse dopo «Sospendi»; un DDT corretto cancellandolo e rifacendolo | Salvataggio immediato con esito, correzioni collegate, DDT sempre ritrovabile (74, 81) | Deciso; da provare |
+| Piani di spedizione per agente, firma con la sigla, spedizione confermata dall'operatore | Piani con copertura visibile, nome di chi ha fatto l'accesso, «Spedisci» per corriere (167–174) | Deciso |
+| Vendita al banco da telefono: cliente, articoli e ubicazione, conferma; ricevute in Ad Hoc | Vendita assistita con gli stessi passi (178) | Deciso; manca cosa succede se resta a metà |
+| La bolla di carta si scansiona e si carica in ufficio | Nessuna decisione su foto o archivio della bolla | Manca |
+
+**Cosa manca rispetto ai gestionali esistenti.** Le funzioni ricorrenti nei prodotti letti che la base non ha:
+
+| Mancanza | Dove nei prodotti | Priorità UFP / Shopify |
+|---|---|---|
+| Elenchi delle cose in sospeso per sezione (181) | Cruscotto di Odoo: da fare, in ritardo, senza responsabile, i più vecchi | Alta / Alta |
+| «Documenti» con storico per documento e registro delle operazioni (182) | «Moves History» di Odoo, «Change Log» di Business Central | Alta / Alta |
+| Regola unica per «Annulla» e «Conferma» (180) | Contro-registrazioni in Business Central e SAP B1; «Annulla» prima della validazione in Odoo | Alta / Alta |
+| Foto e archivio della bolla | Nessun prodotto la legge in modo affidabile; servizi solo in cloud e solo per la testata | Alta / Media |
+| Merce danneggiata e scarto | «Scrap» di Odoo; reso del danneggiato in SAP B1 | Media / Media |
+| Resi da cliente e al fornitore | In tutti i prodotti | Media / Alta |
+| Inventario periodico con conta cieca | Odoo, Business Central | Media / Media |
+| Etichette e distinta del corriere | ShipStation, Odoo | Media / Media (dipende dalle domande 21–22 al rivenditore) |
+| Requisito di velocità con 35.000 articoli | Lentezza riferita in Odoo con cataloghi grandi | Alta / Media |
+| Avviso se Shopify cambia una giacenza che la base non ha mandato | Giacenze sovrascritte da altre app, riferito | — / Alta |
+
+**Difetti riferiti da non ripetere** (esperienze di utenti, non fatti verificati):
+
+- Validare senza aver scansionato, ignorando l'avviso (Odoo): la base non ha un tasto «riempi con l'atteso».
+- Residuo chiuso per sbaglio senza ritorno (Odoo): nella base lo chiude solo il responsabile (33).
+- Dopo una ricarica a metà la quantità attesa si riscrive (Odoo 17): nella base l'atteso viene dall'ordine; da provare.
+- Lentezza con molti articoli (Odoo): serve un tempo massimo misurabile per l'esito di una scansione.
+- Ordini «presi» e mai finiti (NetSuite, blocchi che restano): mostrare da quanto un ordine è preso (170).
+- Giacenze Shopify riportate a zero o scritte sul valore sbagliato da altre app: la base manda variazioni (52).
+
+**DDT: soluzioni migliori di quella attuale (183).** La 183 coincide già con le soluzioni dei prodotti per PMI più
+completi (Business Central mette più ordini in un'entrata, NetSuite cerca l'ordine per articolo). Ciò che si può
+aggiungere, dal più economico:
+
+1. Foto della bolla all'apertura del DDT, salvata con il DDT e visibile in «Documenti»: archivio e controllo delle
+   differenze con la bolla (73) senza scansioni in ufficio.
+2. Numero e data proposti dalla foto, letti in sede (PaddleOCR, 145), confermati dall'operatore; servono anche all'avviso
+   di doppione (86). Da provare su DDT veri.
+3. Numero d'ordine stampato sulla bolla, se c'è: le letture vanno prima su quell'ordine (70).
+4. Righe della bolla lette solo come «quantità in bolla», mai come quantità contata: da provare fornitore per fornitore.
+5. Avvisi di spedizione elettronici dei fornitori (EDI, Peppol) e riconciliazione con la fattura differita: punti
+   d'estensione e specializzazione, non base.
+
 ### Configurazione per magazzino (aggiunte)
 
 | Scelta | Valori | Di serie | Decisione |
@@ -1004,8 +1141,10 @@ serve il collegamento con Ad Hoc della specializzazione (178). Nel magazzino Sho
 | Ordini coperti in parte si prelevano | sì, no | sì | 165 |
 | Piani di spedizione | accesi, spenti (si lavora con la coda) | spenti | 167, 175 |
 | Chili a fine preparazione | richiesti, facoltativi | richiesti | 171, 175 |
+| «Vecchi» nelle cose in sospeso dopo | giorni | 2 | 187 |
 
-Per utente: ruolo, mansioni, permessi «Pianifica le spedizioni» e «Conferma le spedizioni» (169, 173, 177).
+Per utente: ruolo, mansioni, permessi «Pianifica le spedizioni» e «Conferma le spedizioni» (169, 173, 177). Per
+telefono: volume dei suoni, spenti o accesi (196).
 
 ### Rimandato ad altri ticket o alla nebbia della mappa
 
@@ -1015,5 +1154,7 @@ Per utente: ruolo, mansioni, permessi «Pianifica le spedizioni» e «Conferma l
   Ad Hoc nella specializzazione (51, 178).
 - Cosa succede in UFP alla merce di una vendita assistita che non parte subito (pacco per un agente o da spedire): la
   vendita si chiude in Ad Hoc (178); stato della merce nel programma da fissare con il collegamento ad Ad Hoc.
-- Inventario periodico, catalogo visivo, ingresso del DDT, resi al fornitore, procedura guidata della configurazione:
-  nebbia della mappa.
+- Resi e inventario periodico: ticket «Resi» e «Inventario periodico» (200).
+- Lettura automatica di tutti i dati della bolla, da foto o PDF (193): ticket «Lettura automatica delle bolle».
+- Confronto tra merce caricata e fattura: collegamento con Ad Hoc della specializzazione (192).
+- Catalogo visivo nella vendita assistita, procedura guidata della configurazione: nebbia della mappa.
