@@ -100,16 +100,13 @@ tre livelli di conferma, quantità letta dalla scatola, ubicazioni facoltative, 
   ubicazioni, decisione 26, e dominio o certificato interno, 123), rinnovo del certificato, aggiornamenti (chi segna
   quelli obbligatori, ritorno alla versione precedente se il programma non riparte, 125), copie di sicurezza e
   ripristino.
-- **Inventario:** conta periodica di tutto il magazzino o di una parte. Rettifica per conteggio, correzioni ed effetto
-  sulle assegnazioni sono già definiti nel «Modello dei dati».
 - **Catalogo visivo per la vendita assistita** (idea dell'utente, decisioni 78 e 86; «banco» diventa «vendita assistita», 178): cercare un articolo e vederne
   disponibilità, prezzo, giacenza e ubicazione, anche quando il cliente non sa bene cosa vuole. Tocca identificazione e
   schermate.
-- **Acquisizione del DDT:** oggi il DDT arriva di carta dal corriere e viene scansionato e caricato; gli uffici hanno
-  spesso anche la versione digitale, che in magazzino non si usa. Da capire se la base legge la foto del DDT, importa
-  la versione digitale o chiede solo il numero (tocca identificazione, fonti degli ordini e schermate).
-- **Resi al fornitore:** compaiono con gli annullamenti, con la merce non prevista e con gli articoli nuovi rifiutati
-  dal responsabile (decisioni 41, 45 e 114); quando e come si registrano.
+- **Prova di lettura delle bolle su bolle vere:** dopo la ricerca «Lettura automatica delle bolle» (193), una prova su
+  bolle di UFP con i dati dei clienti coperti, come la prova visiva; dove conservarle va chiesto all'utente.
+- **Etichette e distinta del corriere:** chi le stampa in UFP (domande 21 e 22 al rivenditore) e nel magazzino Shopify;
+  la ricerca del 18/11/2026 le trova in quasi tutti i gestionali.
 - **Ottimizzazione del venduto (VEND):** l'utente vuole un'analisi a parte, soprattutto per UFP, che vende anche al
   banco e ha più casi particolari da controllare.
 - **Descrizione proposta da un modello che legge immagini e scrive testo** per l'articolo nuovo: se tenerla, e quale

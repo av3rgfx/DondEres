@@ -143,7 +143,12 @@ const NOVITA = [
   "Sezione «Documenti» con le due viste e il registro (189).",
   "«Annulla» dopo le azioni frequenti; riepilogo e tasto con il verbo per chiudere DDT, preparazioni e ritiri; conferma per le azioni gravi (190).",
   "«Danneggiata» al ricevimento e dalla scheda dell'articolo (191).",
-  "Da decidere nel secondo giro, qui in prova: quantità in bolla alla chiusura del DDT e «Metti a posto» diviso per fornitore."
+  "Chiudi DDT: con la foto della bolla davanti si tocca solo la riga dove la bolla dice un'altra quantità; anche gli attesi non arrivati, se la bolla li porta (192).",
+  "«Metti a posto» diviso per fornitore e dentro per DDT (194).",
+  "Tasto «Cerca» dentro DDT, prelievo, messa a posto e vendita: la ricerca si apre sopra e chiudendola si torna al punto (197).",
+  "Al prelievo, pezzi in più del richiesto: avviso, si accetta e va al responsabile (198).",
+  "Ogni scheda che si apre dal basso ha il suo «Annulla» (180).",
+  "Le letture riuscite mostrano ♪: nel programma vero suono breve e vibrazione; un suono diverso per righe ferme ed errori (196)."
 ];
 
 let clockMin = 10*60;
@@ -239,7 +244,7 @@ function register(a, q, how, ofKey){
   let l = d.lines.find(x=>x.a===a && x.of===pick.of); if(!l){ l={a, of:pick.of, cnt:0}; d.lines.push(l); }
   l.cnt+=q; l.lastQ=q; pick.r.ric+=q; if(!d.who) d.who=me();
   const e=S.area.find(x=>x.a===a && x.from==="DDT "+d.num); e? e.q+=q : S.area.push({a,q,from:"DDT "+d.num, forn:d.forn});
-  S.toast = {kind:"scan", txt:`Registrati ${q} ${A(a).unit} · ${A(a).code} su ${pick.of}${pick.o.cli?" (per "+pick.o.cli+")":""}`, a, of:pick.of, q};
+  S.toast = {kind:"scan", txt:`♪ Registrati ${q} ${A(a).unit} · ${A(a).code} su ${pick.of}${pick.o.cli?" (per "+pick.o.cli+")":""}`, a, of:pick.of, q};
   log(`+${q} ${A(a).code} (${how}) su ${pick.of}`, "DDT "+d.num);
   if(pick.r.ric>pick.r.q) S.controlli.push({id:"c"+(++S.n), t:"ecc", a, txt:`Eccedenza: ${pick.r.ric} ${A(a).code} su ${pick.r.q} ordinati (${pick.of}, DDT ${d.num})`});
   if(!S.online) S.pendingOffline++;
@@ -370,7 +375,7 @@ V.ddt = () => {
     <div class="cam"><div class="frame">Inquadratura sempre accesa<br>inquadra la scatola</div>
       <div class="chips"><button class="chip" data-act="sheet:simList">Simula cosa inquadri ▾</button></div></div>
     ${toastHtml()}
-    <button class="btn" data-act="mano:art">Aggiungi a mano</button>
+    <div class="btns two"><button class="btn" data-act="mano:art">Aggiungi a mano</button><button class="btn" data-act="sheet:cerca">Cerca</button></div>
     <h2>Righe lette</h2><div class="list">${lines || `<p class="muted">Ancora niente. Inquadra la prima scatola: la riga nasce dalla lettura e si abbina da sola all'ordine giusto.</p>`}</div>
     ${dm.length?`<h2>Danneggiati, da parte</h2><div class="list">${dm.map(x=>row(`${A(x.a).code} · ${esc(A(x.a).desc)}`,`${x.q}`,"halt","","aspetta il responsabile")).join("")}</div>`:""}
     <details class="exp"><summary>Attesi dal fornitore: ${att.length} righe in ${new Set(att.map(x=>x.k)).size} ordini</summary><div class="list">
@@ -468,6 +473,18 @@ SH.bolla = ({i}) => { const l=ddt().lines[i]; return `<h3>${A(l.a).code} · in b
   <div class="field"><label for="bq">Quantità scritta sulla bolla</label><input id="bq" type="number" inputmode="numeric" value="${l.bolla??l.cnt}"></div>
   <div class="btns two"><button class="btn" data-act="bollaOk:${i}:same">Uguale a contati</button><button class="btn go" data-act="bollaOk:${i}">Salva</button></div>`; };
 
+SH.cerca = ({i}) => { const k=i&&ARTS[i]?i:null;
+  if(!k) return `<h3>Cerca</h3><p class="muted">Il lavoro resta aperto com'è: chiudendo torni al punto.</p>
+  <div class="field"><label for="cs1">Codice o parte della descrizione</label><input id="cs1" type="text" placeholder="per esempio valvola"></div>
+  <div class="list">${Object.keys(ARTS).filter(x=>!x.startsWith("NEW")).map(x=>pick(x,"sheet:cerca:"+x)).join("")}</div><button class="btn" data-act="closeSheet">Torna al lavoro</button>`;
+  const a=A(k); return `<h3>${a.code}</h3><p class="muted">${esc(a.desc)}</p>
+  <div class="list">${row(a.loc+" (abituale)","8 "+a.unit,"","","libera 5 · assegnata 3")}${row("Area di ricevimento","2 "+a.unit)}${row("Prezzo di vendita",a.price)}</div>
+  <div class="field"><label for="cs2">Conta ${a.loc}: pezzi contati</label><input id="cs2" type="number" inputmode="numeric" placeholder="solo se la merce non torna"></div>
+  <div class="btns two"><button class="btn" data-act="sheet:cerca">Altro articolo</button><button class="btn go" data-act="cercaOk:${k}">Torna al lavoro</button></div>`; };
+SH.nonArr = ({i, x}) => { const of=String(i).replace("_"," "); const code = ARTS[x] ? A(x).code : x; return `<h3>${esc(code)} · in bolla?</h3>
+  <p class="muted">Non è arrivato niente di ${esc(code)} su ${of}. Se la bolla lo porta, scrivi quanti ne dice: il responsabile vede che in bolla c'è e la merce no.</p>
+  <div class="field"><label for="na">Quantità scritta sulla bolla</label><input id="na" type="number" inputmode="numeric" value="1"></div>
+  <div class="btns two"><button class="btn" data-act="closeSheet">Non c'è in bolla</button><button class="btn go" data-act="nonArrOk:${of.replace(" ","_")}:${x}">Salva</button></div>`; };
 /* ===== Chiudi DDT: riepilogo con le conseguenze (190) ===== */
 V.chiudi = () => { const d=ddt(); const ferme=d.lines.filter(l=>l.ferma), pronte=d.lines.filter(l=>!l.ferma);
   const mancanti = Object.entries(S.ofs).filter(([k,o])=>o.forn===d.forn).flatMap(([k,o])=>o.righe.filter(r=>r.ric<r.q).map(r=>({k,r})));
@@ -475,22 +492,24 @@ V.chiudi = () => { const d=ddt(); const ferme=d.lines.filter(l=>l.ferma), pronte
   const dm = S.dmgList.filter(x=>x.ddt===d.num);
   return `${hdr(`Chiudi DDT ${esc(d.num)}?`, esc(d.forn))}<main class="main">
   ${d.foto?photo("bolla del DDT "+d.num):`<div class="warnbox">Questo DDT non ha la foto della bolla.</div>`}
-  <div class="warnbox boss">In prova per il secondo giro: guarda la bolla e tocca una riga solo se la bolla dice un'altra quantità.</div>
+  <p class="muted">Guarda la bolla: tocca una riga solo se la bolla dice un'altra quantità (192). Anche un articolo atteso e non arrivato, se la bolla lo porta.</p>
   <h2>Righe pronte · contati e in bolla</h2><div class="list">${pronte.map(l=>{ const i=d.lines.indexOf(l), r=ofLine(l);
     const diff = l.bolla!==undefined && l.bolla!==l.cnt;
     return row(`${A(l.a).code} · ${l.of}`, `${l.cnt}`, diff?"part":"done", "sheet:bolla:"+i, `ordinati ${r?r.q:"?"} · in bolla ${l.bolla===undefined?"come contati":l.bolla}${diff?" · differenza al responsabile":""}`); }).join("") || `<p class="muted">Nessuna riga pronta.</p>`}</div>
   ${ferme.length?`<h2>Righe ferme</h2><div class="list">${ferme.map(l=>row(`${A(l.a).code}`, `${l.cnt}`, "halt", "", esc(l.ferma))).join("")}</div>`:""}
   ${dm.length?`<h2>Danneggiati</h2><div class="list">${dm.map(x=>row(A(x.a).code,`${x.q}`,"halt","","al responsabile")).join("")}</div>`:""}
-  <details class="exp"><summary>Ancora attesi da ${esc(d.forn)}: ${mancanti.length} righe</summary><div class="list">${mancanti.map(x=>row(x.r.a?A(x.r.a).code:esc(x.r.code), `mancano ${x.r.q-x.r.ric}`, "", "", x.k)).join("")}</div><p class="muted">Restano aperte negli ordini: le chiude solo il responsabile (33).</p></details>
+  ${(d.nonArr||[]).length?`<h2>In bolla ma non arrivati</h2><div class="list">${d.nonArr.map(x=>row(esc(x.code),`0 di ${x.q}`,"halt","",`${x.of} · in bolla ${x.q}, contati 0: al responsabile`)).join("")}</div>`:""}
+  <details class="exp"><summary>Ancora attesi da ${esc(d.forn)}: ${mancanti.length} righe</summary><div class="list">${mancanti.map(x=>row(x.r.a?A(x.r.a).code:esc(x.r.code), `mancano ${x.r.q-x.r.ric}`, "", `sheet:nonArr:${x.k.replace(" ","_")}:${x.r.a||x.r.code}`, `${x.k} · tocca se la bolla lo porta`)).join("")}</div><p class="muted">Restano aperte negli ordini: le chiude solo il responsabile (33).</p></details>
   <div class="card"><b>Cosa succede se chiudi</b><ul class="muted" style="margin:0;padding-left:20px;display:grid;gap:4px">
     <li>Al gestionale va un carico con ${pronte.length} righe.</li>
     ${ferme.length?`<li>${ferme.length} riga ferma avrà poi un carico suo, quando decide il responsabile (82).</li>`:""}
-    ${diffB.length?`<li>${diffB.length} differenze con la bolla vanno al responsabile.</li>`:""}
+    ${diffB.length+(d.nonArr||[]).length?`<li>${diffB.length+(d.nonArr||[]).length} differenze con la bolla vanno al responsabile.</li>`:""}
     <li>Il DDT non si riapre: dopo, corregge solo il responsabile (81).</li></ul></div>
   <div class="btns two"><button class="btn" data-act="back">Torna al DDT</button><button class="btn go" data-act="chiudiOk" ${pronte.length?"":"disabled"}>${ferme.length?"Chiudi con le righe pronte":"Chiudi DDT"}</button></div>
   </main>`; };
 function closeDdt(){ const d=ddt(); d.open=false; d.chiuso="18/11 "+clock();
   d.lines.filter(l=>!l.ferma && l.bolla!==undefined && l.bolla!==l.cnt).forEach(l=>S.controlli.push({id:"c"+(++S.n), t:"bolla", a:l.a, txt:`Differenza con la bolla: ${A(l.a).code} contati ${l.cnt}, in bolla ${l.bolla} (DDT ${d.num})`}));
+  (d.nonArr||[]).forEach(x=>S.controlli.push({id:"c"+(++S.n), t:"bolla", a:x.a||null, txt:`In bolla ma non arrivati: ${x.q} ${x.code} (${x.of}, DDT ${d.num})`}));
   log(`Chiude il DDT ${d.num}: un carico al gestionale`+(d.lines.some(l=>l.ferma)?"; la riga ferma avrà un carico suo":""), "DDT "+d.num);
   S.coda_out.unshift({txt:`Carico del DDT ${d.num}`, stato: S.online?"inviato":"in coda"}); }
 
@@ -537,7 +556,7 @@ V.nuovo = () => {
 V.metti = () => { const by={}; S.area.forEach((e,i)=>{ (by[e.forn]=by[e.forn]||{})[e.from]=(by[e.forn][e.from]||[]).concat([[e,i]]); });
   return `${hdr("Metti a posto",`${S.area.length+S.rimetti.length} da sistemare`)}<main class="main">
   ${toastHtml()}
-  <div class="warnbox boss">In prova per il secondo giro: l'area di ricevimento è divisa per fornitore, come la «Libera» di oggi, e dentro per DDT.</div>
+  <button class="btn" data-act="sheet:cerca">Cerca</button>
   <h2>Area di ricevimento</h2>${Object.keys(by).length?Object.entries(by).map(([f,dd])=>`<div class="grp-h"><span>${esc(f)}</span><span>${Object.values(dd).flat().length} articoli</span></div><div class="sub">${Object.entries(dd).map(([from,arr])=>`<div class="muted">${esc(from)}</div><div class="list">${arr.map(([e,i])=>row(`${A(e.a).code} · ${esc(A(e.a).desc)}`,`${e.q} ${A(e.a).unit}`,"","put:a:"+i,`abituale ${A(e.a).loc}`)).join("")}</div>`).join("")}</div>`).join(""):`<p class="muted">Niente da mettere a posto: l'area di ricevimento è vuota.</p>`}
   <h2>Rimetti a posto</h2><div class="list">${S.rimetti.length?S.rimetti.map((e,i)=>row(`${A(e.a).code} · ${esc(A(e.a).desc)}`,`${e.q} ${A(e.a).unit}`,"part","put:r:"+i,e.from)).join(""):`<p class="muted">Niente da rimettere a posto.</p>`}</div>
   <p class="muted">In alternativa si inquadra una scatola qualsiasi dell'area: il programma la cerca in questo elenco.</p></main>`; };
@@ -561,6 +580,7 @@ V.vendita = () => { const B=S.vendite.find(v=>v.id===S.banco); if(!B) return V.b
     <div class="cam"><div class="frame">Inquadra l'articolo, poi l'ubicazione da cui lo prendi</div>
     <div class="chips"><button class="chip" data-act="bancoAdd:R110">Simula: 3PR-110 libero</button><button class="chip" data-act="bancoAdd:S77">Simula: SL-77, merce di altri ordini</button></div></div>
     <div class="list">${B.righe.map(r=>row(`${A(r.a).code} · ${esc(A(r.a).desc)}`,`${r.q} × ${A(r.a).price}`,r.tolto?"part":"done","",`da ${A(r.a).loc}${r.tolto?" · da togliere all'ordine 1039 alla conferma":""}${isBoss()?` · costo ${A(r.a).cost}`:""}`)).join("") || `<p class="muted">Nessun articolo ancora.</p>`}</div>
+    <button class="btn" data-act="sheet:cerca">Cerca</button>
     <div class="btns two"><button class="btn bad" data-act="sheet:vendAnn">Annulla vendita</button>${B.righe.length?`<button class="btn go" data-act="bancoOk">Conferma: crea l'ordine</button>`:`<span></span>`}</div>
     <p class="muted">Tornando indietro la vendita resta tra le cose in sospeso. Dopo la conferma l'ordine va al gestionale (in UFP Ad Hoc), dove si fanno le ricevute.</p></main>`; };
 SH.bancoTogli = () => `<h3>Non c'è abbastanza merce libera</h3><p>SL-77: libera 0. Per venderne 2 li tolgo all'<b>ordine 1039 · Edil Po</b>, il più recente che li aspetta.</p>
@@ -640,7 +660,8 @@ SH.ctl = ({id}) => { const c=S.controlli.find(x=>x.id===id); const b = (t,cls=""
     collega:[b("Conferma il collegamento","go"),b("Rifiuta: elenca i carichi da correggere","bad")],
     dmg:[b("Tieni: torna merce buona","go"),b("Rendi al fornitore"),`<button class="btn bad" data-act="sheet:grave:${id}:scarta">Scarta</button>`],
     bolla:[b("Va bene così","go"),b("Segnala al fornitore")],
-    ecc:[b("Tieni l'eccedenza","go"),b("Rendi al fornitore")]
+    ecc:[b("Tieni l'eccedenza","go"),b("Rendi al fornitore")],
+    prel:[b("Va bene: si cambia l'ordine nel gestionale","go"),b("Correggi: il di più torna a magazzino")]
   }[c.t];
   return `<h3>${esc(c.txt)}</h3>${c.a?photo(A(c.a).photo):""}${c.t==="nuovo"?`<div class="list">${row("Ubicazione abituale","da scegliere","part")}${row("Prezzi","da completare","part")}${row("Si tiene a magazzino","sì")}</div>`:""}<div class="btns">${opts.join("")}</div>`; };
 SH.grave = ({i, x}) => { const c=S.controlli.find(z=>z.id===i); const w = x==="scarta" ? "Scartare questa merce? Esce dal magazzino e al gestionale va uno scarico. Non si torna indietro." : "Rifiutare l'articolo? I carichi fatti con lui vanno corretti e la merce va resa o tenuta come merce non prevista (114).";
@@ -684,6 +705,7 @@ V.pick = () => { const k=S.ordine, o=S.ordini[k], rows=pickRows(o), P=S.pk; cons
     ${P.st<2?`<div class="cam"><div class="frame">${stepTxt}</div><div class="chips">${P.st===0?`<button class="chip" data-act="pkLoc:ok">Simula: ${where}</button><button class="chip" data-act="pkLoc:no">Simula: un'altra ubicazione</button>`:`<button class="chip" data-act="pkArt:ok">Simula: ${A(r.a).code}</button><button class="chip" data-act="pkArt:no">Simula: un altro articolo</button>`}</div></div>`:
      `<div class="qty"><button class="ic" data-act="qm" aria-label="Meno">−</button><input id="q" type="number" inputmode="numeric" value="${r.ass}"><button class="ic" data-act="qp" aria-label="Più">+</button></div><button class="btn go" data-act="pkQty">Preso</button>`}
     ${P.warn?`<div class="warnbox bad">${P.warn}</div>`:""}
+    <button class="btn" data-act="sheet:cerca">Cerca</button>
     <h2>Righe</h2><div class="list">${rows.map((x,j)=>row(`${x.vend||A(x.a).loc} · ${A(x.a).code}`,j<P.n?"preso":`${x.ass}`,j<P.n?"done":j===P.n?"part":"")).join("")}</div>
     <p class="muted">Se esci a metà l'ordine resta tuo, tra le cose in sospeso.</p></main>`; };
 V.fine = () => { const k=S.ordine, o=S.ordini[k]; const part=o.righe.filter(r=>r.ass<r.q);
@@ -735,7 +757,7 @@ function render(){
   const offline = !S.online ? `<div class="banner bad">Rete assente: il lavoro è fermo. ${S.pendingOffline} letture salvate sul telefono, partiranno appena torna la rete.</div>` : "";
   app.innerHTML = `<div class="proto"><span>PROTOTIPO · dati inventati${S.user?` · ${S.user.n}`:""}</span><button data-act="go:scenari">Scenari</button></div>${offline}${view}
     <details class="log"><summary>Tutto quello che è successo, per chi prova (${S.log.length})</summary><ol>${S.log.slice(0,30).map(e=>`<li>${e.at} · ${esc(e.who)}: ${esc(e.txt)}</li>`).join("")}</ol></details>
-    ${S.sheet?`<div class="sheet-bg" data-act="bg"><div class="sheet" role="dialog" aria-modal="true">${SH[S.sheet.sk](S.sheet)}</div></div>`:""}`;
+    ${S.sheet?`<div class="sheet-bg" data-act="bg"><div class="sheet" role="dialog" aria-modal="true">${(h=>/data-act="(closeSheet|home|back)"/.test(h)?h:h+`<button class="btn" data-act="closeSheet">Annulla</button>`)(SH[S.sheet.sk](S.sheet))}</div></div>`:""}`;
 }
 
 /* ===== Azioni ===== */
@@ -805,6 +827,8 @@ function act(a, el){
     case "manoArt": return sheet("mano",{tab:"art", a:x});
     case "manoOf": return sheet("mano",{tab:"ord", of:ofk(x)});
     case "bollaOk": { const l=ddt().lines[+x]; l.bolla = y==="same" ? undefined : (+document.getElementById("bq").value); S.sheet=null; if(l.bolla!==undefined) log(`In bolla ${l.bolla} ${A(l.a).code} (contati ${l.cnt})`, "DDT "+ddt().num); return render(); }
+    case "cercaOk": { const n=document.getElementById("cs2").value; if(n){ S.controlli.push({id:"c"+(++S.n), t:"conta", a:x, txt:`Conteggio di ${me()} in ${A(x).loc}: ${n} ${A(x).code}`}); log(`Conteggio: ${n} ${A(x).code} in ${A(x).loc}, vale subito`); } S.sheet=null; return render(); }
+    case "nonArrOk": { const d=ddt(); const q=+document.getElementById("na").value||1; const code = ARTS[y] ? A(y).code : y; d.nonArr=(d.nonArr||[]).filter(z=>!(z.of===ofk(x)&&z.code===code)); d.nonArr.push({of:ofk(x), code, a:ARTS[y]?y:null, q}); log(`In bolla ${q} ${code}, non arrivati`, "DDT "+d.num); S.sheet=null; return render(); }
     case "chiudiOk": closeDdt(); S.toast=null; S.stack=["home"]; S.screen="ricevi"; S.sheet={sk:"mettiOra", n:S.area.length}; render(); return window.scrollTo(0,0);
     case "mettiOra": S.stack=["home"]; S.screen="metti"; S.sheet=null; render(); return window.scrollTo(0,0);
     case "nuovo":
@@ -861,8 +885,8 @@ function act(a, el){
     case "pkLoc": S.toast=null; if(x==="no"){ S.pk.warn="Non è l'ubicazione proposta. Prendi da qui solo se l'articolo c'è: il programma la cambia."; } else { S.pk.warn=null; S.pk.st=1; } return render();
     case "pkArt": S.toast=null; if(x==="no"){ S.pk.warn="Stop: non è l'articolo di questa riga. Rimettilo a posto e inquadra quello giusto."; } else { S.pk.warn=null; S.pk.st=2; } return render();
     case "pkQty": { const o=S.ordini[S.ordine], r=pickRows(o)[S.pk.n]; const q=+document.getElementById("q").value;
-      if(q>r.ass){ S.pk.warn=`Ne servono ${r.ass}: rimetti a posto gli altri ${q-r.ass}.`; return render(); }
-      log(`Prelevati ${q} ${A(r.a).code} da ${r.vend||A(r.a).loc} per l'ordine ${S.ordine}`, "Ordine "+S.ordine); S.pk={n:S.pk.n+1,st:0}; S.toast={txt:`Presi ${q} ${A(r.a).code}`}; render(); return window.scrollTo(0,0); }
+      if(q>r.ass){ S.controlli.push({id:"c"+(++S.n), t:"prel", a:r.a, txt:`Prelievo oltre il richiesto: ${q} ${A(r.a).code} su ${r.ass} per l'ordine ${S.ordine}, da ${me()}`}); log(`Prelievo oltre il richiesto: ${q} ${A(r.a).code} su ${r.ass}, al responsabile`, "Ordine "+S.ordine); }
+      log(`Prelevati ${q} ${A(r.a).code} da ${r.vend||A(r.a).loc} per l'ordine ${S.ordine}`, "Ordine "+S.ordine); S.pk={n:S.pk.n+1,st:0}; S.toast={txt: q>r.ass ? `♪ Presi ${q} ${A(r.a).code} su ${r.ass}: il di più lo vede il responsabile` : `♪ Presi ${q} ${A(r.a).code}`}; render(); return window.scrollTo(0,0); }
     case "pronto": { const o=S.ordini[S.ordine]; o.stato="pronto"; o.pronto="ora"; o.colli=document.getElementById("colli2").value; o.kg=document.getElementById("kg").value; o.prep=document.getElementById("prep").value;
       log(`Ordine ${S.ordine} pronto (evaso): ${o.colli} colli, ${o.kg} kg, preparato da ${o.prep}${o.prep!==me()?` (registrato da ${me()})`:""}; ${o.shop?"a Shopify non si manda niente finché non parte":"documento di prelievo al gestionale"}`, "Ordine "+S.ordine); S.ordine=null; S.pk=null; back(); return; }
     case "pkBack": S.pk.n=Math.max(0,pickRows(S.ordini[S.ordine]).length-1); S.pk.st=2; return render();
