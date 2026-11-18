@@ -150,7 +150,8 @@ const NOVITA = [
   "Terzo giro: in «Cerca e conta» il tasto «Conta un'ubicazione» apre la conta cieca dell'inventario per una sola ubicazione, che vale subito (244).",
   "Correzione sulla preparazione: sulla riga che non si completa «Sospendi l'ordine» o «Concludi senza» (246); l'ordine sospeso va tra i Fermi e, quando arriva il mancante (Scenari), torna «Da riprendere» (247); il resto resta aperto e torna da preparare (248). Provalo come Luca: piano Bianchi M., ordine 1039.",
   "Nuovo piano e anteprima del preparatore: avviso che non blocca, «N articoli non bastano», che aperto dice servono e disponibili (249).",
-  "Prima schermata: il preparatore senza permessi non vede «Altri lavori» (250); in Configurazione «I preparatori vedono il lavoro dei colleghi» e «Ubicazione per gli ordini sospesi» (247, 250)."
+  "Prima schermata: senza lavori in più né permessi non si vede «Altri lavori», per tutte le mansioni (250, 254); in Configurazione «I preparatori vedono il lavoro dei colleghi» (di serie sì, 253) e «Ubicazione per gli ordini sospesi» (247).",
+  "Al prelievo, «Ne trovo di più» e «Ne trovo meno»: si scrive quanti pezzi ci sono nell'ubicazione, vale subito; i pezzi trovati vanno a quest'ordine (251, 252)."
 ];
 
 let clockMin = 10*60;
@@ -894,7 +895,7 @@ SH.ctl = ({id}) => { const c=S.controlli.find(x=>x.id===id); const b = (t,cls=""
 SH.grave = ({i, x}) => { const c=S.controlli.find(z=>z.id===i); const w = x==="scarta" ? "Scartare questa merce? Esce dal magazzino e al gestionale va uno scarico. Non si torna indietro." : "Rifiutare l'articolo? I carichi fatti con lui vanno corretti e la merce va resa o tenuta come merce non prevista (114).";
   return `<h3>${x==="scarta"?"Scarta":"Rifiuta"}</h3><p>${esc(c.txt)}</p><div class="warnbox bad">${w}</div>
   <div class="btns two"><button class="btn" data-act="closeSheet">Torna indietro</button><button class="btn bad" data-act="ctlDone:${i}:${x==="scarta"?"Scarta":"Rifiuta"}">${x==="scarta"?"Scarta":"Rifiuta"}</button></div>`; };
-V.utenti = () => `${hdr("Utenti")}<main class="main"><div class="list">${USERS.map(u=>row(u.n,u.r==="boss"?"responsabile":"operatore","","",["mansioni: "+u.m.map(x=>MANS[x]).join(", "), u.r!=="boss"&&u.plan?"pianifica le spedizioni":"", u.r!=="boss"&&u.sped?"conferma le spedizioni":"", u.r==="boss"?(S.mail?"mail aziendale: anna@azienda.example":"mail aziendale: non indicata"):"mail aziendale: facoltativa"].filter(Boolean).join(" · "))).join("")}</div><button class="btn">Nuovo utente</button><p class="muted">Segnaposto: per chi se ne va basta disattivare l'utente.</p></main>`;
+V.utenti = () => `${hdr("Utenti")}<main class="main"><div class="list">${USERS.map(u=>row(u.n,u.r==="boss"?"responsabile":"operatore","","",["mansioni: "+u.m.map(x=>MANS[x]).join(", "), u.r!=="boss"&&u.plan?"pianifica le spedizioni":"", u.r!=="boss"&&u.sped?"conferma le spedizioni":"", u.r==="boss"?(S.mail?"mail aziendale: anna@azienda.example":"mail aziendale: non indicata"):"mail aziendale: facoltativa", u.r==="boss"?"":"lavori in più: "+((u.extra||[]).join(", ")||"nessuno")].filter(Boolean).join(" · "))).join("")}</div><button class="btn">Nuovo utente</button><p class="muted">Segnaposto: per chi se ne va basta disattivare l'utente.</p></main>`;
 V.config = () => `${hdr("Configurazione")}<main class="main"><div class="warnbox boss">Segnaposto: la procedura guidata dell'installazione è ancora nella nebbia della mappa.</div><div class="list">
   ${[["Ubicazioni","sì"],["VEND","acceso"],["Posti VEND","numerati"],["Prezzi","accesi"],["Ordini parziali si prelevano","sì"],["Uscita dopo","30 min"],["Scambio ogni","5 min"],["«Vecchi» nelle cose in sospeso dopo","2 giorni"]].map(([a,b])=>row(a,b)).join("")}
   ${row("Inventario: quantità attesa a chi conta",S.cfgCieca?"nascosta":"visibile","","cfg:cieca","di serie nascosta (230)")}${row("Inventario: seconda conta se il numero non torna",S.cfgSec?"la stessa persona, subito":"spenta","","cfg:sec","di serie accesa (231)")}
@@ -928,7 +929,7 @@ V.preleva = () => {
 V.piano = () => { const p=S.piani.find(x=>x.id===S.pianoSel);
   return `${hdr(`Piano «${esc(p.t)}»`,`di ${p.prep}`)}<main class="main"><div class="list">${p.ord.map(k=>ordRow(k)+(S.ordini[k].stato==="aperto"?avviso(S.ordini[k]):"")).join("")}</div>
   <p class="muted">Tocca un ordine per iniziare. Chi lo apre lo prende; uscendo a metà resta tuo, tra le cose in sospeso.</p></main>`; };
-function pickRows(o){ return o.righe.map((r,i)=>({...r,i})).filter(r=>r.ass>0).sort((x,y)=>(x.vend||A(x.a).loc).localeCompare(y.vend||A(y.a).loc)); }
+function pickRows(o){ return o.righe.map((r,i)=>({...r,i})).filter(r=>r.ass>0||r.vista).sort((x,y)=>(x.vend||A(x.a).loc).localeCompare(y.vend||A(y.a).loc)); }
 V.pick = () => { const k=S.ordine, o=S.ordini[k], rows=pickRows(o), P=S.pk; const r=rows[P.n];
   if(!r) return V.fine();
   const where = P.alt || r.vend || A(r.a).loc; const ic = P.st===0 && inConta(where);
@@ -940,10 +941,16 @@ V.pick = () => { const k=S.ordine, o=S.ordini[k], rows=pickRows(o), P=S.pk; cons
      `<div class="qty"><button class="ic" data-act="qm" aria-label="Meno">−</button><input id="q" type="number" inputmode="numeric" value="${r.ass}"><button class="ic" data-act="qp" aria-label="Più">+</button></div><button class="btn go" data-act="pkQty">Preso</button>`}
     ${ic?`<div class="warnbox">${where} in conta da ${ic.who}, da ${ic.age||"poco"}: si sta contando (233). Prendi da un'altra ubicazione o aspetta qualche minuto.</div><div class="btns two"><button class="btn" data-act="pkAlt:C-01-2">Prendi da C-01-2</button><button class="btn" data-act="pkWait">Aspetto</button></div>`:""}
     ${P.warn?`<div class="warnbox bad">${P.warn}</div>`:""}
+    <div class="btns two"><button class="btn small" data-act="sheet:trova:piu">Ne trovo di più</button><button class="btn small" data-act="sheet:trova:meno">Ne trovo meno</button></div>
     ${r.ass<r.q && !(o.resto||{})[r.a]?`<div class="warnbox">Ne servono ${r.q}, ne risultano ${r.ass}. Puoi sospendere l'ordine finché arriva il resto, o concludere senza e spedire quello che c'è (246).</div><div class="btns two"><button class="btn" data-act="sheet:sosp">Sospendi l'ordine</button><button class="btn go" data-act="senza:${r.a}">Concludi senza</button></div>`:""}
     <button class="btn" data-act="sheet:cerca">Cerca</button>
     <h2>Righe</h2><div class="list">${rows.map((x,j)=>row(`${x.vend||A(x.a).loc} · ${A(x.a).code}`,j<P.n?"preso":`${x.ass}`,j<P.n?"done":j===P.n?"part":"")).join("")}</div>
     <p class="muted">Se esci a metà l'ordine resta tuo, tra le cose in sospeso.</p></main>`; };
+SH.trova = ({i}) => { const o=S.ordini[S.ordine], r=pickRows(o)[S.pk.n], where=S.pk.alt||r.vend||A(r.a).loc;
+  return `<h3>${i==="piu"?"Ne trovo di più":"Ne trovo meno"} · ${A(r.a).code}</h3>
+  <div class="field"><label for="tq">Quanti ce ne sono in ${where}?</label><input id="tq" type="number" inputmode="numeric" value=""></div>
+  <p class="muted">${i==="piu"?"Il numero vale subito, come «Conta un'ubicazione». I pezzi trovati vanno a quest'ordine; il responsabile lo vede (251).":"Il numero vale subito; se ne restano meno di quelli che servono, sospendi o concludi senza (252)."}</p>
+  <div class="btns two"><button class="btn" data-act="closeSheet">Annulla</button><button class="btn go" data-act="trovaOk:${i}">Salva</button></div>`; };
 SH.sosp = () => { const o=S.ordini[S.ordine], m=manca(o);
   return `<h3>Sospendi l'ordine ${S.ordine}</h3><div class="field"><label for="sm">Motivo</label><input id="sm" type="text" value="manca ${m.map(r=>A(r.a).code+" ("+(r.q-r.ass)+")").join(", ")}"></div>
   <p class="muted">I pezzi già presi restano prelevati per quest'ordine${S.cfgSosp?"":": lascia il pacco sul tuo tavolo con sopra il riferimento"}. L'ordine va tra i fermi; quando arriva il mancante torna «Da riprendere» (247).</p>
@@ -1243,6 +1250,11 @@ function act(a, el){
       log(`Prelevati ${q} ${A(r.a).code} da ${r.vend||A(r.a).loc} per l'ordine ${S.ordine}`, "Ordine "+S.ordine); S.pk={n:S.pk.n+1,st:0}; S.toast={txt: q>r.ass ? `♪ Presi ${q} ${A(r.a).code} su ${r.ass}: il di più lo vede il responsabile` : `♪ Presi ${q} ${A(r.a).code}`}; render(); return window.scrollTo(0,0); }
     case "pronto": { const o=S.ordini[S.ordine]; o.stato="pronto"; o.pronto="ora"; o.colli=document.getElementById("colli2").value; o.kg=document.getElementById("kg").value; o.prep=document.getElementById("prep").value;
       log(`Ordine ${S.ordine} pronto (evaso): ${o.colli} colli, ${o.kg} kg, preparato da ${o.prep}${o.prep!==me()?` (registrato da ${me()})`:""}; ${o.shop?"a Shopify non si manda niente finché non parte":"documento di prelievo al gestionale"}`, "Ordine "+S.ordine); S.ordine=null; S.pk=null; back(); return; }
+    case "trovaOk": { const o=S.ordini[S.ordine], pr=pickRows(o)[S.pk.n], R=o.righe[pr.i], where=S.pk.alt||pr.vend||A(pr.a).loc, v=document.getElementById("tq").value; if(v===""){ return; } const n=+v, prima=R.ass; R.vista=true;
+      if(x==="piu"){ R.ass=Math.min(R.q, Math.max(R.ass, n)); S.controlli.push({id:"c"+(++S.n), t:"conta", a:R.a, txt:`Conteggio di ${me()} in ${where} al prelievo: ${n} ${A(R.a).code}; ${R.ass-prima} in più all'ordine ${S.ordine}${R.a==="N55"?" (l'ordine 1044, più vecchio, li aspettava)":""}`}); }
+      else { R.ass=Math.min(R.ass, n); S.controlli.push({id:"c"+(++S.n), t:"conta", a:R.a, txt:`Conteggio di ${me()} in ${where} al prelievo: ${n} ${A(R.a).code}, meno di quelli che risultavano`}); }
+      log(`${x==="piu"?"Ne trovo di più":"Ne trovo meno"}: ${n} ${A(R.a).code} in ${where}, vale subito; all'ordine ${S.ordine} ${R.ass} di ${R.q}`, "Ordine "+S.ordine);
+      S.sheet=null; S.toast={txt: R.ass>=R.q ? `♪ Ora la riga è completa: prendi ${R.ass} ${A(R.a).code}` : `Giacenza corretta: per quest'ordine ${R.ass} di ${R.q} ${A(R.a).code}`}; return render(); }
     case "senza": { const o=S.ordini[S.ordine]; o.resto=o.resto||{}; o.resto[x]=true; log(`Concludi senza: ${A(x).code} mancante resta aperto sull'ordine ${S.ordine}, partirà appena arriva`, "Ordine "+S.ordine); return render(); }
     case "sospOk": { const o=S.ordini[S.ordine], m=document.getElementById("sm"); o.ferma=m?m.value:"manca un articolo"; o.posto=x||null; o.age="ora";
       log(`Sospende l'ordine ${S.ordine}: ${o.ferma}${x?"; pacco in "+x:"; pacco sul tavolo"}`, "Ordine "+S.ordine); S.sheet=null; S.ordine=null; S.pk=null; S.stack=["home"]; return go("preleva", false); }

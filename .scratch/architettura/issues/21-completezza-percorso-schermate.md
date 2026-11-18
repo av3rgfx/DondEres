@@ -77,3 +77,6 @@ nel browser su tutti i flussi.
   «Altri lavori» e vuole una scelta per magazzino sul lavoro dei colleghi, che in UFP resta visibile). Nota dell'utente:
   cosa fa il preparatore se la merce c'è ma non risulta, o ce n'è meno. Prototipo corretto e provato nel browser.
   Secondo giro nella stessa pagina.
+- 18/11/2026, secondo giro della correzione: accettate le consigliate (251–255); specifica scritta nella sezione
+  «Percorso delle schermate» → «Preparazione e spedizione» e «Chi vede cosa». Domanda dell'utente alla 251 («basta
+  aggiornare la giacenza?»): analisi e due domande nel terzo giro, con la riga a zero nel prelievo.

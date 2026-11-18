@@ -926,7 +926,9 @@ nebbia della mappa.
 | Cosa si vede per primo | Le mansioni, una o più per utente: magazziniere (ricevere, mettere a posto, rimettere a posto, cercare e contare) e preparatore (prelevare, vendita assistita, cercare) | 176, 177 |
 
 **Prima schermata.** In grande un pulsante per ogni lavoro delle mansioni dell'utente, con il numero di cose che
-aspettano; sotto, «Altri lavori» con quelli che ruolo e permessi gli consentono. Con più mansioni la schermata le unisce.
+aspettano; sotto, «Altri lavori» solo con i lavori che il responsabile gli dà in più nella sua scheda utente, uno per
+uno, e quelli dei permessi («Spedisci», «Piani di spedizione»); senza, «Altri lavori» non c'è. Vale per tutte le
+mansioni (250, 254). Con più mansioni la schermata le unisce.
 Il responsabile vede tutti i lavori, più «Da controllare», «Piani di spedizione», «Utenti» e «Configurazione», e gli
 avvisi di aggiornamento e di scambio bloccato (161, 177, 179).
 
@@ -983,14 +985,37 @@ crea il piano; la sigla è sostituita dal nome di chi ha fatto l'accesso; «sped
 | Passo | Con i piani (UFP) | Con la coda (Shopify) | Decisioni |
 |---|---|---|---|
 | Chi dà il lavoro | Chi ha il permesso «Pianifica le spedizioni» crea il piano: titolo libero (proposto dall'agente dell'ordine, se il gestionale lo manda), preparatore, ordini con la loro copertura (completo, «3 di 5», niente). Un ordine arriva ai preparatori solo dentro un piano | Nessuno: «Prossimo ordine» dà l'ordine pronto più vecchio | 165, 167–169, 175 |
-| Cosa vede il preparatore | Prima i suoi piani, poi quelli dei colleghi | Il numero di ordini in coda e «Prossimo ordine» | 167, 168 |
+| Cosa vede il preparatore | Prima i suoi piani, poi quelli dei colleghi (di serie; si spegne per magazzino); accanto a ogni ordine l'avviso «N articoli non bastano», che aperto dice servono e disponibili | Il numero di ordini in coda e «Prossimo ordine» | 167, 168, 249, 250, 253 |
 | Prendere un ordine | Chi lo apre lo prende; gli altri vedono «in preparazione da…»; chi pianifica riassegna | Chi lo riceve dalla coda lo prende; il responsabile rimette in coda un ordine lasciato a metà | 170, 175 |
-| Prelievo | Riga per riga in ordine di ubicazione: scansione dell'ubicazione, inquadratura dell'articolo (stop se è un altro), quantità; la merce in VEND si prende dal suo posto; una riga coperta in parte dice «prendi 3 di 5» | Uguale | 76, 97, 103, 164 |
+| Prelievo | Riga per riga in ordine di ubicazione: scansione dell'ubicazione, inquadratura dell'articolo (stop se è un altro), quantità; la merce in VEND si prende dal suo posto; una riga coperta in parte dice «prendi 3 di 5» e offre «Sospendi l'ordine» o «Concludi senza»; «Ne trovo di più» e «Ne trovo meno» correggono la giacenza sul momento | Uguale | 76, 97, 103, 164, 246, 251, 252 |
 | Fine | Colli, chili, «Preparato da» già compilato con chi ha fatto l'accesso e modificabile (se cambia, si registrano tutti e due i nomi), corriere in grande con l'indicazione del suo posto. L'ordine è evaso e al gestionale va il documento di prelievo | Uguale; a Shopify non si manda niente | 21, 52, 61, 171, 174, 175 |
 | Spedizione | «Spedisci», per chi ha il permesso: ordini pronti divisi per corriere (e «Senza corriere»); si toccano quelli che restano; «Ritirato da …» segna spediti gli altri | Uguale; la spedizione si segna anche su Shopify | 52, 61, 172, 173, 175 |
 
 Piani e coda seguono le stesse regole: solo ordini pagati (63), ordini coperti in parte secondo la scelta del magazzino
-(165). Un ordine pronto troppo tardi per il corriere resta pronto e parte con il ritiro successivo (172). Il corriere
+(165). Nel nuovo piano un ordine con un articolo assente o con più pezzi della disponibilità dà un avviso che non blocca:
+chiuso dice quanti articoli non bastano, aperto dice per ognuno servono e disponibili; l'ordine si aggiunge lo stesso
+(249).
+
+**Quando manca qualcosa al prelievo** (246–248, 251, 252, 255; correzione dell'utente del 18/11/2026):
+
+- Sulla riga che non si completa il preparatore sceglie **«Sospendi l'ordine»** o **«Concludi senza»**. Se l'articolo
+  risultava e non c'è, lo vede anche il responsabile, con la proposta di contare l'ubicazione (244).
+- **Ordine sospeso** (247): anche per giorni. La merce già presa resta prelevata per quell'ordine e non va ad altri. Di
+  serie non si registra dove resta il pacco (oggi sul tavolo del preparatore, con il riferimento); per magazzino si
+  accende un'ubicazione per gli ordini sospesi (di serie «SOSPESI») e allora si inquadra dove resta. L'ordine sta nei
+  «Fermi» di «Preleva» con il motivo; chi pianifica lo vede e può darlo a un altro (170). Quando arriva il mancante passa
+  a **«Da riprendere»**.
+- **Concludi senza** (248): il resto resta aperto sullo stesso ordine e riceve la merce appena arriva, dal più vecchio
+  (16). Quando è coperto l'ordine torna da preparare: con i piani tra gli ordini da pianificare, segnato «resto»; con la
+  coda di nuovo in coda. Al gestionale e a Shopify parte una spedizione per volta (su Shopify due evasioni dello stesso
+  ordine).
+- **Ne trovo di più** (251): il preparatore scrive quanti pezzi ci sono nell'ubicazione; vale subito come «Conta
+  un'ubicazione». I pezzi trovati vanno all'ordine in preparazione, eccezione alla regola del più vecchio perché la
+  merce è già in mano; il responsabile lo vede con gli ordini più vecchi che li aspettavano.
+- **Ne trovo meno** (252): scrive quanti ce ne sono; vale subito, l'assegnazione si rifà e, se non bastano, sospende o
+  conclude senza.
+- La scelta «Ordini coperti in parte si prelevano» (165) resta: se è «no», un ordine coperto in parte non entra in coda;
+  con i piani chi pianifica vede l'avviso e decide (255). Un ordine pronto troppo tardi per il corriere resta pronto e parte con il ritiro successivo (172). Il corriere
 viene dall'ordine nel sistema d'origine (su Shopify il metodo di spedizione) o lo sceglie chi pianifica (175).
 
 ### Vendita assistita
@@ -1144,11 +1169,14 @@ aggiungere, dal più economico:
 | Scelta | Valori | Di serie | Decisione |
 |---|---|---|---|
 | Ordini coperti in parte si prelevano | sì, no | sì | 165 |
+| I preparatori vedono il lavoro dei colleghi | sì, no | sì | 250, 253 |
+| Ubicazione per gli ordini sospesi | spenta, accesa (con nome) | spenta; nome di serie «SOSPESI» | 247, 255 |
 | Piani di spedizione | accesi, spenti (si lavora con la coda) | spenti | 167, 175 |
 | Chili a fine preparazione | richiesti, facoltativi | richiesti | 171, 175 |
 | «Vecchi» nelle cose in sospeso dopo | giorni | 2 | 187 |
 
-Per utente: ruolo, mansioni, permessi «Pianifica le spedizioni» e «Conferma le spedizioni» (169, 173, 177). Per
+Per utente: ruolo, mansioni, lavori in più, permessi «Pianifica le spedizioni» e «Conferma le spedizioni» (169, 173,
+177, 254). Per
 telefono: volume dei suoni, spenti o accesi (196).
 
 ### Rimandato ad altri ticket o alla nebbia della mappa
