@@ -252,6 +252,32 @@ L'elenco in ordine di tempo di tutte le operazioni, con chi, quando, da quale di
 sezione «Documenti».
 _Evitare_: log, storico (da solo), cronologia (è quella di un singolo documento)
 
+**Reso al fornitore**:
+La merce che il magazzino restituisce a un fornitore, raccolta per fornitore e seguita dalla richiesta fino alla
+partenza.
+_Evitare_: restituzione, RMA (è il numero di autorizzazione), reso (da solo)
+
+**Reso del cliente**:
+La merce che un cliente restituisce, ricevuta partendo dall'ordine spedito con cui era uscita.
+_Evitare_: rientro, reso (da solo)
+
+**Da rendere**:
+Lo stato della merce che il responsabile ha deciso di restituire al fornitore: resta in giacenza ma non si assegna e
+non si preleva finché non parte.
+_Evitare_: in reso, bloccata
+
+**Area resi**:
+L'ubicazione dove aspetta la merce da rendere, con il nome scelto dal magazzino.
+_Evitare_: RESIF (è il nome di UFP), zona resi
+
+**Richiesta di reso**:
+Il messaggio al fornitore che chiede di accettare un reso, con le righe, il motivo e le prove.
+_Evitare_: segnalazione, mail di reso
+
+**Riserva**:
+La dicitura scritta sul documento del corriere quando un collo arriva rovinato, che conserva il diritto di contestare.
+_Evitare_: accettato con riserva (è il timbro), contestazione
+
 ## Sistemi
 
 **Gestionale**:

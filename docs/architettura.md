@@ -20,11 +20,12 @@ Un pezzo presente in magazzino si trova sempre in uno di questi stati:
 | In VEND | Arrivato con un ordine fornitore fatto per quel cliente | No, salvo annullamento (34) |
 | Prelevato | Preso dall'operatore; l'ordine è evaso e la merce aspetta la spedizione (21, 36) | No |
 | In attesa di decisione | Merce non prevista, caricata ma non ubicata (45) | No, finché il responsabile non la tiene (48) |
+| Da rendere | Decisa per il reso al fornitore, in attesa di partire (207); nell'area resi se il magazzino usa le ubicazioni (217) | No, finché il reso non parte o il fornitore non lo rifiuta (214) |
 
 La spedizione fa uscire il pezzo dal magazzino. La quantità che un operatore vede come prelevabile è sempre:
 
 ```
-prelevabile = in magazzino − assegnato − in VEND − prelevato − in attesa di decisione
+prelevabile = in magazzino − assegnato − in VEND − prelevato − in attesa di decisione − da rendere
 ```
 
 ### Il ricevimento
@@ -300,7 +301,7 @@ I nomi delle entità sono quelli di `GLOSSARY.md`.
 | Compito | Tipo (da mettere a posto, rimetti a posto), articolo, quantità, da dove | 62, 69 |
 | Da controllare | Movimenti e avvisi per il responsabile: merce senza ordine, eccedenze, conteggi, collegamenti da confermare, differenze con la bolla, unità mai viste, possibili doppioni, differenze con il sistema d'origine | 31, 32, 45, 49, 71–73, 77, 86 |
 | Coda di uscita | Documenti da mandare a gestionale o Shopify, con stato e tentativi | 54, 61 |
-| Utente | Nome, ruolo (operatore o responsabile), PIN o password, attivo sì o no | 27, 80 |
+| Utente | Nome, ruolo (operatore o responsabile), PIN o password, mail aziendale facoltativa, attivo sì o no | 27, 80, 223 |
 | Configurazione | Le scelte per magazzino delle tabelle «Configurazione per magazzino» | |
 
 **Provenienza.** Articoli, fornitori, clienti e ordini importati portano il sistema d'origine e il codice che hanno lì
@@ -947,7 +948,11 @@ avvisi di aggiornamento e di scambio bloccato (161, 177, 179).
    due quantità, «non è tra gli attesi», «Collego questo barcode?», «non lo so» (tabella «Cosa vede l'operatore» nella
    sezione «Percorso di identificazione»). La scheda della quantità ha più e meno, «× colli» e il consiglio «come
    l'ultima volta».
-4. **Aggiungi a mano** (185), quando una scatola non si legge: scheda «Per articolo» (gli articoli che il fornitore deve
+4. **Aggiungi a mano** (185, 224), quando una scatola non si legge. Prima scheda **«Dalla bolla»**: le righe della
+   bolla non ancora trovate, nell'ordine del foglio (dalla lettura della bolla dove è accesa, altrove dall'ordine
+   citato); si tocca la riga e si scrive il contato. Una riga senza ordine aperto si cerca a mano; se l'ordine manca
+   davvero, «Manca l'ordine»: la riga diventa ferma (82) e va al responsabile, che crea l'ordine nel gestionale; al
+   primo scambio la riga riparte con un carico suo, il resto del DDT si chiude con le righe pronte. Poi scheda «Per articolo» (gli articoli che il fornitore deve
    ancora mandare; toccato uno, gli ordini che lo contengono nell'ordine dell'abbinamento, con data, quantità mancante e
    cliente, il primo già proposto) e scheda «Per ordine» (gli ordini aperti del fornitore; dentro, gli articoli). Se la
    scatola aveva un barcode non riconosciuto, alla registrazione si propone di collegarlo (92).
@@ -1158,3 +1163,180 @@ telefono: volume dei suoni, spenti o accesi (196).
 - Lettura automatica di tutti i dati della bolla, da foto o PDF (193): ticket «Lettura automatica delle bolle».
 - Confronto tra merce caricata e fattura: collegamento con Ad Hoc della specializzazione (192).
 - Catalogo visivo nella vendita assistita, procedura guidata della configurazione: nebbia della mappa.
+
+## Lettura automatica delle bolle
+
+Dalla ricerca «Lettura automatica delle bolle», chiusa il 18/11/2026: `docs/research/2026-11-18-lettura-automatica-bolle.md`.
+Decisioni 192, 193 e 202–206. La prova la esegue il ticket «Esecuzione della prova di lettura delle bolle». Domande
+nella pagina privata https://claude.ai/artifact/KQtNpyrXjbywxnz1iGKnGY.
+
+### Cosa si sa
+
+- Testata (fornitore, numero, data, ordine citato): leggibile in sede con strumenti a licenza commerciale. Righe con
+  codice e quantità: leggibili da modelli recenti in sede, ma nessuna fonte li misura su bolle italiane. Finché la prova
+  non dice il contrario, le quantità in bolla entrano come nella 192; quelle lette restano «quantità in bolla», mai
+  contate (183, 193).
+- Sulle bolle vere di UFP (3 fornitori, viste il 18/11/2026) una parte dei dati è già in codici stampati: il DataMatrix
+  di AGB porta numero e data del DDT, i barcode di ISEO l'EAN di ogni riga. Si leggono senza riconoscere il testo
+  (zxing-cpp, Apache-2.0); il DataMatrix tiene anche insieme le pagine dello stesso DDT.
+- Ogni bolla porta due numeri d'ordine: la conferma del fornitore e l'ordine di UFP, scritto in posti diversi per ogni
+  fornitore. L'abbinamento usa quello di UFP (70).
+- Righe che non sono merce, da scartare: intestazioni «Saldo» e «Acconto», righe con il solo numero d'ordine,
+  riferimenti del cliente, pallet a rendere, testi legali, merce in sconto (da distinguere o sommare: da chiarire).
+- Strumenti esclusi per licenza: LayoutLMv3, DocTr, Qwen2.5-VL-3B e derivati (Nanonets-OCR, OCRFlux), Marker, Surya e
+  Chandra (soglia di ricavi), HunyuanOCR (esclude l'UE), jina-ocr. Da evitare dentro il programma: PyMuPDF (AGPL),
+  Poppler (GPL).
+- Gli scanner di documenti di Android e iPhone funzionano solo nelle app native: nella web app (121) ritaglio e
+  raddrizzamento si fanno con OpenCV.js o jscanify.
+
+### Come si legge una bolla (proposta da provare)
+
+1. **Codici stampati** su ogni pagina (zxing): numero e data dal DataMatrix, EAN delle righe. Dove ci sono, valgono più
+   del testo letto.
+2. **Foto o PDF.** Dal PDF con testo si legge il testo senza riconoscimento (pdfplumber, MIT). Dalla foto: ritaglio,
+   raddrizzamento, contrasto, poi uno dei sistemi della prova.
+3. **Uscita in uno schema fisso** (tipo di documento, testata, righe con il loro tipo, ordine di UFP, Saldo/Acconto,
+   segni a mano), vincolato in JSON dove il sistema lo permette.
+4. **Controlli sugli ordini aperti** del fornitore scelto: numero d'ordine di UFP per gruppo di righe, poi codice o EAN,
+   poi quantità residua. Un codice che non c'è negli ordini aperti è un avviso, non una riga.
+5. **Numero e data** si propongono all'apertura del DDT (184); **le righe** alla chiusura (192), quindi il server ha il
+   tempo del conteggio per leggerle.
+
+Addestrare un modello non è il primo passo: modello generale, controlli e «memoria» delle correzioni per fornitore;
+un adattamento solo se la prova mostra errori ripetuti (ricerca, §4).
+
+### Piano della prova
+
+| Cosa | Scelta | Decisione |
+|---|---|---|
+| Dove stanno le bolle | Cartella «bolle» del repository privato `prova-visiva-foto`; nel pubblico solo script e numeri, con sigle F01, B001…; tabella delle sigle nel privato; tenute dopo la prova, cancellate su richiesta di UFP | 202 (eccezione alla 130) |
+| Cosa si copre | Nomi e riferimenti dei clienti finali, firme, targhe, con un rettangolo pieno nell'immagine; del PDF si tiene l'immagine; le zone coperte non si misurano | 203 |
+| Quante | 100–120 bolle scelte a caso: 8–12 fornitori ricorrenti (circa 8 bolle ciascuno) più 20–30 bolle di occasionali; due foto per bolla («bene» e «come capita»), tutte le pagine; PDF quando c'è; 5–10 lettere di vettura; bolle d'archivio con segni a penna in un gruppo a parte; un terzo dei ricorrenti fuori dalla prima metà; primo giro di 20 | 204 |
+| Sistemi | Passo comune: codici stampati (zxing-cpp). A PaddleOCR con regole; B PaddleOCR-VL-1.6; C Qwen3-VL-8B con schema JSON (e 4B per i tempi); D pdfplumber per i PDF con testo. Stesso abbinamento per tutti | 205 |
+| Traguardi | Numero e data giusti in 95 bolle su 100 dalla foto «come capita»; righe: codice e quantità giusti in 95 su 100 e al massimo 1 errore senza avviso su 100. Solo il primo: lettura solo della testata. Righe buone solo per alcuni fornitori: si accende per fornitore | 206 |
+| Dove si calcola | Nella sessione di Claude, come la prova visiva; si riportano tempi e memoria di ogni sistema | 143 (per analogia) |
+
+**Verità scritta a mano**, guardando la bolla: testata (fornitore, numero com'è stampato, data, ordini citati, pagine);
+per ogni riga tipo di riga, codice, EAN, descrizione, quantità, unità, ordine di UFP, conferma del fornitore, Saldo o
+Acconto, pagina, «scritto o corretto a mano», «coperto da timbro»; se l'articolo era in un ordine aperto quel giorno.
+Una seconda persona ricontrolla il 10% (proposta della ricerca).
+
+**Cosa si misura**: testata per campo; righe (trovate, giuste, quantità giusta); errori senza avviso dopo i controlli;
+righe non di merce scartate bene; pagine rimesse insieme; lettere di vettura riconosciute; quanto si legge dai soli
+codici stampati. Tutto diviso per foto «bene», «come capita» e PDF, per fornitore visto o mai visto, per bolle con o
+senza segni.
+
+**Principio dell'utente** (nota alla 206): conta che il carico dei DDT in Ad Hoc diventi veloce; ciò che non si
+automatizza ha una procedura guidata, senza passaggi ripetuti.
+
+### Rimandato
+
+- Dove gira la lettura (telefono o server) e il caso del magazzino Shopify con un solo PC fisso: secondo giro del
+  ticket «Resi», nella stessa pagina (nota alla 205).
+- Requisiti minimi del server in sede: nebbia della mappa, con i numeri della prova.
+
+## Resi
+
+Dal ticket «Resi», chiuso il 18/11/2026. Decisioni 207–226 (la 214 precisa la 208, la 223 precisa la 215). Fonti: ricerca
+`docs/research/2026-11-18-gestionali-magazzino-esistenti.md` (§ 1.8), documentazione Shopify sui resi (link nel ticket),
+due mail di reso e due di segnalazione mostrate dall'utente in chat (fatti annotati sotto, senza nomi). Domande nella
+pagina privata https://claude.ai/artifact/KQtNpyrXjbywxnz1iGKnGY; schermate nel prototipo
+`prototipi/percorso-schermate/index.html` (https://claude.ai/artifact/Vb6ijyDdr4n2gsZcKhhVur, privata).
+
+### Come si lavora oggi in UFP
+
+Fatti mostrati dall'utente il 18/11/2026:
+
+- **Differenze tra bolla e merce contata** (mancanti o in più): l'ufficio scrive al fornitore con un modello fisso,
+  con una tabella «codice / quantità indicata in DDT / quantità ricevuta / differenza / note» e la richiesta di mandare
+  il mancante oppure emettere una nota di credito; allega la bolla fotografata, con le correzioni a penna.
+- **Reso per eccedenza** (arrivati 32 pezzi invece di 3): accordo per telefono, mail dell'ufficio acquisti che conferma
+  il reso dei pezzi in più; poi l'ufficio manda il DDT di restituzione in PDF (causale «Reso a fornitori», dicitura
+  «reso per accredito», riferimento al DDT del fornitore, porto assegnato, corriere del fornitore); il fornitore
+  risponde con il giorno del ritiro.
+- In magazzino c'è già un'ubicazione «RESIF» per i resi ai fornitori (nota alla 217).
+
+### Reso al fornitore
+
+**Da dove nasce** (207). «Rendi al fornitore» del responsabile, da «Da controllare» (merce non prevista, 45; articolo
+rifiutato, 114; merce danneggiata, 191; eccedenza, 32; pezzi rimasti dopo un annullamento, 37 e 41; reso di un cliente
+non rivendibile, 211) o dalla scheda di un articolo per merce libera. I pezzi passano a **Da rendere**; se erano
+assegnati, l'assegnazione si rifà e la conferma nomina gli ordini che li perdono (16, 190, deduzione). Nei magazzini con
+le ubicazioni nasce il compito «Porta nell'area resi» (217).
+
+**Stati** (214):
+
+| Stato | Cosa vuol dire | Chi lo fa avanzare |
+|---|---|---|
+| Da chiedere | Merce da rendere raccolta per fornitore | Il responsabile prepara la richiesta |
+| Chiesto | Richiesta partita, si aspetta la risposta | Il responsabile segna la risposta |
+| Autorizzato | Il fornitore accetta; «la rimanda» o «non la rimanda» (208), numero di autorizzazione se c'è | Il magazziniere prepara |
+| Pronto | Pezzi inquadrati uno per uno, colli contati (216) | Chi consegna: «Ritirato da …» o «Consegnato al fornitore» |
+| Partito | La merce esce dalla giacenza; va il documento di reso (209) | — |
+
+Se il fornitore rifiuta, la merce torna al responsabile: tenerla o scartarla (214). «La rimanda» riapre il residuo della
+riga d'ordine fornitore e i pezzi tornano attesi; eccedenze e merce senza ordine non riaprono niente (208). Un pezzo in
+VEND reso con «la rimanda» torna a quel cliente quando arriva, perché il residuo riaperto porta ancora il riferimento
+(34, 226).
+
+**Richiesta di reso** (215, 223). Il programma prepara la mail: destinatario dal fornitore, oggetto con il DDT, righe
+con quantità e motivo, allegati con la foto della bolla, il PDF delle righe, le foto dei danni e la riserva al corriere
+(219). Anteprima modificabile; «Invia» la manda solo il responsabile, dalla sua mail aziendale salvata nel suo utente
+(campo facoltativo). Senza mail nell'utente: «Copia testo» e «Scarica allegati». Il programma non legge le risposte.
+Punto tecnico aperto (deduzione): mandare a nome di ogni responsabile chiede al server di posta dell'azienda il permesso
+di inviare da quell'indirizzo (per esempio un accesso per utente o un invio autorizzato «per conto di»); si sceglie con
+lo stack e all'installazione.
+
+**Segnalazione delle differenze** (223). Le differenze di un DDT (bolla, contato, ordine) stanno insieme in «Da
+controllare» con «Scrivi al fornitore»: la stessa tabella di oggi (codice, quantità indicata in DDT, ricevuta,
+differenza, note), la foto della bolla, la richiesta di mandare il mancante o di una nota di credito. Alla risposta,
+per riga: «Manda il mancante» (residuo aperto, 33), «Nota di credito» (residuo chiuso), per i pezzi in più «Rendi»
+(207) o «Teniamo» (32).
+
+**Documento di reso** (209). Gestionale principale: il programma stampa il DDT di reso con la sua numerazione, causale
+di reso e riferimento al DDT del fornitore. Accanto a un gestionale: il programma manda il documento di reso e il DDT
+lo fa il gestionale; in UFP lo fa l'ufficio con Ad Hoc (225); resta da sapere come Ad Hoc riceve il documento già
+pronto (domanda 24).
+
+### Reso del cliente
+
+- **Ricevi reso** (210): si parte dall'ordine spedito, cercato per numero, cliente o inquadrando un articolo; nel
+  magazzino Shopify in cima ci sono i resi aperti sul sito. Il documento del cliente, se c'è, si fotografa. Un pacco
+  senza ordine trovato, o un articolo non spedito con quell'ordine, va al responsabile come merce non prevista (45).
+- **Per ogni pezzo** (211): «Integro» (torna libero, va in «Metti a posto», si assegna dal più vecchio), «Da
+  controllare» (al responsabile: rivendibile, da rendere al fornitore o da scartare), «Danneggiato» (191). Più pezzi di
+  quelli spediti: si accettano e il di più va al responsabile (deduzione, come la 198).
+- **Shopify** (212): alla chiusura il programma scrive sul reso del sito l'esito di ogni pezzo (rimesso a magazzino,
+  non rimesso, mancante; da controllare aspetta il responsabile) e non manda in più una variazione di giacenza. Rimborso,
+  credito e cambio restano sul sito. L'app di Shopify chiede in più i permessi `read_returns` e `write_returns` (53,
+  documentazione Shopify). Da provare su un negozio di sviluppo.
+- **Accanto a un gestionale** (220): alla chiusura va al gestionale un «reso da cliente» con il riferimento all'ordine e
+  alla vendita; nota di credito e rimborso li fa il gestionale (domanda 27 al rivenditore).
+
+### Danni al trasporto
+
+All'apertura del DDT, o con «Danneggiata», l'operatore segna «Collo rovinato all'arrivo» con una foto e «firmato con
+riserva» sì o no (219). Foto e riserva finiscono nella richiesta di reso e nei «Documenti» del DDT. Pallet e imballi a
+rendere non si contano (218).
+
+### Schermate
+
+Lavoro «Resi» della mansione magazziniere, con il numero sulla prima schermata (213): scheda «Dai clienti» (cose in
+sospeso, resi aperti sul sito, «Ricevi reso») e scheda «Al fornitore» (Da chiedere, Chiesto, Autorizzato, Pronto,
+Partito). Per il responsabile: «Rendi al fornitore» in «Da controllare» e nella scheda dell'articolo, richiesta di reso
+in anteprima, risposta del fornitore. In «Documenti» la categoria «Resi». In «Metti a posto» il compito «Porta
+nell'area resi». Nel nuovo DDT «Collo rovinato all'arrivo».
+
+### Requisito sul carico
+
+Il carico di articoli e DDT dev'essere semplice, veloce e molto più funzionale di quello di oggi in UFP; quando mancano
+codici o quantità, il carico a mano ha una procedura guidata senza passaggi ripetuti (222). Vale per tutto il
+ricevimento, non solo per i resi. Primo passo: la scheda «Dalla bolla» e «Manca l'ordine» (224), nella sezione
+«Percorso delle schermate» → «Ricevimento».
+
+### Configurazione per magazzino (aggiunte)
+
+| Scelta | Valori | Di serie | Decisione |
+|---|---|---|---|
+| Nome dell'area resi | testo | «RESI» | 217 |
+| Invio delle mail ai fornitori | dalla mail aziendale del responsabile, solo testo da copiare | solo testo da copiare finché non si collega il server di posta | 215, 223 |

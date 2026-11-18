@@ -2,7 +2,7 @@
 
 Type: grilling
 Label: wayfinder:grilling
-Status: open
+Status: resolved
 Blocked by: —
 
 ## Question
@@ -22,3 +22,44 @@ Si parte dalla ricerca `docs/research/2026-11-18-gestionali-magazzino-esistenti.
 
 Risultato atteso: una sezione «Resi» in `docs/architettura.md` e le schermate aggiunte al prototipo
 `prototipi/percorso-schermate/index.html`.
+
+## Comments
+
+- 18/11/2026, inizio: il ticket non aveva commenti. Fatti su Shopify letti nella documentazione ufficiale (API
+  2026-10): resi solo di merce spedita; stati richiesto, aperto, rifiutato, chiuso, annullato; esito per pezzo con
+  `reverseFulfillmentOrderDispose` (RESTOCKED, NOT_RESTOCKED, MISSING, PROCESSING_REQUIRED), dato una volta sola;
+  `returnProcess` dalla 2025-07; permessi `read_returns` e `write_returns`.
+  Fonti: https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps,
+  https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/manage-reverse-fulfillment-orders,
+  https://shopify.dev/docs/api/admin-graphql/latest/enums/ReverseFulfillmentOrderDispositionType,
+  https://shopify.dev/docs/api/admin-graphql/latest/mutations/returnProcess (consultate il 18/11/2026).
+- 18/11/2026: dalle bolle vere di UFP, due spunti per il secondo giro: pallet «a rendere» sulle bolle AGB (un reso di
+  imballi al fornitore) e il timbro «accettato con riserva» sulla lettera del corriere (primo passo di un reso per
+  danni). Primo giro di 7 domande nella pagina https://claude.ai/artifact/KQtNpyrXjbywxnz1iGKnGY.
+- 18/11/2026, primo giro: accettate tutte le consigliate (207–213), con una nota sulla 208: oggi i resi li gestisce
+  il responsabile in ufficio con una mail al fornitore; proposta dell'utente di far preparare la mail al programma.
+- 18/11/2026, secondo giro: accettate tutte le consigliate (214–221); nota: in UFP esiste già l'ubicazione «RESIF».
+  L'utente ha mostrato in chat due mail di segnalazione di differenze con la bolla e lo scambio di un reso per
+  eccedenza (fatti annotati in `docs/architettura.md`, sezione «Resi», senza nomi né indirizzi) e ha chiesto un carico
+  semplice e veloce quando mancano codici o quantità (222). Domande 24 (annotata) e 27 per il rivenditore. Prototipo
+  aggiornato con le schermate dei resi e provato nel browser.
+- 18/11/2026, terzo giro: accettate tutte le consigliate; DDT di reso in UFP fatto con Ad Hoc. Note: le mail le
+  manda solo il responsabile dalla sua mail aziendale (223); a volte l'ordine non è citato o manca del tutto (224).
+
+## Answer
+
+Chiuso il 18/11/2026 in tre giri, con la pagina https://claude.ai/artifact/KQtNpyrXjbywxnz1iGKnGY (privata). Decisioni
+207–226; specifica nella sezione «Resi» di `docs/architettura.md` (e «Ricevimento» per la scheda «Dalla bolla»);
+prototipo `prototipi/percorso-schermate/index.html` (https://claude.ai/artifact/Vb6ijyDdr4n2gsZcKhhVur, privata),
+provato nel browser.
+
+- Reso al fornitore: «Rendi al fornitore» → «Da rendere», area resi, Da chiedere → Chiesto → Autorizzato → Pronto →
+  Partito; richiesta e segnalazione delle differenze preparate dal programma e mandate dal responsabile dalla sua
+  mail; preparazione con l'inquadratura di ogni pezzo; DDT di reso al gestionale (in UFP Ad Hoc) o stampato dal
+  programma (207–209, 214–217, 223, 225).
+- Reso del cliente: «Ricevi reso» dall'ordine spedito o dai resi aperti su Shopify; Integro, Da controllare,
+  Danneggiato; esiti su Shopify; «reso da cliente» al gestionale (210–212, 220).
+- Collo rovinato con riserva (219); pallet a rendere esclusi (218); lettura della bolla divisa tra telefono e server
+  (221); carico a mano veloce con «Dalla bolla» e «Manca l'ordine» (222, 224).
+- Domande 24 (annotata) e 27 per il rivenditore. Termini nuovi in `GLOSSARY.md`: reso al fornitore, reso del cliente,
+  da rendere, area resi, richiesta di reso, riserva.
