@@ -1162,6 +1162,9 @@ function keypad(inp){ const dec = inp.id==="kg"; const lab = (inp.closest(".fiel
     if(k==="esc") return bg.remove(); if(k==="ok"){ inp.value=v; bg.remove(); return inp.focus({preventScroll:true}); }
     if(k==="⌫") v = fresh ? "" : v.slice(0,-1); else { if(fresh) v=""; if(k===","&&v.includes(",")) return; v=(v+k).slice(0,7); }
     fresh=false; show(); });
+  /* tastiera fisica (palmari con tasti, prove da computer): cifre, virgola, cancella, Invio, Esc */
+  bg.addEventListener("keydown", e=>{ const m={Escape:"esc",Enter:"ok",Backspace:"⌫"}[e.key] || (/^[0-9]$/.test(e.key)?e.key:(dec&&(e.key===","||e.key==="."))?",":null);
+    if(!m) return; e.preventDefault(); const b=bg.querySelector(`[data-k="${m}"]`); if(b) b.click(); });
   document.body.appendChild(bg); bg.querySelector('[data-k="ok"]').focus(); }
 document.addEventListener("click", e=>{ const t=e.target.closest("input[data-kp], [data-kpfor]"); if(!t) return; e.preventDefault(); keypad(t.dataset.kpfor?document.getElementById(t.dataset.kpfor):t); });
 
