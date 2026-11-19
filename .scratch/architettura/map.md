@@ -107,6 +107,10 @@ percorso delle schermate e aspetto grafico, compresi nome e brand kit (decisioni
   moduli solo nostri; punti d'aggancio collegamento, lettore di etichette, precedenza, partita; «Da registrare nel
   gestionale»; aggiornamento fermo se un modulo non va; vendita assistita, agenti, fattura, ordini fornitore e
   inventario verso Ad Hoc; «collegamento» al posto di «connettore» (decisioni 301–320).
+- [Shopify: resi, rimborsi e cosa si può collegare](issues/27-ricerca-shopify-resi-e-collegamenti.md): resi, esiti,
+  etichetta propria e rimborso (anche in credito) si fanno da API a intervalli; no etichette di reso Shopify in Italia,
+  scelta del rimborso del cliente solo con un'estensione, niente WhatsApp in arrivo senza indirizzo pubblico; rimborso
+  entro 14 giorni dalla richiesta, credito solo con accordo espresso (ricerca del 19/11/2026).
 
 Prese prima della mappa, nel secondo giro di domande del 15/11/2026: decisioni 15–28 in
 [`docs/decisioni.md`](../../docs/decisioni.md) (assegnazione parziale, codice stampato come tipo di articolo,
