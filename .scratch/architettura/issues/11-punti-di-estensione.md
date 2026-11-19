@@ -33,3 +33,6 @@ Risultato atteso: l'elenco dei punti di estensione e il loro contratto in `docs/
   senza note (301–307): base unica con Configurazione e moduli; moduli solo nostri; «Da registrare nel gestionale»;
   parole in Configurazione e lettori di etichette; precedenza sostituibile; campi aggiuntivi dell'admin; aggiornamento
   fermo se un modulo non va.
+- 19/11/2026, secondo giro: accettate le consigliate (308–316). Note: uscita della vendita assistita scelta dall'admin
+  (308); confronto con la fattura facoltativo (310); testo della mail oltre al PDF (311); domanda su chi stampa i
+  documenti in UFP (313), con risposta nel riepilogo. «Collegamento» al posto di «connettore» (316).

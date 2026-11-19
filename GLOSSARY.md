@@ -355,6 +355,14 @@ _Evitare_: impostazioni, parametri
 Un pezzo di programma in più che si aggancia alla base in un punto previsto e che l'admin accende o spegne.
 _Evitare_: plugin, estensione, add-on
 
+**Collegamento**:
+Un modulo che scambia dati tra il programma e un gestionale o un negozio online, e dichiara cosa sa leggere e mandare.
+_Evitare_: connettore, integrazione
+
+**Partita**:
+I pezzi di uno stesso articolo con lo stesso lotto, la stessa scadenza o lo stesso seriale; la base non la usa.
+_Evitare_: batch, matricola (da sola)
+
 **Punto d'aggancio**:
 Un posto previsto dalla base dove un modulo può aggiungere o sostituire un comportamento, con regole fisse.
 _Evitare_: hook, API
