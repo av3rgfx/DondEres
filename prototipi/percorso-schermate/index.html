@@ -129,11 +129,24 @@ const ARTS = {
   S77:{code:"SL-77", desc:"Silicone neutro trasparente 300 ml", unit:"pz", loc:"C-02-4", price:"6,90 €", cost:"3,30 €", photo:"cartuccia"},
   V12:{code:"VT-1200", desc:"Valvola a sfera 3/4\" leva rossa", unit:"pz", loc:"A-05-1", price:"11,50 €", cost:"6,00 €", photo:"valvola rossa"},
   V13:{code:"VT-1201", desc:"Valvola a sfera 3/4\" leva blu", unit:"pz", loc:"A-05-2", price:"11,50 €", cost:"6,00 €", photo:"valvola blu"},
-  N55:{code:"NB-55", desc:"Nastro butilico 50 mm", unit:"pz", loc:"D-01-3", price:"9,80 €", cost:"4,90 €", photo:"nastro"}
+  N55:{code:"NB-55", desc:"Nastro butilico 50 mm", unit:"pz", loc:"D-01-3", price:"9,80 €", cost:"4,90 €", photo:"nastro"},
+  /* Articoli dell'ordine lungo d'esempio 1060 (ticket «Elenco del prelievo e correzione della quantità») */
+  RC2:{code:"RC-200", desc:"Rubinetto cucina monocomando", unit:"pz", loc:"A-01-3", price:"48,00 €", cost:"26,00 €", photo:"rubinetto"},
+  CR3:{code:"CR-3", desc:"Curva 90° rame 18 mm", unit:"pz", loc:"A-02-2", price:"1,90 €", cost:"0,80 €", photo:"curva"},
+  MN34:{code:"MN-34", desc:"Manicotto ottone 3/4\"", unit:"pz", loc:"A-08-1", price:"2,40 €", cost:"1,10 €", photo:"manicotto"},
+  TF16:{code:"TF-16", desc:"Tubo multistrato 16 mm", unit:"m", loc:"B-02-2", price:"1,60 €/m", cost:"0,75 €/m", photo:"tubo"},
+  CL25:{code:"CL-25", desc:"Collare a vite 25 mm", unit:"pz", loc:"B-14-3", price:"0,70 €", cost:"0,30 €", photo:"collare"},
+  TP12:{code:"TP-12", desc:"Nastro teflon 12 mm", unit:"pz", loc:"C-01-4", price:"1,20 €", cost:"0,45 €", photo:"teflon"},
+  SF09:{code:"SF-09", desc:"Sifone lavabo 1 1/4\"", unit:"pz", loc:"C-05-2", price:"7,50 €", cost:"3,60 €", photo:"sifone"},
+  GU08:{code:"GU-08", desc:"Kit guarnizioni in fibra", unit:"pz", loc:"D-03-1", price:"3,80 €", cost:"1,50 €", photo:"guarnizioni"},
+  FL40:{code:"FL-40", desc:"Flessibile inox 40 cm", unit:"pz", loc:"D-06-2", price:"5,20 €", cost:"2,40 €", photo:"flessibile"},
+  PM1:{code:"PM-1", desc:"Pompa di ricircolo", unit:"pz", loc:"E-02-1", price:"189,00 €", cost:"112,00 €", photo:"pompa"},
+  VS5:{code:"VS-50", desc:"Vaso d'espansione 5 l", unit:"pz", loc:"E-04-3", price:"32,00 €", cost:"17,00 €", photo:"vaso"}
 };
 /* Giacenze per ubicazione (presenti) e liberi in tutto il magazzino, per il prelievo e la vendita assistita (258–260) */
-const GU = {R110:[["A-03-2",8],["A-07-4",3]], G44:[["B-11-1",50],["B-12-2",20]], S77:[["C-02-4",5],["C-01-2",2]], V12:[["A-05-1",8],["A-06-3",4]], V13:[["A-05-2",4]], N55:[["D-01-3",3],["D-02-1",2]]};
-const LIBERI = {R110:5, G44:30, S77:0, V12:6, V13:2, N55:0};
+const GU = {R110:[["A-03-2",8],["A-07-4",3]], G44:[["B-11-1",50],["B-12-2",20]], S77:[["C-02-4",5],["C-01-2",2]], V12:[["A-05-1",8],["A-06-3",4]], V13:[["A-05-2",4]], N55:[["D-01-3",3],["D-02-1",2]],
+  RC2:[["A-01-3",4]], CR3:[["A-02-2",40]], MN34:[["A-08-1",22],["A-08-3",10]], TF16:[["B-02-2",200]], CL25:[["B-14-3",60]], TP12:[["C-01-4",30],["C-01-5",12]], SF09:[["C-05-2",1]], GU08:[["D-03-1",15]], FL40:[["D-06-2",9],["D-06-4",6]], PM1:[["VEND4",1],["E-02-1",2]], VS5:[]};
+const LIBERI = {R110:5, G44:30, S77:0, V12:6, V13:2, N55:0, RC2:2, CR3:32, MN34:22, TF16:150, CL25:40, TP12:30, SF09:0, GU08:10, FL40:7, PM1:2, VS5:0};
 /* Tre gruppi di permessi da sommare (263): admin, mag = responsabile di magazzino, piani = responsabile dei piani */
 const USERS = [{n:"Marco",r:"op",m:["mag"],sped:true,perm:[]},{n:"Luca",r:"op",m:["prep"],perm:[]},{n:"Sara",r:"op",m:["prep","mag"],sped:true,perm:[]},{n:"Paolo",r:"op",m:["prep"],perm:[]},{n:"Davide",r:"op",m:["prep"],perm:["piani"]},{n:"Anna",r:"boss",m:["mag","prep"],perm:["admin","mag"]}];
 const PERM = {admin:"Admin", mag:"Responsabile di magazzino", piani:"Responsabile dei piani"};
@@ -211,8 +224,10 @@ function initial(){
     ],
     lastDdt:null, collo:{S77:24}, nd:null, mano:null, dmgList:[],
     coda:false, ordine:null, pk:null, cour:{BRT:"Bartolini", GLS:"GLS"},
-    piani:[{id:"p1", t:"Bianchi M.", prep:"Luca", ord:["1042","1039","1044"]},{id:"p2", t:"Ferri G.", prep:"Paolo", ord:["1050","1053"]},{id:"p3", t:"Neri L.", prep:"Sara", ord:["1048"]}],
+    piani:[{id:"p1", t:"Bianchi M.", prep:"Luca", ord:["1060","1042","1039","1044"]},{id:"p2", t:"Ferri G.", prep:"Paolo", ord:["1050","1053"]},{id:"p3", t:"Neri L.", prep:"Sara", ord:["1048"]}],
     ordini:{
+      /* Ordine lungo d'esempio: 15 articoli, uno coperto in parte, uno in VEND, uno che non risulta, uno in un'ubicazione in conta (C-02-4) */
+      "1060":{cli:"Termoidraulica Gallo", cour:"BRT", stato:"aperto", righe:[{a:"RC2",q:2,ass:2},{a:"CR3",q:8,ass:8},{a:"R110",q:6,ass:6},{a:"V12",q:2,ass:2},{a:"MN34",q:10,ass:10},{a:"TF16",q:50,ass:50},{a:"G44",q:25,ass:25},{a:"CL25",q:20,ass:20},{a:"TP12",q:12,ass:12},{a:"S77",q:4,ass:4},{a:"SF09",q:3,ass:1},{a:"GU08",q:5,ass:5},{a:"FL40",q:8,ass:8},{a:"PM1",q:1,ass:1,vend:"VEND4"},{a:"VS5",q:1,ass:0}]},
       "1042":{cli:"Rossi Srl", cour:"BRT", stato:"aperto", righe:[{a:"R110",q:4,ass:4},{a:"G44",q:20,ass:20},{a:"S77",q:6,ass:6}]},
       "1039":{cli:"Edil Po", cour:"BRT", stato:"aperto", righe:[{a:"N55",q:5,ass:3},{a:"V12",q:2,ass:2}]},
       "1050":{cli:"Termo Sud", cour:"GLS", stato:"aperto", da:"Paolo", age:"3 giorni", old:true, righe:[{a:"V13",q:1,ass:1,vend:"VEND3"},{a:"R110",q:2,ass:2}]},
