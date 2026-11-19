@@ -107,6 +107,11 @@ dopo, avvisi che non bloccano nel piano e nell'anteprima, «Ne trovo di più/men
 risultano in fondo al prelievo, «Altri lavori» solo con lavori dati in più e permessi, lavoro dei colleghi per
 magazzino. Specifica in «Percorso delle schermate» → «Preparazione e spedizione». Deduzione ancora da confermare: un
 ordine senza nessun pezzo preso non diventa pronto.
+Il 19/11/2026: giacenze per ubicazione e scelta dell'ubicazione al prelievo e nella vendita assistita, aggiunta da
+«Cerca» nella vendita (258–260); «Disponibilità» al posto di «liberi» (261); interfaccia pulita con un «ⓘ» nel titolo
+(262, 266, 267); tre gruppi di permessi, Admin, Responsabile di magazzino e Responsabile dei piani, con gli avvisi
+della preparazione al responsabile dei piani (263–265; corregge la 27). Pagina privata delle domande:
+https://claude.ai/artifact/ScDtAoDaYsTP1K3b61x6MP.
 
 ## Cose dell'utente, senza sessione
 

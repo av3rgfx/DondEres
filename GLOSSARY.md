@@ -337,9 +337,19 @@ preparatore (prepara gli ordini e fa le vendite assistite). Una persona può ave
 _Evitare_: ruolo, profilo
 
 **Permesso**:
-Un lavoro in più che il responsabile dà a un operatore: pianificare le spedizioni, confermare le spedizioni.
+Un compito in più che l'admin dà a un account: admin, responsabile di magazzino, responsabile dei piani, confermare le
+spedizioni; più permessi si sommano sullo stesso account.
 _Evitare_: ruolo, diritto
 
-**Responsabile**:
-Chi, oltre al lavoro dell'operatore, gestisce catalogo, rettifiche, annullamenti e utenti.
-_Evitare_: amministratore, admin, capo magazzino
+**Admin**:
+Chi ha il permesso di gestire utenti e permessi, configurazione e aggiornamenti.
+_Evitare_: amministratore, superutente
+
+**Responsabile di magazzino**:
+Chi ha il permesso di decidere sulle cose di magazzino: merce da controllare, inventari, articoli da confermare, resi,
+correzioni, costo d'acquisto.
+_Evitare_: responsabile (da solo), capo magazzino
+
+**Responsabile dei piani**:
+Chi ha il permesso di gestire tutti i piani di spedizione e le preparazioni, e riceve gli avvisi della preparazione.
+_Evitare_: responsabile dei preparatori, pianificatore, capo reparto

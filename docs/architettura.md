@@ -921,8 +921,9 @@ nebbia della mappa.
 
 | Cosa | Decide | Decisioni |
 |---|---|---|
-| Cosa si può fare | Il ruolo (operatore o responsabile) | 27 |
-| Lavori in più per un operatore | I permessi «Pianifica le spedizioni» (nessuno di serie) e «Conferma le spedizioni» (tutti di serie; il responsabile lo può togliere). Senza il secondo la schermata «Spedisci» non c'è | 169, 173 |
+| Cosa si può fare | I permessi che l'admin dà all'account, da sommare: Admin (utenti, permessi, configurazione, aggiornamenti), Responsabile di magazzino («Da controllare» di magazzino, inventari, articoli da confermare, resi, correzioni, costo d'acquisto), Responsabile dei piani (piani, preparazioni, avvisi della preparazione, spedizioni). Nelle sezioni di questa specifica «il responsabile» è il responsabile di magazzino, salvo piani e preparazione (responsabile dei piani) e utenti, configurazione e aggiornamenti (admin) | 27, 263, 264 |
+| Lavori in più per un operatore | Il permesso «Responsabile dei piani» (al posto di «Pianifica le spedizioni», nessuno di serie) e «Conferma le spedizioni» (tutti di serie; l'admin lo può togliere). Senza il secondo la schermata «Spedisci» non c'è. Gli avvisi della preparazione vanno al responsabile dei piani; le conte fatte al prelievo anche al responsabile di magazzino | 169, 173, 264, 265 |
+| Testi | Interfaccia pulita: parole brevi o icone, niente frasi di spiegazione; un «ⓘ» accanto al titolo di ogni schermata con poche righe su come si lavora; avvisi che servono per non sbagliare sempre visibili, brevi. La quantità che si può ancora dare o vendere si chiama «Disponibilità» | 261, 262, 266 |
 | Cosa si vede per primo | Le mansioni, una o più per utente: magazziniere (ricevere, mettere a posto, rimettere a posto, cercare e contare) e preparatore (prelevare, vendita assistita, cercare) | 176, 177 |
 
 **Prima schermata.** In grande un pulsante per ogni lavoro delle mansioni dell'utente, con il numero di cose che

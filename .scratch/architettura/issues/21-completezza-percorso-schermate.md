@@ -92,3 +92,6 @@ nel browser su tutti i flussi.
   dall'account admin; gli avvisi della preparazione vanno al responsabile dei piani. Chiede «Disponibilità» al posto di
   «liberi» (261) e un'interfaccia pulita con poche parole (262). Tocca le decisioni 27, 169, 173 e 177. Domande nella
   pagina privata https://claude.ai/artifact/ScDtAoDaYsTP1K3b61x6MP.
+- 19/11/2026: accettate le cinque consigliate su responsabili e testi (263–267): tre gruppi di permessi, avvisi della
+  preparazione al responsabile dei piani, un solo permesso al posto di «Pianifica le spedizioni», «ⓘ» nel titolo,
+  prototipo pulito subito. Prototipo provato nel browser (Davide e Anna vedono i loro «Da controllare»).
