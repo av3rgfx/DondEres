@@ -129,6 +129,9 @@ const ARTS = {
   V13:{code:"VT-1201", desc:"Valvola a sfera 3/4\" leva blu", unit:"pz", loc:"A-05-2", price:"11,50 €", cost:"6,00 €", photo:"valvola blu"},
   N55:{code:"NB-55", desc:"Nastro butilico 50 mm", unit:"pz", loc:"D-01-3", price:"9,80 €", cost:"4,90 €", photo:"nastro"}
 };
+/* Giacenze per ubicazione (presenti) e liberi in tutto il magazzino, per il prelievo e la vendita assistita (258–260) */
+const GU = {R110:[["A-03-2",8],["A-07-4",3]], G44:[["B-11-1",50],["B-12-2",20]], S77:[["C-02-4",5],["C-01-2",2]], V12:[["A-05-1",8],["A-06-3",4]], V13:[["A-05-2",4]], N55:[["D-01-3",3],["D-02-1",2]]};
+const LIBERI = {R110:5, G44:30, S77:0, V12:6, V13:2, N55:0};
 const USERS = [{n:"Marco",r:"op",m:["mag"],sped:true},{n:"Luca",r:"op",m:["prep"]},{n:"Sara",r:"op",m:["prep","mag"],plan:true,sped:true},{n:"Paolo",r:"op",m:["prep"]},{n:"Anna",r:"boss",m:["mag","prep"]}];
 const FORN = {"Idrotecnica Nord":"IDN","Colle Sud":"CSU","Elettroforniture Est":"EFE"};
 const MANS = {mag:"magazziniere", prep:"preparatore"};
@@ -152,7 +155,9 @@ const NOVITA = [
   "Nuovo piano e anteprima del preparatore: avviso che non blocca, «N articoli non bastano», che aperto dice servono e disponibili (249).",
   "Prima schermata: senza lavori in più né permessi non si vede «Altri lavori», per tutte le mansioni (250, 254); in Configurazione «I preparatori vedono il lavoro dei colleghi» (di serie sì, 253) e «Ubicazione per gli ordini sospesi» (247).",
   "Al prelievo, «Ne trovo di più» e «Ne trovo meno»: si scrive quanti pezzi ci sono nell'ubicazione e si torna alla stessa riga, al punto della quantità (251, 252, 256).",
-  "Le righe che non risultano compaiono in fondo al prelievo: «Non risulta: se lo trovi, inquadralo» (257). Prova come Luca l'ordine 1044, ora nel piano Bianchi M."
+  "Le righe che non risultano compaiono in fondo al prelievo: «Non risulta: se lo trovi, inquadralo» (257). Prova come Luca l'ordine 1044, ora nel piano Bianchi M.",
+  "Prelievo e vendita assistita: sotto l'articolo le sue giacenze in ogni ubicazione, con quanti sono liberi; di serie è scelta l'ubicazione abituale, se ne tocca un'altra per prelevare da lì (258, 259).",
+  "Vendita assistita: da «Cerca» si apre l'articolo e «Aggiungi alla vendita», per chi l'ha preso e non l'ha inquadrato (260)."
 ];
 
 let clockMin = 10*60;
@@ -515,9 +520,13 @@ SH.cerca = ({i}) => { const k=i&&ARTS[i]?i:null;
   <div class="field"><label for="cs1">Codice o parte della descrizione</label><input id="cs1" type="text" placeholder="per esempio valvola"></div>
   <div class="list">${Object.keys(ARTS).filter(x=>!x.startsWith("NEW")).map(x=>pick(x,"sheet:cerca:"+x)).join("")}</div><button class="btn" data-act="closeSheet">Torna al lavoro</button>`;
   const a=A(k); return `<h3>${a.code}</h3><p class="muted">${esc(a.desc)}</p>
-  <div class="list">${row(a.loc+" (abituale)","8 "+a.unit,"","","libera 5 · assegnata 3")}${row("Area di ricevimento","2 "+a.unit)}${row("Prezzo di vendita",a.price)}</div>
-  <div class="field"><label for="cs2">Conta ${a.loc}: pezzi contati</label><input id="cs2" type="number" inputmode="numeric" placeholder="solo se la merce non torna"></div>
-  <div class="btns two"><button class="btn" data-act="sheet:cerca">Altro articolo</button><button class="btn go" data-act="cercaOk:${k}">Torna al lavoro</button></div>`; };
+  ${giac(k, a.loc)}<div class="list">${row("Prezzo di vendita",a.price)}</div>
+  ${S.screen==="vendita"?`<div class="field"><label for="caq">Quanti ne aggiungi alla vendita</label><input id="caq" type="number" inputmode="numeric" value="1"></div>
+  <button class="btn go" data-act="cercaAdd:${k}">Aggiungi alla vendita</button>
+  <p class="muted">Per quando l'hai preso e non l'hai inquadrato (260).</p>
+  <div class="btns two"><button class="btn" data-act="sheet:cerca">Altro articolo</button><button class="btn" data-act="closeSheet">Torna alla vendita</button></div>`:
+  `<div class="field"><label for="cs2">Conta ${a.loc}: pezzi contati</label><input id="cs2" type="number" inputmode="numeric" placeholder="solo se la merce non torna"></div>
+  <div class="btns two"><button class="btn" data-act="sheet:cerca">Altro articolo</button><button class="btn go" data-act="cercaOk:${k}">Torna al lavoro</button></div>`}`; };
 SH.nonArr = ({i, x}) => { const of=String(i).replace("_"," "); const code = ARTS[x] ? A(x).code : x; return `<h3>${esc(code)} · in bolla?</h3>
   <p class="muted">Non è arrivato niente di ${esc(code)} su ${of}. Se la bolla lo porta, scrivi quanti ne dice: il responsabile vede che in bolla c'è e la merce no.</p>
   <div class="field"><label for="na">Quantità scritta sulla bolla</label><input id="na" type="number" inputmode="numeric" value="1"></div>
@@ -616,10 +625,14 @@ V.vendita = () => { const B=S.vendite.find(v=>v.id===S.banco); if(!B) return V.b
   return `${hdr("Vendita assistita",esc(B.cli))}<main class="main">
     <div class="cam"><div class="frame">Inquadra l'articolo, poi l'ubicazione da cui lo prendi</div>
     <div class="chips"><button class="chip" data-act="bancoAdd:R110">Simula: 3PR-110 libero</button><button class="chip" data-act="bancoAdd:S77">Simula: SL-77, merce di altri ordini</button></div></div>
-    <div class="list">${B.righe.map(r=>row(`${A(r.a).code} · ${esc(A(r.a).desc)}`,`${r.q} × ${A(r.a).price}`,r.tolto?"part":"done","",`da ${A(r.a).loc}${r.tolto?" · da togliere all'ordine 1039 alla conferma":""}${isBoss()?` · costo ${A(r.a).cost}`:""}`)).join("") || `<p class="muted">Nessun articolo ancora.</p>`}</div>
+    <div class="list">${B.righe.map((r,j)=>row(`${A(r.a).code} · ${esc(A(r.a).desc)}`,`${r.q} × ${A(r.a).price}`,r.tolto?"part":"done","sheet:vUbi:"+j,`da ${r.u||A(r.a).loc} · ${(GU[r.a]||[]).map(([u,q])=>u+" "+q).join(", ")} · liberi ${LIBERI[r.a]}${r.mano?" · aggiunto a mano":""}${r.tolto?" · da togliere all'ordine 1039 alla conferma":""}${isBoss()?` · costo ${A(r.a).cost}`:""}`)).join("") || `<p class="muted">Nessun articolo ancora.</p>`}</div>
+    ${B.righe.length?`<p class="muted">Tocca un articolo per vedere le giacenze e scegliere da dove prenderlo.</p>`:""}
     <button class="btn" data-act="sheet:cerca">Cerca</button>
     <div class="btns two"><button class="btn bad" data-act="sheet:vendAnn">Annulla vendita</button>${B.righe.length?`<button class="btn go" data-act="bancoOk">Conferma: crea l'ordine</button>`:`<span></span>`}</div>
     <p class="muted">Tornando indietro la vendita resta tra le cose in sospeso. Dopo la conferma l'ordine va al gestionale (in UFP Ad Hoc), dove si fanno le ricevute.</p></main>`; };
+SH.vUbi = ({i}) => { const B=S.vendite.find(v=>v.id===S.banco), r=B.righe[i];
+  return `<h3>${A(r.a).code} · ${r.q} ${A(r.a).unit}</h3><p class="muted">${esc(A(r.a).desc)}</p>${giac(r.a, r.u||A(r.a).loc, `vUbiOk:${i}:`)}
+  <button class="btn" data-act="closeSheet">Torna alla vendita</button>`; };
 SH.bancoTogli = () => `<h3>Non c'è abbastanza merce libera</h3><p>SL-77: libera 0. Per venderne 2 li tolgo all'<b>ordine 1039 · Edil Po</b>, il più recente che li aspetta.</p>
   <div class="warnbox">Si toglie solo alla conferma della vendita; l'assegnazione si rifà e il responsabile lo trova tra le cose da controllare. La merce in VEND non si tocca.</div>
   <div class="btns two"><button class="btn" data-act="closeSheet">Non aggiungere</button><button class="btn go" data-act="bancoTogli">Aggiungi lo stesso</button></div>`;
@@ -906,6 +919,8 @@ V.config = () => `${hdr("Configurazione")}<main class="main"><div class="warnbox
 /* ===== Preparazione e spedizione ===== */
 const manca = o => o.righe.filter(r=>r.ass<r.q);
 const avviso = (o, open) => { const m=manca(o); if(!m.length) return ""; return `<details class="exp" ${open?"open":""}><summary>⚠ ${nr(m.length,"articolo non basta","articoli non bastano")}</summary><div class="list">${m.map(r=>row(A(r.a).code, r.ass?`servono ${r.q} · disponibili ${r.ass}`:`servono ${r.q} · non c'è`, r.ass?"part":"halt")).join("")}</div></details>`; };
+const giac = (k, scelta, act) => { const tot=(GU[k]||[]).reduce((n,x)=>n+x[1],0);
+  return `<div class="grp-h"><span>Giacenze di ${A(k).code}</span><span>${tot} ${A(k).unit} · liberi ${LIBERI[k]}</span></div><div class="list">${(GU[k]||[]).map(([u,q])=>row(`${u}${u===A(k).loc?" · abituale":""}`, `${q} ${A(k).unit}`, act&&u===scelta?"boss":"", u===scelta||!act?"":act+u, !act?"":u===scelta?"da qui":"tocca per prendere da qui")).join("")}</div>`; };
 const cop = o => { const t=o.righe.reduce((n,r)=>n+r.q,0), a=o.righe.reduce((n,r)=>n+r.ass,0); return a>=t?["completo","done"]:a>0?[`${a} di ${t}`,"part"]:["niente","dim"]; };
 const ordRow = (k, act=true) => { const o=S.ordini[k]; const [t,c]=cop(o);
   if(o.stato!=="aperto") return row(`${k} · ${esc(o.cli)}`, o.stato==="pronto"?"pronto":"spedito", "done");
@@ -944,6 +959,7 @@ V.pick = () => { const k=S.ordine, o=S.ordini[k], rows=pickRows(o), P=S.pk; cons
   return `${hdr(`Ordine ${k}`,`${esc(o.cli)} · riga ${P.n+1} di ${rows.length}`)}<main class="main">
     ${toastHtml()}
     <div class="row boss"><span class="l"><span>${A(r.a).code} · ${esc(A(r.a).desc)}</span><small>${r.ass<r.q?`prendi ${r.ass} di ${r.q}: il resto non c'è ancora`:`prendi ${r.ass} ${A(r.a).unit}`}${r.vend?" · merce venduta, nel suo posto VEND":""}</small></span><span class="r">${where}</span></div>
+    ${r.vend?`<p class="muted">Merce venduta: si prende solo dal suo posto VEND.</p>`:giac(r.a, where, "pkUbi:")}
     ${P.st<2?`<div class="cam"><div class="frame">${stepTxt}</div><div class="chips">${P.st===0?`<button class="chip" data-act="pkLoc:ok">Simula: ${where}</button><button class="chip" data-act="pkLoc:no">Simula: un'altra ubicazione</button>`:`<button class="chip" data-act="pkArt:ok">Simula: ${A(r.a).code}</button><button class="chip" data-act="pkArt:no">Simula: un altro articolo</button>`}</div></div>`:
      `<div class="qty"><button class="ic" data-act="qm" aria-label="Meno">−</button><input id="q" type="number" inputmode="numeric" value="${r.ass}"><button class="ic" data-act="qp" aria-label="Più">+</button></div><button class="btn go" data-act="pkQty">Preso</button>`}
     ${ic?`<div class="warnbox">${where} in conta da ${ic.who}, da ${ic.age||"poco"}: si sta contando (233). Prendi da un'altra ubicazione o aspetta qualche minuto.</div><div class="btns two"><button class="btn" data-act="pkAlt:C-01-2">Prendi da C-01-2</button><button class="btn" data-act="pkWait">Aspetto</button></div>`:""}
@@ -1165,6 +1181,9 @@ function act(a, el){
     case "vendNew": { const id="v"+(++S.n); S.vendite.unshift({id, cli:null, who:me(), age:"ora", righe:[]}); S.banco=id; log("Inizia una vendita assistita"); return go("vendita"); }
     case "vend": S.banco=x; return go("vendita");
     case "cli": S.vendite.find(v=>v.id===S.banco).cli=[x,y].filter(Boolean).join(":"); return render();
+    case "vUbiOk": { const B=S.vendite.find(v=>v.id===S.banco), r=B.righe[+x]; r.u=y; log(`Vendita assistita: ${A(r.a).code} da ${y}`); S.sheet=null; return render(); }
+    case "cercaAdd": { const B=S.vendite.find(v=>v.id===S.banco), q=+document.getElementById("caq").value||1; if(x==="S77"){ S.sheet=null; return sheet("bancoTogli"); }
+      const r=B.righe.find(z=>z.a===x); r? r.q+=q : B.righe.push({a:x,q,mano:true}); log(`Vendita assistita: ${q} ${A(x).code} aggiunti a mano da «Cerca» (identificazione: a mano)`); S.sheet=null; S.toast={txt:`Aggiunti ${q} ${A(x).code} alla vendita`}; return render(); }
     case "bancoAdd": { const B=S.vendite.find(v=>v.id===S.banco); if(x==="S77") return sheet("bancoTogli"); const r=B.righe.find(z=>z.a===x); r? r.q++ : B.righe.push({a:x,q:1}); log(`Vendita assistita: 1 ${A(x).code} da ${A(x).loc}`); return render(); }
     case "bancoTogli": { S.sheet=null; S.vendite.find(v=>v.id===S.banco).righe.push({a:"S77",q:2,tolto:true}); log("Vendita assistita: 2 SL-77, da togliere all'ordine 1039 alla conferma"); return render(); }
     case "bancoOk": { const B=S.vendite.find(v=>v.id===S.banco); const r=B.righe.find(z=>z.a==="R110"&&z.q>=4); if(r && !B.ricontrollato){ B.ricontrollato=true; return sheet("ricontrollo"); } return act("bancoOk2:0"); }
@@ -1224,6 +1243,7 @@ function act(a, el){
       S.sheet=null; S.stack=["home"]; S.screen="inv"; return render(); }
     case "cfg": if(x==="coll"||x==="sosp"){ if(x==="coll") S.cfgColl=!S.cfgColl; else S.cfgSosp=!S.cfgSosp; log(`Configurazione: ${x==="coll"?"lavoro dei colleghi "+(S.cfgColl?"visibile":"nascosto"):"ubicazione per gli ordini sospesi "+(S.cfgSosp?"accesa":"spenta")}`); return render(); }
       if(x==="cieca") S.cfgCieca=!S.cfgCieca; else S.cfgSec=!S.cfgSec; log(`Configurazione: ${x==="cieca"?"quantità attesa a chi conta "+(S.cfgCieca?"nascosta":"visibile"):"seconda conta "+(S.cfgSec?"accesa":"spenta")}`); return render();
+    case "pkUbi": S.pk.alt=x===A(pickRows(S.ordini[S.ordine])[S.pk.n].a).loc?null:x; S.pk.st=0; S.pk.warn=null; log(`Prelievo da ${x}, scelta tra le giacenze`, "Ordine "+S.ordine); return render();
     case "pkAlt": S.pk.alt=x; S.pk.st=0; log(`${x} al posto di un'ubicazione in conta`, "Ordine "+S.ordine); return render();
     case "pkWait": S.toast={txt:"Va bene: riprova tra qualche minuto, la riga resta qui"}; return render();
     /* Cerca */

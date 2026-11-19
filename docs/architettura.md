@@ -1014,6 +1014,10 @@ chiuso dice quanti articoli non bastano, aperto dice per ognuno servono e dispon
   punto della quantità, e preleva. Se ne restano meno di quelli che servono, sospende o conclude senza. Dietro, i pezzi
   trovati vanno all'ordine in preparazione (eccezione alla regola del più vecchio, perché la merce è già in mano); il
   responsabile trova la conta tra le cose da controllare, con gli ordini più vecchi che quei pezzi li aspettavano.
+- **Giacenze sulla riga** (258): sotto l'articolo, le sue giacenze in ogni ubicazione e i liberi in tutto il
+  magazzino; di serie è scelta l'abituale, se ne tocca un'altra per prelevare da lì. Le righe in VEND si prendono solo
+  dal loro posto. Con le quantità sotto gli occhi, «Ne trovo di più/meno» non è una conta cieca, come la conta aperta
+  dalla scheda dell'articolo (244).
 - **Righe che non risultano** (257): compaiono in fondo al prelievo, con «Non risulta: se lo trovi, inquadralo»; un
   ordine con un articolo che non risulta si apre lo stesso.
 - **Niente da prendere** (deduzione dell'agente, da confermare): se a fine prelievo non si è preso nessun pezzo,
@@ -1033,6 +1037,10 @@ si toglie a nessuno finché non si conferma; alla conferma il programma ricontro
 frattempo qualcosa è finito; «Annulla vendita» la toglie con una conferma (188). Alla conferma non si sceglie come esce la merce: in UFP l'ordine si crea in Ad Hoc, dove si
 fanno e si stampano le ricevute, e il resto si fa lì (178). In UFP la vendita assistita serve al banco e anche a
 preparare una vendita o un pacco per un agente o da spedire (176).
+
+Giacenze e ricerca (258–260): per ogni articolo della vendita si vedono le giacenze per ubicazione e i liberi, e si
+sceglie da dove prenderlo (di serie l'abituale). Da «Cerca» un articolo si aggiunge alla vendita con la quantità,
+senza inquadrarlo, con le stesse regole della lettura; nel registro risulta aggiunto a mano.
 
 ### Cose in sospeso
 

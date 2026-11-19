@@ -85,3 +85,6 @@ nel browser su tutti i flussi.
   righe che non risultano in fondo al prelievo (257). Deduzione nel prototipo, da confermare: un ordine senza nessun
   pezzo preso non diventa pronto. Pagina delle domande: https://claude.ai/artifact/Qft5i5wPiwfyYEQpdUz5Kq. Correzione
   chiusa (decisioni 246–257).
+- 19/11/2026: nuove richieste dell'utente dopo la prova da telefono: giacenze per ubicazione e scelta dell'ubicazione
+  al prelievo e nella vendita assistita (258, 259); «Aggiungi alla vendita» da «Cerca» (260). Prototipo aggiornato e
+  provato nel browser.
