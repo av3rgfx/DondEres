@@ -1,11 +1,30 @@
 # Prompt per la prossima sessione (Wayfinder sull'architettura)
 
 Da incollare all'avvio di una nuova sessione sul ramo principale aggiornato. La mappa esiste già: si lavora un ticket
-per sessione, più le ricerche. Consigliato ora: «Nome del prodotto» (prompt D), che porta a «Unicità dei nomi scelti» e
-al brand kit. Lo stack aspetta ancora la divisione tra le macchine, che aspetta la prova visiva; «Aspetto grafico»
-aspetta brand kit e stack (deve contare anche la vista da computer per responsabili e admin, decisione 292). Quando nei
-repository privati ci sono foto o bolle da aprire, sessioni a parte lavorano la prova visiva (prompt B) e la prova di
-lettura delle bolle (prompt C). Si possono avviare in parallelo.
+per sessione, più le ricerche. Consigliato ora, su richiesta dell'utente (321): la ricerca «Shopify: resi, rimborsi e
+cosa si può collegare» e poi il ticket «Resi del cliente nel magazzino Shopify» (prompt A). In alternativa «Nome del
+prodotto» (prompt D), che porta a «Unicità dei nomi scelti» e al brand kit. Lo stack aspetta ancora la divisione tra le
+macchine, che aspetta la prova visiva; «Aspetto grafico» aspetta brand kit e stack (deve contare anche la vista da
+computer per responsabili e admin, decisione 292). Quando nei repository privati ci sono foto o bolle da aprire,
+sessioni a parte lavorano la prova visiva (prompt B) e la prova di lettura delle bolle (prompt C).
+
+**Prompt A: resi del cliente nel magazzino Shopify**
+
+```text
+/wayfinder .scratch/architettura/map.md
+
+Leggi prima AGENTS.md, poi la mappa (solo map.md, non tutti i ticket). Prima risolvi la ricerca «Shopify: resi,
+rimborsi e cosa si può collegare» con la skill research: fonti primarie, un file in docs/research/ con data e link.
+Poi lavora con me il ticket «Resi del cliente nel magazzino Shopify» (grilling), partendo da come si lavora oggi
+(decisione 321) e dai risultati della ricerca: mostrami prima, senza abbellirlo, cosa si può fare in automatico con
+Shopify e cosa no, e tutto quello a cui ci si può collegare. Leggi i commenti dei due ticket e la parte «Reso del
+cliente» della sezione «Resi» di docs/architettura.md (decisioni 210–212).
+Registra ogni mia decisione in docs/decisioni.md, con data e motivo; scrivi la tua parte in docs/architettura.md.
+Parlami in italiano, con domande semplici: cosa chiedi, perché conta, cosa comporta ogni opzione.
+Per le domande usa una pagina interattiva (Artifact) con esempi visivi che cambiano con la risposta, opzione
+consigliata, «Accetta tutte le consigliate», note facoltative e risposte salvate che leggi tu quando scrivo «fatto».
+Lavora a giri: registra le risposte di ogni giro prima del successivo e chiudi con un riepilogo da confermare.
+```
 
 **Prompt D: nome del prodotto**
 
@@ -69,10 +88,12 @@ In ordine di numero:
    repository privato `av3rgfx/prova-visiva-foto` esiste; la pagina di scatto è su https://av3rgfx.github.io/DondEres/
    (ramo `gh-pages`, da non cancellare; se la pagina cambia va copiata anche lì). Tocca all'utente scegliere gli
    articoli, scattare e caricare gli ZIP in `da-caricare` (decisioni 149–159). Poi prompt B.
-2. «Nome del prodotto»: libero (prompt D); poi «Unicità dei nomi scelti» e «Brand kit con la skill logo-design».
-3. «Esecuzione della prova di lettura delle bolle» (task con l'utente): parte quando le bolle sono nella cartella
+2. Ricerca «Shopify: resi, rimborsi e cosa si può collegare» e poi «Resi del cliente nel magazzino Shopify»: liberi,
+   consigliati (prompt A, decisione 321).
+3. «Nome del prodotto»: libero (prompt D); poi «Unicità dei nomi scelti» e «Brand kit con la skill logo-design».
+4. «Esecuzione della prova di lettura delle bolle» (task con l'utente): parte quando le bolle sono nella cartella
    `bolle/` del repository privato (prompt C).
-4. «Stack»: aspetta solo la divisione tra telefono, computer e server, che aspetta la prova visiva. «Punti di
+5. «Stack»: aspetta solo la divisione tra telefono, computer e server, che aspetta la prova visiva. «Punti di
    estensione» è chiuso (decisioni 301–320).
 
 ## In sospeso fuori dalla mappa
@@ -81,6 +102,13 @@ In ordine di numero:
   e la 28 sull'inventario aggiunte il 18/11/2026, la 29 sull'uscita della vendita assistita il 19/11/2026): le manda
   l'utente (decisione 57). Le risposte si annotano in fondo al file; servono al collegamento Ad Hoc della
   specializzazione, non bloccano la mappa.
+- Domande al rivenditore, 19/11/2026: l'utente teme che un'email da privato, senza UFP alle spalle, resti senza risposta,
+  e non può scrivere a nome di UFP. Proposta in attesa di risposta: (A) dividere il file in una lista «da osservare in
+  UFP» (la maggior parte delle domande: versione, moduli, documenti, OP e bolla, agente e corriere, resi, giacenza dopo
+  una vendita) e una breve email con le 5–6 domande che solo il rivenditore può chiarire (permesso sul database,
+  ambiente di prova, come scrive ARS, frequenza delle letture, costi), da far mandare a UFP quando adotterà il
+  programma; (B) una ricerca online sulle poche domande generali (importazione da file, servizi web, «NEX Logistica»,
+  fatture elettroniche). Non bloccano la mappa: il collegamento Ad Hoc sta nella specializzazione.
 - Punto tecnico aperto: mandare le mail dalla casella aziendale di ogni responsabile (223, 311) chiede un permesso al
   server di posta dell'azienda; si sceglie con lo stack e all'installazione.
 
@@ -108,4 +136,4 @@ scelte che dipendono dal modo di lavorare del magazzino stiano in Configurazione
 - Scegliere a caso gli articoli della prova visiva, scattare il primo giro (10–20 articoli) e caricare gli ZIP.
 - Raccogliere il primo giro di 20 bolle per la prova di lettura, coprire i dati dei clienti e caricarle in `bolle/` nel
   repository privato (202–204); dire quali fornitori sono ricorrenti e quanti mandano il PDF.
-- Mandare al rivenditore le domande 21–29.
+- Rispondere alla proposta A/B sulle domande al rivenditore (sopra); non mandare l'email da privato per ora.
