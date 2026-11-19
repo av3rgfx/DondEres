@@ -1,9 +1,9 @@
 # Prompt per la prossima sessione (Wayfinder sull'architettura)
 
 Da incollare all'avvio di una nuova sessione sul ramo principale aggiornato. La mappa esiste già: si lavora un ticket
-per sessione, più le ricerche. Consigliato ora, su richiesta dell'utente (321): la ricerca «Shopify: resi, rimborsi e
-cosa si può collegare» e poi il ticket «Resi del cliente nel magazzino Shopify» (prompt A). In alternativa «Nome del
-prodotto» (prompt D), che porta a «Unicità dei nomi scelti» e al brand kit. Lo stack aspetta ancora la divisione tra le
+per sessione, più le ricerche. I due ticket sui resi del cliente nel magazzino Shopify sono chiusi
+(19/11/2026, decisioni 322–343; il prompt A resta come esempio di forma). Consigliato ora: «Nome del prodotto»
+(prompt D), che porta a «Unicità dei nomi scelti» e al brand kit. Lo stack aspetta ancora la divisione tra le
 macchine, che aspetta la prova visiva; «Aspetto grafico» aspetta brand kit e stack (deve contare anche la vista da
 computer per responsabili e admin, decisione 292). Quando nei repository privati ci sono foto o bolle da aprire,
 sessioni a parte lavorano la prova visiva (prompt B) e la prova di lettura delle bolle (prompt C).
