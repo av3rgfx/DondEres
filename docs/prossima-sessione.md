@@ -1,12 +1,30 @@
 # Prompt per la prossima sessione (Wayfinder sull'architettura)
 
 Da incollare all'avvio di una nuova sessione sul ramo principale aggiornato. La mappa esiste già: si lavora un ticket
-per sessione, più le ricerche. Consigliato ora: «Punti di estensione per la specializzazione» (prompt A), che sblocca lo
-stack con la divisione tra le macchine; in alternativa «Nome del prodotto», che porta al brand kit. «Aspetto grafico»
-aspetta ancora brand kit e stack. Quando nei repository privati ci sono foto o bolle da aprire, sessioni a parte lavorano
+per sessione, più le ricerche. Consigliato ora, come chiesto dall'utente: «Elenco del prelievo e correzione della
+quantità» (prompt A). Poi «Punti di estensione per la specializzazione» (prompt D), che sblocca lo stack con la divisione
+tra le macchine; in alternativa «Nome del prodotto», che porta al brand kit. «Aspetto grafico» aspetta ancora questi. Quando nei repository privati ci sono foto o bolle da aprire, sessioni a parte lavorano
 la prova visiva (prompt B) e la prova di lettura delle bolle (prompt C). Si possono avviare in parallelo.
 
-**Prompt A: punti di estensione per la specializzazione**
+**Prompt A: elenco del prelievo e correzione della quantità**
+
+```text
+/wayfinder .scratch/architettura/map.md
+
+Leggi prima AGENTS.md, poi la mappa (solo map.md, non tutti i ticket). Lavora il ticket «Elenco del prelievo e
+correzione della quantità» (prototype), con le decisioni 164, 233, 246, 251, 252, 256, 258, 262, 266, 269 e 270.
+Leggi i commenti del ticket. Aggiorna il prototipo prototipi/percorso-schermate/index.html: elenco degli articoli
+all'apertura dell'ordine con tasti rapidi per articolo («Preleva» e gli altri), «Sospendi» e «Prelievo guidato» in
+cima, un solo tasto per correggere la quantità al posto di «Ne trovo di più/meno», «Aspetto» da rivedere, e un ordine
+d'esempio di 10–20 articoli. Testi brevi, spiegazioni nell'ⓘ. Provalo nel browser a larghezza di telefono.
+Registra ogni mia decisione in docs/decisioni.md, con data e motivo; scrivi la tua parte in docs/architettura.md.
+Parlami in italiano, con domande semplici: cosa chiedi, perché conta, cosa comporta ogni opzione.
+Per le domande usa una pagina interattiva (Artifact) con esempi visivi che cambiano con la risposta, opzione
+consigliata, «Accetta tutte le consigliate», note facoltative e risposte salvate che leggi tu quando scrivo «fatto».
+Lavora a giri: registra le risposte di ogni giro prima del successivo e chiudi con un riepilogo da confermare.
+```
+
+**Prompt D: punti di estensione per la specializzazione**
 
 ```text
 /wayfinder .scratch/architettura/map.md
@@ -64,7 +82,7 @@ consigliata, «Accetta tutte le consigliate», note facoltative e risposte salva
 Lavora a giri: registra le risposte di ogni giro prima del successivo e chiudi con un riepilogo da confermare.
 ```
 
-## Frontiera al 18/11/2026 (fine sessione dell'inventario)
+## Frontiera al 19/11/2026
 
 In ordine di numero:
 
@@ -75,10 +93,12 @@ In ordine di numero:
 2. «Punti di estensione per la specializzazione»: libero. Da raccogliere anche: collegamento con Ad Hoc per gli ordini
    degli agenti e le vendite assistite (178), confronto tra merce caricata e fattura (192), invio degli ordini fornitore
    dal programma come le richieste di reso (226), documento di reso e «reso da cliente» verso Ad Hoc (24, 27),
-   inventario verso Ad Hoc (domanda 28). Consigliato ora (prompt A).
+   inventario verso Ad Hoc (domanda 28). Prompt D.
 3. «Nome del prodotto»: libero; poi «Unicità dei nomi scelti» e «Brand kit con la skill logo-design».
 4. «Esecuzione della prova di lettura delle bolle» (task con l'utente, nuovo): parte quando le bolle sono nella cartella
    `bolle/` del repository privato (prompt C).
+5. «Elenco del prelievo e correzione della quantità» (prototype, nuovo il 19/11/2026): libero, consigliato ora
+   (prompt A). Blocca «Aspetto grafico».
 
 ## In sospeso fuori dalla mappa
 
@@ -111,7 +131,10 @@ Il 19/11/2026: giacenze per ubicazione e scelta dell'ubicazione al prelievo e ne
 «Cerca» nella vendita (258–260); «Disponibilità» al posto di «liberi» (261); interfaccia pulita con un «ⓘ» nel titolo
 (262, 266, 267); tre gruppi di permessi, Admin, Responsabile di magazzino e Responsabile dei piani, con gli avvisi
 della preparazione al responsabile dei piani (263–265; corregge la 27). Pagina privata delle domande:
-https://claude.ai/artifact/ScDtAoDaYsTP1K3b61x6MP.
+https://claude.ai/artifact/ScDtAoDaYsTP1K3b61x6MP. Confermati la regola sull'ordine senza pezzi e i dettagli sulle giacenze
+(268). Ultime richieste, per la prossima sessione (269, 270): un solo tasto per correggere la quantità, elenco degli
+articoli con tasti rapidi, «Sospendi» e «Prelievo guidato» in cima, prova con 10–20 articoli; nuovo ticket «Elenco del
+prelievo e correzione della quantità».
 
 ## Cose dell'utente, senza sessione
 

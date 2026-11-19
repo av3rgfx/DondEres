@@ -97,3 +97,5 @@ nel browser su tutti i flussi.
   prototipo pulito subito. Prototipo provato nel browser (Davide e Anna vedono i loro «Da controllare»).
 - 19/11/2026: confermati la regola sull'ordine senza pezzi presi e i tre dettagli sulle giacenze al prelievo; sulla riga
   si vedono giacenza e disponibilità (268).
+- 19/11/2026: nuove richieste (269, 270) spostate nel nuovo ticket «Elenco del prelievo e correzione della quantità»
+  (issues/26-elenco-del-prelievo.md), da fare nella prossima sessione.
