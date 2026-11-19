@@ -58,6 +58,11 @@ button{font:inherit;cursor:pointer;color:inherit}
 .row.halt{background:var(--bad-soft);border-color:var(--bad)} .row.boss{background:var(--boss-soft);border-color:var(--boss)}
 .row.dim{opacity:.6}
 .row.sel{border:2px solid var(--ink);border-radius:10px 10px 0 0}
+.kp-bg{z-index:20}
+.kp-val{font-size:30px;font-weight:700;text-align:center;border:2px solid var(--ink);border-radius:10px;padding:6px;min-height:52px;font-variant-numeric:tabular-nums}
+.kp-ic{min-width:44px;display:inline-grid;place-items:center}
+.qty:has(.kp-ic){grid-template-columns:48px 1fr 48px 48px}
+.field:has(> .kp-ic){grid-template-columns:1fr auto;align-items:center} .field:has(> .kp-ic) label{grid-column:1/-1}
 .rexp{border:2px solid var(--ink);border-top:0;border-radius:0 0 10px 10px;margin-top:-10px;padding:10px;display:grid;gap:8px;background:var(--bg)}
 h2{font-size:13px;margin:6px 0 -4px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
 p{margin:0}
@@ -186,7 +191,9 @@ const NOVITA = [
   "Le righe prese passano sotto, in «Presi» (274). Con 📷 in alto inquadri un articolo dell'ordine e si apre la sua riga; un articolo estraneo dà lo stop (276).",
   "Prelievo guidato: su un articolo che non basta, «Prosegui» finché ce ne sono altri e «Concludi senza» sull'ultimo (272). Con l'ubicazione in conta (SL-77 in C-02-4), «Più tardi» al posto di «Aspetto» (275).",
   "Vendita assistita: stesso elenco; toccando un articolo, giacenze, «Quantità» ed «Elimina» (277).",
-  "Secondo giro: gli articoli lasciati aperti stanno in «Restano aperti», in «Presi» solo ciò che hai preso (281). Una quantità diversa da quella proposta chiede conferma prima di registrarla (283)."
+  "Secondo giro: gli articoli lasciati aperti stanno in «Restano aperti», in «Presi» solo ciò che hai preso (281). Una quantità diversa da quella proposta chiede conferma prima di registrarla (283).",
+  "Terzo giro: al telefono le quantità si scrivono con il tastierino del programma toccando il numero; da Scenari «Simula il computer»: tastiera e icona del tastierino (290, 291).",
+  "Come Davide: «Piani di spedizione» ha «Da completare» (merce arrivata / aspettano merce); «Da controllare» ha l'avviso «Arrivato…» con «Crea piano», che apre il piano con il resto e il preparatore della prima parte (285–288)."
 ];
 
 let clockMin = 10*60;
@@ -218,7 +225,8 @@ function initial(){
       {id:"c2", t:"conta", a:"S77", q:7, txt:"Conteggio di Sara in C-02-4: 7 invece di 5"},
       {id:"c3", t:"cdiff", a:"V13", txt:"Codice VT-1201B sulla scatola, VT-1201 a catalogo (DDT 1140)"},
       {id:"c4", t:"bolla", a:"N55", ddt:"DDT 1153", riga:"NB-55 · 6 · 4 · −2", txt:"Differenza con la bolla: NB-55 contati 4, in bolla 6 (DDT 1153)"},
-      {id:"c5", t:"inv", inv:"INV-3", txt:"Inventario corsia C: 1 differenza da approvare"}
+      {id:"c5", t:"inv", inv:"INV-3", txt:"Inventario corsia C: 1 differenza da approvare"},
+      {id:"c6", t:"arrivo", to:"piani", k:"1031", txt:"Arrivato: 2 VT-1200 per l'ordine 1031 (resto)"}
     ],
     log:[
       {at:"10/11 09:02", who:"Marco", txt:"Apre il DDT 655/00 di Idrotecnica Nord, foto della bolla salvata", doc:"DDT 655/00", esito:"salvata"},
@@ -272,6 +280,7 @@ function initial(){
         {u:"C-07-2", ass:null, stato:"libera", righe:[]}],
       diff:[{u:"C-01-2", a:"S77", giac:2, q:4, who:"Sara", at:"09:31", due:true, stato:"da approvare"}]},
       {id:"LIB", t:"fuori dall'inventario", libera:true, ubi:[], diff:[]}],
+    resti:[{k:"1031", cli:"Bianchi Edilizia", prep:"Sara", righe:[{a:"V12",q:2}], arrivata:true, da:"ieri"},{k:"1029", cli:"Edil Po", prep:"Luca", righe:[{a:"N55",q:1}], arrivata:false, da:"2 giorni"}], pc:false, npResto:null,
     curInv:null, curUbi:null, invN:null, cfgCieca:true, cfgSec:true, cfgColl:true, cfgSosp:false,
     banco:null, cerca:"", cnt:null, put:null, newArt:null, docTab:"doc", docCat:null, docSel:null, regWho:"tutti"
   };
@@ -943,6 +952,7 @@ SH.ctl = ({id}) => { const c=S.controlli.find(x=>x.id===id); const b = (t,cls=""
     ecc:[b("Tieni l'eccedenza","go"),b("Rendi al fornitore")],
     prel:[b("Va bene: si cambia l'ordine nel gestionale","go"),b("Correggi: il di più torna a magazzino")],
     sosp:[b("Va bene","go"),b("Dallo a un altro preparatore")],
+    arrivo:[`<button class="btn go" data-act="creaResto:${c.k}:${id}">Crea piano</button>`],
     resoc:[b("Rivendibile: torna libero","go"),b("Rendi al fornitore"),`<button class="btn bad" data-act="sheet:grave:${id}:scarta">Scarta</button>`],
     rifiuto:[b("Tieni: va in ubicazione e diventa libera","go"),`<button class="btn bad" data-act="sheet:grave:${id}:scarta">Scarta</button>`]
   }[c.t];
@@ -1078,15 +1088,27 @@ SH.ritiro = ({i}) => { const c=["BRT","GLS"][i]||i; const ks=Object.keys(S.ordin
   return `<h3>Ritirato da ${S.cour[c]}?</h3><div class="list">${ks.map(k=>row(`${k} · ${esc(S.ordini[k].cli)}`,`${S.ordini[k].colli} colli`,"done")).join("")}</div>
   <p class="muted">Segno spediti ${ks.length} ordini, ${ks.reduce((n,k)=>n+(+S.ordini[k].colli||0),0)} colli. ${rest.length?`Restano pronti: ${rest.join(", ")}.`:""} La spedizione va al gestionale${S.coda?" e a Shopify":""}. Un errore lo corregge il responsabile.</p>
   <div class="btns two"><button class="btn" data-act="closeSheet">Torna indietro</button><button class="btn go" data-act="ritirato:${c}">Ritirato da ${S.cour[c]}</button></div>`; };
-V.piani = () => `${hdr("Piani di spedizione","Chi pianifica")}<main class="main"><div class="list">${S.piani.map(p=>row(`«${esc(p.t)}»`,p.prep,"","",`${p.ord.join(", ")}`)).join("")}</div>
-  <button class="btn go" data-act="go:nuovoPiano">Nuovo piano</button></main>`;
-V.nuovoPiano = () => { const liberi=Object.keys(S.ordini).filter(k=>!S.ordini[k].shop && S.ordini[k].stato==="aperto" && !S.piani.some(p=>p.ord.includes(k)));
+/* «Da completare» per il responsabile dei piani (286): merce arrivata / aspettano merce; resti e ordini sospesi */
+function daCompl(){ const arr=[], att=[];
+  S.resti.filter(r=>!r.piano).forEach(r=>(r.arrivata?arr:att).push(row(`${r.k} · ${esc(r.cli)}`, "resto", r.arrivata?"done":"part", r.arrivata?`creaResto:${r.k}`:"", `${r.righe.map(x=>x.q+" "+A(x.a).code).join(", ")} · ${r.arrivata?"merce arrivata":"da "+r.da} · prima parte di ${r.prep}`)));
+  Object.entries(S.ordini).filter(([k,o])=>o.stato==="aperto"&&!o.shop&&(o.ferma||o.riprendi)).forEach(([k,o])=>(o.riprendi?arr:att).push(row(`${k} · ${esc(o.cli)}`, o.riprendi?"da riprendere":"sospeso", o.riprendi?"done":"halt", "", `${esc(o.ferma||o.riprendi)} · preso da ${o.da}`)));
+  return {arr, att}; }
+V.piani = () => { const {arr, att}=daCompl();
+  return `${hdr("Piani di spedizione","Responsabile dei piani")}<main class="main">${toastHtml()}
+  <h2>Da completare · merce arrivata (${arr.length})</h2><div class="list">${arr.join("") || `<p class="muted">Niente.</p>`}</div>
+  <h2>Aspettano merce (${att.length})</h2><div class="list">${att.join("") || `<p class="muted">Niente.</p>`}</div>
+  <h2>Piani</h2><div class="list">${S.piani.map(p=>row(`«${esc(p.t)}»`,p.prep,"","",`${p.ord.join(", ")}`)).join("")}</div>
+  <button class="btn go" data-act="go:nuovoPiano">Nuovo piano</button>
+  <p class="muted">«Da completare»: ordini sospesi e resti che devono ancora partire. Tocca un resto con la merce arrivata per creare il suo piano: il preparatore proposto è chi ha fatto la prima parte (285–288).</p></main>`; };
+V.nuovoPiano = () => { const liberi=Object.keys(S.ordini).filter(k=>!S.ordini[k].shop && S.ordini[k].stato==="aperto" && !S.ordini[k].resto && !S.piani.some(p=>p.ord.includes(k)));
+  const resti=S.resti.filter(r=>r.arrivata && !r.piano), rr=resti.find(r=>r.k===S.npResto);
   return `${hdr("Nuovo piano")}<main class="main">
-  <div class="field"><label for="pt">Titolo</label><input id="pt" type="text" value="Verdi A."></div><p class="muted">Proposto dall'agente dell'ordine, se il gestionale lo manda.</p>
-  <div class="field"><label for="pp">Preparatore</label><select id="pp">${USERS.filter(u=>u.m.includes("prep")).map(u=>`<option>${u.n}</option>`).join("")}</select></div>
+  <div class="field"><label for="pt">Titolo</label><input id="pt" type="text" value="${rr?esc(rr.cli)+" · resto":"Verdi A."}"></div><p class="muted">Proposto dall'agente dell'ordine, se il gestionale lo manda.</p>
+  <div class="field"><label for="pp">Preparatore</label><select id="pp">${USERS.filter(u=>u.m.includes("prep")||(rr&&u.n===rr.prep)).map(u=>`<option value="${u.n}" ${rr&&u.n===rr.prep?"selected":""}>${u.n}${rr&&u.n===rr.prep?" (prima parte)":""}</option>`).join("")}</select></div>
+  ${resti.length?`<h2>Resti con la merce arrivata</h2><div class="list">${resti.map(r=>`<label class="row done"><span class="l"><span><input type="checkbox" data-resto="${r.k}" ${r.k===S.npResto?"checked":""}> ${r.k} · resto · ${esc(r.cli)}</span><small>${r.righe.map(x=>x.q+" "+A(x.a).code).join(", ")} · prima parte di ${r.prep}</small></span><span class="r">resto</span></label>`).join("")}</div>`:""}
   <h2>Ordini senza piano</h2><div class="list">${liberi.map(k=>{const o=S.ordini[k],[t,c]=cop(o);return `<label class="row ${c}"><span class="l"><span><input type="checkbox" data-ord="${k}" ${c==="done"?"checked":""}> ${k} · ${esc(o.cli)}</span><small>${S.cour[o.cour]}</small></span><span class="r">${t}</span></label>${avviso(o)}`;}).join("") || `<p class="muted">Tutti gli ordini aperti sono già in un piano.</p>`}</div>
   <div class="btns two"><button class="btn" data-act="back">Annulla</button><button class="btn go" data-act="creaPiano">Crea e dai al preparatore</button></div>
-  <p class="muted">Un ordine con articoli che non bastano si dà lo stesso: l'avviso non blocca e lo vede anche il preparatore (249). Il resto parte dopo, appena arriva (248).</p></main>`; };
+  <p class="muted">Un ordine con articoli che non bastano si dà lo stesso: l'avviso non blocca e lo vede anche il preparatore (249). I resti con la merce arrivata stanno in cima; il preparatore proposto è chi ha fatto la prima parte (288).</p></main>`; };
 V.scenari = () => `${hdr("Scenari del prototipo")}<main class="main">
   <details class="exp" open><summary>Cosa è cambiato in questa versione</summary><ul class="muted" style="margin:8px 0 0;padding-left:20px;display:grid;gap:4px">${NOVITA.map(t=>`<li>${t}</li>`).join("")}</ul></details>
   <div class="scen">
@@ -1095,7 +1117,8 @@ V.scenari = () => `${hdr("Scenari del prototipo")}<main class="main">
   <button class="btn" data-act="sc:sync">${S.sync?"Simula scambio bloccato da 15 minuti":"Scambio di nuovo a posto"}</button>
   <button class="btn" data-act="sc:coda">${S.coda?"Magazzino con i piani (come UFP)":"Magazzino con la coda (come Shopify)"}</button>
   <button class="btn" data-act="sc:mail">${S.mail?"Simula responsabile senza mail aziendale":"Responsabile con la mail aziendale"}</button>
-  <button class="btn" data-act="sc:arriva">Simula: arriva la merce che mancava agli ordini sospesi</button>
+  <button class="btn" data-act="sc:arriva">Simula: arriva la merce che mancava (ordini sospesi e resti)</button>
+  <button class="btn" data-act="sc:pc">${S.pc?"Torna al telefono (tastierino)":"Simula il computer (tastiera e icona del tastierino)"}</button>
   <button class="btn" data-act="sc:vuoti">Svuota gli elenchi (per vedere gli stati vuoti)</button>
   <button class="btn" data-act="sc:primo">Rivedi la prima apertura</button>
   <button class="btn" data-act="sc:boss">Entra come Anna (admin e responsabile di magazzino)</button>
@@ -1116,7 +1139,24 @@ function render(){
   app.innerHTML = `<div class="proto"><span>PROTOTIPO · dati inventati${S.user?` · ${S.user.n}`:""}</span><button data-act="go:scenari">Scenari</button></div>${offline}${view}
     <details class="log"><summary>Tutto quello che è successo, per chi prova (${S.log.length})</summary><ol>${S.log.slice(0,30).map(e=>`<li>${e.at} · ${esc(e.who)}: ${esc(e.txt)}</li>`).join("")}</ol></details>
     ${S.sheet?`<div class="sheet-bg" data-act="bg"><div class="sheet" role="dialog" aria-modal="true">${(h=>/data-act="(closeSheet|home|back)"/.test(h)?h:h+`<button class="btn" data-act="closeSheet">Annulla</button>`)(tipSheet(SH[S.sheet.sk](S.sheet)))}</div></div>`:""}`;
+  numInputs();
 }
+
+/* ===== Tastierino del programma (284, 290, 291) ===== */
+const KPI = `<svg width="18" height="20" viewBox="0 0 18 20" aria-hidden="true"><rect x="1" y="1" width="16" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><rect x="4" y="4" width="10" height="4" fill="currentColor"/><circle cx="5.5" cy="12" r="1.3" fill="currentColor"/><circle cx="9" cy="12" r="1.3" fill="currentColor"/><circle cx="12.5" cy="12" r="1.3" fill="currentColor"/><circle cx="5.5" cy="15.5" r="1.3" fill="currentColor"/><circle cx="9" cy="15.5" r="1.3" fill="currentColor"/><circle cx="12.5" cy="15.5" r="1.3" fill="currentColor"/></svg>`;
+function numInputs(){ document.querySelectorAll('#app input[type=number], #app input#kg').forEach(inp=>{
+  if(S.pc){ if(!inp.nextElementSibling || !inp.nextElementSibling.classList.contains("kp-ic")) inp.insertAdjacentHTML("afterend", `<button type="button" class="ic kp-ic" data-kpfor="${inp.id}" aria-label="Apri il tastierino">${KPI}</button>`); }
+  else { inp.readOnly=true; inp.inputMode="none"; inp.dataset.kp="1"; } }); }
+function keypad(inp){ const dec = inp.id==="kg"; const lab = (inp.closest(".field")?.querySelector("label")?.textContent) || "Quantità";
+  let v=String(inp.value), fresh=true; const bg=document.createElement("div"); bg.className="sheet-bg kp-bg";
+  bg.innerHTML=`<div class="sheet" role="dialog" aria-modal="true" aria-label="Tastierino"><h3>${esc(lab)}</h3><div class="kp-val" aria-live="polite"></div><div class="keys">${["1","2","3","4","5","6","7","8","9",dec?",":"","0","⌫"].map(k=>k?`<button class="key" data-k="${k}" aria-label="${k==="⌫"?"Cancella":k}">${k}</button>`:"<span></span>").join("")}</div><div class="btns two"><button class="btn" data-k="esc">Annulla</button><button class="btn go" data-k="ok">OK</button></div></div>`;
+  const show=()=>{ bg.querySelector(".kp-val").textContent = v || "0"; }; show();
+  bg.addEventListener("click", e=>{ e.stopPropagation(); const b=e.target.closest("[data-k]"); if(!b){ if(e.target===bg) bg.remove(); return; } const k=b.dataset.k;
+    if(k==="esc") return bg.remove(); if(k==="ok"){ inp.value=v; bg.remove(); return inp.focus({preventScroll:true}); }
+    if(k==="⌫") v = fresh ? "" : v.slice(0,-1); else { if(fresh) v=""; if(k===","&&v.includes(",")) return; v=(v+k).slice(0,7); }
+    fresh=false; show(); });
+  document.body.appendChild(bg); bg.querySelector('[data-k="ok"]').focus(); }
+document.addEventListener("click", e=>{ const t=e.target.closest("input[data-kp], [data-kpfor]"); if(!t) return; e.preventDefault(); keypad(t.dataset.kpfor?document.getElementById(t.dataset.kpfor):t); });
 
 /* ===== Azioni ===== */
 function invReg(a, q){ const U=curUbi(), g=expQ(U.u,a), r=U.righe.find(z=>z.a===a);
@@ -1382,7 +1422,9 @@ function act(a, el){
       S.toast={txt: q<R.q ? `♪ Presi ${q} di ${R.q} ${A(R.a).code}` : `♪ Presi ${q} ${A(R.a).code}`};
       if(S.pk.mode==="single") Object.assign(S.pk,{mode:"list", cur:null, open:null}); else S.pk.cur=null;
       S.pk.st=0; S.pk.warn=null; render(); return window.scrollTo(0,0); }
-    case "pronto": { const o=S.ordini[S.ordine]; o.stato="pronto"; o.pronto="ora"; o.colli=document.getElementById("colli2").value; o.kg=document.getElementById("kg").value; o.prep=document.getElementById("prep").value;
+    case "pronto": { const o=S.ordini[S.ordine]; const mancano=o.righe.filter(r=>(r.preso??r.ass)<r.q).map(r=>({a:r.a,q:r.q-(r.preso??r.ass)}));
+      if(mancano.length && !o.shop) S.resti.push({k:S.ordine.replace(" resto",""), cli:o.cli, prep:document.getElementById("prep").value, righe:mancano, arrivata:false, da:"oggi"});
+      o.stato="pronto"; o.pronto="ora"; o.colli=document.getElementById("colli2").value; o.kg=document.getElementById("kg").value; o.prep=document.getElementById("prep").value;
       log(`Ordine ${S.ordine} pronto (evaso): ${o.colli} colli, ${o.kg} kg, preparato da ${o.prep}${o.prep!==me()?` (registrato da ${me()})`:""}; ${o.shop?"a Shopify non si manda niente finché non parte":"documento di prelievo al gestionale"}`, "Ordine "+S.ordine); S.ordine=null; S.pk=null; back(); return; }
     case "corrOk": { const o=S.ordini[S.ordine], R=o.righe[+x], w=whereOf(R), v=document.getElementById("tq").value; if(v===""){ return; }
       const n=+v, g=gq(R.a,w), prima=R.ass, diff=n-g; const e=(GU[R.a]=GU[R.a]||[]).find(z=>z[0]===w); e ? (e[1]=n) : GU[R.a].push([w,n]);
@@ -1402,7 +1444,10 @@ function act(a, el){
     case "resta": S.resta=S.resta||{}; S.resta[x]=!S.resta[x]; return render();
     case "ritirato": { const ks=Object.keys(S.ordini).filter(k=>S.ordini[k].stato==="pronto"&&S.ordini[k].cour===x&&!(S.resta||{})[k]); ks.forEach(k=>S.ordini[k].stato="spedito"); const id=`Ritiro ${x} 18/11 ${clock()}`; S.ritiri.unshift({id, cour:x, day:"18/11", ord:ks, who:me()});
       log(`Ritirato da ${S.cour[x]}: spediti ${ks.join(", ")}; spedizione al gestionale${S.coda?" e a Shopify":""}`, id); S.sheet=null; S.toast={kind:"ship", txt:`Spediti ${ks.length} ordini con ${S.cour[x]}`, ks}; return render(); }
-    case "creaPiano": { const ks=[...document.querySelectorAll("[data-ord]")].filter(i=>i.checked).map(i=>i.dataset.ord); if(!ks.length) return; const t=document.getElementById("pt").value, pp=document.getElementById("pp").value; S.piani.push({id:"p"+(++S.n), t, prep:pp, ord:ks}); log(`Crea il piano «${t}» per ${pp}: ${ks.join(", ")}`); return back(); }
+    case "creaResto": { S.npResto=x; if(y){ S.controlli=S.controlli.filter(z=>z.id!==y); S.sheet=null; } return go("nuovoPiano"); }
+    case "creaPiano": { const rs=[...document.querySelectorAll("[data-resto]")].filter(i=>i.checked).map(i=>i.dataset.resto);
+      rs.forEach(k=>{ const r=S.resti.find(z=>z.k===k); r.piano=true; const o0=S.ordini[k]; S.ordini[k+" resto"]={cli:r.cli, cour:o0?o0.cour:"BRT", stato:"aperto", resto:true, righe:r.righe.map(x=>({a:x.a,q:x.q,ass:x.q}))}; });
+      const ks=[...document.querySelectorAll("[data-ord]")].filter(i=>i.checked).map(i=>i.dataset.ord).concat(rs.map(k=>k+" resto")); if(!ks.length) return; S.npResto=null; const t=document.getElementById("pt").value, pp=document.getElementById("pp").value; S.piani.push({id:"pn"+(++S.n), t, prep:pp, ord:ks}); log(`Crea il piano «${t}» per ${pp}: ${ks.join(", ")}`); return back(); }
     case "sc":
       if(x==="rete"){ S.online=!S.online; log(S.online?`Rete tornata: partite ${S.pendingOffline} letture`:"Rete assente"); if(S.online) S.pendingOffline=0; return back(); }
       if(x==="timeout"){ if(!S.user) return back(); S.resume=S.stack[S.stack.length-1]||"home"; log(`Uscita automatica dopo 30 minuti senza uso: il lavoro a metà resta`); S.user=null; S.stack=[]; return go("accesso", false); }
@@ -1410,7 +1455,9 @@ function act(a, el){
       if(x==="coda"){ S.coda=!S.coda; log(S.coda?"Ora il magazzino lavora con la coda":"Ora il magazzino lavora con i piani"); S.stack=[]; return go(S.user?"home":"accesso", false); }
       if(x==="vuoti"){ S.ddts.forEach(d=>d.open=false); S.area=[]; S.rimetti=[]; S.vendite=[]; S.controlli=[]; Object.values(S.ordini).forEach(o=>{ if(o.stato!=="spedito"){ o.stato="spedito"; o.da=null; } }); log("Scenario: elenchi svuotati"); S.stack=[]; return go(S.user?"home":"accesso", false); }
       if(x==="mail"){ S.mail=!S.mail; return back(); }
-      if(x==="arriva"){ Object.entries(S.ordini).forEach(([k,o])=>{ if(o.ferma && /manca/.test(o.ferma)){ o.riprendi="è arrivato quello che mancava"; o.ferma=null; o.righe.forEach(r=>r.ass=r.q); log(`Arrivato il mancante: l'ordine ${k} è da riprendere`, "Ordine "+k); } }); return back(); }
+      if(x==="pc"){ S.pc=!S.pc; return back(); }
+      if(x==="arriva"){ S.resti.filter(r=>!r.arrivata).forEach(r=>{ r.arrivata=true; S.controlli.push({id:"c"+(++S.n), t:"arrivo", to:"piani", k:r.k, txt:`Arrivato: ${r.righe.map(z=>z.q+" "+A(z.a).code).join(", ")} per l'ordine ${r.k} (resto)`}); log(`Registrata al ricevimento la merce che mancava al resto dell'ordine ${r.k}: avviso al responsabile dei piani`); });
+        Object.entries(S.ordini).forEach(([k,o])=>{ if(o.ferma && /manca/.test(o.ferma)){ o.riprendi="è arrivato quello che mancava"; o.ferma=null; o.righe.forEach(r=>r.ass=r.q); log(`Arrivato il mancante: l'ordine ${k} è da riprendere`, "Ordine "+k); } }); return back(); }
       if(x==="primo"){ S.stack=[]; return go("primo", false); }
       if(x==="boss"){ S.pinFor="Anna"; S.stack=[]; return go("pin", false); }
       if(x==="piani"){ S.pinFor="Davide"; S.stack=[]; return go("pin", false); }
