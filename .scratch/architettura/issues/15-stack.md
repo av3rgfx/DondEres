@@ -24,3 +24,7 @@ Risultato atteso: lo stack e il motivo di ogni scelta in `docs/architettura.md` 
 - 17/11/2026, dal ticket «Piano della prova di accuratezza visiva»: per la prova, lettura del codice stampato sul
   server con PaddleOCR (Apache-2.0), modelli visivi SigLIP 2, PE-Core e DINOv2 (Apache-2.0), DINOv3 solo come confronto
   (140–142, 145). Lo stack del riconoscimento dipende dal modello scelto nell'esecuzione della prova.
+- 19/11/2026, dal ticket «Punti di estensione»: lo stack deve permettere moduli che si agganciano alla base senza
+  modificarla (301), accesi e spenti dall'admin (302), con regole dei punti d'aggancio a versione e il controllo prima
+  di ogni aggiornamento (307); quattro punti d'aggancio (collegamento, lettore di etichette, precedenza, partita) e campi
+  aggiuntivi da configurazione (306). Da scegliere qui: come si scrivono i moduli e la forma delle regole.

@@ -99,6 +99,13 @@ Per collegarlo ad Ad Hoc vi chiediamo:
     rilevazione d'inventario unica, con la quantità contata di ogni articolo? Ad Hoc calcola da sé il valore
     dell'inventario (costo medio, ultimo costo o altro)?
 
+**Vendita assistita** (aggiunta il 19/11/2026, dal ticket «Punti di estensione per la specializzazione»)
+
+29. Dopo una vendita assistita la merce può restare in magazzino per giorni, per esempio un pacco sul pancale di un
+    agente. In quale momento Ad Hoc scarica la giacenza: alla creazione dell'OP, al passaggio da OP a bolla al ritiro, o
+    alla fattura? Il nostro programma può leggere quel passaggio (e quando, dopo quanto tempo)? Lo useremmo per
+    registrare l'uscita della merce nello stesso momento.
+
 Grazie.
 
 ---

@@ -103,6 +103,10 @@ percorso delle schermate e aspetto grafico, compresi nome e brand kit (decisioni
   «Prelievo guidato» e «Sospendi»; si entra nell'articolo per giacenza e quantità; «Correggi giacenza», «Prosegui»,
   «Restano aperti», conferma della quantità diversa, tastierino del programma; il resto lo segue il responsabile dei
   piani in «Da completare»; responsabili soprattutto dal computer (decisioni 270–299).
+- [Punti di estensione per la specializzazione](issues/11-punti-di-estensione.md): base unica con Configurazione e
+  moduli solo nostri; punti d'aggancio collegamento, lettore di etichette, precedenza, partita; «Da registrare nel
+  gestionale»; aggiornamento fermo se un modulo non va; vendita assistita, agenti, fattura, ordini fornitore e
+  inventario verso Ad Hoc; «collegamento» al posto di «connettore» (decisioni 301–320).
 
 Prese prima della mappa, nel secondo giro di domande del 15/11/2026: decisioni 15–28 in
 [`docs/decisioni.md`](../../docs/decisioni.md) (assegnazione parziale, codice stampato come tipo di articolo,
@@ -124,7 +128,7 @@ tre livelli di conferma, quantità letta dalla scatola, ubicazioni facoltative, 
   disponibilità, prezzo, giacenza e ubicazione, anche quando il cliente non sa bene cosa vuole. Tocca identificazione e
   schermate.
 - **Etichette e distinta del corriere:** chi le stampa in UFP (domande 21 e 22 al rivenditore) e nel magazzino Shopify;
-  la ricerca del 18/11/2026 le trova in quasi tutti i gestionali.
+  la ricerca del 18/11/2026 le trova in quasi tutti i gestionali. Se serviranno, diventano un collegamento in più (decisione 303).
 - **Ottimizzazione del venduto (VEND):** l'utente vuole un'analisi a parte, soprattutto per UFP, che vende anche al
   banco e ha più casi particolari da controllare.
 - **Descrizione proposta da un modello che legge immagini e scrive testo** per l'articolo nuovo: se tenerla, e quale
@@ -133,7 +137,7 @@ tre livelli di conferma, quantità letta dalla scatola, ubicazioni facoltative, 
 ## Out of scope
 
 - Specializzazione per un magazzino specifico (decisione 4).
-- Connettore Ad Hoc Revolution per UFP: sta nella specializzazione, dopo le risposte del rivenditore (decisioni 51 e
+- Collegamento Ad Hoc Revolution per UFP: sta nella specializzazione, dopo le risposte del rivenditore (decisioni 51 e
   57; domande in `docs/domande-rivenditore-ufp.md`).
 - Registrazione per numero seriale del singolo pezzo, lotti e scadenze: possibile estensione (decisione 17).
 - Lavoro senza rete (decisione 23).

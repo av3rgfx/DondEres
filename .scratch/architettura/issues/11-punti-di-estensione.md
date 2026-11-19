@@ -2,7 +2,7 @@
 
 Type: grilling
 Label: wayfinder:grilling
-Status: in progress
+Status: resolved
 Assignee: sessione del 19/11/2026 con l'utente
 Blocked by: 01, 02, 04
 
@@ -36,3 +36,25 @@ Risultato atteso: l'elenco dei punti di estensione e il loro contratto in `docs/
 - 19/11/2026, secondo giro: accettate le consigliate (308–316). Note: uscita della vendita assistita scelta dall'admin
   (308); confronto con la fattura facoltativo (310); testo della mail oltre al PDF (311); domanda su chi stampa i
   documenti in UFP (313), con risposta nel riepilogo. «Collegamento» al posto di «connettore» (316).
+- 19/11/2026, riepilogo: accettate le consigliate (317–320). Nota alla 317: la scelta legata al gestionale c'è solo se il
+  collegamento legge la chiusura; in UFP la merce prelevata non è più disponibile anche sul pancale dell'agente; il
+  passaggio da OP a bolla al ritiro è il candidato per l'uscita, da verificare con il rivenditore (domanda 29).
+
+## Answer
+
+Chiuso il 19/11/2026 in due giri più il riepilogo, con la pagina https://claude.ai/artifact/H5oSLLHmbpw3qMAXpNFEkz
+(privata). Decisioni 301–320; specifica nella sezione «Punti di estensione» di `docs/architettura.md`; termini nuovi in
+`GLOSSARY.md` (base, specializzazione, configurazione, modulo, collegamento, punto d'aggancio, partita, lettore di
+etichette, campo aggiuntivo, «Da registrare nel gestionale»); domanda 29 per il rivenditore.
+
+- Base unica: la specializzazione è fatta di «Configurazione» e moduli, mai di una copia modificata (301); moduli solo
+  nostri, accesi dall'admin in «Collegamenti» (302, 316).
+- Quattro punti d'aggancio: collegamento (che dichiara cosa legge e manda; il resto va in «Da registrare nel
+  gestionale»), lettore di etichette, precedenza dell'assegnazione, partita (303–305, 314). Parole di quantità, campi
+  aggiuntivi, intestazione dei documenti e nomi in Configurazione; gli altri testi uguali per tutti (304, 306, 313, 315).
+- Aggiornamenti: regole valide almeno un anno, prova delle specializzazioni, aggiornamento fermo se un modulo non va
+  (307).
+- Punti lasciati alla specializzazione: vendita assistita prelevata alla conferma ed esce quando sceglie l'admin
+  (308, 317); agenti in «Ordini da assegnare» con filtro (309); confronto con la fattura facoltativo (310); «Invia al
+  fornitore» con testo di serie (311, 318); inventario in una delle due forme (312); documenti con un solo autore (319);
+  resi verso Ad Hoc in «Da registrare nel gestionale» finché il rivenditore non risponde (303).
