@@ -2,7 +2,7 @@
 
 Type: grilling
 Label: wayfinder:grilling
-Status: open
+Status: resolved
 Assignee: sessione del 19/11/2026 con l'utente
 Blocked by: 27
 
@@ -25,3 +25,11 @@ Shopify, ed eventuali scelte nuove in Configurazione.
 ## Comments
 
 - 19/11/2026: nasce dalla richiesta dell'utente (321), da lavorare nella sessione successiva, dopo la ricerca.
+- 19/11/2026, risoluzione (tre giri, pagina privata https://claude.ai/artifact/AR5aJVmctJ7FbEzbwyjCQd; decisioni
+  322–343, riepilogo confermato nella 343): resi di Shopify letti e scritti dal programma, senza app; richiesta dal
+  sito con un modulo nostro che fa scegliere credito o rimborso e salva la scelta, con l'indirizzo del ritiro GLS;
+  mail lette dal programma da un indirizzo dedicato, con bozza del modello solo dopo una prova (ancora da definire) e
+  conferma di una persona; il responsabile approva le richieste, prenota il ritiro GLS dal riepilogo o carica
+  l'etichetta FedEx; rimborso eseguito dal programma dopo la conferma, importo scritto dal responsabile; «giorno N di
+  14»; niente cambi; scheda in «Documenti». Tre punti per la parte legale (342). Specifica in `docs/architettura.md`,
+  «Resi» → «Reso del cliente nel magazzino Shopify».
