@@ -305,6 +305,7 @@ Le decisioni tecniche ancora aperte non stanno qui: stanno in `docs/analisi-prog
 | 297 | 19/11/2026 | Prelevando dall'area di ricevimento (in UFP «CHECK», nome scelto alla configurazione) l'ubicazione non si scansiona; l'articolo si può inquadrare oppure confermare a mano. Precisa la 287. | Proposta accettata con la nota dell'utente: «Facciamo entrambe: se un preparatore ha il dubbio può scansionarlo, altrimenti lo conferma a mano». |
 | 298 | 19/11/2026 | Nel «Nuovo piano» l'elenco degli ordini che non sono ancora in nessun piano si chiama «Ordini da assegnare» (prima «Ordini senza piano»). | Scelta dell'utente, diversa dalla proposta («Da pianificare»). L'utente aveva chiesto cosa volesse dire «Ordini senza piano». |
 | 299 | 19/11/2026 | Confermato il riepilogo del ticket «Elenco del prelievo e correzione della quantità» (decisioni 270–298), con le correzioni delle 293–298. | Riepilogo confermato: «Sì, confermo». |
+| 300 | 19/11/2026 | Il tasto che conferma senza scansionare con il palmare o il telefono si chiama «Conferma», non «Conferma a mano»: vale per l'area di ricevimento (297) e per «Rimetti a posto» (295), e per ogni conferma senza lettura del codice. | L'utente: «non voglio che venga scritto proprio "Conferma a mano", quello è un mio modo di spiegartelo, voglio che ci sia scritto "Conferma" e basta». |
 
 ## Note di lettura
 
@@ -391,3 +392,4 @@ Le decisioni tecniche ancora aperte non stanno qui: stanno in `docs/analisi-prog
 - Decisione 248: precisata dalle 285 (con i piani il resto lo segue solo il responsabile, che crea il piano) e 288 (preparatore proposto). Decisione 284: precisata dalla 290 (telefono e computer).
 - Decisione 272: corretta dalla 293 (le giacenze si scelgono dentro l'articolo, non nella riga dell'elenco).
 - Decisioni 271, 272 e 276: precisate dalla 294 (si entra subito nell'articolo). Decisione 274: precisata dalla 295 (tasti sugli articoli presi). Decisioni 248 e 285: precisate dalla 296 (magazzini con la coda). Decisione 287: precisata dalla 297.
+- Decisioni 295 e 297: il tasto si chiama «Conferma» (300).

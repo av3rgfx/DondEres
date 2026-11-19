@@ -1011,15 +1011,15 @@ l'ordine d'esempio 1060 di 15 articoli):
   l'articolo.
 - **Toccando un articolo preso** (295) la riga in «Presi» si allarga con **«Elimina»**, che toglie subito il prelievo
   (correzione collegata, 74; per esempio un articolo confermato a mano che non si ha in mano), e **«Rimetti a posto»**,
-  che porta all'ubicazione da cui era stato preso: scansionandola il ritorno si conferma da solo, oppure «Conferma a
-  mano». In tutti e due i casi l'articolo torna da prendere. Deduzione dell'agente: se era stato preso dall'area di
+  che porta all'ubicazione da cui era stato preso: scansionandola il ritorno si conferma da solo, oppure si tocca
+  «Conferma» senza scansionare (300). In tutti e due i casi l'articolo torna da prendere. Deduzione dell'agente: se era stato preso dall'area di
   ricevimento, «Rimetti a posto» porta alla sua ubicazione abituale.
 - **Inquadrare dall'elenco** (276, 294): con l'elenco aperto, inquadrando o sparando un articolo dell'ordine si entra nel
   suo articolo; un articolo che non è nell'ordine dà lo stop (97). Al telefono un tasto in alto apre l'inquadratura; il
   palmare legge sempre con il grilletto.
 - **Dall'area di ricevimento** (297, 69): tra le giacenze compare l'area di ricevimento (nome scelto alla
   configurazione; in UFP «CHECK», lo scarico in fondo al magazzino). Scelta lei, l'ubicazione non si scansiona e
-  l'articolo si inquadra oppure si conferma con «Conferma a mano».
+  l'articolo si inquadra oppure si tocca «Conferma» (300).
 - **Prelievo guidato** (164, 270, 272, 275): un articolo dopo l'altro, in ordine di ubicazione, con «‹» per tornare
   all'elenco. Su un articolo che non basta i tasti sono «Sospendi» e **«Prosegui»** (prende quello che c'è e passa al
   prossimo, il resto resta aperto) finché restano altri articoli; sull'ultimo «Concludi senza». Con l'ubicazione in conta

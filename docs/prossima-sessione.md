@@ -94,7 +94,7 @@ In ordine di numero:
 ## Ultimo ticket chiuso
 
 19/11/2026: «Elenco del prelievo e correzione della quantità», in tre giri più il riepilogo, con la pagina
-https://claude.ai/artifact/SdXpDTDFxGAs76mx17cNb5 (privata). Decisioni 271–299 (la 270 era la richiesta), sezione
+https://claude.ai/artifact/SdXpDTDFxGAs76mx17cNb5 (privata). Decisioni 271–300 (la 270 era la richiesta), sezione
 «Percorso delle schermate» → «Preparazione e spedizione» di `docs/architettura.md` («Elenco del prelievo» e «Ciò che
 resta da spedire»), prototipo `prototipi/percorso-schermate/index.html` (anche
 https://claude.ai/artifact/Vb6ijyDdr4n2gsZcKhhVur, privata) con l'ordine d'esempio 1060 di 15 articoli. Termini nuovi in
@@ -111,7 +111,7 @@ dall'utente: dopo una spedizione parziale il preparatore non vede più l'ordine 
 crea il piano quando la merce torna; la merce appena caricata sta nell'ubicazione «check» in fondo al magazzino. Da qui
 «Da completare» e l'avviso all'arrivo per il responsabile dei piani. L'utente ha fatto notare che responsabili e admin
 lavorano quasi sempre dal computer (292): va tenuto nel ticket «Aspetto grafico». L'utente cura molto i nomi di tasti e
-titoli (278): «Elimina» al posto di «Togli», «Ordini da assegnare» al posto di «Ordini senza piano».
+titoli (278): «Elimina» al posto di «Togli», «Ordini da assegnare» al posto di «Ordini senza piano», «Conferma» al posto di «Conferma a mano» (300).
 
 ## Cose dell'utente, senza sessione
 

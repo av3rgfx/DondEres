@@ -193,7 +193,7 @@ const NOVITA = [
   "Vendita assistita: stesso elenco; toccando un articolo, giacenze, «Quantità» ed «Elimina» (277).",
   "Secondo giro: gli articoli lasciati aperti stanno in «Restano aperti», in «Presi» solo ciò che hai preso (281). Una quantità diversa da quella proposta chiede conferma prima di registrarla (283).",
   "Terzo giro: al telefono le quantità si scrivono con il tastierino del programma toccando il numero; da Scenari «Simula il computer»: tastiera e icona del tastierino (290, 291).",
-  "Dopo la prova: toccando un articolo da prendere si entra subito nell'articolo, dove si sceglie la giacenza (293, 294); toccando un articolo preso, «Elimina» e «Rimetti a posto» (295). TP-12 ha 24 pezzi in CHECK, l'area di ricevimento: lì l'ubicazione non si scansiona e l'articolo si inquadra o si conferma a mano (297). In Configurazione «Con la coda, i resti» (296). «Ordini da assegnare» nel nuovo piano (298).",
+  "«Conferma» al posto di «Conferma a mano» (300). Dopo la prova: toccando un articolo da prendere si entra subito nell'articolo, dove si sceglie la giacenza (293, 294); toccando un articolo preso, «Elimina» e «Rimetti a posto» (295). TP-12 ha 24 pezzi in CHECK, l'area di ricevimento: lì l'ubicazione non si scansiona e l'articolo si inquadra o si tocca «Conferma» (297, 300). In Configurazione «Con la coda, i resti» (296). «Ordini da assegnare» nel nuovo piano (298).",
   "Come Davide: «Piani di spedizione» ha «Da completare» (merce arrivata / aspettano merce); «Da controllare» ha l'avviso «Arrivato…» con «Crea piano», che apre il piano con il resto e il preparatore della prima parte (285–288)."
 ];
 
@@ -1030,11 +1030,11 @@ V.pick = () => { const k=S.ordine, o=S.ordini[k], P=S.pk, tot=o.righe.length, fa
     <div class="btns two"><button class="btn" data-act="sheet:sosp">Sospendi</button><button class="btn go" data-act="senza:${i}">${avanti}</button></div>
     <p class="muted">${avanti==="Prosegui"?"«Prosegui»: passi al prossimo articolo; questo resta aperto e parte appena arriva (248).":"«Concludi senza»: questo articolo resta aperto e parte appena arriva (248)."} «Sospendi»: l'ordine si ferma finché arriva (247).</p></main>`;
   const ric = w===AREA_RIC;
-  const stepTxt = P.st===0?`Vai a <b>${w}</b> e scansiona l'ubicazione`:ric?`Area di ricevimento: inquadra <b>${A(R.a).code}</b> o confermalo a mano`:`Inquadra <b>${A(R.a).code}</b>`;
+  const stepTxt = P.st===0?`Vai a <b>${w}</b> e scansiona l'ubicazione`:ric?`Area di ricevimento: inquadra <b>${A(R.a).code}</b> o tocca «Conferma»`:`Inquadra <b>${A(R.a).code}</b>`;
   const short = R.ass<R.q;
   return `${pkHdr(k, sub)}<main class="main">${toastHtml()}${head}${g}
     ${ic?`<div class="warnbox">${w} in conta da ${ic.who}. Prendi da un'altra ubicazione.</div>${guided?`<button class="btn small" data-act="later:${i}">Più tardi</button>`:""}`:""}
-    ${P.st<2?`<div class="cam"><div class="frame">${stepTxt}</div><div class="chips">${P.st===0?`<button class="chip" data-act="pkLoc:ok">Simula: ${w}</button><button class="chip" data-act="pkLoc:no">Simula: un'altra ubicazione</button>`:`<button class="chip" data-act="pkArt:ok">Simula: ${A(R.a).code}</button><button class="chip" data-act="pkArt:no">Simula: un altro articolo</button>`}</div></div>${ric&&P.st===1?`<button class="btn" data-act="pkArt:mano">Conferma a mano</button>`:""}`:
+    ${P.st<2?`<div class="cam"><div class="frame">${stepTxt}</div><div class="chips">${P.st===0?`<button class="chip" data-act="pkLoc:ok">Simula: ${w}</button><button class="chip" data-act="pkLoc:no">Simula: un'altra ubicazione</button>`:`<button class="chip" data-act="pkArt:ok">Simula: ${A(R.a).code}</button><button class="chip" data-act="pkArt:no">Simula: un altro articolo</button>`}</div></div>${ric&&P.st===1?`<button class="btn" data-act="pkArt:mano">Conferma</button>`:""}`:
      `<div class="field"><label for="q">Quanti ne prendi?</label><div class="qty"><button class="ic" data-act="qm" aria-label="Meno">−</button><input id="q" type="number" inputmode="numeric" value="${R.ass}"><button class="ic" data-act="qp" aria-label="Più">+</button></div></div>
      ${short?`<div class="warnbox">Ne servono ${R.q}, ne risultano ${R.ass}.</div><div class="btns two"><button class="btn" data-act="sheet:sosp">Sospendi</button><button class="btn go" data-act="pkQty:senza">${avanti}</button></div>`:`<button class="btn go" data-act="pkQty">Preso</button>`}`}
     ${P.warn?`<div class="warnbox bad">${P.warn}</div>`:""}
@@ -1047,7 +1047,7 @@ const backTo = R => { const d=R.da||whereOf(R); return d===AREA_RIC ? A(R.a).loc
 V.rimetti = (o, k, i) => { const R=o.righe[i], w=backTo(R);
   return `${pkHdr(k, "Rimetti a posto")}<main class="main">${row(`<b>${w}</b> · ${A(R.a).code}`, `${R.preso} ${A(R.a).unit}`, "boss", "", esc(A(R.a).desc))}
     <div class="cam"><div class="frame">Riporta ${R.preso} ${A(R.a).code} in <b>${w}</b> e scansiona l'ubicazione</div><div class="chips"><button class="chip" data-act="rimOk:${i}:scan">Simula: ${w}</button></div></div>
-    <button class="btn" data-act="rimOk:${i}:mano">Conferma a mano</button>
+    <button class="btn" data-act="rimOk:${i}:mano">Conferma</button>
     <p class="muted">Scansionando l'ubicazione il ritorno si conferma da solo; l'articolo torna da prendere (295).</p></main>`; };
 V.pickList = (o, k, tot, fatti) => { const P=S.pk, pend=pending(o), done=pickRows(o).filter(isDone);
   /* 281: «Restano aperti» con quello che manca; in «Presi» solo ciò che si è preso davvero */

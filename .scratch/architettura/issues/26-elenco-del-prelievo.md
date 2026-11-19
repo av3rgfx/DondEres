@@ -46,7 +46,7 @@ Risultato atteso: prototipo `prototipi/percorso-schermate/index.html` aggiornato
 - 19/11/2026, dopo una seconda prova: la giacenza si sceglie dentro l'articolo, non nella riga (293). Riepilogo: si entra
   subito nell'articolo (294); «Elimina» e «Rimetti a posto» sugli articoli presi (295); resti con la coda (296); area di
   ricevimento senza scansione dell'ubicazione (297); «Ordini da assegnare», scelta dell'utente diversa dalla proposta
-  (298); riepilogo confermato (299).
+  (298); riepilogo confermato (299). Dopo la chiusura: «Conferma» al posto di «Conferma a mano» (300).
 
 ## Answer
 
