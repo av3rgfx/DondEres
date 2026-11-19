@@ -2,7 +2,8 @@
 
 Type: grilling
 Label: wayfinder:grilling
-Status: open
+Status: in progress
+Assignee: sessione del 19/11/2026 con l'utente
 Blocked by: 01, 02, 04
 
 ## Question
