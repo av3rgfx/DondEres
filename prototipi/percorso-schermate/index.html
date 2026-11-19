@@ -185,7 +185,8 @@ const NOVITA = [
   "Toccando un articolo la riga si allarga: giacenze per ubicazione (tocca un'altra ubicazione per prendere da lì), «Preleva» e «Correggi giacenza»; «Concludi senza» dove non c'è niente da prendere (271–273).",
   "Le righe prese passano sotto, in «Presi» (274). Con 📷 in alto inquadri un articolo dell'ordine e si apre la sua riga; un articolo estraneo dà lo stop (276).",
   "Prelievo guidato: su un articolo che non basta, «Prosegui» finché ce ne sono altri e «Concludi senza» sull'ultimo (272). Con l'ubicazione in conta (SL-77 in C-02-4), «Più tardi» al posto di «Aspetto» (275).",
-  "Vendita assistita: stesso elenco; toccando un articolo, giacenze, «Quantità» ed «Elimina» (277)."
+  "Vendita assistita: stesso elenco; toccando un articolo, giacenze, «Quantità» ed «Elimina» (277).",
+  "Secondo giro: gli articoli lasciati aperti stanno in «Restano aperti», in «Presi» solo ciò che hai preso (281). Una quantità diversa da quella proposta chiede conferma prima di registrarla (283)."
 ];
 
 let clockMin = 10*60;
@@ -1034,13 +1035,19 @@ V.pick = () => { const k=S.ordine, o=S.ordini[k], P=S.pk, tot=o.righe.length, fa
     ${short&&P.st===2?`<p class="muted">${avanti==="Prosegui"?"«Prosegui»: prendi quelli che ci sono e passi al prossimo; il resto parte appena arriva (248).":"«Concludi senza»: prendi quelli che ci sono; il resto parte appena arriva (248)."} «Sospendi»: l'ordine si ferma finché arriva (247).</p>`:""}
     <p class="muted">${guided?"Prelievo guidato: un articolo dopo l'altro, in ordine di ubicazione. ‹ torna all'elenco.":"Dopo «Preso» torni all'elenco."} «Correggi giacenza»: scrivi quanti pezzi ci sono nell'ubicazione e continui da qui (256).${guided?" «Più tardi», con l'ubicazione in conta: l'articolo passa in fondo (275).":""}</p></main>`; };
 V.pickList = (o, k, tot, fatti) => { const P=S.pk, pend=pending(o), done=pickRows(o).filter(isDone);
+  /* 281: «Restano aperti» con quello che manca; in «Presi» solo ciò che si è preso davvero */
+  const aperti=done.filter(r=>r.senza && (r.preso||0)<r.q), presi=done.filter(r=>(r.preso||0)>0);
   return `${hdr(`Ordine ${k}`, `${esc(o.cli)} · ${fatti} di ${tot}`, {right:`<button class="ic" data-act="liCam" aria-label="Inquadra un articolo" aria-pressed="${!!P.cam}">📷</button>`})}<main class="main">
     ${pend.length?`<div class="btns two"><button class="btn go" data-act="guida">Prelievo guidato</button><button class="btn" data-act="sheet:sosp">Sospendi</button></div>`:`<button class="btn go" data-act="pkFine">Fine preparazione</button>`}
     ${P.cam?`<div class="cam"><div class="frame">Inquadra un articolo dell'ordine</div><div class="chips"><button class="chip" data-act="liScan:SF09">Simula: SF-09</button><button class="chip" data-act="liScan:V13">Simula: VT-1201</button></div></div>`:""}
     ${P.warn?`<div class="warnbox bad">${P.warn}</div>`:""}${toastHtml()}
     ${pend.length?`<h2>Da prendere (${pend.length})</h2><div class="list">${pend.map(r=>liRow(o,r.i)+(P.open===r.i?liExp(o,r.i):"")).join("")}</div>`:""}
-    ${done.length?`<details class="exp"><summary>Presi (${done.length})</summary><div class="list">${done.map(r=>{ const R=o.righe[r.i]; return row(`<b>${whereOf(R)}</b> · ${A(R.a).code}`, R.preso?`${R.preso}${R.preso<R.q?" di "+R.q:""}`:"resta aperto", (R.preso||0)>=R.q?"done":"part", "", esc(A(R.a).desc)); }).join("")}</div></details>`:""}
+    ${aperti.length?`<h2>Restano aperti (${aperti.length})</h2><div class="list">${aperti.map(r=>{ const R=o.righe[r.i]; return row(`<b>${whereOf(R)}</b> · ${A(R.a).code}`, `${R.q-(R.preso||0)} ${A(R.a).unit}`, "part", "", esc(A(R.a).desc)); }).join("")}</div>`:""}
+    ${presi.length?`<details class="exp"><summary>Presi (${presi.length})</summary><div class="list">${presi.map(r=>{ const R=o.righe[r.i]; return row(`<b>${whereOf(R)}</b> · ${A(R.a).code}`, `${R.preso}${R.preso<R.q?" di "+R.q:""}`, R.preso>=R.q?"done":"part", "", esc(A(R.a).desc)); }).join("")}</div></details>`:""}
     <p class="muted">Tocca un articolo per le giacenze e i tasti rapidi. «Prelievo guidato» ti porta da un articolo all'altro, in ordine di ubicazione. Con 📷 inquadri un articolo e si apre la sua riga (276). Se esci, l'ordine resta tuo, tra le cose in sospeso.</p></main>`; };
+SH.qConf = ({i, x}) => { const o=S.ordini[S.ordine], R=o.righe[curRow(o)], q=+i;
+  return `<h3>Prendi ${q} ${A(R.a).code}?</h3><div class="warnbox">${R.ass<R.q?`Proposti ${R.ass}, ne servono ${R.q}`:`Ne servono ${R.q}`}${q<R.q?`: restano aperti ${R.q-q}`:q>R.q?`: ${q-R.q} in più`:""}.</div>
+  <div class="btns two"><button class="btn" data-act="closeSheet">Cambia</button><button class="btn go" data-act="pkQtyOk:${q}:${x||""}">Prendi ${q}</button></div>`; };
 SH.corr = ({i}) => { const o=S.ordini[S.ordine], R=o.righe[+i], w=whereOf(R);
   return `<h3>Correggi giacenza · ${A(R.a).code}</h3>
   <div class="field"><label for="tq">Quanti ce ne sono in ${w}?</label><input id="tq" type="number" inputmode="numeric" value=""></div>
@@ -1366,11 +1373,13 @@ function act(a, el){
     case "prossimo": { const k=Object.keys(S.ordini).find(k=>S.ordini[k].shop&&S.ordini[k].stato==="aperto"&&!S.ordini[k].da); if(!k) return; return act("ord:"+k); }
     case "pkLoc": S.toast=null; if(x==="no"){ S.pk.warn="Non è l'ubicazione proposta. Prendi da qui solo se l'articolo c'è: il programma la cambia."; } else { S.pk.warn=null; S.pk.st=1; } return render();
     case "pkArt": S.toast=null; if(x==="no"){ S.pk.warn="Stop: non è l'articolo di questa riga. Rimettilo a posto e inquadra quello giusto."; } else { S.pk.warn=null; S.pk.st=2; } return render();
-    case "pkQty": { const o=S.ordini[S.ordine], i=curRow(o), R=o.righe[i]; const q=+document.getElementById("q").value;
-      if(q>R.ass){ S.controlli.push({id:"c"+(++S.n), t:"prel", to:"piani", a:R.a, txt:`Prelievo oltre il richiesto: ${q} ${A(R.a).code} su ${R.ass} per l'ordine ${S.ordine}, da ${me()}`}); log(`Prelievo oltre il richiesto: ${q} ${A(R.a).code} su ${R.ass}, al responsabile`, "Ordine "+S.ordine); }
-      R.preso=q; if(x==="senza" || q<R.q) R.senza = q<R.q;
+    case "pkQty": { const o=S.ordini[S.ordine], R=o.righe[curRow(o)], q=+document.getElementById("q").value;
+      if(q!==R.ass) return sheet("qConf", {i:q, x:x||""}); return act(`pkQtyOk:${q}:${x||""}`); }
+    case "pkQtyOk": { const o=S.ordini[S.ordine], i=curRow(o), R=o.righe[i], q=+x; S.sheet=null;
+      if(q>R.ass){ S.controlli.push({id:"c"+(++S.n), t:"prel", to:"piani", a:R.a, txt:`Prelievo diverso dal proposto: ${q} ${A(R.a).code} su ${R.ass} per l'ordine ${S.ordine}, da ${me()}`}); log(`Prelievo oltre il proposto: ${q} ${A(R.a).code} su ${R.ass}, confermato; al responsabile dei piani`, "Ordine "+S.ordine); }
+      R.preso=q; R.senza = q<R.q;
       log(`Prelevati ${q} ${A(R.a).code} da ${whereOf(R)} per l'ordine ${S.ordine}${q<R.q?`; ${R.q-q} restano aperti e partono appena arrivano`:""}`, "Ordine "+S.ordine);
-      S.toast={txt: q>R.ass ? `♪ Presi ${q} ${A(R.a).code} su ${R.ass}: il di più lo vede il responsabile dei piani` : q<R.q ? `♪ Presi ${q} di ${R.q} ${A(R.a).code}: il resto parte appena arriva` : `♪ Presi ${q} ${A(R.a).code}`};
+      S.toast={txt: q<R.q ? `♪ Presi ${q} di ${R.q} ${A(R.a).code}` : `♪ Presi ${q} ${A(R.a).code}`};
       if(S.pk.mode==="single") Object.assign(S.pk,{mode:"list", cur:null, open:null}); else S.pk.cur=null;
       S.pk.st=0; S.pk.warn=null; render(); return window.scrollTo(0,0); }
     case "pronto": { const o=S.ordini[S.ordine]; o.stato="pronto"; o.pronto="ora"; o.colli=document.getElementById("colli2").value; o.kg=document.getElementById("kg").value; o.prep=document.getElementById("prep").value;
