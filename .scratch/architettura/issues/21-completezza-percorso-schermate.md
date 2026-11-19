@@ -88,3 +88,7 @@ nel browser su tutti i flussi.
 - 19/11/2026: nuove richieste dell'utente dopo la prova da telefono: giacenze per ubicazione e scelta dell'ubicazione
   al prelievo e nella vendita assistita (258, 259); «Aggiungi alla vendita» da «Cerca» (260). Prototipo aggiornato e
   provato nel browser.
+- 19/11/2026: l'utente distingue due responsabili (di magazzino e dei piani di spedizione), con i diritti dati
+  dall'account admin; gli avvisi della preparazione vanno al responsabile dei piani. Chiede «Disponibilità» al posto di
+  «liberi» (261) e un'interfaccia pulita con poche parole (262). Tocca le decisioni 27, 169, 173 e 177. Domande nella
+  pagina privata https://claude.ai/artifact/ScDtAoDaYsTP1K3b61x6MP.

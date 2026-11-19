@@ -162,6 +162,11 @@ _Evitare_: quantità stampata, quantità dichiarata
 La quantità di un articolo presente in magazzino.
 _Evitare_: stock, scorta (al singolare), disponibilità
 
+**Disponibilità**:
+La quantità di un articolo che si può ancora dare a un ordine o vendere: la giacenza meno la merce assegnata, in VEND,
+prelevata, in attesa di decisione o da rendere.
+_Evitare_: liberi, prelevabile, disponibile (da solo)
+
 **Assegnazione**:
 La parte di giacenza riservata a una riga di ordine cliente; può coprire la riga solo in parte.
 _Evitare_: allocazione, impegno, prenotazione

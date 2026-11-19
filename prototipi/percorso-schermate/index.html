@@ -156,7 +156,7 @@ const NOVITA = [
   "Prima schermata: senza lavori in più né permessi non si vede «Altri lavori», per tutte le mansioni (250, 254); in Configurazione «I preparatori vedono il lavoro dei colleghi» (di serie sì, 253) e «Ubicazione per gli ordini sospesi» (247).",
   "Al prelievo, «Ne trovo di più» e «Ne trovo meno»: si scrive quanti pezzi ci sono nell'ubicazione e si torna alla stessa riga, al punto della quantità (251, 252, 256).",
   "Le righe che non risultano compaiono in fondo al prelievo: «Non risulta: se lo trovi, inquadralo» (257). Prova come Luca l'ordine 1044, ora nel piano Bianchi M.",
-  "Prelievo e vendita assistita: sotto l'articolo le sue giacenze in ogni ubicazione, con quanti sono liberi; di serie è scelta l'ubicazione abituale, se ne tocca un'altra per prelevare da lì (258, 259).",
+  "Prelievo e vendita assistita: sotto l'articolo le sue giacenze in ogni ubicazione, con la disponibilità; di serie è scelta l'ubicazione abituale, se ne tocca un'altra per prelevare da lì (258, 259).",
   "Vendita assistita: da «Cerca» si apre l'articolo e «Aggiungi alla vendita», per chi l'ha preso e non l'ha inquadrato (260)."
 ];
 
@@ -625,7 +625,7 @@ V.vendita = () => { const B=S.vendite.find(v=>v.id===S.banco); if(!B) return V.b
   return `${hdr("Vendita assistita",esc(B.cli))}<main class="main">
     <div class="cam"><div class="frame">Inquadra l'articolo, poi l'ubicazione da cui lo prendi</div>
     <div class="chips"><button class="chip" data-act="bancoAdd:R110">Simula: 3PR-110 libero</button><button class="chip" data-act="bancoAdd:S77">Simula: SL-77, merce di altri ordini</button></div></div>
-    <div class="list">${B.righe.map((r,j)=>row(`${A(r.a).code} · ${esc(A(r.a).desc)}`,`${r.q} × ${A(r.a).price}`,r.tolto?"part":"done","sheet:vUbi:"+j,`da ${r.u||A(r.a).loc} · ${(GU[r.a]||[]).map(([u,q])=>u+" "+q).join(", ")} · liberi ${LIBERI[r.a]}${r.mano?" · aggiunto a mano":""}${r.tolto?" · da togliere all'ordine 1039 alla conferma":""}${isBoss()?` · costo ${A(r.a).cost}`:""}`)).join("") || `<p class="muted">Nessun articolo ancora.</p>`}</div>
+    <div class="list">${B.righe.map((r,j)=>row(`${A(r.a).code} · ${esc(A(r.a).desc)}`,`${r.q} × ${A(r.a).price}`,r.tolto?"part":"done","sheet:vUbi:"+j,`da ${r.u||A(r.a).loc} · ${(GU[r.a]||[]).map(([u,q])=>u+" "+q).join(", ")} · disponibilità ${LIBERI[r.a]}${r.mano?" · aggiunto a mano":""}${r.tolto?" · da togliere all'ordine 1039 alla conferma":""}${isBoss()?` · costo ${A(r.a).cost}`:""}`)).join("") || `<p class="muted">Nessun articolo ancora.</p>`}</div>
     ${B.righe.length?`<p class="muted">Tocca un articolo per vedere le giacenze e scegliere da dove prenderlo.</p>`:""}
     <button class="btn" data-act="sheet:cerca">Cerca</button>
     <div class="btns two"><button class="btn bad" data-act="sheet:vendAnn">Annulla vendita</button>${B.righe.length?`<button class="btn go" data-act="bancoOk">Conferma: crea l'ordine</button>`:`<span></span>`}</div>
@@ -638,7 +638,7 @@ SH.bancoTogli = () => `<h3>Non c'è abbastanza merce libera</h3><p>SL-77: libera
   <div class="btns two"><button class="btn" data-act="closeSheet">Non aggiungere</button><button class="btn go" data-act="bancoTogli">Aggiungi lo stesso</button></div>`;
 SH.vendAnn = () => { const B=S.vendite.find(v=>v.id===S.banco); return `<h3>Annullare la vendita per ${esc(B.cli||"un cliente da scegliere")}?</h3><p class="muted">${B.righe.length} articoli. Non va niente al gestionale; la merce è già libera. La vendita resta nel registro come annullata.</p>
   <div class="btns two"><button class="btn" data-act="closeSheet">Torna alla vendita</button><button class="btn bad" data-act="vendAnnOk">Annulla vendita</button></div>`; };
-SH.ricontrollo = () => `<h3>Nel frattempo è cambiato qualcosa</h3><div class="warnbox">3PR-110: ne volevi 4, liberi ora 3. Uno è andato all'ordine 1053 mentre la vendita era in sospeso.</div>
+SH.ricontrollo = () => `<h3>Nel frattempo è cambiato qualcosa</h3><div class="warnbox">3PR-110: ne volevi 4, disponibilità ora 3. Uno è andato all'ordine 1053 mentre la vendita era in sospeso.</div>
   <div class="btns"><button class="btn go" data-act="bancoOk2:3">Vendi 3</button><button class="btn" data-act="closeSheet">Torna alla vendita</button></div>`;
 
 /* ===== Cerca e scheda articolo ===== */
@@ -920,7 +920,7 @@ V.config = () => `${hdr("Configurazione")}<main class="main"><div class="warnbox
 const manca = o => o.righe.filter(r=>r.ass<r.q);
 const avviso = (o, open) => { const m=manca(o); if(!m.length) return ""; return `<details class="exp" ${open?"open":""}><summary>⚠ ${nr(m.length,"articolo non basta","articoli non bastano")}</summary><div class="list">${m.map(r=>row(A(r.a).code, r.ass?`servono ${r.q} · disponibili ${r.ass}`:`servono ${r.q} · non c'è`, r.ass?"part":"halt")).join("")}</div></details>`; };
 const giac = (k, scelta, act) => { const tot=(GU[k]||[]).reduce((n,x)=>n+x[1],0);
-  return `<div class="grp-h"><span>Giacenze di ${A(k).code}</span><span>${tot} ${A(k).unit} · liberi ${LIBERI[k]}</span></div><div class="list">${(GU[k]||[]).map(([u,q])=>row(`${u}${u===A(k).loc?" · abituale":""}`, `${q} ${A(k).unit}`, act&&u===scelta?"boss":"", u===scelta||!act?"":act+u, !act?"":u===scelta?"da qui":"tocca per prendere da qui")).join("")}</div>`; };
+  return `<div class="grp-h"><span>Giacenze di ${A(k).code}</span><span>${tot} ${A(k).unit} · Disponibilità ${LIBERI[k]}</span></div><div class="list">${(GU[k]||[]).map(([u,q])=>row(`${u}${u===A(k).loc?" · abituale":""}`, `${q} ${A(k).unit}`, act&&u===scelta?"boss":"", u===scelta||!act?"":act+u, !act?"":u===scelta?"da qui":"tocca per prendere da qui")).join("")}</div>`; };
 const cop = o => { const t=o.righe.reduce((n,r)=>n+r.q,0), a=o.righe.reduce((n,r)=>n+r.ass,0); return a>=t?["completo","done"]:a>0?[`${a} di ${t}`,"part"]:["niente","dim"]; };
 const ordRow = (k, act=true) => { const o=S.ordini[k]; const [t,c]=cop(o);
   if(o.stato!=="aperto") return row(`${k} · ${esc(o.cli)}`, o.stato==="pronto"?"pronto":"spedito", "done");
