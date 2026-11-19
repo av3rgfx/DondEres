@@ -988,9 +988,63 @@ crea il piano; la sigla è sostituita dal nome di chi ha fatto l'accesso; «sped
 | Chi dà il lavoro | Chi ha il permesso «Pianifica le spedizioni» crea il piano: titolo libero (proposto dall'agente dell'ordine, se il gestionale lo manda), preparatore, ordini con la loro copertura (completo, «3 di 5», niente). Un ordine arriva ai preparatori solo dentro un piano | Nessuno: «Prossimo ordine» dà l'ordine pronto più vecchio | 165, 167–169, 175 |
 | Cosa vede il preparatore | Prima i suoi piani, poi quelli dei colleghi (di serie; si spegne per magazzino); accanto a ogni ordine l'avviso «N articoli non bastano», che aperto dice servono e disponibili | Il numero di ordini in coda e «Prossimo ordine» | 167, 168, 249, 250, 253 |
 | Prendere un ordine | Chi lo apre lo prende; gli altri vedono «in preparazione da…»; chi pianifica riassegna | Chi lo riceve dalla coda lo prende; il responsabile rimette in coda un ordine lasciato a metà | 170, 175 |
-| Prelievo | Riga per riga in ordine di ubicazione: scansione dell'ubicazione, inquadratura dell'articolo (stop se è un altro), quantità; la merce in VEND si prende dal suo posto; una riga coperta in parte dice «prendi 3 di 5» e offre «Sospendi l'ordine» o «Concludi senza»; «Ne trovo di più» e «Ne trovo meno» correggono la giacenza sul momento | Uguale | 76, 97, 103, 164, 246, 251, 252 |
+| Prelievo | L'ordine si apre sull'elenco degli articoli (sotto, «Elenco del prelievo»); si preleva un articolo alla volta o con «Prelievo guidato», in ordine di ubicazione: scansione dell'ubicazione, inquadratura dell'articolo (stop se è un altro), quantità; la merce in VEND si prende dal suo posto; «Correggi giacenza» corregge la giacenza sul momento | Uguale | 76, 97, 103, 164, 246, 256, 270–284 |
 | Fine | Colli, chili, «Preparato da» già compilato con chi ha fatto l'accesso e modificabile (se cambia, si registrano tutti e due i nomi), corriere in grande con l'indicazione del suo posto. L'ordine è evaso e al gestionale va il documento di prelievo | Uguale; a Shopify non si manda niente | 21, 52, 61, 171, 174, 175 |
 | Spedizione | «Spedisci», per chi ha il permesso: ordini pronti divisi per corriere (e «Senza corriere»); si toccano quelli che restano; «Ritirato da …» segna spediti gli altri | Uguale; la spedizione si segna anche su Shopify | 52, 61, 172, 173, 175 |
+
+**Elenco del prelievo** (ticket «Elenco del prelievo e correzione della quantità», 19/11/2026, decisioni 270–292;
+domande in tre giri e riepilogo nella pagina privata https://claude.ai/artifact/SdXpDTDFxGAs76mx17cNb5; prototipo con
+l'ordine d'esempio 1060 di 15 articoli):
+
+- **Apertura** (270, 282): aprendo un ordine si vede l'elenco degli articoli in ordine di ubicazione, con ubicazione e
+  codice sopra, descrizione sotto, quantità a destra (completa, «1 di 3» se coperta in parte, «non risulta»). In cima
+  **«Prelievo guidato»** e **«Sospendi»**; quando non resta niente da prendere, al loro posto «Fine preparazione».
+- **Gruppi** (274, 281): «Da prendere» in alto; poi «Restano aperti», con quanti pezzi mancano di ogni articolo lasciato
+  con «Concludi senza» o «Prosegui»; infine «Presi», chiuso, con solo ciò che si è preso davvero (un articolo preso in
+  parte sta sia in «Presi» sia in «Restano aperti»). Le righe che non risultano stanno in fondo a «Da prendere» (257).
+- **Riga aperta** (271, 272, 279): toccando un articolo la riga si allarga sotto di sé; un altro tocco la richiude.
+  Dentro, senza tasti, le giacenze per ubicazione con giacenza e disponibilità (258, 268): di serie è scelta l'abituale,
+  toccandone un'altra si preleva da lì. Sotto, **«Preleva»** e **«Correggi giacenza»**. Se non c'è niente da prendere
+  (articolo che non risulta) i tasti sono «Correggi giacenza» e **«Concludi senza»**. Su un articolo coperto in parte
+  «Concludi senza» arriva dopo «Preleva».
+- **Inquadrare dall'elenco** (276): con l'elenco aperto, inquadrando o sparando un articolo dell'ordine si apre la sua
+  riga; un articolo che non è nell'ordine dà lo stop (97). Al telefono un tasto in alto apre l'inquadratura; il palmare
+  legge sempre con il grilletto.
+- **Un articolo da solo** («Preleva»): ubicazione, articolo, quantità e «Preso» (280); poi si torna all'elenco. Sui
+  coperti in parte, al posto di «Preso», «Sospendi» e «Concludi senza»: si prende quello che c'è e il resto resta aperto.
+- **Prelievo guidato** (164, 270, 272, 275): un articolo dopo l'altro, in ordine di ubicazione, con «‹» per tornare
+  all'elenco. Su un articolo che non basta i tasti sono «Sospendi» e **«Prosegui»** (prende quello che c'è e passa al
+  prossimo, il resto resta aperto) finché restano altri articoli; sull'ultimo «Concludi senza». Con l'ubicazione in conta
+  da un collega (233) l'avviso resta e c'è **«Più tardi»**: la riga passa in fondo e torna quando si sono finite le
+  altre; si può anche toccare un'altra ubicazione tra le giacenze. «Aspetto» non c'è più.
+- **Quantità diversa da quella proposta** (283, 289): prima di registrarla, di più o di meno, il programma chiede
+  conferma con i due numeri («Prendi 7 3PR-110? Ne servono 6: 1 in più» · «Cambia» / «Prendi 7»). Dopo, nessun
+  messaggio al preparatore: il responsabile dei piani lo trova tra le cose da controllare (198, 264). Con 0 e «Concludi
+  senza» (o «Prosegui») l'articolo resta aperto per intero: serve quando al cliente non serve una parte.
+- **Correggi giacenza** (273, 256): sostituisce «Ne trovo di più» e «Ne trovo meno». Una scheda chiede «Quanti ce ne sono
+  in C-02-4?», con sotto «Risultano 5»; il numero vale subito, come «Conta un'ubicazione», e si torna alla stessa riga, al
+  punto della quantità. Le regole dietro restano quelle della 251 e della 252.
+- **Tastierino** (284, 290, 291): al telefono e al palmare ogni quantità del programma (prelievo, ricevimento, conte,
+  «Correggi giacenza», vendita assistita, colli e chili) si scrive con il tastierino del programma, che sale dal basso
+  toccando il numero: 0–9, cancella, «OK», la virgola dove serve; «−» e «+» restano. La tastiera del telefono non si apre.
+  Al computer si scrive con la tastiera e accanto al campo un'icona a forma di calcolatrice apre lo stesso tastierino.
+
+**Ciò che resta da spedire** (285–288; fatti di UFP riferiti dall'utente il 19/11/2026):
+
+- Il resto resta nello stesso ordine e parte dopo, segnato «resto» (248). Con i piani, dopo «Ordine pronto» il preparatore
+  non vede più l'ordine: il resto lo segue solo il responsabile dei piani, e non torna da solo a un preparatore.
+- **«Da completare»** in «Piani di spedizione» (286), sempre visibile al responsabile dei piani, in due gruppi: «Merce
+  arrivata» (resti coperti e ordini sospesi da riprendere) e «Aspettano merce» (cosa manca e da quando). Il numero sul
+  pulsante conta quelli con la merce arrivata.
+- **Avviso** (287): appena la merce che manca è registrata al ricevimento, «Arrivato: 2 SF-09 per l'ordine 1060 (resto)»
+  in «Da controllare» del responsabile dei piani e in «Da completare». La merce è già prelevabile anche dall'area di
+  ricevimento (69).
+- **Piano del resto** (288): «Crea piano» nell'avviso, o toccando il resto in «Da completare», apre il nuovo piano con il
+  resto già dentro; il preparatore proposto è chi ha preparato la prima parte, e si cambia. Nel nuovo piano i resti con
+  la merce arrivata stanno in cima. Un ordine sospeso torna di solito a chi l'aveva preso (247).
+
+**Vista da computer** (292): i responsabili e l'admin lavorano quasi sempre dal computer; aspetto e schermate si
+progettano anche per il computer nel ticket «Aspetto grafico». Il prototipo resta una colonna larga come un telefono.
 
 Piani e coda seguono le stesse regole: solo ordini pagati (63), ordini coperti in parte secondo la scelta del magazzino
 (165). Nel nuovo piano un ordine con un articolo assente o con più pezzi della disponibilità dà un avviso che non blocca:
@@ -999,7 +1053,8 @@ chiuso dice quanti articoli non bastano, aperto dice per ognuno servono e dispon
 
 **Quando manca qualcosa al prelievo** (246–248, 251, 252, 255–257; correzione dell'utente del 18/11/2026):
 
-- Sulla riga che non si completa il preparatore sceglie **«Sospendi l'ordine»** o **«Concludi senza»**. Se l'articolo
+- Sulla riga che non si completa il preparatore sceglie **«Sospendi»** o **«Concludi senza»** (nel prelievo guidato
+  «Prosegui», 272). Se l'articolo
   risultava e non c'è, lo vede anche il responsabile, con la proposta di contare l'ubicazione (244).
 - **Ordine sospeso** (247): anche per giorni. La merce già presa resta prelevata per quell'ordine e non va ad altri. Di
   serie non si registra dove resta il pacco (oggi sul tavolo del preparatore, con il riferimento); per magazzino si
@@ -1010,16 +1065,16 @@ chiuso dice quanti articoli non bastano, aperto dice per ognuno servono e dispon
   (16). Quando è coperto l'ordine torna da preparare: con i piani tra gli ordini da pianificare, segnato «resto»; con la
   coda di nuovo in coda. Al gestionale e a Shopify parte una spedizione per volta (su Shopify due evasioni dello stesso
   ordine).
-- **Ne trovo di più e Ne trovo meno** (251, 252, 256): un passo solo per il preparatore. Scrive quanti pezzi ci sono
+- **Correggi giacenza** (251, 252, 256, 273; prima «Ne trovo di più» e «Ne trovo meno»): un passo solo per il preparatore. Scrive quanti pezzi ci sono
   nell'ubicazione; la giacenza si corregge subito, come con «Conta un'ubicazione», e lui torna alla stessa riga, al
   punto della quantità, e preleva. Se ne restano meno di quelli che servono, sospende o conclude senza. Dietro, i pezzi
   trovati vanno all'ordine in preparazione (eccezione alla regola del più vecchio, perché la merce è già in mano); il
   responsabile trova la conta tra le cose da controllare, con gli ordini più vecchi che quei pezzi li aspettavano.
 - **Giacenze sulla riga** (258, 268): fin dall'inizio della riga, sotto l'articolo, la giacenza in ogni ubicazione e in
   tutto il magazzino e la disponibilità; di serie è scelta l'abituale, se ne tocca un'altra per prelevare da lì. Le righe in VEND si prendono solo
-  dal loro posto. Con le quantità sotto gli occhi, «Ne trovo di più/meno» non è una conta cieca, come la conta aperta
+  dal loro posto. Con le quantità sotto gli occhi, «Correggi giacenza» non è una conta cieca, come la conta aperta
   dalla scheda dell'articolo (244).
-- **Righe che non risultano** (257): compaiono in fondo al prelievo, con «Non risulta: se lo trovi, inquadralo»; un
+- **Righe che non risultano** (257): compaiono in fondo al prelievo, con «Non risulta. Se lo trovi, correggi la giacenza»; un
   ordine con un articolo che non risulta si apre lo stesso.
 - **Niente da prendere** (268): se a fine prelievo non si è preso nessun pezzo,
   l'ordine non può diventare pronto; il preparatore lo lascia (torna da preparare quando arriva la merce) o lo
@@ -1039,8 +1094,9 @@ frattempo qualcosa è finito; «Annulla vendita» la toglie con una conferma (18
 fanno e si stampano le ricevute, e il resto si fa lì (178). In UFP la vendita assistita serve al banco e anche a
 preparare una vendita o un pacco per un agente o da spedire (176).
 
-Giacenze e ricerca (258–260): per ogni articolo della vendita si vedono le giacenze per ubicazione e i liberi, e si
-sceglie da dove prenderlo (di serie l'abituale). Da «Cerca» un articolo si aggiunge alla vendita con la quantità,
+Giacenze e ricerca (258–260, 277): gli articoli della vendita usano lo stesso elenco del prelievo; toccando una riga si
+vedono le giacenze per ubicazione e la disponibilità e si sceglie da dove prenderlo (di serie l'abituale), con i tasti
+«Quantità» ed «Elimina», che toglie l'articolo dalla vendita (con «Annulla» per qualche secondo, 190). Da «Cerca» un articolo si aggiunge alla vendita con la quantità,
 senza inquadrarlo, con le stesse regole della lettura; nel registro risulta aggiunto a mano.
 
 ### Cose in sospeso
@@ -1102,7 +1158,7 @@ renderla al fornitore o scartarla (191). Lo scarto manda uno scarico al gestiona
   ferma o errore; il messaggio a schermo c'è sempre; volume per telefono, spegnibile.
 - **Cerca** (197): in ogni lavoro un tasto apre la ricerca sopra (scheda, giacenze, conta); chiudendola si torna al
   punto.
-- **Prelievo oltre il richiesto** (198, 201): avviso, si accetta e i pezzi escono come prelevati per l'ordine; il
+- **Prelievo oltre il richiesto** (198, 201, 283): conferma prima di registrarlo, si accetta e i pezzi escono come prelevati per l'ordine; il
   responsabile sceglie se cambiare l'ordine nel gestionale o rimettere il di più a magazzino con una correzione.
 
 ### La preparazione oggi in UFP

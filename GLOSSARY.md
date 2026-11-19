@@ -130,6 +130,20 @@ Gli ordini pronti da prelevare in ordine di data, dati uno alla volta a chi prem
 magazzino non usa i piani di spedizione.
 _Evitare_: piano automatico
 
+**Elenco del prelievo**:
+Gli articoli di un ordine cliente da preparare, in ordine di ubicazione, divisi in da prendere, restano aperti e presi.
+_Evitare_: lista di prelievo, picking list
+
+**Prelievo guidato**:
+Il modo di preparare un ordine in cui il programma porta da un articolo dell'elenco al successivo, in ordine di
+ubicazione, senza sceglierli uno per uno.
+_Evitare_: picking guidato, giro
+
+**Resto**:
+La parte di un ordine cliente rimasta aperta dopo una spedizione parziale; resta lo stesso ordine e parte dopo, con un
+suo piano di spedizione quando la merce c'è.
+_Evitare_: arretrato, backorder, ordine nuovo
+
 **Corriere**:
 Chi ritira i colli e porta la merce al cliente; ogni ordine da spedire ne ha uno.
 _Evitare_: vettore, spedizioniere
