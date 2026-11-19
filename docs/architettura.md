@@ -1015,13 +1015,13 @@ chiuso dice quanti articoli non bastano, aperto dice per ognuno servono e dispon
   punto della quantità, e preleva. Se ne restano meno di quelli che servono, sospende o conclude senza. Dietro, i pezzi
   trovati vanno all'ordine in preparazione (eccezione alla regola del più vecchio, perché la merce è già in mano); il
   responsabile trova la conta tra le cose da controllare, con gli ordini più vecchi che quei pezzi li aspettavano.
-- **Giacenze sulla riga** (258): sotto l'articolo, le sue giacenze in ogni ubicazione e i liberi in tutto il
-  magazzino; di serie è scelta l'abituale, se ne tocca un'altra per prelevare da lì. Le righe in VEND si prendono solo
+- **Giacenze sulla riga** (258, 268): fin dall'inizio della riga, sotto l'articolo, la giacenza in ogni ubicazione e in
+  tutto il magazzino e la disponibilità; di serie è scelta l'abituale, se ne tocca un'altra per prelevare da lì. Le righe in VEND si prendono solo
   dal loro posto. Con le quantità sotto gli occhi, «Ne trovo di più/meno» non è una conta cieca, come la conta aperta
   dalla scheda dell'articolo (244).
 - **Righe che non risultano** (257): compaiono in fondo al prelievo, con «Non risulta: se lo trovi, inquadralo»; un
   ordine con un articolo che non risulta si apre lo stesso.
-- **Niente da prendere** (deduzione dell'agente, da confermare): se a fine prelievo non si è preso nessun pezzo,
+- **Niente da prendere** (268): se a fine prelievo non si è preso nessun pezzo,
   l'ordine non può diventare pronto; il preparatore lo lascia (torna da preparare quando arriva la merce) o lo
   sospende.
 - La scelta «Ordini coperti in parte si prelevano» (165) resta: se è «no», un ordine coperto in parte non entra in coda;

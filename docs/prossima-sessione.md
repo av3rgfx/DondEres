@@ -105,7 +105,7 @@ Poi, guardando il prototipo da telefono, l'utente ha corretto la preparazione (d
 https://claude.ai/artifact/Qft5i5wPiwfyYEQpdUz5Kq): sospendere o concludere senza l'articolo mancante, resto che parte
 dopo, avvisi che non bloccano nel piano e nell'anteprima, «Ne trovo di più/meno» in un passo solo, righe che non
 risultano in fondo al prelievo, «Altri lavori» solo con lavori dati in più e permessi, lavoro dei colleghi per
-magazzino. Specifica in «Percorso delle schermate» → «Preparazione e spedizione». Deduzione ancora da confermare: un
+magazzino. Specifica in «Percorso delle schermate» → «Preparazione e spedizione». Confermato il 19/11/2026 (268): un
 ordine senza nessun pezzo preso non diventa pronto.
 Il 19/11/2026: giacenze per ubicazione e scelta dell'ubicazione al prelievo e nella vendita assistita, aggiunta da
 «Cerca» nella vendita (258–260); «Disponibilità» al posto di «liberi» (261); interfaccia pulita con un «ⓘ» nel titolo

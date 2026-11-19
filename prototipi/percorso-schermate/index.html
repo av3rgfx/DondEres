@@ -637,7 +637,7 @@ V.vendita = () => { const B=S.vendite.find(v=>v.id===S.banco); if(!B) return V.b
   return `${hdr("Vendita assistita",esc(B.cli))}<main class="main">
     <div class="cam"><div class="frame">Inquadra l'articolo, poi l'ubicazione da cui lo prendi</div>
     <div class="chips"><button class="chip" data-act="bancoAdd:R110">Simula: 3PR-110 libero</button><button class="chip" data-act="bancoAdd:S77">Simula: SL-77, merce di altri ordini</button></div></div>
-    <div class="list">${B.righe.map((r,j)=>row(`${A(r.a).code} · ${esc(A(r.a).desc)}`,`${r.q} × ${A(r.a).price}`,r.tolto?"part":"done","sheet:vUbi:"+j,`da ${r.u||A(r.a).loc} · ${(GU[r.a]||[]).map(([u,q])=>u+" "+q).join(", ")} · disponibilità ${LIBERI[r.a]}${r.mano?" · aggiunto a mano":""}${r.tolto?" · da togliere all'ordine 1039 alla conferma":""}${isBoss()?` · costo ${A(r.a).cost}`:""}`)).join("") || `<p class="muted">Nessun articolo ancora.</p>`}</div>
+    <div class="list">${B.righe.map((r,j)=>row(`${A(r.a).code} · ${esc(A(r.a).desc)}`,`${r.q} × ${A(r.a).price}`,r.tolto?"part":"done","sheet:vUbi:"+j,`da ${r.u||A(r.a).loc} · ${(GU[r.a]||[]).map(([u,q])=>u+" "+q).join(", ")} · giacenza ${(GU[r.a]||[]).reduce((n,x)=>n+x[1],0)} · disponibilità ${LIBERI[r.a]}${r.mano?" · aggiunto a mano":""}${r.tolto?" · da togliere all'ordine 1039 alla conferma":""}${isBoss()?` · costo ${A(r.a).cost}`:""}`)).join("") || `<p class="muted">Nessun articolo ancora.</p>`}</div>
     ${B.righe.length?`<p class="muted">Tocca un articolo per vedere le giacenze e scegliere da dove prenderlo.</p>`:""}
     <button class="btn" data-act="sheet:cerca">Cerca</button>
     <div class="btns two"><button class="btn bad" data-act="sheet:vendAnn">Annulla vendita</button>${B.righe.length?`<button class="btn go" data-act="bancoOk">Conferma: crea l'ordine</button>`:`<span></span>`}</div>
@@ -935,7 +935,7 @@ V.config = () => `${hdr("Configurazione")}<main class="main"><div class="warnbox
 const manca = o => o.righe.filter(r=>r.ass<r.q);
 const avviso = (o, open) => { const m=manca(o); if(!m.length) return ""; return `<details class="exp" ${open?"open":""}><summary>⚠ ${nr(m.length,"articolo non basta","articoli non bastano")}</summary><div class="list">${m.map(r=>row(A(r.a).code, r.ass?`servono ${r.q} · disponibili ${r.ass}`:`servono ${r.q} · non c'è`, r.ass?"part":"halt")).join("")}</div></details>`; };
 const giac = (k, scelta, act) => { const tot=(GU[k]||[]).reduce((n,x)=>n+x[1],0);
-  return `<div class="grp-h"><span>Giacenze di ${A(k).code}</span><span>${tot} ${A(k).unit} · Disponibilità ${LIBERI[k]}</span></div><div class="list">${(GU[k]||[]).map(([u,q])=>row(`${u}${u===A(k).loc?" · abituale":""}`, `${q} ${A(k).unit}`, act&&u===scelta?"boss":"", u===scelta||!act?"":act+u, !act?"":u===scelta?"da qui":"tocca per prendere da qui")).join("")}</div>`; };
+  return `<div class="grp-h"><span>Giacenze di ${A(k).code}</span><span>Giacenza ${tot} ${A(k).unit} · Disponibilità ${LIBERI[k]}</span></div><div class="list">${(GU[k]||[]).map(([u,q])=>row(`${u}${u===A(k).loc?" · abituale":""}`, `${q} ${A(k).unit}`, act&&u===scelta?"boss":"", u===scelta||!act?"":act+u, !act?"":u===scelta?"da qui":"tocca per prendere da qui")).join("")}</div>`; };
 const cop = o => { const t=o.righe.reduce((n,r)=>n+r.q,0), a=o.righe.reduce((n,r)=>n+r.ass,0); return a>=t?["completo","done"]:a>0?[`${a} di ${t}`,"part"]:["niente","dim"]; };
 const ordRow = (k, act=true) => { const o=S.ordini[k]; const [t,c]=cop(o);
   if(o.stato!=="aperto") return row(`${k} · ${esc(o.cli)}`, o.stato==="pronto"?"pronto":"spedito", "done");

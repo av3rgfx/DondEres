@@ -95,3 +95,5 @@ nel browser su tutti i flussi.
 - 19/11/2026: accettate le cinque consigliate su responsabili e testi (263–267): tre gruppi di permessi, avvisi della
   preparazione al responsabile dei piani, un solo permesso al posto di «Pianifica le spedizioni», «ⓘ» nel titolo,
   prototipo pulito subito. Prototipo provato nel browser (Davide e Anna vedono i loro «Da controllare»).
+- 19/11/2026: confermati la regola sull'ordine senza pezzi presi e i tre dettagli sulle giacenze al prelievo; sulla riga
+  si vedono giacenza e disponibilità (268).
