@@ -3,6 +3,7 @@
 Type: research
 Label: wayfinder:research
 Status: open
+Assignee: sessione del 19/11/2026 (ricerca in corso)
 Blocked by: —
 
 ## Question
