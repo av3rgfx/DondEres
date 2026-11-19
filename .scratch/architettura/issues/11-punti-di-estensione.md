@@ -29,3 +29,7 @@ Risultato atteso: l'elenco dei punti di estensione e il loro contratto in `docs/
 - 18/11/2026, dal ticket «Resi» (226): proporre all'utente di far partire anche gli ordini fornitore dal programma,
   come le richieste di reso (223), dalla mail aziendale del responsabile; oggi li manda una persona (64). Anche come
   Ad Hoc riceve il documento di reso e il «reso da cliente» (domande 24 e 27).
+- 19/11/2026, primo giro (pagina privata https://claude.ai/artifact/H5oSLLHmbpw3qMAXpNFEkz): accettate le consigliate,
+  senza note (301–307): base unica con Configurazione e moduli; moduli solo nostri; «Da registrare nel gestionale»;
+  parole in Configurazione e lettori di etichette; precedenza sostituibile; campi aggiuntivi dell'admin; aggiornamento
+  fermo se un modulo non va.
