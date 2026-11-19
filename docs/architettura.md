@@ -197,7 +197,8 @@ un carico per DDT ricevuto, uno per ordine prelevato, uno per spedizione, una re
 scambio a file sono righe di un file; con un connettore, i documenti del gestionale.
 
 Un ordine fornitore confermato nel programma diventa un documento (PDF e file) con il riferimento del cliente; una
-persona lo manda al fornitore. Il programma non lo invia da solo (64).
+persona lo manda al fornitore. Il programma non lo invia da solo (64). Precisata dalla 311: parte con «Invia al fornitore»,
+sezione «Punti di estensione».
 
 ### Collegamenti previsti
 
@@ -359,7 +360,8 @@ d'acquisto lo vede solo il responsabile (85).
 ### Spazio per le estensioni
 
 - Seriali, lotti e scadenze (17): giacenze e movimenti hanno posto per una «partita» facoltativa, vuota nella base.
-- Campi aggiuntivi su articoli, ordini e clienti: si decide nel ticket «Punti di estensione per la specializzazione».
+- Campi aggiuntivi su articoli, ordini, clienti e fornitori: li crea l'admin in «Configurazione» (306); seriali, lotti e
+  scadenze con un modulo nel punto d'aggancio «Partita» (314). Sezione «Punti di estensione».
 
 ### Configurazione per magazzino (aggiunte)
 
@@ -503,8 +505,8 @@ movimenti e a misurare, con l'uso, dove il riconoscimento sbaglia.
 ### Configurazione per magazzino
 
 Nessuna scelta nuova: il percorso è lo stesso in ogni magazzino. Le parole di quantità si possono ampliare con i
-termini dei fornitori di un magazzino; dove stanno (configurazione o modulo) si decide nel ticket «Punti di estensione
-per la specializzazione».
+termini dei fornitori di un magazzino, in «Configurazione»; un formato con regole proprie richiede un lettore di
+etichette (304, sezione «Punti di estensione»).
 
 ### Rimandato ad altri ticket
 
@@ -513,7 +515,7 @@ per la specializzazione».
 - Le schermate (scheda «È questo», scelta tra più codici, «× colli», uscite del «non lo so»): ticket «Percorso delle
   schermate».
 - Chi può creare l'articolo nuovo dall'uscita «Articolo nuovo»: sezione «Articolo nuovo da foto».
-- Formati di etichette dei fornitori con regole proprie: ticket «Punti di estensione per la specializzazione».
+- Formati di etichette dei fornitori con regole proprie: lettore di etichette (304), sezione «Punti di estensione».
 
 ## Articolo nuovo da foto
 
@@ -1267,11 +1269,11 @@ telefono: volume dei suoni, spenti o accesi (196).
 - Prove con la fotocamera vera su iPhone, Android e palmare: sezione «Prove su dispositivi veri» (127).
 - Agente e corriere sull'ordine in Ad Hoc, colli e peso restituiti: domande 21 e 22 per il rivenditore; collegamento con
   Ad Hoc nella specializzazione (51, 178).
-- Cosa succede in UFP alla merce di una vendita assistita che non parte subito (pacco per un agente o da spedire): la
-  vendita si chiude in Ad Hoc (178); stato della merce nel programma da fissare con il collegamento ad Ad Hoc.
+- Cosa succede in UFP alla merce di una vendita assistita che non parte subito (pacco per un agente o da spedire):
+  sezione «Punti di estensione» (308, 317).
 - Resi e inventario periodico: sezioni «Resi» e «Inventario periodico» (200, 207–226, 227–245).
 - Lettura automatica di tutti i dati della bolla, da foto o PDF (193): ticket «Lettura automatica delle bolle».
-- Confronto tra merce caricata e fattura: collegamento con Ad Hoc della specializzazione (192).
+- Confronto tra merce caricata e fattura: punto d'aggancio facoltativo, sezione «Punti di estensione» (192, 310).
 - Catalogo visivo nella vendita assistita, procedura guidata della configurazione: nebbia della mappa.
 
 ## Lettura automatica delle bolle
@@ -1556,5 +1558,128 @@ Deduzioni confermate con la chiusura (245):
 ### Rimandato
 
 - Come Ad Hoc riceve l'inventario (rettifiche o rilevazione unica) e se ne calcola il valore: domanda 28 per il
-  rivenditore; collegamento con Ad Hoc nella specializzazione.
+  rivenditore; il collegamento sceglie una delle due forme (312), sezione «Punti di estensione».
 - Colori e stile delle schermate: ticket «Aspetto grafico».
+
+## Punti di estensione
+
+Dal ticket «Punti di estensione per la specializzazione», chiuso il 19/11/2026. Decisioni 301–320; raccoglie anche i
+punti lasciati alla specializzazione dalle decisioni 178, 192, 226 e dalle domande 24, 27 e 28 per il rivenditore.
+Nelle sezioni precedenti «connettore» vuol dire «collegamento» (316).
+
+### Base, configurazione e moduli
+
+- Il codice della base è uno solo, uguale in ogni magazzino. Una specializzazione è fatta di scelte in «Configurazione»
+  e di moduli che si agganciano a punti d'aggancio previsti; mai una copia modificata della base. Un bisogno che la
+  base non prevede diventa un punto d'aggancio nuovo, utile a tutti (301).
+- I moduli per ora li scriviamo solo noi: quelli consegnati con la base (scambio a file, Shopify) e quelli delle
+  specializzazioni (Ad Hoc Revolution per UFP). Arrivano con gli aggiornamenti, già provati con quella versione; l'admin
+  li accende e spegne in «Configurazione» → «Collegamenti» (302, 316). Le regole dei punti d'aggancio si scrivono in
+  modo che si possano aprire ad altri più avanti.
+- Cosa si fa senza programmare, in «Configurazione»: tutte le scelte per magazzino delle sezioni precedenti, più parole
+  di quantità (304), campi aggiuntivi (306), logo, intestazione e piè di pagina dei documenti (313), nomi previsti
+  (315), uscita della vendita assistita (317), confronto con la fattura (310), testo della mail dell'ordine fornitore
+  (318). Gli altri testi dell'interfaccia sono uguali in ogni magazzino (315).
+
+### Punti d'aggancio
+
+| Punto d'aggancio | Cosa fa il modulo | Cosa resta alla base | Moduli previsti | Decisioni |
+|---|---|---|---|---|
+| Collegamento | Legge dal gestionale o dal negozio online articoli, fornitori, clienti, ordini, prezzi, campi aggiuntivi, chiusura degli ordini, fatture del fornitore; manda i documenti dei fatti di magazzino | Coda d'uscita, scambio a intervalli, codici del sistema d'origine, avvisi, «Da registrare nel gestionale» | Scambio a file (di serie), Shopify (con la base, spento), Ad Hoc Revolution (UFP) | 49–67, 303, 310, 312, 317 |
+| Lettore di etichette | Legge codice e quantità da un formato di etichetta con regole proprie, per un fornitore | Barcode, GS1, parole di quantità, conversioni approvate (72, 93) | Nessuno: si scrive su etichette vere quando serve | 304 |
+| Precedenza dell'assegnazione | Decide l'ordine in cui gli ordini ricevono la merce | Mai sotto zero, assegnazione in parte, VEND che vince (16, 37) | Nessuno: di serie «dal più vecchio» | 305 |
+| Partita | Chiede lotto, scadenza o seriale al ricevimento, li mostra al prelievo, sceglie da quale partita prendere | Il posto per la partita su giacenze e movimenti (17) | Nessuno: UFP e il magazzino Shopify non ne hanno bisogno | 314 |
+
+Un campo aggiuntivo si vede nella scheda e si cerca, ma non cambia le regole: per quello serve un modulo (306). Un
+modello di documento con un'altra disposizione non è un punto d'aggancio (313).
+
+### Il collegamento
+
+Ogni collegamento dichiara cosa legge e quali documenti sa mandare (303). I documenti della base, uno per fatto di
+magazzino, appena il fatto si chiude (61):
+
+| Documento | Quando nasce | Decisioni |
+|---|---|---|
+| Carico | DDT ricevuto | 61 |
+| Prelievo, spedizione | Ordine prelevato, spedito | 61 |
+| Rettifica | Correzione approvata; differenza d'inventario approvata | 61, 235 |
+| Rilevazione d'inventario | Chiusura di un inventario, se il collegamento la preferisce alle rettifiche (mai tutte e due) | 312 |
+| Documento di reso al fornitore | Reso pronto a partire; il DDT di reso lo fa il gestionale | 209, 225 |
+| Reso da cliente | Chiusura di un reso del cliente; nota di credito e rimborso li fa il gestionale | 220 |
+| Ordine della vendita assistita | «Conferma: crea l'ordine nel gestionale» | 65, 178 |
+
+Un documento che il collegamento non sa mandare va in «Documenti» → «Da registrare nel gestionale», con PDF e file e un
+avviso al responsabile di magazzino; chi lo ricopia nel gestionale tocca «Registrato». Il lavoro in magazzino non si
+ferma (303). Con il collegamento Ad Hoc vale per il documento di reso e il «reso da cliente» finché il rivenditore non
+risponde alle domande 24 e 27.
+
+Cosa può leggere in più, se il gestionale lo permette:
+
+- **Chiusura dell'ordine** (ricevuta, DDT o fattura emessi nel gestionale): serve all'uscita della vendita assistita
+  (317).
+- **Fatture del fornitore**: il programma le confronta con i DDT caricati e mette le differenze in «Da controllare», nel
+  DDT, insieme a quelle con la bolla, con «Scrivi al fornitore» (223). Facoltativo, si accende in «Configurazione», solo
+  con un collegamento che legge le fatture (310). Senza gestionale per ora non c'è.
+
+### Con Ad Hoc in UFP
+
+- **Ordini degli agenti** (178, 309): arrivano come gli altri ordini cliente, con il nome dell'agente (domanda 21); il
+  responsabile dei piani li vede in «Ordini da assegnare», con l'agente su ogni riga e un filtro «Agente», e il titolo
+  del piano si propone dall'agente.
+- **Inventario** (312): finché il rivenditore non risponde alla domanda 28, Ad Hoc riceve le rettifiche.
+- **Chi stampa cosa** (319): bolle, fatture, ricevute, ordini fornitore e DDT di reso li fa Ad Hoc, come oggi. Il
+  programma stampa solo i suoi documenti: richiesta di reso, segnalazione delle differenze al fornitore, PDF «Da
+  registrare nel gestionale». Dove il programma è il gestionale (magazzino Shopify) stampa anche ordini fornitore e DDT
+  di reso.
+
+**Vendita assistita** (178, 308, 317). Alla conferma la merce è prelevata per quell'ordine e non è più disponibile per
+altri, anche se il pacco resta sul pancale dell'agente. L'ordine torna dal gestionale al primo scambio, collegato dal
+nostro riferimento. In «Configurazione» → «Vendita assistita» l'admin sceglie quando la merce esce:
+
+| Scelta | Quando c'è | Di serie |
+|---|---|---|
+| Quando il gestionale chiude l'ordine | Solo se il collegamento legge la chiusura | Con un gestionale accanto |
+| Alla conferma | Sempre | Senza gestionale, o se il collegamento non legge la chiusura |
+
+Finché la merce non esce, un pacco da spedire compare a chi fa i piani tra gli ordini già prelevati. In UFP il momento
+candidato è il passaggio da OP a bolla al ritiro: prima di impostarlo si verifica con il rivenditore se il collegamento
+lo vede e quando Ad Hoc scarica la giacenza (domanda 29).
+
+### Ordini fornitore dal programma
+
+Gli ordini fornitore che nascono nel programma (magazzino Shopify, proposte con il riferimento cliente) partono con
+«Invia al fornitore», come le richieste di reso: anteprima con il testo della mail e il PDF allegato, dalla mail
+aziendale del responsabile, con copia a lui (311, 223). Il testo parte da un testo di serie che l'admin scrive in
+«Configurazione», con numero d'ordine e fornitore messi dal programma, e si corregge nell'anteprima (318). Senza server
+di posta collegato restano «Copia testo» e «Scarica PDF» (215). La mail resta nei «Documenti» dell'ordine. Precisa la
+64.
+
+### Aggiornamenti senza rompere
+
+- Ogni modulo dichiara con quale versione delle regole dei punti d'aggancio funziona (307).
+- La base tiene valide le regole vecchie per almeno un anno dopo averle cambiate; ogni specializzazione nota si prova
+  prima di pubblicare un aggiornamento.
+- Prima di installare, il server controlla i moduli accesi. Se uno non va con la versione nuova, l'aggiornamento non
+  parte, neanche quello obbligatorio di notte (125): il programma resta com'è e l'admin vede l'avviso, mandato anche a
+  noi.
+
+### Configurazione per magazzino (aggiunte)
+
+| Scelta | Valori | Di serie | Decisione |
+|---|---|---|---|
+| Collegamenti | moduli accesi, spenti | Shopify spento (51); gli altri da scegliere alla configurazione | 302, 316 |
+| Parole di quantità in più | elenco di parole | nessuna | 304 |
+| Lettori di etichette | per fornitore, accesi, spenti | nessuno | 304 |
+| Campi aggiuntivi | nome, tipo (testo, numero, data, sì/no, scelta da elenco), dove (articolo, ordine, cliente, fornitore) | nessuno | 306 |
+| Documenti | logo, intestazione, piè di pagina | vuoti | 313 |
+| Uscita della vendita assistita | alla conferma, quando il gestionale chiude l'ordine | vedi «Con Ad Hoc in UFP» | 317 |
+| Confronto con la fattura | acceso, spento | spento | 310 |
+| Testo della mail dell'ordine fornitore | testo | da scrivere alla configurazione | 318 |
+
+### Rimandato
+
+- Quando Ad Hoc scarica la giacenza e se il collegamento vede il passaggio da OP a bolla: domanda 29 per il
+  rivenditore. Come Ad Hoc riceve documento di reso, «reso da cliente» e inventario, e se legge le fatture: domande 24,
+  26, 27 e 28.
+- Etichette e distinta del corriere: nebbia della mappa; se serviranno, diventano un collegamento in più.
+- Come si scrivono i moduli (linguaggio, forma delle regole dei punti d'aggancio): ticket «Stack».

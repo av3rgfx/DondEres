@@ -339,6 +339,46 @@ _Evitare_: cloud, hosting
 Un dispositivo portatile robusto con un lettore di barcode a grilletto, usato in magazzino al posto del telefono.
 _Evitare_: terminale, PDA, scanner (lo scanner è solo il lettore)
 
+**Base**:
+Il programma uguale per tutti i magazzini, che ognuno adatta con la configurazione e i moduli, senza cambiarlo.
+_Evitare_: core, prodotto standard
+
+**Specializzazione**:
+L'insieme delle scelte di configurazione e dei moduli che adattano la base a un magazzino preciso.
+_Evitare_: personalizzazione, versione del cliente, fork
+
+**Configurazione**:
+Le scelte di un magazzino che l'admin fa dalle schermate del programma, senza programmare.
+_Evitare_: impostazioni, parametri
+
+**Modulo**:
+Un pezzo di programma in più che si aggancia alla base in un punto previsto e che l'admin accende o spegne.
+_Evitare_: plugin, estensione, add-on
+
+**Collegamento**:
+Un modulo che scambia dati tra il programma e un gestionale o un negozio online, e dichiara cosa sa leggere e mandare.
+_Evitare_: connettore, integrazione
+
+**Partita**:
+I pezzi di uno stesso articolo con lo stesso lotto, la stessa scadenza o lo stesso seriale; la base non la usa.
+_Evitare_: batch, matricola (da sola)
+
+**Punto d'aggancio**:
+Un posto previsto dalla base dove un modulo può aggiungere o sostituire un comportamento, con regole fisse.
+_Evitare_: hook, API
+
+**Lettore di etichette**:
+Un modulo che insegna al programma a leggere codice e quantità sulle etichette di un fornitore con un formato suo.
+_Evitare_: parser, template
+
+**Campo aggiuntivo**:
+Un dato in più su articoli, ordini, clienti o fornitori, creato dall'admin; si vede e si cerca, ma non cambia le regole.
+_Evitare_: campo personalizzato, attributo
+
+**Da registrare nel gestionale**:
+L'elenco dei documenti che il collegamento non sa mandare al gestionale e che una persona ricopia a mano.
+_Evitare_: errori di sincronizzazione, coda manuale
+
 ## Persone
 
 **Operatore**:
