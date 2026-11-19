@@ -1,28 +1,11 @@
 # Prompt per la prossima sessione (Wayfinder sull'architettura)
 
 Da incollare all'avvio di una nuova sessione sul ramo principale aggiornato. La mappa esiste già: si lavora un ticket
-per sessione, più le ricerche. Consigliato ora, come chiesto dall'utente: «Elenco del prelievo e correzione della
-quantità» (prompt A). Poi «Punti di estensione per la specializzazione» (prompt D), che sblocca lo stack con la divisione
-tra le macchine; in alternativa «Nome del prodotto», che porta al brand kit. «Aspetto grafico» aspetta ancora questi. Quando nei repository privati ci sono foto o bolle da aprire, sessioni a parte lavorano
-la prova visiva (prompt B) e la prova di lettura delle bolle (prompt C). Si possono avviare in parallelo.
-
-**Prompt A: elenco del prelievo e correzione della quantità**
-
-```text
-/wayfinder .scratch/architettura/map.md
-
-Leggi prima AGENTS.md, poi la mappa (solo map.md, non tutti i ticket). Lavora il ticket «Elenco del prelievo e
-correzione della quantità» (prototype), con le decisioni 164, 233, 246, 251, 252, 256, 258, 262, 266, 269 e 270.
-Leggi i commenti del ticket. Aggiorna il prototipo prototipi/percorso-schermate/index.html: elenco degli articoli
-all'apertura dell'ordine con tasti rapidi per articolo («Preleva» e gli altri), «Sospendi» e «Prelievo guidato» in
-cima, un solo tasto per correggere la quantità al posto di «Ne trovo di più/meno», «Aspetto» da rivedere, e un ordine
-d'esempio di 10–20 articoli. Testi brevi, spiegazioni nell'ⓘ. Provalo nel browser a larghezza di telefono.
-Registra ogni mia decisione in docs/decisioni.md, con data e motivo; scrivi la tua parte in docs/architettura.md.
-Parlami in italiano, con domande semplici: cosa chiedi, perché conta, cosa comporta ogni opzione.
-Per le domande usa una pagina interattiva (Artifact) con esempi visivi che cambiano con la risposta, opzione
-consigliata, «Accetta tutte le consigliate», note facoltative e risposte salvate che leggi tu quando scrivo «fatto».
-Lavora a giri: registra le risposte di ogni giro prima del successivo e chiudi con un riepilogo da confermare.
-```
+per sessione, più le ricerche. Consigliato ora: «Punti di estensione per la specializzazione» (prompt D), che sblocca lo
+stack con la divisione tra le macchine; in alternativa «Nome del prodotto», che porta al brand kit. «Aspetto grafico»
+aspetta ancora questi (deve contare anche la vista da computer per responsabili e admin, decisione 292). Quando nei
+repository privati ci sono foto o bolle da aprire, sessioni a parte lavorano la prova visiva (prompt B) e la prova di
+lettura delle bolle (prompt C). Si possono avviare in parallelo.
 
 **Prompt D: punti di estensione per la specializzazione**
 
@@ -82,7 +65,7 @@ consigliata, «Accetta tutte le consigliate», note facoltative e risposte salva
 Lavora a giri: registra le risposte di ogni giro prima del successivo e chiudi con un riepilogo da confermare.
 ```
 
-## Frontiera al 19/11/2026
+## Frontiera al 19/11/2026, sera
 
 In ordine di numero:
 
@@ -97,8 +80,8 @@ In ordine di numero:
 3. «Nome del prodotto»: libero; poi «Unicità dei nomi scelti» e «Brand kit con la skill logo-design».
 4. «Esecuzione della prova di lettura delle bolle» (task con l'utente, nuovo): parte quando le bolle sono nella cartella
    `bolle/` del repository privato (prompt C).
-5. «Elenco del prelievo e correzione della quantità» (prototype, nuovo il 19/11/2026): libero, consigliato ora
-   (prompt A). Blocca «Aspetto grafico».
+5. «Elenco del prelievo e correzione della quantità»: chiuso il 19/11/2026 (decisioni 270–299). «Aspetto grafico»
+   non lo aspetta più.
 
 ## In sospeso fuori dalla mappa
 
@@ -110,31 +93,25 @@ In ordine di numero:
 
 ## Ultimo ticket chiuso
 
-18/11/2026: «Inventario periodico», in tre giri, con la pagina https://claude.ai/artifact/QGQvc1pHzoQTsJBATiM1g5
-(privata). Decisioni 227–245, sezione «Inventario periodico» in `docs/architettura.md`, prototipo con le schermate
-dell'inventario (`prototipi/percorso-schermate/index.html`, anche https://claude.ai/artifact/Vb6ijyDdr4n2gsZcKhhVur,
-privata). Termini nuovi in `GLOSSARY.md`: inventario, conta cieca, seconda conta, differenza d'inventario, in conta.
-Prima, sempre il 18/11/2026: «Resi» (207–226) e la ricerca «Lettura automatica delle bolle» (202–206).
+19/11/2026: «Elenco del prelievo e correzione della quantità», in tre giri più il riepilogo, con la pagina
+https://claude.ai/artifact/SdXpDTDFxGAs76mx17cNb5 (privata). Decisioni 271–299 (la 270 era la richiesta), sezione
+«Percorso delle schermate» → «Preparazione e spedizione» di `docs/architettura.md` («Elenco del prelievo» e «Ciò che
+resta da spedire»), prototipo `prototipi/percorso-schermate/index.html` (anche
+https://claude.ai/artifact/Vb6ijyDdr4n2gsZcKhhVur, privata) con l'ordine d'esempio 1060 di 15 articoli. Termini nuovi in
+`GLOSSARY.md`: elenco del prelievo, prelievo guidato, resto. Prima, il 18/11/2026: «Inventario periodico» (227–245).
 
 ## Ultima sessione
 
-18/11/2026: «Inventario periodico» in tre giri. Fatti dall'utente: in UFP e nel magazzino Shopify l'inventario di tutto
-si fa una volta l'anno (in UFP su carta o foglio di calcolo, ricopiato in Ad Hoc; ARS non si usa) e durante l'anno si
-corregge sul momento. Scelta dell'utente diversa dalla proposta: «tutto il magazzino» sono solo gli scaffali (239).
-Poi, guardando il prototipo da telefono, l'utente ha corretto la preparazione (decisioni 246–257, pagina privata
-https://claude.ai/artifact/Qft5i5wPiwfyYEQpdUz5Kq): sospendere o concludere senza l'articolo mancante, resto che parte
-dopo, avvisi che non bloccano nel piano e nell'anteprima, «Ne trovo di più/meno» in un passo solo, righe che non
-risultano in fondo al prelievo, «Altri lavori» solo con lavori dati in più e permessi, lavoro dei colleghi per
-magazzino. Specifica in «Percorso delle schermate» → «Preparazione e spedizione». Confermato il 19/11/2026 (268): un
-ordine senza nessun pezzo preso non diventa pronto.
-Il 19/11/2026: giacenze per ubicazione e scelta dell'ubicazione al prelievo e nella vendita assistita, aggiunta da
-«Cerca» nella vendita (258–260); «Disponibilità» al posto di «liberi» (261); interfaccia pulita con un «ⓘ» nel titolo
-(262, 266, 267); tre gruppi di permessi, Admin, Responsabile di magazzino e Responsabile dei piani, con gli avvisi
-della preparazione al responsabile dei piani (263–265; corregge la 27). Pagina privata delle domande:
-https://claude.ai/artifact/ScDtAoDaYsTP1K3b61x6MP. Confermati la regola sull'ordine senza pezzi e i dettagli sulle giacenze
-(268). Ultime richieste, per la prossima sessione (269, 270): un solo tasto per correggere la quantità, elenco degli
-articoli con tasti rapidi, «Sospendi» e «Prelievo guidato» in cima, prova con 10–20 articoli; nuovo ticket «Elenco del
-prelievo e correzione della quantità».
+19/11/2026: «Elenco del prelievo e correzione della quantità». L'ordine si apre sull'elenco con «Prelievo guidato» e
+«Sospendi» in cima; toccando un articolo si entra nell'articolo, dove si scelgono giacenza e quantità (scelta
+dell'utente dopo la prova: i preparatori di UFP sono abituati così, 293); «Correggi giacenza» al posto di «Ne trovo di
+più/meno»; «Prosegui» nel prelievo guidato e «Concludi senza» sull'ultimo; «Restano aperti»; conferma prima di
+registrare una quantità diversa; tastierino del programma (al computer tastiera e icona). Fatti di UFP riferiti
+dall'utente: dopo una spedizione parziale il preparatore non vede più l'ordine e il resto lo segue il responsabile, che
+crea il piano quando la merce torna; la merce appena caricata sta nell'ubicazione «check» in fondo al magazzino. Da qui
+«Da completare» e l'avviso all'arrivo per il responsabile dei piani. L'utente ha fatto notare che responsabili e admin
+lavorano quasi sempre dal computer (292): va tenuto nel ticket «Aspetto grafico». L'utente cura molto i nomi di tasti e
+titoli (278): «Elimina» al posto di «Togli», «Ordini da assegnare» al posto di «Ordini senza piano».
 
 ## Cose dell'utente, senza sessione
 

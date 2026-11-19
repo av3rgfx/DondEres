@@ -992,8 +992,8 @@ crea il piano; la sigla è sostituita dal nome di chi ha fatto l'accesso; «sped
 | Fine | Colli, chili, «Preparato da» già compilato con chi ha fatto l'accesso e modificabile (se cambia, si registrano tutti e due i nomi), corriere in grande con l'indicazione del suo posto. L'ordine è evaso e al gestionale va il documento di prelievo | Uguale; a Shopify non si manda niente | 21, 52, 61, 171, 174, 175 |
 | Spedizione | «Spedisci», per chi ha il permesso: ordini pronti divisi per corriere (e «Senza corriere»); si toccano quelli che restano; «Ritirato da …» segna spediti gli altri | Uguale; la spedizione si segna anche su Shopify | 52, 61, 172, 173, 175 |
 
-**Elenco del prelievo** (ticket «Elenco del prelievo e correzione della quantità», 19/11/2026, decisioni 270–292;
-domande in tre giri e riepilogo nella pagina privata https://claude.ai/artifact/SdXpDTDFxGAs76mx17cNb5; prototipo con
+**Elenco del prelievo** (ticket «Elenco del prelievo e correzione della quantità», 19/11/2026, decisioni 270–299;
+domande in tre giri e riepilogo confermato nella pagina privata https://claude.ai/artifact/SdXpDTDFxGAs76mx17cNb5; prototipo con
 l'ordine d'esempio 1060 di 15 articoli):
 
 - **Apertura** (270, 282): aprendo un ordine si vede l'elenco degli articoli in ordine di ubicazione, con ubicazione e
@@ -1002,16 +1002,24 @@ l'ordine d'esempio 1060 di 15 articoli):
 - **Gruppi** (274, 281): «Da prendere» in alto; poi «Restano aperti», con quanti pezzi mancano di ogni articolo lasciato
   con «Concludi senza» o «Prosegui»; infine «Presi», chiuso, con solo ciò che si è preso davvero (un articolo preso in
   parte sta sia in «Presi» sia in «Restano aperti»). Le righe che non risultano stanno in fondo a «Da prendere» (257).
-- **Riga aperta** (271, 272, 279): toccando un articolo la riga si allarga sotto di sé; un altro tocco la richiude.
-  Dentro, senza tasti, le giacenze per ubicazione con giacenza e disponibilità (258, 268): di serie è scelta l'abituale,
-  toccandone un'altra si preleva da lì. Sotto, **«Preleva»** e **«Correggi giacenza»**. Se non c'è niente da prendere
-  (articolo che non risulta) i tasti sono «Correggi giacenza» e **«Concludi senza»**. Su un articolo coperto in parte
-  «Concludi senza» arriva dopo «Preleva».
-- **Inquadrare dall'elenco** (276): con l'elenco aperto, inquadrando o sparando un articolo dell'ordine si apre la sua
-  riga; un articolo che non è nell'ordine dà lo stop (97). Al telefono un tasto in alto apre l'inquadratura; il palmare
-  legge sempre con il grilletto.
-- **Un articolo da solo** («Preleva»): ubicazione, articolo, quantità e «Preso» (280); poi si torna all'elenco. Sui
-  coperti in parte, al posto di «Preso», «Sospendi» e «Concludi senza»: si prende quello che c'è e il resto resta aperto.
+- **Toccando un articolo da prendere** (293, 294; prima la riga si allargava, 271, 272) si entra subito nell'articolo:
+  in alto le giacenze per ubicazione con giacenza e disponibilità (258, 268), con l'abituale già scelta; toccandone
+  un'altra si preleva da lì. Poi ubicazione, articolo, quantità e «Preso» (280), e si torna all'elenco. Lì ci sono anche
+  **«Correggi giacenza»** e, sui coperti in parte, al posto di «Preso», **«Sospendi»** e **«Concludi senza»**: si prende
+  quello che c'è e il resto resta aperto (279). Su un articolo che non risulta: «Correggi giacenza», «Sospendi» e
+  «Concludi senza». Nell'elenco le giacenze non si toccano: i preparatori di UFP sono abituati a sceglierle dentro
+  l'articolo.
+- **Toccando un articolo preso** (295) la riga in «Presi» si allarga con **«Elimina»**, che toglie subito il prelievo
+  (correzione collegata, 74; per esempio un articolo confermato a mano che non si ha in mano), e **«Rimetti a posto»**,
+  che porta all'ubicazione da cui era stato preso: scansionandola il ritorno si conferma da solo, oppure «Conferma a
+  mano». In tutti e due i casi l'articolo torna da prendere. Deduzione dell'agente: se era stato preso dall'area di
+  ricevimento, «Rimetti a posto» porta alla sua ubicazione abituale.
+- **Inquadrare dall'elenco** (276, 294): con l'elenco aperto, inquadrando o sparando un articolo dell'ordine si entra nel
+  suo articolo; un articolo che non è nell'ordine dà lo stop (97). Al telefono un tasto in alto apre l'inquadratura; il
+  palmare legge sempre con il grilletto.
+- **Dall'area di ricevimento** (297, 69): tra le giacenze compare l'area di ricevimento (nome scelto alla
+  configurazione; in UFP «CHECK», lo scarico in fondo al magazzino). Scelta lei, l'ubicazione non si scansiona e
+  l'articolo si inquadra oppure si conferma con «Conferma a mano».
 - **Prelievo guidato** (164, 270, 272, 275): un articolo dopo l'altro, in ordine di ubicazione, con «‹» per tornare
   all'elenco. Su un articolo che non basta i tasti sono «Sospendi» e **«Prosegui»** (prende quello che c'è e passa al
   prossimo, il resto resta aperto) finché restano altri articoli; sull'ultimo «Concludi senza». Con l'ubicazione in conta
@@ -1033,6 +1041,9 @@ l'ordine d'esempio 1060 di 15 articoli):
 
 - Il resto resta nello stesso ordine e parte dopo, segnato «resto» (248). Con i piani, dopo «Ordine pronto» il preparatore
   non vede più l'ordine: il resto lo segue solo il responsabile dei piani, e non torna da solo a un preparatore.
+- **Con la coda** (296): il resto torna in coda da solo quando la merce lo copre, e il responsabile lo vede in «Da
+  completare». In Configurazione «Con la coda, i resti»: «tornano in coda da soli» (di serie) o «passano dal
+  responsabile», che li rimette in coda.
 - **«Da completare»** in «Piani di spedizione» (286), sempre visibile al responsabile dei piani, in due gruppi: «Merce
   arrivata» (resti coperti e ordini sospesi da riprendere) e «Aspettano merce» (cosa manca e da quando). Il numero sul
   pulsante conta quelli con la merce arrivata.
@@ -1041,7 +1052,8 @@ l'ordine d'esempio 1060 di 15 articoli):
   ricevimento (69).
 - **Piano del resto** (288): «Crea piano» nell'avviso, o toccando il resto in «Da completare», apre il nuovo piano con il
   resto già dentro; il preparatore proposto è chi ha preparato la prima parte, e si cambia. Nel nuovo piano i resti con
-  la merce arrivata stanno in cima. Un ordine sospeso torna di solito a chi l'aveva preso (247).
+  la merce arrivata stanno in cima. Un ordine sospeso torna di solito a chi l'aveva preso (247). Nel nuovo piano l'elenco
+  degli ordini non ancora in un piano si chiama «Ordini da assegnare» (298).
 
 **Vista da computer** (292): i responsabili e l'admin lavorano quasi sempre dal computer; aspetto e schermate si
 progettano anche per il computer nel ticket «Aspetto grafico». Il prototipo resta una colonna larga come un telefono.
@@ -1062,7 +1074,7 @@ chiuso dice quanti articoli non bastano, aperto dice per ognuno servono e dispon
   «Fermi» di «Preleva» con il motivo; chi pianifica lo vede e può darlo a un altro (170). Quando arriva il mancante passa
   a **«Da riprendere»**.
 - **Concludi senza** (248): il resto resta aperto sullo stesso ordine e riceve la merce appena arriva, dal più vecchio
-  (16). Quando è coperto l'ordine torna da preparare: con i piani tra gli ordini da pianificare, segnato «resto»; con la
+  (16). Quando è coperto l'ordine torna da preparare: con i piani va in «Da completare» del responsabile dei piani, che crea il piano (285–288), segnato «resto»; con la
   coda di nuovo in coda. Al gestionale e a Shopify parte una spedizione per volta (su Shopify due evasioni dello stesso
   ordine).
 - **Correggi giacenza** (251, 252, 256, 273; prima «Ne trovo di più» e «Ne trovo meno»): un passo solo per il preparatore. Scrive quanti pezzi ci sono

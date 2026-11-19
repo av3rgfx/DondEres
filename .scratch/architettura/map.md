@@ -99,6 +99,10 @@ percorso delle schermate e aspetto grafico, compresi nome e brand kit (decisioni
   scaffali, ubicazioni, articoli, fornitore); conta cieca e seconda conta, di serie e per inventario; una persona per
   ubicazione con «in conta da…» e lavoro che continua; differenze valide all'approvazione, poi rettifiche o variazioni;
   «Conta un'ubicazione» con le stesse regole, valida subito (decisioni 227–245).
+- [Elenco del prelievo e correzione della quantità](issues/26-elenco-del-prelievo.md): l'ordine si apre sull'elenco con
+  «Prelievo guidato» e «Sospendi»; si entra nell'articolo per giacenza e quantità; «Correggi giacenza», «Prosegui»,
+  «Restano aperti», conferma della quantità diversa, tastierino del programma; il resto lo segue il responsabile dei
+  piani in «Da completare»; responsabili soprattutto dal computer (decisioni 270–299).
 
 Prese prima della mappa, nel secondo giro di domande del 15/11/2026: decisioni 15–28 in
 [`docs/decisioni.md`](../../docs/decisioni.md) (assegnazione parziale, codice stampato come tipo di articolo,

@@ -3,7 +3,7 @@
 Type: prototype
 Label: wayfinder:prototype
 Status: open
-Blocked by: 14, 15, 16, 21, 22, 23, 26 (16 chiuso il 17/11/2026; 21, 22 e 23 chiusi il 18/11/2026)
+Blocked by: 14, 15, 16, 21, 22, 23, 26 (16 chiuso il 17/11/2026; 21, 22 e 23 chiusi il 18/11/2026; 26 chiuso il 19/11/2026)
 
 ## Question
 
@@ -12,3 +12,9 @@ kit e dal percorso delle schermate; si mostrano poche varianti da guardare; sceg
 visiva, registrata in `docs/decisioni.md`. Obiettivo di accessibilità WCAG 2.2 AA.
 
 Risultato atteso: la direzione visiva in `docs/architettura.md` e in `docs/decisioni.md`.
+
+## Comments
+- 19/11/2026, dal ticket «Elenco del prelievo e correzione della quantità»: i responsabili e l'admin lavorano quasi
+  sempre dal computer (292): aspetto e schermate vanno progettati anche per il computer, non solo per il telefono. Al
+  computer le quantità si scrivono con la tastiera, con l'icona a calcolatrice che apre il tastierino (290). Le icone
+  vere (📷 dell'elenco, calcolatrice) arrivano qui (267).
