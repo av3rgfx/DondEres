@@ -375,7 +375,7 @@ d'acquisto lo vede solo il responsabile (85).
 - Foto di riferimento e impronte: risolte nella sezione «Percorso di identificazione e lettura della quantità».
 - Prezzi, codici dei fornitori e conversioni da leggere in Ad Hoc: domande 17 e 18 in `docs/domande-rivenditore-ufp.md`.
 - Catalogo visivo per la vendita al banco (idea dell'utente, 78 e 86): sezione «Not yet specified» della mappa.
-- Inventario periodico: sezione «Not yet specified» della mappa; la rettifica per conteggio è già definita qui.
+- Inventario periodico: sezione «Inventario periodico» (decisioni 227–245).
 
 ## Percorso di identificazione e lettura della quantità
 
@@ -910,10 +910,10 @@ sue.
 | Articolo nuovo | Righe attese senza articolo, in cima (109); tre foto guidate, con gli avvisi di foto mossa o buia (106); scheda con i campi compilati (107); parole dell'etichetta da toccare (108); «È uno di questi?» (110) |
 | Dopo il ricevimento | Da mettere a posto, per fornitore e dentro per DDT, proposto alla chiusura del DDT (69, 163, 194); rimetti a posto (62); posto VEND, se acceso (47) |
 | Uscita | Piani di spedizione, per chi pianifica (167, 169); prelievo dai piani o dalla coda (167, 168); prelievo guidato con stop se l'articolo è un altro (97, 103, 164); fine della preparazione (171); spedizione (172, 173); vendita assistita (65, 58, 84, 178) |
-| Sempre | Cose in sospeso in cima a ogni sezione (187); «Documenti» con storico per categoria e registro (189); «Cerca» sopra ogni lavoro (197) e dalla prima schermata: scheda, giacenze per ubicazione e stato, codici, prezzo; conta un'ubicazione (77); «Aggiungi foto» (117); «Segna danneggiati» (191); rete assente, operazione in attesa o persa (23, 127) |
+| Sempre | Cose in sospeso in cima a ogni sezione (187); «Documenti» con storico per categoria e registro (189); «Cerca» sopra ogni lavoro (197) e dalla prima schermata: scheda, giacenze per ubicazione e stato, codici, prezzo; conta un'ubicazione da «Cerca e conta» (77, 244); inventario (229); «Aggiungi foto» (117); «Segna danneggiati» (191); rete assente, operazione in attesa o persa (23, 127) |
 | Responsabile | Da controllare (86), con le sue uscite: tenere o rendere la merce non prevista (45), confermare conteggi, collegamenti e codici diversi (71, 158), approvare conversioni (72); articolo da confermare: Conferma, Unisci, Rifiuta (114); correzioni dopo la chiusura (81); scambio: avvisi e «aggiorna ora» (54); utenti con ruolo, mansioni e permessi (177); configurazione iniziale; «È disponibile un aggiornamento» (125); costo d'acquisto (85) |
 
-Fuori: resi e inventario periodico hanno ticket propri (200); la lettura automatica della bolla ha un ticket di ricerca
+Fuori: resi e inventario periodico hanno sezioni proprie («Resi», «Inventario periodico», 200); la lettura automatica della bolla ha un ticket di ricerca
 (193); il catalogo visivo nella vendita assistita e la procedura guidata della configurazione iniziale restano nella
 nebbia della mappa.
 
@@ -921,12 +921,15 @@ nebbia della mappa.
 
 | Cosa | Decide | Decisioni |
 |---|---|---|
-| Cosa si può fare | Il ruolo (operatore o responsabile) | 27 |
-| Lavori in più per un operatore | I permessi «Pianifica le spedizioni» (nessuno di serie) e «Conferma le spedizioni» (tutti di serie; il responsabile lo può togliere). Senza il secondo la schermata «Spedisci» non c'è | 169, 173 |
+| Cosa si può fare | I permessi che l'admin dà all'account, da sommare: Admin (utenti, permessi, configurazione, aggiornamenti), Responsabile di magazzino («Da controllare» di magazzino, inventari, articoli da confermare, resi, correzioni, costo d'acquisto), Responsabile dei piani (piani, preparazioni, avvisi della preparazione, spedizioni). Nelle sezioni di questa specifica «il responsabile» è il responsabile di magazzino, salvo piani e preparazione (responsabile dei piani) e utenti, configurazione e aggiornamenti (admin) | 27, 263, 264 |
+| Lavori in più per un operatore | Il permesso «Responsabile dei piani» (al posto di «Pianifica le spedizioni», nessuno di serie) e «Conferma le spedizioni» (tutti di serie; l'admin lo può togliere). Senza il secondo la schermata «Spedisci» non c'è. Gli avvisi della preparazione vanno al responsabile dei piani; le conte fatte al prelievo anche al responsabile di magazzino | 169, 173, 264, 265 |
+| Testi | Interfaccia pulita: parole brevi o icone, niente frasi di spiegazione; un «ⓘ» accanto al titolo di ogni schermata con poche righe su come si lavora; avvisi che servono per non sbagliare sempre visibili, brevi. La quantità che si può ancora dare o vendere si chiama «Disponibilità» | 261, 262, 266 |
 | Cosa si vede per primo | Le mansioni, una o più per utente: magazziniere (ricevere, mettere a posto, rimettere a posto, cercare e contare) e preparatore (prelevare, vendita assistita, cercare) | 176, 177 |
 
 **Prima schermata.** In grande un pulsante per ogni lavoro delle mansioni dell'utente, con il numero di cose che
-aspettano; sotto, «Altri lavori» con quelli che ruolo e permessi gli consentono. Con più mansioni la schermata le unisce.
+aspettano; sotto, «Altri lavori» solo con i lavori che il responsabile gli dà in più nella sua scheda utente, uno per
+uno, e quelli dei permessi («Spedisci», «Piani di spedizione»); senza, «Altri lavori» non c'è. Vale per tutte le
+mansioni (250, 254). Con più mansioni la schermata le unisce.
 Il responsabile vede tutti i lavori, più «Da controllare», «Piani di spedizione», «Utenti» e «Configurazione», e gli
 avvisi di aggiornamento e di scambio bloccato (161, 177, 179).
 
@@ -983,14 +986,46 @@ crea il piano; la sigla è sostituita dal nome di chi ha fatto l'accesso; «sped
 | Passo | Con i piani (UFP) | Con la coda (Shopify) | Decisioni |
 |---|---|---|---|
 | Chi dà il lavoro | Chi ha il permesso «Pianifica le spedizioni» crea il piano: titolo libero (proposto dall'agente dell'ordine, se il gestionale lo manda), preparatore, ordini con la loro copertura (completo, «3 di 5», niente). Un ordine arriva ai preparatori solo dentro un piano | Nessuno: «Prossimo ordine» dà l'ordine pronto più vecchio | 165, 167–169, 175 |
-| Cosa vede il preparatore | Prima i suoi piani, poi quelli dei colleghi | Il numero di ordini in coda e «Prossimo ordine» | 167, 168 |
+| Cosa vede il preparatore | Prima i suoi piani, poi quelli dei colleghi (di serie; si spegne per magazzino); accanto a ogni ordine l'avviso «N articoli non bastano», che aperto dice servono e disponibili | Il numero di ordini in coda e «Prossimo ordine» | 167, 168, 249, 250, 253 |
 | Prendere un ordine | Chi lo apre lo prende; gli altri vedono «in preparazione da…»; chi pianifica riassegna | Chi lo riceve dalla coda lo prende; il responsabile rimette in coda un ordine lasciato a metà | 170, 175 |
-| Prelievo | Riga per riga in ordine di ubicazione: scansione dell'ubicazione, inquadratura dell'articolo (stop se è un altro), quantità; la merce in VEND si prende dal suo posto; una riga coperta in parte dice «prendi 3 di 5» | Uguale | 76, 97, 103, 164 |
+| Prelievo | Riga per riga in ordine di ubicazione: scansione dell'ubicazione, inquadratura dell'articolo (stop se è un altro), quantità; la merce in VEND si prende dal suo posto; una riga coperta in parte dice «prendi 3 di 5» e offre «Sospendi l'ordine» o «Concludi senza»; «Ne trovo di più» e «Ne trovo meno» correggono la giacenza sul momento | Uguale | 76, 97, 103, 164, 246, 251, 252 |
 | Fine | Colli, chili, «Preparato da» già compilato con chi ha fatto l'accesso e modificabile (se cambia, si registrano tutti e due i nomi), corriere in grande con l'indicazione del suo posto. L'ordine è evaso e al gestionale va il documento di prelievo | Uguale; a Shopify non si manda niente | 21, 52, 61, 171, 174, 175 |
 | Spedizione | «Spedisci», per chi ha il permesso: ordini pronti divisi per corriere (e «Senza corriere»); si toccano quelli che restano; «Ritirato da …» segna spediti gli altri | Uguale; la spedizione si segna anche su Shopify | 52, 61, 172, 173, 175 |
 
 Piani e coda seguono le stesse regole: solo ordini pagati (63), ordini coperti in parte secondo la scelta del magazzino
-(165). Un ordine pronto troppo tardi per il corriere resta pronto e parte con il ritiro successivo (172). Il corriere
+(165). Nel nuovo piano un ordine con un articolo assente o con più pezzi della disponibilità dà un avviso che non blocca:
+chiuso dice quanti articoli non bastano, aperto dice per ognuno servono e disponibili; l'ordine si aggiunge lo stesso
+(249).
+
+**Quando manca qualcosa al prelievo** (246–248, 251, 252, 255–257; correzione dell'utente del 18/11/2026):
+
+- Sulla riga che non si completa il preparatore sceglie **«Sospendi l'ordine»** o **«Concludi senza»**. Se l'articolo
+  risultava e non c'è, lo vede anche il responsabile, con la proposta di contare l'ubicazione (244).
+- **Ordine sospeso** (247): anche per giorni. La merce già presa resta prelevata per quell'ordine e non va ad altri. Di
+  serie non si registra dove resta il pacco (oggi sul tavolo del preparatore, con il riferimento); per magazzino si
+  accende un'ubicazione per gli ordini sospesi (di serie «SOSPESI») e allora si inquadra dove resta. L'ordine sta nei
+  «Fermi» di «Preleva» con il motivo; chi pianifica lo vede e può darlo a un altro (170). Quando arriva il mancante passa
+  a **«Da riprendere»**.
+- **Concludi senza** (248): il resto resta aperto sullo stesso ordine e riceve la merce appena arriva, dal più vecchio
+  (16). Quando è coperto l'ordine torna da preparare: con i piani tra gli ordini da pianificare, segnato «resto»; con la
+  coda di nuovo in coda. Al gestionale e a Shopify parte una spedizione per volta (su Shopify due evasioni dello stesso
+  ordine).
+- **Ne trovo di più e Ne trovo meno** (251, 252, 256): un passo solo per il preparatore. Scrive quanti pezzi ci sono
+  nell'ubicazione; la giacenza si corregge subito, come con «Conta un'ubicazione», e lui torna alla stessa riga, al
+  punto della quantità, e preleva. Se ne restano meno di quelli che servono, sospende o conclude senza. Dietro, i pezzi
+  trovati vanno all'ordine in preparazione (eccezione alla regola del più vecchio, perché la merce è già in mano); il
+  responsabile trova la conta tra le cose da controllare, con gli ordini più vecchi che quei pezzi li aspettavano.
+- **Giacenze sulla riga** (258, 268): fin dall'inizio della riga, sotto l'articolo, la giacenza in ogni ubicazione e in
+  tutto il magazzino e la disponibilità; di serie è scelta l'abituale, se ne tocca un'altra per prelevare da lì. Le righe in VEND si prendono solo
+  dal loro posto. Con le quantità sotto gli occhi, «Ne trovo di più/meno» non è una conta cieca, come la conta aperta
+  dalla scheda dell'articolo (244).
+- **Righe che non risultano** (257): compaiono in fondo al prelievo, con «Non risulta: se lo trovi, inquadralo»; un
+  ordine con un articolo che non risulta si apre lo stesso.
+- **Niente da prendere** (268): se a fine prelievo non si è preso nessun pezzo,
+  l'ordine non può diventare pronto; il preparatore lo lascia (torna da preparare quando arriva la merce) o lo
+  sospende.
+- La scelta «Ordini coperti in parte si prelevano» (165) resta: se è «no», un ordine coperto in parte non entra in coda;
+  con i piani chi pianifica vede l'avviso e decide (255). Un ordine pronto troppo tardi per il corriere resta pronto e parte con il ritiro successivo (172). Il corriere
 viene dall'ordine nel sistema d'origine (su Shopify il metodo di spedizione) o lo sceglie chi pianifica (175).
 
 ### Vendita assistita
@@ -1003,6 +1038,10 @@ si toglie a nessuno finché non si conferma; alla conferma il programma ricontro
 frattempo qualcosa è finito; «Annulla vendita» la toglie con una conferma (188). Alla conferma non si sceglie come esce la merce: in UFP l'ordine si crea in Ad Hoc, dove si
 fanno e si stampano le ricevute, e il resto si fa lì (178). In UFP la vendita assistita serve al banco e anche a
 preparare una vendita o un pacco per un agente o da spedire (176).
+
+Giacenze e ricerca (258–260): per ogni articolo della vendita si vedono le giacenze per ubicazione e i liberi, e si
+sceglie da dove prenderlo (di serie l'abituale). Da «Cerca» un articolo si aggiunge alla vendita con la quantità,
+senza inquadrarlo, con le stesse regole della lettura; nel registro risulta aggiunto a mano.
 
 ### Cose in sospeso
 
@@ -1144,11 +1183,14 @@ aggiungere, dal più economico:
 | Scelta | Valori | Di serie | Decisione |
 |---|---|---|---|
 | Ordini coperti in parte si prelevano | sì, no | sì | 165 |
+| I preparatori vedono il lavoro dei colleghi | sì, no | sì | 250, 253 |
+| Ubicazione per gli ordini sospesi | spenta, accesa (con nome) | spenta; nome di serie «SOSPESI» | 247, 255 |
 | Piani di spedizione | accesi, spenti (si lavora con la coda) | spenti | 167, 175 |
 | Chili a fine preparazione | richiesti, facoltativi | richiesti | 171, 175 |
 | «Vecchi» nelle cose in sospeso dopo | giorni | 2 | 187 |
 
-Per utente: ruolo, mansioni, permessi «Pianifica le spedizioni» e «Conferma le spedizioni» (169, 173, 177). Per
+Per utente: ruolo, mansioni, lavori in più, permessi «Pianifica le spedizioni» e «Conferma le spedizioni» (169, 173,
+177, 254). Per
 telefono: volume dei suoni, spenti o accesi (196).
 
 ### Rimandato ad altri ticket o alla nebbia della mappa
@@ -1159,7 +1201,7 @@ telefono: volume dei suoni, spenti o accesi (196).
   Ad Hoc nella specializzazione (51, 178).
 - Cosa succede in UFP alla merce di una vendita assistita che non parte subito (pacco per un agente o da spedire): la
   vendita si chiude in Ad Hoc (178); stato della merce nel programma da fissare con il collegamento ad Ad Hoc.
-- Resi e inventario periodico: ticket «Resi» e «Inventario periodico» (200).
+- Resi e inventario periodico: sezioni «Resi» e «Inventario periodico» (200, 207–226, 227–245).
 - Lettura automatica di tutti i dati della bolla, da foto o PDF (193): ticket «Lettura automatica delle bolle».
 - Confronto tra merce caricata e fattura: collegamento con Ad Hoc della specializzazione (192).
 - Catalogo visivo nella vendita assistita, procedura guidata della configurazione: nebbia della mappa.
@@ -1340,3 +1382,111 @@ ricevimento, non solo per i resi. Primo passo: la scheda «Dalla bolla» e «Man
 |---|---|---|---|
 | Nome dell'area resi | testo | «RESI» | 217 |
 | Invio delle mail ai fornitori | dalla mail aziendale del responsabile, solo testo da copiare | solo testo da copiare finché non si collega il server di posta | 215, 223 |
+
+## Inventario periodico
+
+Dal ticket «Inventario periodico», chiuso il 18/11/2026 in tre giri. Decisioni 227–245 (la 236 e la 237 precisano la
+230 e la 231; la 238 e la 244 precisano la 77). Fonti: ricerca
+`docs/research/2026-11-18-gestionali-magazzino-esistenti.md` (§ 1.7, Odoo e Business Central) e
+`docs/research/2026-11-15-adhoc-revolution-ars-logistica.md` (rilevazioni d'inventario di ARS). Domande nella pagina
+privata https://claude.ai/artifact/QGQvc1pHzoQTsJBATiM1g5; schermate nel prototipo
+`prototipi/percorso-schermate/index.html` (https://claude.ai/artifact/Vb6ijyDdr4n2gsZcKhhVur, privata).
+
+### Come si lavora oggi
+
+- **UFP** (227): l'inventario di tutto il magazzino si fa una volta l'anno, su carta o foglio di calcolo, e i numeri si
+  ricopiano a mano in Ad Hoc. ARS non si usa per l'inventario. Durante l'anno una giacenza sbagliata si corregge sul
+  momento, quando si può.
+- **Magazzino Shopify** (228): lo stesso, con le giacenze corrette a mano su Shopify.
+
+### Due modi di contare
+
+| | Conta un'ubicazione | Inventario |
+|---|---|---|
+| Chi la avvia | L'operatore, quando la merce non torna: «Conta un'ubicazione» in «Cerca e conta» (244), o «Conta» dalla scheda dell'articolo | Il responsabile (229) |
+| Cosa si conta | Un'ubicazione | Tutto (solo le ubicazioni normali, 239), alcune ubicazioni, alcuni articoli (in tutte le loro ubicazioni), la merce di un fornitore; senza ubicazioni (26) per articolo |
+| Come si conta | Con la schermata dell'inventario: cieca e con la seconda conta, secondo la Configurazione (238, 244); aperta dalla scheda, chi conta ha già visto la giacenza | Vedi sotto |
+| Quando vale | Subito; il responsabile la controlla dopo (77, 238) | Quando il responsabile approva la differenza (232) |
+
+**Tutto il magazzino** (239): solo le ubicazioni normali. Area di ricevimento, area resi, posti VEND e merce prelevata
+in attesa del corriere non entrano in un inventario di tutto.
+
+**Scegliere cosa contare** (241): il programma non propone conte da solo. Ogni ubicazione mostra la data dell'ultima
+conta; nel nuovo inventario il responsabile può prendere le ubicazioni «non contate da più di … giorni» o «con
+differenze negli ultimi … giorni».
+
+### Come si conta
+
+1. **Si prende un'ubicazione** (234). Il responsabile può dare gruppi di ubicazioni a persone; ogni ubicazione la conta
+   una persona sola: chi la apre la prende e gli altri la vedono **in conta da…**; chi finisce prende le libere.
+2. **Conta cieca** (230): si inquadra ogni articolo trovato (stesso percorso di identificazione del ricevimento) e si
+   scrive quanti pezzi; la quantità attesa non si vede. Il numero si scrive sempre (186).
+3. **Seconda conta** (231): se il numero non torna con la giacenza, il programma chiede subito alla stessa persona di
+   ricontare quell'articolo, senza dire l'atteso né il verso della differenza. Due numeri uguali: la differenza va al
+   responsabile; diversi: vale il secondo.
+4. **Articoli attesi non contati** (230): finita l'ubicazione, il programma chiede di ognuno «ce n'è?»: «Nessuno» vale
+   come conta di zero (con la sua seconda conta), «Lo conto» riapre la conta.
+5. **Chiusura dell'ubicazione** (233): il numero si confronta con la giacenza di quel momento; i movimenti successivi
+   non creano differenze finte. Le conte che tornano segnano solo l'ubicazione come contata.
+
+### Il lavoro continua
+
+Durante un inventario si riceve, si mette a posto e si preleva (233). Chi deve prelevare o mettere a posto in
+un'ubicazione in conta lo vede («C-02-4 in conta da Marco, da 3 minuti») e prende da un'altra ubicazione o aspetta.
+Fermare il magazzino per l'inventario di fine anno resta una scelta di chi lo organizza, non del programma.
+
+### Approvazione e documenti
+
+- **Differenze d'inventario** (232): stanno nell'inventario e in «Da controllare». Il responsabile le approva una per
+  una o tutte insieme; il riepilogo (190) dice le rettifiche e nomina gli ordini che perdono merce, perché
+  l'assegnazione si rifà dal più vecchio (16). In alternativa chiede una nuova conta a un collega (231).
+- **Cosa parte** (235): a ogni approvazione una rettifica per articolo al gestionale, o una variazione di quantità a
+  Shopify (52, 61). In «Documenti» la categoria «Inventari» raccoglie conte, differenze, chi ha contato e chi ha
+  approvato; si esporta (189, 199) con le sole quantità: articolo, ubicazione, contato, differenza. Il valore lo
+  calcola il gestionale o chi fa il bilancio (242). Come Ad Hoc vuole ricevere l'inventario: domanda 28 per il
+  rivenditore.
+- **Chiusura** (240): le ubicazioni non contate restano come sono, senza rettifiche; il riepilogo le elenca e con un
+  tocco diventano un nuovo inventario. Le differenze non ancora approvate restano in «Da controllare».
+
+### Schermate
+
+Confermate sul prototipo (243). Lavoro «Inventario» della mansione magazziniere, con il numero sulla prima schermata
+(le ubicazioni che toccano a chi ha fatto l'accesso; per il responsabile le differenze da approvare). In cima le
+ubicazioni in conta (le mie, di colleghi, 187); per ogni inventario aperto: le tue, libere, di colleghi, contate. Conta
+di un'ubicazione con inquadratura, numero da scrivere, seconda conta, domanda sugli attesi non contati, «Ho finito
+questa ubicazione» e «Lascia: torna libera». Il responsabile: «Nuovo inventario» (cosa contare, entro quando, a chi,
+quantità attesa e seconda conta per quell'inventario), «Differenze da approvare» con il riepilogo, «Chiedi una nuova
+conta», «Chiudi l'inventario». Al prelievo e alla messa a posto: «in conta da…» con un'altra ubicazione proposta. In
+«Documenti» la categoria «Inventari».
+
+### Configurazione per magazzino (aggiunte)
+
+| Scelta | Valori | Di serie | Decisione |
+|---|---|---|---|
+| Quantità attesa a chi conta | nascosta, visibile; si cambia anche per un singolo inventario | nascosta | 230, 236 |
+| Seconda conta se il numero non torna | accesa (la stessa persona, subito), spenta; si cambia anche per un singolo inventario | accesa | 231, 236, 237 |
+
+### Casi limite
+
+Deduzioni confermate con la chiusura (245):
+
+- **Aree**: area di ricevimento, area resi e posti VEND, fuori da «tutto» (239), si contano scegliendole come
+  ubicazioni in un inventario o con «Conta un'ubicazione».
+- **Senza ubicazioni** (26): l'inventario è per articolo; «in conta da…» vale per l'articolo; stesse regole.
+- **Merce fuori posto**: un articolo trovato dove non risulta si conta e dà una differenza in più in quell'ubicazione
+  (di solito compensata da una in meno altrove); un articolo sconosciuto si inserisce come articolo nuovo «da
+  confermare» (105).
+- **Il responsabile che conta** conta cieco come gli altri; l'atteso lo vede nelle differenze.
+- **Chiusura con qualcuno che conta**: il riepilogo nomina ubicazione e persona; si chiude lo stesso e quell'ubicazione
+  passa con le non contate (240).
+- **Permessi**: creare, approvare e chiudere spetta al responsabile (27); contano i magazzinieri e chi ha il lavoro tra
+  gli «Altri lavori» (177).
+- **Lasciata a metà**: «Lascia» rimette l'ubicazione tra le libere e la conta riparte da capo; un'ubicazione in conta da
+  oltre 2 giorni va tra i vecchi delle cose in sospeso (187).
+- **Tempi** (195): valgono anche qui; la prova di carico prima della consegna comprende un inventario con più telefoni.
+
+### Rimandato
+
+- Come Ad Hoc riceve l'inventario (rettifiche o rilevazione unica) e se ne calcola il valore: domanda 28 per il
+  rivenditore; collegamento con Ad Hoc nella specializzazione.
+- Colori e stile delle schermate: ticket «Aspetto grafico».

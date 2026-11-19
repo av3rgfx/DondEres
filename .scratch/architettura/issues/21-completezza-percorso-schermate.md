@@ -63,3 +63,39 @@ nel browser su tutti i flussi.
 - Nuovi ticket: «Resi», «Inventario periodico» (bloccano «Aspetto grafico») e la ricerca «Lettura automatica delle
   bolle» (193, 200). Domande 23–26 per il rivenditore. Termini nuovi in `GLOSSARY.md`: bolla, quantità in bolla, cose
   in sospeso, merce danneggiata, scarto, registro.
+
+## Correzione dopo la chiusura
+
+- 18/11/2026, sera: l'utente corregge la preparazione, guardando il prototipo da telefono («ho fatto un errore e mi
+  sono spiegato male»). Se manca qualcosa, la preparazione si sospende (anche per giorni) o si conclude senza
+  quell'articolo e si spedisce; il mancante parte appena arriva. Nel nuovo piano, un ordine con un articolo assente o
+  con quantità superiore alla disponibilità dà un avviso che non blocca; il preparatore vede lo stesso avviso
+  nell'anteprima dell'ordine, che aperto dice quale articolo non basta. I preparatori senza permessi non vedono «gli
+  altri lavori». Tocca le decisioni 165, 170 e 177. Domande nella pagina privata
+  https://claude.ai/artifact/Qft5i5wPiwfyYEQpdUz5Kq.
+- 18/11/2026, primo giro della correzione: decisioni 246–250 (consigliate per 1–4; per la 5 l'utente nasconde solo
+  «Altri lavori» e vuole una scelta per magazzino sul lavoro dei colleghi, che in UFP resta visibile). Nota dell'utente:
+  cosa fa il preparatore se la merce c'è ma non risulta, o ce n'è meno. Prototipo corretto e provato nel browser.
+  Secondo giro nella stessa pagina.
+- 18/11/2026, secondo giro della correzione: accettate le consigliate (251–255); specifica scritta nella sezione
+  «Percorso delle schermate» → «Preparazione e spedizione» e «Chi vede cosa». Domanda dell'utente alla 251 («basta
+  aggiornare la giacenza?»): analisi e due domande nel terzo giro, con la riga a zero nel prelievo.
+- 18/11/2026, terzo giro della correzione: accettate le due consigliate; nota dell'utente: aveva letto «ordine» come
+  ordine al fornitore. Per il preparatore «Ne trovo di più/meno» è un passo solo e si torna alla riga a prelevare (256);
+  righe che non risultano in fondo al prelievo (257). Deduzione nel prototipo, da confermare: un ordine senza nessun
+  pezzo preso non diventa pronto. Pagina delle domande: https://claude.ai/artifact/Qft5i5wPiwfyYEQpdUz5Kq. Correzione
+  chiusa (decisioni 246–257).
+- 19/11/2026: nuove richieste dell'utente dopo la prova da telefono: giacenze per ubicazione e scelta dell'ubicazione
+  al prelievo e nella vendita assistita (258, 259); «Aggiungi alla vendita» da «Cerca» (260). Prototipo aggiornato e
+  provato nel browser.
+- 19/11/2026: l'utente distingue due responsabili (di magazzino e dei piani di spedizione), con i diritti dati
+  dall'account admin; gli avvisi della preparazione vanno al responsabile dei piani. Chiede «Disponibilità» al posto di
+  «liberi» (261) e un'interfaccia pulita con poche parole (262). Tocca le decisioni 27, 169, 173 e 177. Domande nella
+  pagina privata https://claude.ai/artifact/ScDtAoDaYsTP1K3b61x6MP.
+- 19/11/2026: accettate le cinque consigliate su responsabili e testi (263–267): tre gruppi di permessi, avvisi della
+  preparazione al responsabile dei piani, un solo permesso al posto di «Pianifica le spedizioni», «ⓘ» nel titolo,
+  prototipo pulito subito. Prototipo provato nel browser (Davide e Anna vedono i loro «Da controllare»).
+- 19/11/2026: confermati la regola sull'ordine senza pezzi presi e i tre dettagli sulle giacenze al prelievo; sulla riga
+  si vedono giacenza e disponibilità (268).
+- 19/11/2026: nuove richieste (269, 270) spostate nel nuovo ticket «Elenco del prelievo e correzione della quantità»
+  (issues/26-elenco-del-prelievo.md), da fare nella prossima sessione.

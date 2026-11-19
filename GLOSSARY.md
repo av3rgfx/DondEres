@@ -162,6 +162,11 @@ _Evitare_: quantità stampata, quantità dichiarata
 La quantità di un articolo presente in magazzino.
 _Evitare_: stock, scorta (al singolare), disponibilità
 
+**Disponibilità**:
+La quantità di un articolo che si può ancora dare a un ordine o vendere: la giacenza meno la merce assegnata, in VEND,
+prelevata, in attesa di decisione o da rendere.
+_Evitare_: liberi, prelevabile, disponibile (da solo)
+
 **Assegnazione**:
 La parte di giacenza riservata a una riga di ordine cliente; può coprire la riga solo in parte.
 _Evitare_: allocazione, impegno, prenotazione
@@ -207,6 +212,28 @@ _Evitare_: storno, annullamento (da solo), cancellazione
 **Rettifica**:
 Il movimento che porta la giacenza di un'ubicazione alla quantità contata.
 _Evitare_: aggiustamento, inventario (da solo)
+
+**Inventario**:
+La conta di tutto il magazzino o di una parte (alcune ubicazioni, alcuni articoli, la merce di un fornitore), chiesta
+dal responsabile ed eventualmente divisa tra più persone; serve sia a fine anno sia durante l'anno.
+_Evitare_: conta ciclica, rilevazione, inventario a rotazione
+
+**Conta cieca**:
+Il modo di contare in cui chi conta non vede quanti pezzi dovrebbero esserci.
+_Evitare_: conta al buio, conta senza atteso
+
+**Seconda conta**:
+La conta ripetuta subito dalla stessa persona quando il primo numero non torna con la giacenza.
+_Evitare_: riconteggio, verifica
+
+**Differenza d'inventario**:
+Lo scarto tra la quantità contata in un'ubicazione e la giacenza nel momento in cui la conta si è chiusa; diventa una
+rettifica solo quando il responsabile la approva.
+_Evitare_: ammanco, discrepanza, scostamento
+
+**In conta**:
+Lo stato di un'ubicazione che qualcuno sta contando: gli altri la vedono e non la aprono.
+_Evitare_: bloccata, occupata
 
 **Ubicazione**:
 Il punto del magazzino in cui sta la merce, come uno scaffale o una corsia; si usa solo se il magazzino lo sceglie.
@@ -310,9 +337,19 @@ preparatore (prepara gli ordini e fa le vendite assistite). Una persona può ave
 _Evitare_: ruolo, profilo
 
 **Permesso**:
-Un lavoro in più che il responsabile dà a un operatore: pianificare le spedizioni, confermare le spedizioni.
+Un compito in più che l'admin dà a un account: admin, responsabile di magazzino, responsabile dei piani, confermare le
+spedizioni; più permessi si sommano sullo stesso account.
 _Evitare_: ruolo, diritto
 
-**Responsabile**:
-Chi, oltre al lavoro dell'operatore, gestisce catalogo, rettifiche, annullamenti e utenti.
-_Evitare_: amministratore, admin, capo magazzino
+**Admin**:
+Chi ha il permesso di gestire utenti e permessi, configurazione e aggiornamenti.
+_Evitare_: amministratore, superutente
+
+**Responsabile di magazzino**:
+Chi ha il permesso di decidere sulle cose di magazzino: merce da controllare, inventari, articoli da confermare, resi,
+correzioni, costo d'acquisto.
+_Evitare_: responsabile (da solo), capo magazzino
+
+**Responsabile dei piani**:
+Chi ha il permesso di gestire tutti i piani di spedizione e le preparazioni, e riceve gli avvisi della preparazione.
+_Evitare_: responsabile dei preparatori, pianificatore, capo reparto

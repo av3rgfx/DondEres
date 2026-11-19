@@ -92,6 +92,13 @@ Per collegarlo ad Ad Hoc vi chiediamo:
     credito)? Il nostro programma potrebbe mandare ad Ad Hoc un «reso da cliente» già pronto, con il riferimento
     all'ordine e alla vendita d'origine, da cui l'ufficio fa la nota di credito?
 
+**Inventario** (aggiunta il 18/11/2026, dal ticket «Inventario periodico»)
+
+28. Oggi l'inventario di fine anno si ricopia a mano in Ad Hoc. Il nostro programma potrebbe mandare ad Ad Hoc il
+    risultato: meglio una rettifica per articolo ogni volta che il responsabile approva una differenza, oppure una
+    rilevazione d'inventario unica, con la quantità contata di ogni articolo? Ad Hoc calcola da sé il valore
+    dell'inventario (costo medio, ultimo costo o altro)?
+
 Grazie.
 
 ---
