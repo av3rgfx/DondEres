@@ -1860,3 +1860,53 @@ Nessun `.com` è libero per nessun nome.
 
 Pagina delle domande, privata: https://claude.ai/artifact/QWapLTTybQqGXbrajL7ErH; copia nel repository in
 `prototipi/unicita-nomi/index.html`.
+
+## Brand kit
+
+Ticket «Brand kit con la skill logo-design» (decisioni 20, 351, 358, 359). Il logo si fa con la skill logo-design di
+kaankiziltug, nel suo percorso: brief, tre concetti, punto di controllo con l'utente, kit sulla strada scelta. Se il
+consulente in marchi dà parere negativo su Varko, nome e logo si rifanno (359).
+
+### Skill nel progetto (decisione 362)
+
+- In `.claude/skills/logo-design` e `.agents/skills/logo-design`, uguali; versione del 13/11/2026 (commit `e9eaddc`),
+  licenza MIT. Mai a livello globale.
+- Senza `assets/library/svg/` (1.432 loghi di altre aziende, marchi dei loro proprietari, circa 12 MB). Restano le
+  schede `catalog.json`, quindi la ricerca per categoria funziona; per vedere i loghi o fare il confronto «a scaffale»
+  si scarica la stessa versione in una cartella temporanea della sessione:
+  `git clone https://github.com/kaankiziltug/logo-design-skill` e `git checkout e9eaddc`, poi si passano i file a
+  `preview_sheet.py --refs`.
+- Gli script sono Python senza dipendenze e non usano la rete; per le immagini usano il Chromium già presente.
+
+### Brief (decisioni 363–368)
+
+| Voce | Scelta |
+|---|---|
+| Nome | **Varko**, iniziale maiuscola (365); il «varco» da cui passa la merce (358) |
+| Carattere | veloce e ordinato (346), solido e preciso (363) |
+| Lettere | geometriche e piene, come Kiln: cerchi e rette, una lettera con un dettaglio proprio (364) |
+| Concetti | tre, di tre tipi: lettera V, nome scritto, simbolo con il nome (366) |
+| Colore | bianco e nero fino al kit; poi lontano da rosso, verde e giallo, che nel programma dicono errore, fatto e attenzione (367) |
+| Deve reggere | icona sul telefono e sui palmari, scheda del browser a 16 punti, testata delle schermate su telefono e computer, stampe in bianco e nero anche termiche (368) |
+| Chi decide | l'utente |
+
+Ricerca sulla categoria (deduzione, dalla raccolta della skill e dal settore): nei programmi di logistica e magazzino
+ricorrono cubi e scatole in prospettiva, frecce, camion, codici a barre, spunte e i colori blu e arancione; si
+evitano. La raccolta della skill non ha una categoria «logistica»: le più vicine sono commercio e trasporti.
+
+### Concetti del giro 2
+
+File in `prototipi/brand-kit/concetti/`: SVG fatti solo di forme piene (niente testo vivo), generati da `genera.py`
+(lettere costruite a mano: linea di base 200, altezza della x 96, maiuscola 144, asta 30 su un'altezza di 256);
+`concetti.png` è il foglio del punto di controllo. Tutti e sei i file passano `svg_audit.py` senza avvisi (100/100,
+punteggio della skill); provati con `preview_sheet.py` a 16–256 punti, a un colore, in negativo, sfocati, specchiati e
+accanto a Tidal, Vue, Dropbox, Kotlin e Vercel.
+
+| | Concetto | Idea | Rischio visto nelle prove |
+|---|---|---|---|
+| A | Varco (consigliato) | la V non si chiude: in fondo resta il varco; la stessa V apre il nome | a 16 punti il varco sparisce; il vuoto può sembrare una Y |
+| B | Mirino | il nome scritto, con la o fatta a mirino della telecamera | la o da sola sembra un salvagente, una croce o un bersaglio |
+| C | Colli | due colli lasciano un varco largo un collo, il terzo ci passa sotto: insieme fanno la V | in grande sembra una faccina; struttura vicina a Tidal |
+
+Pagina delle domande, privata: https://claude.ai/artifact/JQ2vwNwRMfT2qi4BDWNnX5; copia in
+`prototipi/brand-kit/index.html` (mostra l'ultimo giro). Il primo giro è nella cronologia del repository.

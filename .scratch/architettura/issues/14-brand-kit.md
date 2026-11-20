@@ -18,3 +18,6 @@ Risultato atteso: il brand kit nel repository, il link qui e la direzione scelta
 ## Comments
 - 20/11/2026: sbloccato. Nome scelto Varko (358); Kiln vale solo come riferimento di stile (351), quindi la domanda sul
   Kiln è già risolta. Un parere negativo del consulente in marchi può far rifare nome e logo (359).
+- 20/11/2026, primo giro (pagina https://claude.ai/artifact/JQ2vwNwRMfT2qi4BDWNnX5, privata): skill installata nel
+  progetto senza la raccolta di loghi altrui (362); brief nelle decisioni 363–368. Secondo giro: tre concetti
+  (Varco, Mirino, Colli) in `prototipi/brand-kit/concetti/`, sezione «Brand kit» di `docs/architettura.md`.
