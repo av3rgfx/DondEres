@@ -1965,3 +1965,10 @@ Quobyte: nessuna somiglianza forte.
 
 Ordine dei passi dopo la scelta: rosa di nomi che cominciano con la lettera, verifica dei marchi del nome scelto, kit.
 
+### Giro 6: il nome in R (decisioni 380 e 381)
+
+Logo: R · Rampa (380). Nome: dieci proposte che cominciano con la R, con le regole 344–350 (381): Rampo, Ramko (da
+«rampa», legate al logo), Reko, Rulo, Rasto, Ripo, Rodo, Ranko, Roto, Rapo. Escluse prima di proporle (deduzioni da
+fatti noti, non da una ricerca): Rako (marchio di piastrelle), Rolo (caramelle), Rekto (doppio senso di «retto»); Rivo
+e Rigo hanno un marchio identico (361). Dopo i preferiti in ordine si fa la verifica dei marchi, come per Varko.
+
