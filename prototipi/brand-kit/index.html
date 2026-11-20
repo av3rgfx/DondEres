@@ -1,0 +1,440 @@
+<title>Brand kit Varko</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@112,600;112,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&family=Outfit:wght@400;500;600;700;800&family=Chakra+Petch:wght@500;600;700&family=Barlow+Condensed:wght@500;600;700;800&display=swap">
+<style>
+/* Layout: una colonna di domande; ogni domanda ha le opzioni a sinistra e l'esempio che cambia a destra (sotto, sul telefono).
+   Tono: segnaletica di magazzino, come le pagine dei ticket «Nome del prodotto» e «Unicità dei nomi scelti». */
+:root{
+  --bg:#f3f5f7; --surface:#ffffff; --fg:#17202b; --muted:#5a6675; --line:#d5dbe2;
+  --accent:#1f4e8c; --accent-soft:#e3ebf6; --tag:#f2b705; --tag-fg:#2a2100;
+  --ok:#1d7a46; --ok-soft:#e2f3e9; --warn:#9a5200; --warn-soft:#fbeedd; --bad:#b0302b; --bad-soft:#f8e3e2;
+  --ink:#141414; --paper:#ffffff; --brand:#5b6573;
+  --phone:#0f1720; --phone-fg:#e9eef4; --phone-bar:#1b2633;
+  --f-display:"Archivo","Arial Narrow",system-ui,sans-serif;
+  --f-body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f141a; --surface:#18202a; --fg:#e6ebf1; --muted:#9aa7b6; --line:#2c3846;
+  --accent:#7fb0ef; --accent-soft:#1d2d42; --tag:#f2b705; --tag-fg:#2a2100;
+  --ok:#5fcf8e; --ok-soft:#163324; --warn:#f0a447; --warn-soft:#3a2a14; --bad:#f08a84; --bad-soft:#3d1c1b;
+  --ink:#141414; --paper:#f4f4f2; --brand:#8a94a3;
+  --phone:#05080c; --phone-fg:#e9eef4; --phone-bar:#1b2633; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f141a; --surface:#18202a; --fg:#e6ebf1; --muted:#9aa7b6; --line:#2c3846;
+  --accent:#7fb0ef; --accent-soft:#1d2d42; --tag:#f2b705; --tag-fg:#2a2100;
+  --ok:#5fcf8e; --ok-soft:#163324; --warn:#f0a447; --warn-soft:#3a2a14; --bad:#f08a84; --bad-soft:#3d1c1b;
+  --ink:#141414; --paper:#f4f4f2; --brand:#8a94a3;
+  --phone:#05080c; --phone-fg:#e9eef4; --phone-bar:#1b2633; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:15px/1.55 var(--f-body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 96px}
+.wrap{max-width:1040px;margin:0 auto;display:grid;gap:28px}
+h1,h2,h3{font-family:var(--f-display);font-stretch:112%;text-wrap:balance;margin:0;line-height:1.15}
+h1{font-size:clamp(28px,5vw,40px);font-weight:800}
+h2{font-size:22px;font-weight:800}
+h3{font-size:18px;font-weight:600}
+p{margin:0;max-width:68ch}
+a{color:var(--accent)}
+code{font:13px var(--f-mono)}
+.eyebrow{font:600 12px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.intro{display:grid;gap:12px}
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+button{font:600 14px/1 var(--f-body);border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--fg);padding:11px 14px;cursor:pointer}
+button.primary{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+button:focus-visible,input:focus-visible,textarea:focus-visible,label.opt:focus-within,a:focus-visible{outline:3px solid var(--tag);outline-offset:2px}
+.status{font-size:13px;color:var(--muted)}
+.status.ok{color:var(--ok)} .status.warn{color:var(--warn)}
+.box{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:var(--surface);font-size:14px;display:grid;gap:8px}
+.box ul{margin:0;padding-left:20px;display:grid;gap:4px}
+
+.q{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:18px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px}
+@media (max-width:760px){.q{grid-template-columns:minmax(0,1fr)}}
+.q .ask{display:grid;gap:10px;align-content:start;min-width:0}
+.q .num{font:600 12px/1 var(--f-mono);letter-spacing:.08em;color:var(--muted)}
+.q .why{color:var(--muted);font-size:14px}
+.opts{display:grid;gap:8px}
+label.opt{display:grid;grid-template-columns:22px minmax(0,1fr);gap:8px;align-items:start;border:1px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer;background:var(--bg)}
+label.opt:has(input:checked){border-color:var(--accent);background:var(--accent-soft)}
+label.opt input{margin:3px 0 0;accent-color:var(--accent);width:16px;height:16px}
+label.opt b{font-weight:600}
+label.opt .d{display:block;color:var(--muted);font-size:13.5px;margin-top:2px}
+.rec{display:inline-block;margin-left:8px;font:600 11px/1 var(--f-mono);letter-spacing:.05em;text-transform:uppercase;background:var(--tag);color:var(--tag-fg);padding:4px 6px;border-radius:4px;vertical-align:2px}
+textarea{width:100%;min-height:56px;font:14px/1.4 var(--f-body);border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:var(--bg);color:var(--fg);resize:vertical}
+.notelbl{font-size:13px;color:var(--muted)}
+.ex{background:var(--bg);border:1px dashed var(--line);border-radius:12px;padding:14px;display:grid;gap:12px;align-content:start;min-width:0}
+.ex .cap{font:600 11px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.ex small{color:var(--muted);font-size:13px;display:block}
+
+/* anteprima delle lettere */
+.word{background:var(--paper);color:var(--ink);border-radius:10px;padding:22px 12px;display:grid;place-items:center;min-height:120px;overflow:hidden}
+.word span{font-size:clamp(46px,9vw,72px);line-height:1;white-space:nowrap}
+.minis{display:flex;gap:14px;align-items:flex-end;flex-wrap:wrap}
+.mini{display:grid;gap:4px;justify-items:center;font-size:11px;color:var(--muted)}
+.tile{display:grid;place-items:center;background:var(--ink);color:var(--paper);border-radius:22%}
+.hdr{display:flex;align-items:center;gap:10px;background:var(--phone-bar);color:var(--phone-fg);border-radius:8px;padding:8px 12px;font-size:12px;min-width:0}
+.hdr .w{font-size:20px;line-height:1;color:#fff}
+.hdr .sp{margin-left:auto;opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* tipi di marchio */
+.types{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.type{background:var(--paper);color:var(--ink);border-radius:10px;padding:10px;display:grid;gap:6px;justify-items:center;text-align:center;font-size:12px;border:2px solid transparent;transition:opacity .2s}
+.type.on{border-color:var(--accent)} .type.off{opacity:.3}
+.type svg{width:100%;max-width:110px;height:auto}
+.type .k{font:600 10.5px/1.2 var(--f-mono);letter-spacing:.04em;text-transform:uppercase;color:#4b5563}
+
+/* telefono con gli stati */
+.phone{background:var(--phone);color:var(--phone-fg);border-radius:18px;padding:10px;display:grid;gap:8px;max-width:300px;width:100%;justify-self:center}
+.phone .top{display:flex;align-items:center;gap:8px;border-radius:8px;padding:9px 10px;font:700 15px/1 var(--f-body);color:#fff}
+.phone .row{display:flex;justify-content:space-between;align-items:center;gap:8px;background:var(--phone-bar);border-radius:8px;padding:9px 10px;font-size:12.5px}
+.st{font:600 11px/1 var(--f-body);padding:5px 7px;border-radius:999px;white-space:nowrap}
+.st.r{background:#f8e3e2;color:#9b1c17} .st.g{background:#e2f3e9;color:#155c35} .st.y{background:#fbeedd;color:#7a4100}
+.sw{display:flex;gap:6px;flex-wrap:wrap}
+.sw i{width:26px;height:26px;border-radius:6px;display:block;border:1px solid rgba(0,0,0,.1)}
+
+/* contesti */
+.ctx{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.c{background:var(--paper);color:var(--ink);border-radius:10px;padding:10px;display:grid;gap:6px;min-height:92px;align-content:space-between;font-size:11.5px;transition:opacity .2s;border:2px solid transparent}
+.c.on{border-color:var(--accent)} .c.off{opacity:.28}
+.c .lbl{color:#4b5563;font:600 10.5px/1.2 var(--f-mono);letter-spacing:.04em;text-transform:uppercase}
+
+/* installazione */
+.sizes{display:grid;gap:8px}
+.sz{display:grid;grid-template-columns:120px minmax(0,1fr) 64px;gap:8px;align-items:center;font-size:13px}
+.sz .b{height:14px;border-radius:4px;background:var(--line);overflow:hidden}
+.sz .b i{display:block;height:100%;background:var(--accent)}
+.sz.dim{opacity:.4}
+.tree{font:12.5px/1.6 var(--f-mono);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px 12px;overflow-x:auto;white-space:pre}
+.tree .x{color:var(--bad);text-decoration:line-through}
+
+.save{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--line);padding-block:12px calc(12px + env(safe-area-inset-bottom,0px));display:grid;gap:8px}
+#copybox{font:12.5px/1.5 var(--f-mono);white-space:pre-wrap;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header class="intro">
+    <div class="eyebrow">Ticket «Brand kit con la skill logo-design» · giro 1 di 3 · 20/11/2026</div>
+    <h1>Brand kit di Varko: il brief</h1>
+    <p>La skill lavora in quattro tappe: <b>brief</b> (questo giro), <b>tre concetti</b> disegnati in bianco e nero da
+      guardare (giro 2), <b>kit completo</b> sulla strada che scegli, con colori, versioni e icone (giro 3), riepilogo
+      da confermare. Le scelte di gusto sono tue: dove c'è «Consigliata» è solo il mio parere.</p>
+    <p>Gli esempi qui sotto usano caratteri già pronti solo per farti capire la direzione: <b>non sono il logo</b>.
+      Il logo vero si disegna come forma nel giro 2.</p>
+    <div class="box">
+      <b>Cosa so già (non si richiede)</b>
+      <ul>
+        <li>Nome: <b>Varko</b>, il «varco» da cui passa la merce; si legge «vàr-ko» (decisione 358).</li>
+        <li>Deve far venire in mente velocità, ordine e precisione (346).</li>
+        <li>Kiln vale solo come riferimento di stile: lettere piene e geometriche, nero più un solo colore, una
+          lettera con un dettaglio proprio (351).</li>
+        <li>Se il consulente in marchi dà parere negativo, nome e logo si rifanno (359).</li>
+        <li>Chi decide: tu.</li>
+      </ul>
+    </div>
+    <div class="bar"><button class="primary" id="accept-all" type="button">Accetta tutte le consigliate</button>
+      <span class="status" id="status">Caricamento delle risposte salvate…</span></div>
+  </header>
+
+  <section class="q" aria-labelledby="h-q1">
+    <div class="ask">
+      <div class="num">DOMANDA 1 · INSTALLAZIONE</div>
+      <h3 id="h-q1">Installo la skill con la raccolta di loghi di altre aziende?</h3>
+      <p class="why">La skill porta con sé 1.432 loghi veri (Microsoft, Zendesk, HubSpot…) per studiare come sono
+        costruiti e per controllare che il nostro non somigli a uno esistente. Sono marchi dei loro proprietari: la
+        licenza della skill non li copre. Pesano circa 12 MB, il resto della skill 2,3 MB.</p>
+      <div class="opts" id="q1-opts"></div>
+      <label class="notelbl" for="n-q1">Nota facoltativa</label>
+      <textarea id="n-q1" data-note="q1"></textarea>
+    </div>
+    <div class="ex" id="ex-q1" aria-live="polite"></div>
+  </section>
+
+  <section class="q" aria-labelledby="h-q2">
+    <div class="ask">
+      <div class="num">DOMANDA 2 · CARATTERE</div>
+      <h3 id="h-q2">Oltre a veloce e ordinato, che carattere deve avere?</h3>
+      <p class="why">È l'indicazione che guida di più i concetti: decide peso e inclinazione delle forme. Lo vedranno
+        magazzinieri al telefono e responsabili al computer, accanto ai gestionali che usano già.</p>
+      <div class="opts" id="q2-opts"></div>
+      <label class="notelbl" for="n-q2">Nota facoltativa (per esempio una parola che lo descrive meglio)</label>
+      <textarea id="n-q2" data-note="q2"></textarea>
+    </div>
+    <div class="ex" id="ex-q2" aria-live="polite"></div>
+  </section>
+
+  <section class="q" aria-labelledby="h-q3">
+    <div class="ask">
+      <div class="num">DOMANDA 3 · LETTERE</div>
+      <h3 id="h-q3">Che forma devono avere le lettere?</h3>
+      <p class="why">Il nome scritto compare in ogni schermata e su ogni stampa. La forma delle lettere dice subito
+        se il programma sembra uno strumento tecnico, un'app moderna o un cartello di magazzino.</p>
+      <div class="opts" id="q3-opts"></div>
+      <label class="notelbl" for="n-q3">Nota facoltativa</label>
+      <textarea id="n-q3" data-note="q3"></textarea>
+    </div>
+    <div class="ex" id="ex-q3" aria-live="polite"></div>
+  </section>
+
+  <section class="q" aria-labelledby="h-q4">
+    <div class="ask">
+      <div class="num">DOMANDA 4 · MAIUSCOLE</div>
+      <h3 id="h-q4">Come si scrive il nome nel logo?</h3>
+      <p class="why">Cambia quanto è leggibile in piccolo e quanto «grida». Nei testi normali resta comunque «Varko».</p>
+      <div class="opts" id="q4-opts"></div>
+      <label class="notelbl" for="n-q4">Nota facoltativa</label>
+      <textarea id="n-q4" data-note="q4"></textarea>
+    </div>
+    <div class="ex" id="ex-q4" aria-live="polite"></div>
+  </section>
+
+  <section class="q" aria-labelledby="h-q5">
+    <div class="ask">
+      <div class="num">DOMANDA 5 · CONCETTI</div>
+      <h3 id="h-q5">Che tipo di logo provo nei tre concetti del giro 2?</h3>
+      <p class="why">La skill disegna tre concetti e consiglia di provare almeno due tipi diversi: si confronta di più
+        con lo stesso lavoro. Se sai già cosa vuoi, puoi stringere su un tipo solo.</p>
+      <div class="opts" id="q5-opts"></div>
+      <label class="notelbl" for="n-q5">Nota facoltativa</label>
+      <textarea id="n-q5" data-note="q5"></textarea>
+    </div>
+    <div class="ex" id="ex-q5" aria-live="polite"></div>
+  </section>
+
+  <section class="q" aria-labelledby="h-q6">
+    <div class="ask">
+      <div class="num">DOMANDA 6 · COLORE</div>
+      <h3 id="h-q6">Un vincolo sul colore, prima di vedere i concetti?</h3>
+      <p class="why">I concetti si guardano prima in bianco e nero, come chiede la skill; il colore si sceglie nel
+        giro 3. Ma il colore del marchio diventerà anche quello del programma, dove rosso, verde e giallo dicono già
+        errore, fatto e attenzione.</p>
+      <div class="opts" id="q6-opts"></div>
+      <label class="notelbl" for="n-q6">Nota facoltativa (se hai un colore in mente, scrivilo qui)</label>
+      <textarea id="n-q6" data-note="q6"></textarea>
+    </div>
+    <div class="ex" id="ex-q6" aria-live="polite"></div>
+  </section>
+
+  <section class="q" aria-labelledby="h-q7">
+    <div class="ask">
+      <div class="num">DOMANDA 7 · DOVE SI USA</div>
+      <h3 id="h-q7">Dove deve funzionare il logo? (anche più di una)</h3>
+      <p class="why">Ogni posto in più è una prova da superare: l'icona a 16 punti nella scheda del browser chiede una
+        forma semplicissima, le stampe in bianco e nero un logo che regge senza colore.</p>
+      <div class="opts" id="q7-opts"></div>
+      <label class="notelbl" for="n-q7">Nota facoltativa</label>
+      <textarea id="n-q7" data-note="q7"></textarea>
+    </div>
+    <div class="ex" id="ex-q7" aria-live="polite"></div>
+  </section>
+
+  <section class="q" aria-labelledby="h-q8" style="grid-template-columns:minmax(0,1fr)">
+    <div class="ask">
+      <div class="num">FACOLTATIVA</div>
+      <h3 id="h-q8">Loghi che ti piacciono o che vuoi evitare</h3>
+      <p class="why">Anche fuori dal settore. Scrivi il nome e, se puoi, cosa ti piace o non ti piace. Mi serve per
+        tarare i concetti; non si copia niente.</p>
+      <label class="notelbl" for="n-gen">Nota</label>
+      <textarea id="n-gen" data-note="gen"></textarea>
+    </div>
+  </section>
+
+  <div class="save">
+    <div class="bar"><button class="primary" id="save" type="button">Salva adesso</button>
+      <button id="copy" type="button">Copia le risposte</button>
+      <span class="status" id="status2"></span></div>
+    <small class="status">Quando hai finito, scrivi «fatto» in chat: leggo le risposte salvate.</small>
+    <div id="copybox" hidden></div>
+  </div>
+</div>
+
+<script>
+const GIRO = "1";
+const Q = {
+ q1:[{id:"lite",l:"Senza la raccolta di loghi",d:"Nel repository entrano istruzioni, script e le schede di catalogo dei loghi (tipo, tecnica, colori), così la ricerca per categoria funziona. I file dei loghi li uso solo da una copia temporanea durante le sessioni, per i confronti. È la versione «lite» prevista dall'autore.",rec:true},
+     {id:"completa",l:"Completa, con i 1.432 loghi",d:"La skill funziona tutta anche in una sessione nuova, senza scaricare niente. Nel repository entrano 12 MB di marchi altrui, uguali nelle due cartelle."}],
+ q2:[{id:"solido",l:"Solido e preciso",d:"Forme piene e stabili, come un'attrezzatura da magazzino che non sbaglia. Vicino a ordine e precisione (346).",rec:true},
+     {id:"agile",l:"Agile e scattante",d:"Forme inclinate o tagliate che danno movimento. Spinge sulla velocità."},
+     {id:"sobrio",l:"Sobrio e professionale",d:"Pochi segni, molto spazio. Sta bene accanto ai gestionali da ufficio, ma si ricorda meno."},
+     {id:"amichevole",l:"Amichevole e alla mano",d:"Angoli morbidi e aria più leggera. Rende il programma meno «da ufficio»."}],
+ q3:[{id:"morbide",l:"Geometriche e piene, come Kiln",d:"Cerchi e rette, lettere larghe, una con un dettaglio proprio. È lo stile che hai indicato (351).",rec:true},
+     {id:"squadrate",l:"Squadrate, da strumento tecnico",d:"Angoli tagliati, aria da display o da macchina. Molto «magazzino», rischia di sembrare un videogioco."},
+     {id:"strette",l:"Strette e alte, da cartello",d:"Come la segnaletica delle corsie. Stanno in poco spazio, ma in piccolo si leggono peggio."}],
+ q4:[{id:"cap",l:"«Varko», iniziale maiuscola",d:"Si legge come un nome proprio, regge bene in piccolo.",rec:true},
+     {id:"min",l:"«varko», tutto minuscolo",d:"Più morbido e moderno, come Kiln. Nei testi resta «Varko»."},
+     {id:"mai",l:"«VARKO», tutto maiuscolo",d:"Più forte, da cartello. Occupa più spazio e in piccolo si legge peggio."}],
+ q5:[{id:"misti",l:"Tre tipi diversi",d:"Una lettera V con un'idea dentro (come la K di Kiln), il nome scritto in modo proprio, un simbolo con il nome accanto. Come consiglia la skill.",rec:true},
+     {id:"lettera",l:"Tutti e tre sulla lettera V",d:"Tre modi diversi di disegnare una V con un'idea dentro, più il nome accanto."},
+     {id:"nome",l:"Tutti e tre sul nome scritto",d:"Nessun simbolo: tre modi di scrivere «Varko» con un dettaglio proprio. L'icona del telefono diventa la prima lettera."}],
+ q6:[{id:"stati",l:"Libero, ma lontano da rosso, verde e giallo",d:"Così nel programma il colore del marchio non si confonde con errore, fatto e attenzione. Il colore preciso lo scegli nel giro 3.",rec:true},
+     {id:"libero",l:"Nessun vincolo",d:"Si decide tutto nel giro 3. Se scegli un rosso o un giallo, nel programma andranno distinti in altro modo."},
+     {id:"preciso",l:"Ho già un colore in mente",d:"Scrivilo nella nota: i concetti si disegnano comunque in bianco e nero, il tuo colore si prova per primo nel giro 3."}],
+};
+const Q7 = [
+ {id:"icona",l:"Icona sul telefono",d:"Il programma aggiunto alla schermata Home di telefoni e palmari (decisione 119).",rec:true},
+ {id:"scheda",l:"Scheda del browser",d:"L'icona piccolissima, 16 punti, accanto al titolo della pagina.",rec:true},
+ {id:"testata",l:"Testata delle schermate",d:"In alto nel programma, sul telefono e al computer dei responsabili (292).",rec:true},
+ {id:"stampa",l:"Stampe in bianco e nero",d:"Documenti, etichette e riepiloghi stampati, anche su stampanti termiche per etichette.",rec:true},
+ {id:"sito",l:"Sito e presentazioni",d:"Quando il programma si offrirà ad altri magazzini. Per ora un sito non serve (349)."},
+ {id:"oggetti",l:"Oggetti e insegne",d:"Magliette, adesivi sui palmari, cartelli. Chiede un logo che regga anche ricamato."}
+];
+const FONT = {morbide:'"Outfit",system-ui,sans-serif', squadrate:'"Chakra Petch",system-ui,sans-serif', strette:'"Barlow Condensed","Arial Narrow",sans-serif'};
+const CHAR = {solido:{w:800,ls:"-0.02em",sk:0}, agile:{w:700,ls:"-0.01em",sk:-9}, sobrio:{w:500,ls:"0.06em",sk:0}, amichevole:{w:600,ls:"0.01em",sk:0,round:true}};
+
+let S = {q1:"",q2:"",q3:"",q4:"",q5:"",q6:"",q7:[],note:{}};
+try{ const d = JSON.parse(localStorage.getItem("brand-kit-g1")||"null"); if(d) S = Object.assign(S,d); }catch(e){}
+const esc = s => String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const opts = (name,list,cur) => list.map(o=>`<label class="opt"><input type="radio" name="${name}" value="${o.id}" ${cur===o.id?"checked":""}>
+  <span><b>${esc(o.l)}</b>${o.rec?'<span class="rec">Consigliata</span>':""}<span class="d">${esc(o.d)}</span></span></label>`).join("");
+const checks = (list,cur) => list.map(o=>`<label class="opt"><input type="checkbox" name="q7" value="${o.id}" ${cur.includes(o.id)?"checked":""}>
+  <span><b>${esc(o.l)}</b>${o.rec?'<span class="rec">Consigliata</span>':""}<span class="d">${esc(o.d)}</span></span></label>`).join("");
+
+function wordStyle(){
+  const f = FONT[S.q3]||FONT.morbide, c = CHAR[S.q2]||CHAR.solido;
+  return `font-family:${f};font-weight:${c.w};letter-spacing:${c.ls};display:inline-block;transform:skewX(${c.sk}deg)`;
+}
+function nameTxt(){ return S.q4==="min"?"varko":S.q4==="mai"?"VARKO":"Varko"; }
+function letter(){ return S.q4==="min"?"v":"V"; }
+function preview(note){
+  const st = wordStyle(), rad = (CHAR[S.q2]||{}).round ? "32%" : "22%";
+  const tile = (px,fs) => `<div class="mini"><div class="tile" style="width:${px}px;height:${px}px;border-radius:${rad}"><span style="${st};font-size:${fs}px;line-height:1">${letter()}</span></div>${px}px</div>`;
+  return `<div class="cap">Esempio con caratteri già pronti, non il logo</div>
+   <div class="word"><span style="${st}">${nameTxt()}</span></div>
+   <div class="minis">${tile(64,40)}${tile(32,20)}${tile(16,11)}
+     <div class="mini" style="flex:1;min-width:180px"><div class="hdr" style="width:100%"><span class="w" style="${st}">${nameTxt()}</span><span class="sp">Ricevimento · DDT 418</span></div>Testata</div></div>
+   <small>${note}</small>`;
+}
+const lab = (list,id) => (list.find(o=>o.id===id)||{l:"da scegliere"}).l;
+
+const TYPE_SVG = {
+ lettera:`<svg viewBox="0 0 100 100" aria-hidden="true"><path d="M14 18h20l16 44 16-44h20L58 86H42z" fill="currentColor"/><rect x="44" y="18" width="12" height="30" fill="#fff"/></svg>`,
+ nome:`<svg viewBox="0 0 140 100" aria-hidden="true"><text x="70" y="62" text-anchor="middle" font-family="Outfit,sans-serif" font-weight="800" font-size="38" fill="currentColor">Varko</text><rect x="83" y="66" width="14" height="5" fill="currentColor"/></svg>`,
+ simbolo:`<svg viewBox="0 0 140 100" aria-hidden="true"><rect x="8" y="26" width="18" height="48" fill="currentColor"/><rect x="34" y="26" width="18" height="48" fill="currentColor"/><path d="M26 44h8v12h-8z" fill="currentColor" opacity=".35"/><text x="98" y="60" text-anchor="middle" font-family="Outfit,sans-serif" font-weight="700" font-size="22" fill="currentColor">Varko</text></svg>`
+};
+function exTypes(){
+  const sets = {misti:[["lettera","Lettera V"],["nome","Nome scritto"],["simbolo","Simbolo + nome"]],
+                lettera:[["lettera","V · idea 1"],["lettera","V · idea 2"],["lettera","V · idea 3"]],
+                nome:[["nome","Nome · idea 1"],["nome","Nome · idea 2"],["nome","Nome · idea 3"]]};
+  const set = sets[S.q5];
+  const tiles = set ? set.map(([t,k])=>`<div class="type on">${TYPE_SVG[t]}<span class="k">${k}</span></div>`).join("")
+    : [["lettera","Lettera V"],["nome","Nome scritto"],["simbolo","Simbolo + nome"]].map(([t,k])=>`<div class="type">${TYPE_SVG[t]}<span class="k">${k}</span></div>`).join("");
+  return `<div class="cap">I tre concetti del giro 2 (schizzi solo per capire il tipo)</div><div class="types">${tiles}</div>
+   <small>${S.q5==="misti"?"Tre strade che si confrontano bene: scegli la strada, poi la si raffina.":S.q5==="lettera"?"Confronto stretto tra idee sulla stessa lettera: più facile scegliere, meno strade aperte.":S.q5==="nome"?"Niente simbolo: il nome scritto fa tutto. Più semplice, ma l'icona del telefono è solo una lettera.":"Scegli un'opzione."}</small>`;
+}
+function exColor(){
+  const brand = S.q6==="stati" ? ["#1f4e8c","#2d3a8c","#0f6e7a","#5a3f8f","#222831"] : S.q6==="libero" ? ["#b0302b","#e0a100","#1d7a46","#1f4e8c","#222831"] : null;
+  const top = S.q6==="libero" ? "#b0302b" : S.q6==="stati" ? "#1f4e8c" : "var(--brand)";
+  const msg = S.q6==="stati" ? "Il colore del marchio resta distinto dagli stati: un «Errore» si vede subito."
+    : S.q6==="libero" ? "Con un rosso come colore del marchio, la testata e la riga «Errore» si somigliano: andranno distinti con icone o forme."
+    : S.q6==="preciso" ? ("Il tuo colore si prova per primo nel giro 3"+(S.note.q6?": «"+esc(S.note.q6)+"».":". Scrivilo nella nota."))
+    : "Scegli un'opzione.";
+  return `<div class="cap">Il colore del marchio dentro il programma</div>
+   <div class="phone"><div class="top" style="background:${top}">${nameTxt()}<span style="margin-left:auto;font:500 11px var(--f-body);opacity:.8">Ricevimento</span></div>
+     <div class="row"><span>Viti M6 · 40 pz</span><span class="st g">Fatto</span></div>
+     <div class="row"><span>Staffa 120 · 12 pz</span><span class="st y">Attenzione</span></div>
+     <div class="row"><span>Codice sconosciuto</span><span class="st r">Errore</span></div></div>
+   ${brand?`<div><div class="cap" style="margin-bottom:6px">${S.q6==="stati"?"Famiglie ancora possibili (esempi, non proposte)":"Tutto possibile, anche"}</div><div class="sw">${brand.map(c=>`<i style="background:${c}"></i>`).join("")}</div></div>`:""}
+   <small>${msg}</small>`;
+}
+function exCtx(){
+  const st = wordStyle(), on = id => S.q7.includes(id) ? "on" : "off";
+  const L = letter(), N = nameTxt();
+  const cells = [
+   ["icona","Icona sul telefono",`<div class="tile" style="width:44px;height:44px"><span style="${st};font-size:26px;line-height:1">${L}</span></div>`],
+   ["scheda","Scheda del browser",`<div style="display:flex;align-items:center;gap:6px;background:#e5e7eb;border-radius:6px 6px 0 0;padding:5px 8px;font-size:11px"><div class="tile" style="width:16px;height:16px;border-radius:3px"><span style="${st};font-size:11px;line-height:1">${L}</span></div>${N} · Ricevimento</div>`],
+   ["testata","Testata delle schermate",`<div class="hdr" style="padding:6px 8px"><span class="w" style="${st};font-size:15px">${N}</span><span class="sp">Prelievo</span></div>`],
+   ["stampa","Stampa in bianco e nero",`<div style="border:1px dashed #9ca3af;padding:6px;font:10px var(--f-mono);display:grid;gap:3px"><span style="${st};font-size:15px;font-family:${FONT[S.q3]||FONT.morbide}">${N}</span>ETICHETTA · UBIC. A-03-2</div>`],
+   ["sito","Sito e presentazioni",`<div style="display:grid;gap:4px"><span style="${st};font-size:20px">${N}</span><span style="height:5px;background:#d1d5db;border-radius:3px;width:80%"></span><span style="height:5px;background:#d1d5db;border-radius:3px;width:60%"></span></div>`],
+   ["oggetti","Oggetti e insegne",`<div style="background:#111;color:#fff;border-radius:6px;padding:8px;text-align:center"><span style="${st};font-size:18px">${N}</span></div>`]
+  ];
+  return `<div class="cap">Dove il logo deve reggere</div><div class="ctx">${cells.map(([id,l,h])=>`<div class="c ${on(id)}">${h}<span class="lbl">${l}</span></div>`).join("")}</div>
+   <small>${S.q7.length?S.q7.length+" posti scelti: ognuno diventa una prova del giro 2 e un file del kit.":"Scegli almeno un posto."}</small>`;
+}
+function exInstall(){
+  const lite = S.q1==="lite", full = S.q1==="completa";
+  return `<div class="cap">Cosa entra nel repository</div>
+   <div class="tree">.claude/skills/logo-design/      (uguale in .agents/skills)
+  SKILL.md, references/        istruzioni
+  scripts/                     controlli e anteprime
+  templates/                   guida d'uso del marchio
+  assets/library/catalog.json  schede dei 1.432 loghi
+  ${lite?'<span class="x">assets/library/svg/</span>          non entra':full?'assets/library/svg/          1.432 loghi altrui':'assets/library/svg/          ?'}</div>
+   <div class="sizes">
+     <div class="sz ${full?"dim":""}"><span>Senza raccolta</span><span class="b"><i style="width:16%"></i></span><span>2,3 MB</span></div>
+     <div class="sz ${lite?"dim":""}"><span>Completa</span><span class="b"><i style="width:100%"></i></span><span>14 MB</span></div>
+   </div>
+   <small>${lite?"Per i confronti scarico la raccolta in una cartella temporanea della sessione, dalla stessa versione della skill. Niente installazioni globali.":full?"Tutto pronto in ogni sessione. Git salva una volta sola i file uguali delle due cartelle.":"Scegli un'opzione."} In entrambi i casi la versione è fissata (13/11/2026, licenza MIT).</small>`;
+}
+function render(){
+  for(const k of ["q1","q2","q3","q4","q5","q6"]) document.getElementById(k+"-opts").innerHTML = opts(k,Q[k],S[k]);
+  document.getElementById("q7-opts").innerHTML = checks(Q7,S.q7);
+  for(const k of ["q1","q2","q3","q4","q5","q6","q7","gen"]) document.getElementById("n-"+k).value = S.note[k]||"";
+  refresh();
+}
+function refresh(){
+  document.getElementById("ex-q1").innerHTML = exInstall();
+  document.getElementById("ex-q2").innerHTML = preview(S.q2 ? "Carattere: "+esc(lab(Q.q2,S.q2).toLowerCase())+"." : "Scegli un'opzione: cambia peso e inclinazione.");
+  document.getElementById("ex-q3").innerHTML = preview(S.q3 ? "Lettere: "+esc(lab(Q.q3,S.q3).toLowerCase())+"." : "Scegli un'opzione: cambia la forma delle lettere.");
+  document.getElementById("ex-q4").innerHTML = preview(S.q4 ? "Nota l'icona: con il minuscolo diventa «v»." : "Scegli un'opzione.");
+  document.getElementById("ex-q5").innerHTML = exTypes();
+  document.getElementById("ex-q6").innerHTML = exColor();
+  document.getElementById("ex-q7").innerHTML = exCtx();
+  document.getElementById("copybox").textContent = asText();
+}
+function asText(){
+  const L=["Brand kit Varko – giro 1"];
+  const n = k => S.note[k] ? " — nota: "+S.note[k] : "";
+  L.push("1. Installazione: "+lab(Q.q1,S.q1)+n("q1"));
+  L.push("2. Carattere: "+lab(Q.q2,S.q2)+n("q2"));
+  L.push("3. Lettere: "+lab(Q.q3,S.q3)+n("q3"));
+  L.push("4. Maiuscole: "+lab(Q.q4,S.q4)+n("q4"));
+  L.push("5. Concetti: "+lab(Q.q5,S.q5)+n("q5"));
+  L.push("6. Colore: "+lab(Q.q6,S.q6)+n("q6"));
+  L.push("7. Dove si usa: "+(S.q7.length?S.q7.map(id=>lab(Q7,id)).join(", "):"da scegliere")+n("q7"));
+  if(S.note.gen) L.push("Loghi che piacciono o da evitare: "+S.note.gen);
+  return L.join("\n");
+}
+
+let db=null,timer=null,saving=false,pending=false;
+function setStatus(t,cls){ ["status","status2"].forEach(id=>{const el=document.getElementById(id); el.textContent=t; el.className="status "+(cls||"");}); }
+function local(){ try{ localStorage.setItem("brand-kit-g1", JSON.stringify(S)); }catch(e){} }
+function changed(){ local(); refresh(); clearTimeout(timer); timer=setTimeout(save,900); setStatus(db?"Modifiche da salvare…":"Salvate solo su questo dispositivo", db?"":"warn"); }
+async function save(){
+  clearTimeout(timer);
+  if(!db){ setStatus("Salvataggio non disponibile qui: usa «Copia le risposte» e incollale in chat","warn"); document.getElementById("copybox").hidden=false; return; }
+  if(saving){ pending=true; return; }
+  saving=true;
+  try{ await db.doc("giri/"+GIRO).set({q1:S.q1,q2:S.q2,q3:S.q3,q4:S.q4,q5:S.q5,q6:S.q6,q7:S.q7,note:S.note,testo:asText(),aggiornato:new Date().toISOString()});
+    setStatus("Salvate alle "+new Date().toLocaleTimeString("it-IT",{hour:"2-digit",minute:"2-digit"}),"ok");
+  }catch(e){ setStatus("Non salvate ("+(e&&e.code||"errore")+"). Riprova con «Salva adesso» o copia le risposte.","warn"); document.getElementById("copybox").hidden=false; }
+  saving=false; if(pending){ pending=false; save(); }
+}
+document.addEventListener("change", e=>{
+  const t=e.target;
+  if(["q1","q2","q3","q4","q5","q6"].includes(t.name)){ S[t.name]=t.value; changed(); }
+  else if(t.name==="q7"){ S.q7=[...document.querySelectorAll('input[name="q7"]:checked')].map(x=>x.value); changed(); }
+});
+document.addEventListener("input", e=>{ const t=e.target; if(t.dataset && t.dataset.note){ S.note[t.dataset.note]=t.value; changed(); } });
+document.getElementById("accept-all").addEventListener("click",()=>{
+  for(const k of ["q1","q2","q3","q4","q5","q6"]) S[k]=Q[k].find(o=>o.rec).id;
+  S.q7=Q7.filter(o=>o.rec).map(o=>o.id); render(); changed(); });
+document.getElementById("save").addEventListener("click", save);
+document.getElementById("copy").addEventListener("click", async()=>{
+  const box=document.getElementById("copybox"); box.hidden=false;
+  try{ await navigator.clipboard.writeText(asText()); setStatus("Testo copiato","ok"); }
+  catch(e){ const r=document.createRange(); r.selectNodeContents(box); const s=getSelection(); s.removeAllRanges(); s.addRange(r); setStatus("Testo selezionato: copialo","warn"); }
+});
+render();
+(async()=>{
+  let got=null;
+  try{ got = (window.claude && window.claude.use) ? await window.claude.use("db") : null; }catch(e){ got=null; }
+  db=got;
+  if(!db){ setStatus("Salvataggio non disponibile qui: le risposte restano su questo dispositivo. Usa «Copia le risposte».","warn"); return; }
+  const to=setTimeout(()=>setStatus("Le risposte salvate non arrivano: puoi continuare, si salvano alla prossima modifica.","warn"),10000);
+  try{ const snap=await db.doc("giri/"+GIRO).get(); clearTimeout(to);
+    if(snap.exists){ const d=snap.data(); for(const k of ["q1","q2","q3","q4","q5","q6"]) S[k]=d[k]||""; S.q7=d.q7||[]; S.note=d.note||{}; render(); setStatus("Risposte salvate caricate","ok"); }
+    else setStatus("Nessuna risposta salvata finora: le tue si salvano da sole","");
+  }catch(e){ clearTimeout(to); setStatus("Non riesco a leggere le risposte salvate: le tue si salvano comunque alla prossima modifica.","warn"); }
+})();
+</script>
