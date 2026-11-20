@@ -189,7 +189,8 @@ const Q = [
   why:"È la scelta da cui dipendono quasi tutte le altre. Il server fa il grosso del lavoro: dati, assegnazione, codice stampato, confronto delle impronte, scambio con gestionale e Shopify. Il codice stampato e il modello visivo girano con programmi scritti per Python (PaddleOCR, gli script della prova visiva).",
   o:[{id:"django",l:"Python, con Django",d:"Un linguaggio solo sul server, lo stesso di OCR e modello. Django ha già utenti, permessi, database con aggiornamenti della struttura, pannello dell'admin, testi tradotti e invio delle mail: li scriviamo una volta in meno.",rec:true},
      {id:"fastapi",l:"Python, con FastAPI",d:"Stesso linguaggio, struttura più leggera. Utenti, permessi, pannello e aggiornamenti del database si montano con altri pezzi, da scegliere e tenere aggiornati."},
-     {id:"node",l:"TypeScript (Node.js)",d:"Lo stesso linguaggio delle pagine nel browser. Ma codice stampato e modello visivo restano in Python: sul server girano due programmi in due linguaggi."}]},
+     {id:"node",l:"TypeScript (Node.js)",d:"Lo stesso linguaggio delle pagine nel browser. Ma codice stampato e modello visivo restano in Python: sul server girano due programmi in due linguaggi."},
+     {id:"rust",l:"Rust",d:"Il più veloce e il più leggero in memoria. Ma i pezzi pesanti (modello, OCR, database, ricerca delle impronte) sono già scritti in C e C++ e non accelerano; utenti, permessi, pannello, aggiornamenti del database e traduzioni vanno scritti o montati a mano; PaddleOCR non c'è e va sostituito; il telefono non diventa più veloce. Più tempo per arrivare alla prima versione."}]},
  {k:"db", t:"Quale database tiene catalogo, giacenze, ordini e impronte?",
   why:"Il database decide quanto è facile non sbagliare: due telefoni che confermano l'ultimo pezzo insieme, la stessa operazione che arriva due volte, la giacenza che non va mai sotto zero (77, 201, 421).",
   o:[{id:"pg",l:"PostgreSQL, con pgvector per le impronte",d:"Più dispositivi scrivono insieme. «Mai sotto zero» e «operazione già arrivata» diventano regole del database stesso. Le impronte stanno nello stesso database, con la ricerca esatta già decisa (407). Avvisa da solo il programma quando un dato cambia.",rec:true},
@@ -259,12 +260,12 @@ function lanes(){
     chip("Operazioni in attesa, con la foto","memoria del browser (IndexedDB), 127"),
     chip("Calcolo delle impronte?","dopo la prova (405)","out")];
   const net = ({sse:"avvisi dal server (SSE)",ws:"WebSocket",poll:"domanda ogni 3 s"})[v("canale")];
-  const lang = ({django:"Python · Django",fastapi:"Python · FastAPI",node:"TypeScript · Node.js"})[v("server")];
+  const lang = ({django:"Python · Django",fastapi:"Python · FastAPI",node:"TypeScript · Node.js",rust:"Rust"})[v("server")];
   const srv=[
     C("Certificato e HTTPS (Caddy)","dominio o interno, 123"),
     C("Programma: "+lang, "pagine, regole, assegnazione, scambio"),
     C("Lavori a intervalli", "scambio, Shopify, mail, pulizia foto"),
-    v("server")==="node" ? C("Secondo programma in Python","codice stampato e quantità","warn") : C("Riconoscimento: codice stampato e quantità","Python, processo a parte"),
+    v("server")==="node" ? C("Secondo programma in Python","codice stampato e quantità","warn") : C("Riconoscimento: codice stampato e quantità", v("server")==="rust"?"processo a parte, OCR da sostituire":"Python, processo a parte", v("server")==="rust"?"warn":""),
     chip("Modello visivo e macchina","dopo la prova (405)","out"),
     C(v("db")==="pg"?"PostgreSQL + pgvector":"SQLite + elenco impronte a parte", v("db")==="pg"?"dati, registro, impronte":"impronte da tenere allineate", v("db")==="pg"?"":"warn"),
     ({cartelle:chip("Cartelle delle foto","riferimento · bolle · inquadrature (30 gg)"),
@@ -286,7 +287,8 @@ const EX = {
  server:()=>{ const r = {
    django:[["Utenti, ruoli, PIN","già pronto"],["Struttura del database e sue modifiche","già pronto"],["Pannello per l'admin","già pronto"],["Testi separati e tradotti (28)","già pronto"],["Codice stampato, modello","stesso linguaggio"]],
    fastapi:[["Utenti, ruoli, PIN","da montare"],["Struttura del database e sue modifiche","altri due pezzi"],["Pannello per l'admin","da scrivere"],["Testi separati e tradotti (28)","da montare"],["Codice stampato, modello","stesso linguaggio"]],
-   node:[["Utenti, ruoli, PIN","da montare"],["Struttura del database e sue modifiche","altri pezzi"],["Pannello per l'admin","da scrivere"],["Testi separati e tradotti (28)","da montare"],["Codice stampato, modello","<b>secondo programma in Python</b>"]]}[v("server")];
+   node:[["Utenti, ruoli, PIN","da montare"],["Struttura del database e sue modifiche","altri pezzi"],["Pannello per l'admin","da scrivere"],["Testi separati e tradotti (28)","da montare"],["Codice stampato, modello","<b>secondo programma in Python</b>"]],
+   rust:[["Utenti, ruoli, PIN","da scrivere"],["Struttura del database e sue modifiche","altri pezzi"],["Pannello per l'admin","da scrivere"],["Testi separati e tradotti (28)","da montare"],["Codice stampato, modello","<b>OCR da sostituire</b>; modello con ONNX Runtime"]]}[v("server")];
    return `<div class="cap">Cosa c'è già e cosa si scrive</div>${tbl(["Serve alla base","Con questa scelta"],r)}`; },
  db:()=> v("db")==="pg"
    ? `<div class="cap">Mario e Luca confermano l'ultimo pezzo insieme</div><ol class="flow"><li><span class="who">Mario</span><span class="net">conferma 1 pz · giacenza 1 → 0</span></li><li><span class="who">Luca</span><span class="net">conferma 1 pz · giacenza 0 → −1</span></li><li><span class="who s">Database</span><span>rifiuta: la regola «mai sotto zero» è scritta nel database. Luca vede «già preso».</span></li></ol><small>Allo stesso modo un'operazione in attesa con la stessa identità non entra due volte.</small>`
@@ -339,7 +341,7 @@ ripo-…/          <span class="x">uno per specializzazione</span></pre>`,
 };
 
 function deduzioni(){
-  const py = v("server")!=="node", pg = v("db")==="pg";
+  const py = v("server")==="django"||v("server")==="fastapi", pg = v("db")==="pg";
   const L = [
     "Le operazioni in attesa si salvano nella memoria del browser fatta per i file (IndexedDB), che tiene anche la foto; ognuna ha un'identità creata nel browser"+(pg?" e il database rifiuta la stessa identità due volte (niente doppioni, 201).":"; il programma scarta la stessa identità due volte (201)."),
     pg ? "Il confronto tra le impronte è una ricerca esatta dentro PostgreSQL (pgvector), senza indici approssimati (407). Se le prove dicono che supera il secondo (195), si tiene l'elenco in memoria e si cerca lì; dimensione delle impronte e modello li fissa il ticket «Impronte e server in sede, dopo la prova»."
