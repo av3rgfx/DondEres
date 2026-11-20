@@ -37,3 +37,6 @@ Risultato atteso: il brand kit nel repository, il link qui e la direzione scelta
 - 20/11/2026, ripresa: nome Ripo (386), verifica chiusa per ora (387); si prosegue con il kit.
 - 20/11/2026, fine della sessione: R scelta **Pulito costruito** (396); si fanno i file finali del kit (397). Resta
   aperto e preso in carico; prossimo passo nel prompt H di `docs/prossima-sessione.md`.
+- 20/11/2026, giro 13: kit in `brand/` (`genera.py`): R rifinita, R per i 16 punti, versioni nera, blu, bianca e blu
+  chiaro, icone e manifest, foglio di prova di stampa; confronto con Revolut e le R della raccolta nella pagina. Sei
+  domande di gusto nella pagina; sezione «Giro 13» di `docs/architettura.md`.

@@ -3,13 +3,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@112,600;112,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
 <style>
-/* Layout: i tre concetti affiancati (punto di controllo), poi due domande con l'esempio che cambia.
-   Tono: segnaletica di magazzino, come le altre pagine dei ticket. Il blu elettrico (388) sta solo su icona e testata. */
+/* Layout: il kit in alto (prima e dopo, versioni, tavola d'uso, guida), poi sei domande con l'esempio che cambia.
+   Tono: segnaletica di magazzino, come le altre pagine dei ticket. Il blu elettrico (388) sta solo sul marchio. */
 :root{
   --bg:#f3f5f7; --surface:#ffffff; --fg:#17202b; --muted:#5a6675; --line:#d5dbe2;
   --accent:#1f4e8c; --accent-soft:#e3ebf6; --tag:#f2b705; --tag-fg:#2a2100;
   --ok:#1d7a46; --warn:#9a5200; --warn-soft:#fbeedd;
-  --ink:#141414; --paper:#ffffff; --brand:#1F5BFF; --phone:#0f1720;
+  --ink:#141414; --paper:#ffffff; --brand:#1F5BFF; --phone:#0f1720; --dark:#0f141a; --dark2:#1c1c1e;
   --f-display:"Archivo","Arial Narrow",system-ui,sans-serif;
   --f-body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
   --f-mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
@@ -18,20 +18,22 @@
   --bg:#0f141a; --surface:#18202a; --fg:#e6ebf1; --muted:#9aa7b6; --line:#2c3846;
   --accent:#7fb0ef; --accent-soft:#1d2d42; --tag:#f2b705; --tag-fg:#2a2100;
   --ok:#5fcf8e; --warn:#f0a447; --warn-soft:#3a2a14;
-  --ink:#141414; --paper:#f4f4f2; --phone:#05080c; color-scheme:dark}}
+  --ink:#141414; --paper:#f4f4f2; --phone:#05080c; --dark:#0a0e13; --dark2:#1c1c1e; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#0f141a; --surface:#18202a; --fg:#e6ebf1; --muted:#9aa7b6; --line:#2c3846;
   --accent:#7fb0ef; --accent-soft:#1d2d42; --tag:#f2b705; --tag-fg:#2a2100;
   --ok:#5fcf8e; --warn:#f0a447; --warn-soft:#3a2a14;
-  --ink:#141414; --paper:#f4f4f2; --phone:#05080c; color-scheme:dark}
+  --ink:#141414; --paper:#f4f4f2; --phone:#05080c; --dark:#0a0e13; --dark2:#1c1c1e; color-scheme:dark}
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--fg);font:15px/1.55 var(--f-body);
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 96px}
 .wrap{max-width:1100px;margin:0 auto;display:grid;gap:28px}
-h1,h3{font-family:var(--f-display);font-stretch:112%;text-wrap:balance;margin:0;line-height:1.15}
+h1,h2,h3{font-family:var(--f-display);font-stretch:112%;text-wrap:balance;margin:0;line-height:1.15}
 h1{font-size:clamp(28px,5vw,40px);font-weight:800}
+h2{font-size:22px;font-weight:800}
 h3{font-size:18px;font-weight:600}
 p{margin:0;max-width:68ch}
+code{font:13px var(--f-mono)}
 .eyebrow{font:600 12px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .intro{display:grid;gap:12px}
 .bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
@@ -41,26 +43,33 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,label.opt:focus-
 .status{font-size:13px;color:var(--muted)}
 .status.ok{color:var(--ok)} .status.warn{color:var(--warn)}
 .rec{display:inline-block;margin-left:8px;font:600 11px/1 var(--f-mono);letter-spacing:.05em;text-transform:uppercase;background:var(--tag);color:var(--tag-fg);padding:4px 6px;border-radius:4px;vertical-align:2px}
-.ref{display:flex;gap:16px;align-items:center;flex-wrap:wrap;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px}
-.ref img{width:120px;height:auto;border-radius:8px}
-.ref p{font-size:14px}
 
-.concepts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-@media (max-width:1000px){.concepts{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:520px){.concepts{grid-template-columns:minmax(0,1fr)}}
-.cc{background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:12px;display:grid;gap:10px;align-content:start;min-width:0}
-.cc.sel{border-color:var(--accent)}
-.cc .art{background:var(--paper);color:var(--ink);border-radius:10px;padding:14px;display:grid;gap:12px;justify-items:center}
-.cc .art .big{width:70%;max-width:150px;height:auto}
-.cc .art .wm{width:92%;height:auto}
-.mini{display:flex;align-items:flex-end;gap:10px}
-.mini span{display:grid;justify-items:center;gap:2px;font:10px var(--f-mono);color:#6b7280}
-.mini svg{color:var(--ink)}
-.tile{width:40px;height:40px;border-radius:10px;background:var(--brand);color:#fff;display:grid;place-items:center}
-.tile svg{width:66%;height:66%;color:#fff}
-.cc .hd b{font:800 18px/1.15 var(--f-display);font-stretch:112%}
-.cc p{font-size:13.5px}
-.cc .risk{font-size:12.5px;color:var(--warn);background:var(--warn-soft);border-radius:8px;padding:7px 9px}
+.kit{display:grid;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px}
+.kit > p{color:var(--muted);font-size:14px}
+.pd{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:640px){.pd{grid-template-columns:minmax(0,1fr)}}
+.pd figure{margin:0;background:var(--paper);color:var(--ink);border-radius:10px;padding:14px;display:grid;gap:8px;justify-items:center}
+.pd figure svg{width:min(180px,60%);height:auto}
+.pd figcaption{font:600 11px/1.3 var(--f-mono);letter-spacing:.05em;text-transform:uppercase;color:#4b5563}
+ul.fix{margin:0;padding-left:20px;display:grid;gap:4px;font-size:14px}
+.vers{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+@media (max-width:900px){.vers{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:520px){.vers{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.v{border-radius:10px;padding:12px 10px;display:grid;gap:10px;justify-items:center;border:1px solid var(--line);min-width:0}
+.v .s{width:56px;height:56px} .v .n{width:88%;height:auto}
+.v span{font:600 10.5px/1.25 var(--f-mono);letter-spacing:.04em;text-transform:uppercase;text-align:center}
+.uso{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+@media (max-width:900px){.uso{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.uso{grid-template-columns:minmax(0,1fr)}}
+.guida{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:760px){.guida{grid-template-columns:minmax(0,1fr)}}
+.guida section{border:1px solid var(--line);border-radius:10px;padding:12px;display:grid;gap:6px;align-content:start;min-width:0}
+.guida b{font-weight:600}
+.guida ul{margin:0;padding-left:18px;font-size:14px;display:grid;gap:3px}
+table.col{border-collapse:collapse;font-size:13px;width:100%}
+table.col td{padding:4px 6px;border-top:1px solid var(--line);font-variant-numeric:tabular-nums}
+.sw{display:inline-block;width:14px;height:14px;border-radius:3px;vertical-align:-2px;margin-right:6px;border:1px solid var(--line)}
+.tw{overflow-x:auto}
 
 .q{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:18px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px}
 @media (max-width:760px){.q{grid-template-columns:minmax(0,1fr)}}
@@ -77,21 +86,29 @@ textarea{width:100%;min-height:56px;font:14px/1.4 var(--f-body);border:1px solid
 .notelbl{font-size:13px;color:var(--muted)}
 .ex{background:var(--bg);border:1px dashed var(--line);border-radius:12px;padding:14px;display:grid;gap:12px;align-content:start;min-width:0}
 .ex .cap{font:600 11px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-.ex small{color:var(--muted);font-size:13px;display:block}
-.ctx{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.ex small,.note{color:var(--muted);font-size:13px;display:block}
 .c{background:var(--paper);color:var(--ink);border-radius:10px;padding:10px;display:grid;gap:8px;align-content:space-between;min-height:96px;min-width:0}
 .c .lbl{color:#4b5563;font:600 10.5px/1.2 var(--f-mono);letter-spacing:.04em;text-transform:uppercase}
-.home{display:flex;gap:8px;background:var(--phone);border-radius:10px;padding:8px}
-.app{width:38px;height:38px;border-radius:9px;display:grid;place-items:center;background:#334155;color:#fff}
-.app.me{background:var(--brand)}
-.app svg{width:64%;height:64%}
-.tab{display:flex;align-items:center;gap:6px;background:#e5e7eb;border-radius:6px 6px 0 0;padding:5px 8px;font-size:11px;color:#111}
-.tab svg{width:16px;height:16px;flex:none}
-.hdr{display:flex;align-items:center;gap:10px;background:var(--brand);color:#fff;border-radius:8px;padding:8px 10px;font-size:11.5px;min-width:0}
-.hdr svg{height:24px;width:auto;flex:none}
-.hdr .sp{margin-left:auto;opacity:.85;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.label{border:1px dashed #9ca3af;padding:6px 8px;font:10px/1.4 var(--f-mono);display:grid;gap:4px}
-.label svg{height:20px;width:auto}
+.c.dk{background:var(--dark2);color:#e6ebf1} .c.dk .lbl{color:#9aa7b6}
+.home{display:flex;gap:8px;background:var(--phone);border-radius:10px;padding:8px;flex-wrap:wrap}
+.home.light{background:#dfe5ec}
+.app{width:44px;height:44px;border-radius:10px;display:grid;place-items:center;background:#334155;overflow:hidden}
+.app svg{width:100%;height:100%}
+.tab{display:flex;align-items:center;gap:6px;background:#e5e7eb;border-radius:6px 6px 0 0;padding:5px 8px;font-size:11px;color:#111;min-width:0}
+.tab svg,.tab canvas{width:16px;height:16px;flex:none}
+.hdr{display:flex;align-items:center;gap:10px;border-radius:8px;padding:8px 10px;font-size:11.5px;min-width:0;border:1px solid #e5e7eb}
+.hdr svg{height:26px;width:auto;flex:none}
+.hdr .sp{margin-left:auto;opacity:.8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hdr.dk{background:#121212;border-color:#2c3846;color:#e6ebf1}
+.label{border:1px dashed #9ca3af;padding:6px 8px;font:10px/1.4 var(--f-mono);display:grid;gap:4px;color:#000;background:#fff}
+.doc{border:1px solid #d1d5db;padding:8px;font:10px/1.4 var(--f-body);display:grid;gap:6px;color:#000;background:#fff}
+.doc .r{height:5px;background:#d1d5db;border-radius:2px}
+.row{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end}
+.row .it{display:grid;justify-items:center;gap:4px;font:10px var(--f-mono);color:#6b7280}
+.pix{display:flex;gap:14px;flex-wrap:wrap;align-items:flex-end}
+.pix canvas{image-rendering:pixelated;width:128px;height:128px;border:1px solid #d1d5db;background:#fff}
+.mm{display:flex;gap:16px;align-items:flex-end;flex-wrap:wrap;background:#fff;color:#000;padding:10px;border-radius:8px}
+.mm .it{display:grid;gap:3px;justify-items:start;font:10px var(--f-mono);color:#444}
 ol.steps{margin:0;padding-left:22px;display:grid;gap:6px;font-size:14px}
 ol.steps li.hl{font-weight:600}
 
@@ -101,43 +118,56 @@ ol.steps li.hl{font-weight:600}
 
 <div class="wrap">
   <header class="intro">
-    <div class="eyebrow">Ticket «Brand kit con la skill logo-design» · giro 12 · 20/11/2026</div>
-    <h1>La R costruita</h1>
-    <p>Prima di questo giro ho fatto le due ricerche che hai chiesto (395): un'analisi dei 261 loghi a lettera singola
-      della raccolta della skill e una ricerca sulle fonti dei progettisti. Ecco cosa ne ho tratto, senza abbellimenti.</p>
-    <div class="ref" id="ricerca" style="display:grid;gap:6px;align-items:start">
-      <b>Cosa dicono le ricerche</b>
-      <ul style="margin:0;padding-left:20px;display:grid;gap:4px;font-size:14px">
-        <li><b>Un dettaglio solo, e deve nascere dalla lettera.</b> Nei casi documentati (la H di Clinton, la P di
-          Pinterest, il taglio della T di MIT Technology Review) la lettera è neutra e un elemento fa tutto. Per noi: la
-          gamba, con lo stesso spessore dell'asta.</li>
-        <li><b>Spessore uniforme e fine netta.</b> Una gamba che si assottiglia sembra uno svolazzo: spiega perché la
-          B · Affusolato non funzionava.</li>
-        <li><b>I loghi migliori sono due o tre forme elementari</b> e riempiono il quadrato; le nostre R sembravano lettere
-          di un carattere tipografico.</li>
-        <li><b>Il riquadro non distingue.</b> «Lettera dentro una forma» è la tecnica più comune (108 su 261) e il blu il
-          colore più comune. Le R vanno provate senza fondo.</li>
-        <li><b>R e blu è un territorio già occupato:</b> Revolut usa una R geometrica blu (#1326FD) come icona e nel nome.
-          La nostra gamba deve separarci nettamente.</li>
-        <li><b>Serve una versione per i 16 punti</b>, con vuoti più larghi, e una misura minima di stampa da provare su una
-          termica vera.</li>
-      </ul>
-      <small class="status">File: <code>docs/research/2026-11-20-analisi-libreria-lettera-r.md</code> e
-        <code>docs/research/2026-11-20-loghi-lettera-singola-fonti.md</code>.</small>
-    </div>
+    <div class="eyebrow">Ticket «Brand kit con la skill logo-design» · giro 13 · 20/11/2026</div>
+    <h1>Il kit di Ripo</h1>
+    <p>Ho preparato il kit sulla R che hai scelto (396): rifinitura, R per i 16 punti, versioni a colori, icone, tavola
+      d'uso, guida e confronto con Revolut e con le R della raccolta. Restano sei scelte di gusto, qui sotto. Tutto il
+      kit in alto cambia con le tue risposte.</p>
     <div class="bar"><button class="primary" id="accept-all" type="button">Accetta tutte le consigliate</button>
       <span class="status" id="status">Caricamento delle risposte salvate…</span></div>
   </header>
 
-  <section aria-label="I tre concetti" class="concepts" id="concepts"></section>
+  <section class="kit" aria-labelledby="h-rif">
+    <h2 id="h-rif">Rifinitura: prima e dopo</h2>
+    <p>Le correzioni non cambiano la lettera: la fanno sembrare più uniforme all'occhio.</p>
+    <div class="pd" id="pd"></div>
+    <ul class="fix">
+      <li>Le parti orizzontali dell'occhiello sono più sottili dell'asta e la parte tonda un po' più spessa: così sembrano uguali.</li>
+      <li>La gamba è appena più sottile dell'asta, come le diagonali delle lettere, e resta di spessore costante.</li>
+      <li>La gamba passa sotto il vuoto senza toccarlo; il simbolo è alzato di poco (il centro ottico sta sopra quello geometrico).</li>
+      <li>Le versioni bianca e blu chiaro sono più sottili di un punto: su fondo scuro il chiaro sembra più pesante.</li>
+      <li>Nel nome: anelli di p e o con la stessa correzione, spazi tra le lettere rivisti.</li>
+    </ul>
+  </section>
+
+  <section class="kit" aria-labelledby="h-ver">
+    <h2 id="h-ver">Versioni</h2>
+    <p>Simbolo per le icone, nome per testate e documenti, mai affiancati (391). Nero per le stampe, blu sul chiaro,
+      bianco sul blu e sul nero, blu chiaro sul tema scuro.</p>
+    <div class="vers" id="vers"></div>
+  </section>
+
+  <section class="kit" aria-labelledby="h-uso">
+    <h2 id="h-uso">Tavola d'uso</h2>
+    <p>I posti dove deve reggere (368). Lo script della skill fa una tavola con contesti generici in inglese (badge da
+      evento, sito con un dominio non nostro): questa usa i nostri.</p>
+    <div class="uso" id="uso"></div>
+  </section>
+
+  <section class="kit" aria-labelledby="h-gui">
+    <h2 id="h-gui">Guida di una pagina (bozza)</h2>
+    <p>Dopo le tue risposte diventa <code>brand/guida.md</code>, con i valori scelti.</p>
+    <div class="guida" id="guida"></div>
+  </section>
 
   <section class="q" aria-labelledby="h-q1">
     <div class="ask">
-      <div class="num">DOMANDA 1 · LA R</div>
-      <h3 id="h-q1">Quale R diventa il logo di Ripo?</h3>
-      <p class="why">È la scelta che chiude il disegno: dopo si rifinisce solo quella e si preparano i file del kit.</p>
+      <div class="num">DOMANDA 1 · PESO DEL SIMBOLO</div>
+      <h3 id="h-q1">Quanto deve essere piena la R del simbolo?</h3>
+      <p class="why">Accanto alle altre R la nostra è la più leggera. Più piena regge meglio in piccolo e in stampa e
+        dice «solido» (363); troppo piena chiude il vuoto dell'occhiello. Il nome non cambia.</p>
       <div class="opts" id="q1-opts"></div>
-      <label class="notelbl" for="n-q1">Nota facoltativa (anche «la A, ma con…»)</label>
+      <label class="notelbl" for="n-q1">Nota facoltativa</label>
       <textarea id="n-q1" data-note="q1"></textarea>
     </div>
     <div class="ex" id="ex-q1" aria-live="polite"></div>
@@ -145,15 +175,70 @@ ol.steps li.hl{font-weight:600}
 
   <section class="q" aria-labelledby="h-q2">
     <div class="ask">
-      <div class="num">DOMANDA 2 · IL KIT</div>
-      <h3 id="h-q2">Preparo i file finali sulla R scelta?</h3>
-      <p class="why">Il kit è la parte lunga: versioni, icone, tavola d'uso, guida, più il confronto con Revolut e la R per i 16 punti. Le scelte già fatte valgono: blu
-        elettrico (388), puntino tondo (390), simbolo e nome separati (391).</p>
+      <div class="num">DOMANDA 2 · R PER I 16 PUNTI</div>
+      <h3 id="h-q2">Nella scheda del browser usiamo la R disegnata apposta?</h3>
+      <p class="why">A 16 pixel la R normale rimpicciolita diventa sfocata, perché i bordi cadono a metà dei pixel. La
+        versione apposta è disegnata sulla griglia: asta di 3 pixel, vuoto più grande, gamba un po' più corta. Vale solo
+        per i 16 pixel; da 32 in su si usa la R normale.</p>
       <div class="opts" id="q2-opts"></div>
-      <label class="notelbl" for="n-q2">Nota facoltativa (cosa cambiare, se scegli di rivedere)</label>
+      <label class="notelbl" for="n-q2">Nota facoltativa</label>
       <textarea id="n-q2" data-note="q2"></textarea>
     </div>
     <div class="ex" id="ex-q2" aria-live="polite"></div>
+  </section>
+
+  <section class="q" aria-labelledby="h-q3">
+    <div class="ask">
+      <div class="num">DOMANDA 3 · BLU CHIARO</div>
+      <h3 id="h-q3">Quale blu usiamo sul tema scuro?</h3>
+      <p class="why">Il blu elettrico sul nero ha contrasto 3,5 a 1: troppo poco per un nome che si deve leggere (il minimo
+        è 4,5). Serve un blu più chiaro della stessa tinta. Più chiaro vuol dire più leggibile ma meno «elettrico».</p>
+      <div class="opts" id="q3-opts"></div>
+      <label class="notelbl" for="n-q3">Nota facoltativa</label>
+      <textarea id="n-q3" data-note="q3"></textarea>
+    </div>
+    <div class="ex" id="ex-q3" aria-live="polite"></div>
+  </section>
+
+  <section class="q" aria-labelledby="h-q4">
+    <div class="ask">
+      <div class="num">DOMANDA 4 · ICONA DELL'APP</div>
+      <h3 id="h-q4">Che fondo ha l'icona sul telefono?</h3>
+      <p class="why">È il posto dove il marchio si vede di più: la schermata Home dei telefoni e dei palmari. Il fondo
+        pieno di colore si trova al primo sguardo; il fondo bianco è più sobrio ma si perde tra le altre icone.</p>
+      <div class="opts" id="q4-opts"></div>
+      <label class="notelbl" for="n-q4">Nota facoltativa</label>
+      <textarea id="n-q4" data-note="q4"></textarea>
+    </div>
+    <div class="ex" id="ex-q4" aria-live="polite"></div>
+  </section>
+
+  <section class="q" aria-labelledby="h-q5">
+    <div class="ask">
+      <div class="num">DOMANDA 5 · CONFRONTO</div>
+      <h3 id="h-q5">La R si distingue abbastanza da Revolut e dalle altre R?</h3>
+      <p class="why">R e blu è il territorio di Revolut (ricerca del 20/11/2026). Il confronto è in nero, così conta solo
+        la sagoma. Secondo me sì: la gamba lunga e curva è l'unica del gruppo; Revolut ha la gamba diritta e l'occhiello
+        squadrato. Se a te non basta, la rivedo prima di chiudere.</p>
+      <div class="opts" id="q5-opts"></div>
+      <label class="notelbl" for="n-q5">Nota facoltativa</label>
+      <textarea id="n-q5" data-note="q5"></textarea>
+    </div>
+    <div class="ex" id="ex-q5" aria-live="polite"></div>
+  </section>
+
+  <section class="q" aria-labelledby="h-q6">
+    <div class="ask">
+      <div class="num">DOMANDA 6 · PROVA DI STAMPA</div>
+      <h3 id="h-q6">Chi prova la misura minima su una stampante termica?</h3>
+      <p class="why">A schermo ho controllato che a 203 punti per pollice i vuoti restino aperti; propongo almeno 5 mm di
+        altezza per il simbolo e 15 mm di larghezza per il nome. Solo una stampa vera lo conferma. Preparo un foglio di
+        prova con le misure da 4 a 10 mm e da 12 a 30 mm.</p>
+      <div class="opts" id="q6-opts"></div>
+      <label class="notelbl" for="n-q6">Nota facoltativa (modello della stampante, se lo sai)</label>
+      <textarea id="n-q6" data-note="q6"></textarea>
+    </div>
+    <div class="ex" id="ex-q6" aria-live="polite"></div>
   </section>
 
   <div class="save">
@@ -166,81 +251,155 @@ ol.steps li.hl{font-weight:600}
 </div>
 
 <script>
-const GIRO = "12";
-const D = /*DATI*/{"sym":{"pulito":{"g":"<g transform=\"translate(36 28) scale(1)\">","d":["M0 0 L40 0 L40 200 L0 200 Z","M0 0 L52.8 0 A64 64 0 0 1 52.8 128 L0 128 Z M40 40 L52.8 40 A24 24 0 0 1 52.8 88 L40 88 Z","M22 128  C26.24 128.27 39.43 128.6 47.46 129.62 C55.49 130.65 63.08 132.24 70.18 134.14 C77.28 136.04 83.93 138.43 90.06 141.03 C96.18 143.63 101.84 146.64 106.95 149.76 C112.07 152.89 116.69 156.33 120.75 159.78 C124.81 163.23 128.35 166.91 131.33 170.48 C134.31 174.05 136.73 177.75 138.63 181.21 C140.53 184.67 141.85 188.11 142.74 191.25 C143.64 194.38 143.79 198.54 144 200 L184 200 C183.55 196.77 183.01 186.94 181.31 180.64 C179.62 174.33 177.01 168.12 173.82 162.18 C170.63 156.24 166.68 150.47 162.17 145.01 C157.67 139.55 152.49 134.3 146.79 129.42 C141.08 124.53 134.76 119.9 127.94 115.71 C121.11 111.52 113.71 107.63 105.83 104.27 C97.95 100.91 89.53 97.92 80.67 95.54 C71.81 93.15 62.43 91.22 52.65 89.96 C42.88 88.7 27.11 88.33 22 88 Z"]},"slitta":{"g":"<g transform=\"translate(24 28) scale(1)\">","d":["M0 0 L44 0 L44 200 L0 200 Z","M0 0 L56.8 0 A64 64 0 0 1 56.8 128 L0 128 Z M44 44 L56.8 44 A20 20 0 0 1 56.8 84 L44 84 Z","M24.2 128  C25.81 128.29 30.69 128.56 33.87 129.72 C37.04 130.88 39.96 132.56 43.25 134.97 C46.54 137.38 49.99 140.59 53.59 144.18 C57.18 147.77 60.86 152.14 64.82 156.51 C68.78 160.88 72.76 165.8 77.35 170.41 C81.94 175.02 86.63 180.01 92.36 184.17 C98.09 188.33 104.43 192.73 111.7 195.37 C118.98 198.01 129.63 199.37 136 200 C142.37 200.63 145.52 199.71 149.9 199.17 C154.28 198.63 158.42 197.79 162.3 196.78 C166.18 195.76 169.81 194.46 173.16 193.09 C176.52 191.72 179.6 190.12 182.43 188.57 C185.25 187.03 187.79 185.35 190.12 183.82 C192.46 182.3 194.52 180.75 196.43 179.41 C198.33 178.07 200.01 176.81 201.57 175.75 C203.14 174.69 205.1 173.5 205.8 173.05 L183.8 134.95 C182.61 135.7 178.85 138.02 176.67 139.48 C174.5 140.93 172.58 142.38 170.74 143.68 C168.9 144.98 167.26 146.19 165.62 147.27 C163.99 148.36 162.5 149.31 160.94 150.18 C159.37 151.04 157.91 151.79 156.25 152.47 C154.59 153.15 152.95 153.75 150.98 154.26 C149.01 154.76 146.94 155.22 144.44 155.51 C141.95 155.8 138.77 156.18 136 156 C133.23 155.82 130.65 155.55 127.85 154.44 C125.06 153.33 122.35 151.73 119.23 149.33 C116.12 146.93 112.72 143.66 109.17 140.02 C105.61 136.39 101.92 131.93 97.9 127.49 C93.87 123.05 89.78 118.04 85.02 113.38 C80.26 108.72 75.3 103.68 69.33 99.53 C63.36 95.38 56.7 91.06 49.18 88.47 C41.66 85.88 28.36 84.74 24.2 84 Z"]},"collo":{"g":"<g transform=\"translate(53.52 28) scale(1)\">","d":["M28 0 L120.96 0 A28 28 0 0 1 148.96 28 L148.96 172 A28 28 0 0 1 120.96 200 L28 200 A28 28 0 0 1 0 172 L0 28 A28 28 0 0 1 28 0 Z M32 32 L76.7 32 A43.52 43.52 0 0 1 76.7 119.04 L68 119.04 A48.96 48.96 0 0 1 116.96 168 L80.96 168 A12.96 12.96 0 0 0 68 155.04 L68 168 L32 168 Z M68 68 L76.7 68 A7.52 7.52 0 0 1 76.7 83.04 L68 83.04 Z"]}},"nome":{"pulito":{"vb":"0 0 425 256","d":["M20 56 L46 56 L46 200 L20 200 Z","M20 56 L55.22 56 A46.08 46.08 0 0 1 55.22 148.16 L20 148.16 Z M46 82 L55.22 82 A20.08 20.08 0 0 1 55.22 122.16 L46 122.16 Z","M34.3 148.16  C37.5 148.35 47.42 148.59 53.47 149.32 C59.53 150.06 65.26 151.2 70.62 152.57 C75.98 153.93 81 155.65 85.64 157.52 C90.27 159.39 94.55 161.56 98.42 163.81 C102.29 166.06 105.79 168.54 108.87 171.03 C111.95 173.52 114.63 176.17 116.88 178.74 C119.14 181.32 120.98 183.98 122.42 186.47 C123.86 188.97 124.85 191.45 125.53 193.7 C126.21 195.96 126.32 198.95 126.48 200 L152.48 200 C152.15 197.75 151.75 190.88 150.51 186.48 C149.27 182.09 147.35 177.76 145.02 173.63 C142.69 169.5 139.81 165.49 136.52 161.7 C133.23 157.91 129.46 154.27 125.31 150.88 C121.15 147.49 116.55 144.28 111.57 141.38 C106.6 138.47 101.21 135.78 95.47 133.45 C89.73 131.12 83.59 129.05 77.13 127.39 C70.66 125.74 63.83 124.4 56.69 123.52 C49.55 122.65 38.03 122.39 34.3 122.16 Z","M160.48 104 L182.48 104 L182.48 200 L160.48 200 Z","M157.73 76.25 A13.75 13.75 0 1 1 185.23 76.25 A13.75 13.75 0 1 1 157.73 76.25 Z","M196.48 104 L218.48 104 L218.48 244 L196.48 244 Z","M196.48 152 A49 49 0 1 1 294.48 152 A49 49 0 1 1 196.48 152 Z M218.48 152 A27 27 0 1 0 272.48 152 A27 27 0 1 0 218.48 152 Z","M306.48 152 A49 49 0 1 1 404.48 152 A49 49 0 1 1 306.48 152 Z M328.48 152 A27 27 0 1 0 382.48 152 A27 27 0 1 0 328.48 152 Z"]},"slitta":{"vb":"0 0 442 256","d":["M20 56 L46 56 L46 200 L20 200 Z","M20 56 L55.22 56 A46.08 46.08 0 0 1 55.22 148.16 L20 148.16 Z M46 82 L55.22 82 A20.08 20.08 0 0 1 55.22 122.16 L46 122.16 Z","M34.3 148.16  C35.73 148.4 40.13 148.68 42.88 149.63 C45.63 150.58 48.11 152 50.79 153.87 C53.46 155.74 56.15 158.17 58.92 160.84 C61.7 163.5 64.48 166.68 67.44 169.84 C70.41 172.99 73.36 176.5 76.72 179.75 C80.08 183 83.51 186.48 87.58 189.34 C91.66 192.2 96.11 195.15 101.17 196.93 C106.23 198.7 113.47 199.58 117.92 200 C122.37 200.42 124.73 199.8 127.85 199.43 C130.97 199.07 133.89 198.5 136.64 197.81 C139.39 197.13 141.95 196.25 144.33 195.33 C146.71 194.4 148.9 193.32 150.93 192.26 C152.96 191.2 154.8 190.05 156.51 188.97 C158.21 187.9 159.74 186.8 161.18 185.82 C162.61 184.84 163.9 183.91 165.11 183.1 C166.32 182.29 167.9 181.33 168.46 180.98 L155.46 158.46 C154.64 158.98 152.09 160.54 150.57 161.55 C149.04 162.55 147.67 163.56 146.32 164.49 C144.97 165.41 143.72 166.29 142.45 167.1 C141.18 167.9 139.98 168.64 138.7 169.32 C137.41 170 136.16 170.61 134.75 171.16 C133.34 171.7 131.91 172.2 130.24 172.61 C128.58 173.02 126.82 173.38 124.76 173.62 C122.71 173.85 120.31 174.17 117.92 174 C115.53 173.83 112.88 173.54 110.4 172.62 C107.93 171.7 105.62 170.33 103.08 168.46 C100.54 166.6 97.92 164.13 95.18 161.44 C92.44 158.75 89.66 155.52 86.66 152.32 C83.65 149.13 80.62 145.57 77.14 142.29 C73.67 139.01 70.07 135.51 65.82 132.65 C61.56 129.8 56.88 126.89 51.63 125.15 C46.38 123.4 37.19 122.66 34.3 122.16 Z","M177.76 104 L199.76 104 L199.76 200 L177.76 200 Z","M175.01 76.25 A13.75 13.75 0 1 1 202.51 76.25 A13.75 13.75 0 1 1 175.01 76.25 Z","M213.76 104 L235.76 104 L235.76 244 L213.76 244 Z","M213.76 152 A49 49 0 1 1 311.76 152 A49 49 0 1 1 213.76 152 Z M235.76 152 A27 27 0 1 0 289.76 152 A27 27 0 1 0 235.76 152 Z","M323.76 152 A49 49 0 1 1 421.76 152 A49 49 0 1 1 323.76 152 Z M345.76 152 A27 27 0 1 0 399.76 152 A27 27 0 1 0 345.76 152 Z"]},"collo":{"vb":"0 0 397 256","d":["M40.16 56 L104.57 56 A20.16 20.16 0 0 1 124.73 76.16 L124.73 179.84 A20.16 20.16 0 0 1 104.57 200 L40.16 200 A20.16 20.16 0 0 1 20 179.84 L20 76.16 A20.16 20.16 0 0 1 40.16 56 Z M43.04 79.04 L72.71 79.04 A31.33 31.33 0 0 1 72.71 141.71 L66.44 141.71 A35.25 35.25 0 0 1 101.69 176.96 L78.29 176.96 A11.85 11.85 0 0 0 66.44 165.11 L66.44 176.96 L43.04 176.96 Z M66.44 102.44 L72.71 102.44 A7.93 7.93 0 0 1 72.71 118.31 L66.44 118.31 Z","M132.73 104 L154.73 104 L154.73 200 L132.73 200 Z","M129.98 76.25 A13.75 13.75 0 1 1 157.48 76.25 A13.75 13.75 0 1 1 129.98 76.25 Z","M168.73 104 L190.73 104 L190.73 244 L168.73 244 Z","M168.73 152 A49 49 0 1 1 266.73 152 A49 49 0 1 1 168.73 152 Z M190.73 152 A27 27 0 1 0 244.73 152 A27 27 0 1 0 190.73 152 Z","M278.73 152 A49 49 0 1 1 376.73 152 A49 49 0 1 1 278.73 152 Z M300.73 152 A27 27 0 1 0 354.73 152 A27 27 0 1 0 300.73 152 Z"]}}}/*FINE*/;
-const C = {
- pulito:{L:"A",nome:"Pulito costruito",idea:"Asta e occhiello semplici, vuoto più grande; la gamba lunga ha lo spessore dell'asta, nasce dove l'asta finisce e si posa diritta sulla base.",
-   rischio:"Resta vicina a una R «da carattere»: la distingue solo la gamba. Da confrontare con Revolut."},
- slitta:{L:"B",nome:"Slitta costruita",idea:"La gamba della Slitta che ti piaceva, ma con lo spessore dell'asta dall'inizio alla fine: corre bassa e la punta risale.",
-   rischio:"La punta che risale è un secondo gesto: a 16 punti va semplificata. Più lontana da Revolut."},
- collo:{L:"C",nome:"Collo ritagliato",idea:"Strada radicale: il simbolo è un collo pieno, una scatola vista di fronte, e la R è lo spazio vuoto dentro.",
-   rischio:"È una lettera dentro una forma, la mossa più comune; la differenza è che la R è ritagliata. In piccolo il vuoto dell'occhiello si chiude."}
-};
-const ORD = ["pulito","slitta","collo"];
+const GIRO = "13";
+const D = /*DATI*/{"sym":{"40":{"t":"translate(36 26)","d":["M0 0 L52.8 0 A64 64 0 0 1 52.8 128 L40 128 L40 200 L0 200 Z M40 36 L52.8 36 A22 28 0 0 1 52.8 92 L40 92 Z","M20.29 127.92 C23.64 128.34 33.95 129.41 40.4 130.44 C46.84 131.48 53.04 132.74 58.95 134.15 C64.86 135.56 70.52 137.17 75.88 138.91 C81.23 140.64 86.32 142.55 91.1 144.56 C95.87 146.56 100.37 148.72 104.54 150.94 C108.71 153.17 112.58 155.52 116.13 157.9 C119.67 160.28 122.9 162.75 125.8 165.22 C128.69 167.69 131.26 170.22 133.51 172.7 C135.75 175.17 137.66 177.68 139.26 180.09 C140.87 182.5 142.13 184.89 143.14 187.18 C144.15 189.46 144.84 191.67 145.32 193.81 C145.79 195.95 145.89 198.97 146 200 L184 200 C183.74 197.62 183.45 190.38 182.44 185.71 C181.44 181.05 179.9 176.44 177.99 172.01 C176.08 167.59 173.69 163.29 170.99 159.17 C168.28 155.05 165.17 151.08 161.75 147.27 C158.34 143.47 154.56 139.83 150.5 136.34 C146.43 132.86 142.04 129.54 137.37 126.39 C132.7 123.24 127.72 120.25 122.46 117.44 C117.21 114.63 111.67 111.99 105.86 109.54 C100.05 107.09 93.96 104.82 87.62 102.77 C81.28 100.71 74.66 98.84 67.81 97.2 C60.95 95.56 53.83 94.12 46.48 92.93 C39.13 91.75 27.5 90.55 23.71 90.08 Z"]},"44":{"t":"translate(36 26)","d":["M0 0 L56.8 0 A64 64 0 0 1 56.8 128 L44 128 L44 200 L0 200 Z M44 39.6 L56.8 39.6 A17.8 24.4 0 0 1 56.8 88.4 L44 88.4 Z","M22.27 127.91 C25.48 128.33 35.37 129.38 41.54 130.42 C47.71 131.45 53.65 132.72 59.3 134.13 C64.96 135.54 70.37 137.15 75.49 138.89 C80.61 140.63 85.46 142.55 90.02 144.56 C94.58 146.57 98.86 148.73 102.83 150.96 C106.8 153.19 110.48 155.54 113.85 157.92 C117.22 160.3 120.28 162.77 123.03 165.24 C125.78 167.7 128.21 170.22 130.34 172.7 C132.47 175.17 134.27 177.66 135.8 180.07 C137.32 182.48 138.52 184.86 139.48 187.15 C140.44 189.43 141.09 191.64 141.55 193.79 C142 195.93 142.09 198.96 142.2 200 L184 200 C183.75 197.55 183.46 190.1 182.48 185.3 C181.49 180.49 179.98 175.74 178.1 171.17 C176.23 166.6 173.88 162.15 171.22 157.88 C168.55 153.6 165.48 149.48 162.11 145.53 C158.74 141.58 155.01 137.79 151 134.17 C146.99 130.55 142.65 127.1 138.04 123.83 C133.43 120.55 128.51 117.45 123.33 114.53 C118.15 111.62 112.68 108.88 106.95 106.34 C101.23 103.81 95.23 101.46 88.98 99.33 C82.74 97.2 76.22 95.27 69.48 93.58 C62.73 91.9 55.73 90.42 48.51 89.2 C41.28 87.99 29.86 86.78 26.13 86.29 Z"]},"48":{"t":"translate(36 26)","d":["M0 0 L60.8 0 A64 64 0 0 1 60.8 128 L48 128 L48 200 L0 200 Z M48 43.2 L60.8 43.2 A13.6 20.8 0 0 1 60.8 84.8 L48 84.8 Z","M24.23 127.9 C27.3 128.31 36.75 129.35 42.65 130.38 C48.55 131.42 54.21 132.68 59.61 134.09 C65 135.5 70.16 137.11 75.03 138.85 C79.91 140.59 84.53 142.51 88.86 144.52 C93.2 146.53 97.27 148.7 101.04 150.92 C104.81 153.14 108.3 155.49 111.5 157.87 C114.69 160.25 117.59 162.71 120.2 165.17 C122.8 167.63 125.11 170.15 127.13 172.61 C129.14 175.08 130.85 177.57 132.3 179.98 C133.74 182.38 134.89 184.77 135.8 187.06 C136.71 189.35 137.34 191.58 137.77 193.74 C138.21 195.89 138.3 198.96 138.4 200 L184 200 C183.75 197.49 183.47 189.85 182.51 184.92 C181.55 179.98 180.08 175.09 178.24 170.38 C176.4 165.67 174.1 161.07 171.48 156.65 C168.86 152.23 165.84 147.96 162.52 143.87 C159.2 139.77 155.53 135.83 151.57 132.08 C147.62 128.32 143.33 124.73 138.78 121.34 C134.23 117.94 129.38 114.71 124.27 111.68 C119.16 108.66 113.77 105.81 108.12 103.19 C102.48 100.56 96.56 98.12 90.41 95.92 C84.26 93.72 77.84 91.73 71.2 89.99 C64.56 88.25 57.67 86.72 50.57 85.48 C43.46 84.23 32.24 83 28.57 82.5 Z"]}},"symd":{"40":{"t":"translate(36 26)","d":["M1 1 L52.8 1 A63 63 0 0 1 52.8 127 L39 127 L39 199 L1 199 Z M39 35 L52.8 35 A23 29 0 0 1 52.8 93 L39 93 Z","M20.38 126.93 C23.74 127.35 34.09 128.41 40.56 129.46 C47.02 130.5 53.24 131.76 59.18 133.18 C65.12 134.6 70.8 136.21 76.18 137.95 C81.57 139.7 86.68 141.62 91.49 143.63 C96.29 145.65 100.81 147.82 105.01 150.06 C109.21 152.3 113.11 154.67 116.69 157.07 C120.26 159.47 123.52 161.97 126.45 164.46 C129.37 166.95 131.97 169.51 134.25 172.03 C136.52 174.54 138.46 177.08 140.1 179.54 C141.73 182 143.03 184.44 144.06 186.78 C145.09 189.12 145.8 191.56 146.29 193.6 C146.78 195.63 146.88 198.1 147 199 L183 199 C182.74 196.82 182.45 190.36 181.47 185.92 C180.48 181.49 178.95 176.78 177.07 172.41 C175.18 168.05 172.83 163.8 170.15 159.72 C167.47 155.64 164.39 151.71 161.01 147.94 C157.62 144.17 153.88 140.56 149.85 137.1 C145.81 133.65 141.45 130.35 136.81 127.22 C132.17 124.09 127.22 121.11 121.99 118.32 C116.77 115.53 111.25 112.9 105.47 110.46 C99.69 108.03 93.63 105.76 87.31 103.72 C80.99 101.67 74.4 99.8 67.57 98.17 C60.74 96.54 53.65 95.1 46.32 93.92 C38.99 92.74 27.4 91.55 23.62 91.07 Z"]},"44":{"t":"translate(36 26)","d":["M1 1 L56.8 1 A63 63 0 0 1 56.8 127 L43 127 L43 199 L1 199 Z M43 38.6 L56.8 38.6 A18.8 25.4 0 0 1 56.8 89.4 L43 89.4 Z","M22.36 126.91 C25.58 127.33 35.51 128.39 41.71 129.43 C47.9 130.47 53.86 131.74 59.55 133.16 C65.23 134.58 70.66 136.2 75.81 137.95 C80.96 139.69 85.84 141.62 90.42 143.64 C95.01 145.67 99.32 147.85 103.32 150.09 C107.32 152.33 111.03 154.7 114.43 157.1 C117.83 159.5 120.92 162 123.7 164.49 C126.48 166.98 128.94 169.54 131.1 172.05 C133.26 174.55 135.09 177.09 136.64 179.54 C138.19 181.99 139.42 184.42 140.4 186.77 C141.38 189.11 142.06 191.54 142.53 193.58 C142.99 195.62 143.09 198.1 143.2 199 L183 199 C182.75 196.75 182.47 190.08 181.5 185.5 C180.53 180.93 179.03 176.07 177.18 171.55 C175.33 167.04 173.01 162.63 170.37 158.41 C167.73 154.18 164.69 150.09 161.35 146.18 C158.01 142.26 154.31 138.5 150.33 134.92 C146.35 131.33 142.04 127.89 137.46 124.64 C132.88 121.39 127.99 118.3 122.84 115.4 C117.69 112.51 112.24 109.78 106.55 107.26 C100.85 104.74 94.88 102.39 88.66 100.28 C82.44 98.16 75.95 96.24 69.23 94.55 C62.52 92.87 55.54 91.4 48.34 90.19 C41.14 88.98 29.76 87.77 26.04 87.29 Z"]},"48":{"t":"translate(36 26)","d":["M1 1 L60.8 1 A63 63 0 0 1 60.8 127 L47 127 L47 199 L1 199 Z M47 42.2 L60.8 42.2 A14.6 21.8 0 0 1 60.8 85.8 L47 85.8 Z","M24.32 126.9 C27.41 127.32 36.9 128.36 42.82 129.4 C48.75 130.44 54.44 131.7 59.86 133.12 C65.29 134.54 70.47 136.16 75.37 137.91 C80.27 139.66 84.92 141.59 89.29 143.61 C93.65 145.64 97.75 147.82 101.55 150.06 C105.35 152.3 108.87 154.67 112.1 157.07 C115.32 159.47 118.25 161.96 120.89 164.45 C123.52 166.93 125.86 169.48 127.9 171.98 C129.95 174.49 131.69 177.01 133.16 179.47 C134.63 181.92 135.8 184.35 136.73 186.7 C137.66 189.04 138.31 191.49 138.76 193.54 C139.2 195.59 139.29 198.09 139.4 199 L183 199 C182.76 196.68 182.48 189.82 181.53 185.11 C180.58 180.4 179.13 175.4 177.31 170.75 C175.49 166.09 173.22 161.54 170.62 157.17 C168.03 152.79 165.04 148.56 161.75 144.5 C158.46 140.44 154.81 136.53 150.88 132.8 C146.96 129.08 142.71 125.51 138.19 122.14 C133.67 118.76 128.84 115.55 123.76 112.54 C118.68 109.54 113.31 106.71 107.7 104.09 C102.08 101.48 96.2 99.05 90.07 96.87 C83.95 94.68 77.56 92.69 70.95 90.95 C64.34 89.22 57.47 87.7 50.39 86.46 C43.32 85.22 32.13 83.99 28.48 83.5 Z"]}},"s16":["M2 1 L7 1 A4 4 0 0 1 7 9 L5 9 L5 15 L2 15 Z M5 3 L7 3 A1.5 2 0 0 1 7 7 L5 7 Z","M3.43 10.19 C3.72 10.24 4.63 10.36 5.18 10.49 C5.73 10.61 6.25 10.77 6.73 10.95 C7.21 11.12 7.66 11.32 8.06 11.54 C8.47 11.75 8.84 11.98 9.16 12.22 C9.49 12.46 9.77 12.71 10.01 12.95 C10.24 13.2 10.43 13.45 10.58 13.69 C10.73 13.93 10.83 14.16 10.9 14.38 C10.97 14.6 10.98 14.9 11 15 L14 15 C13.96 14.75 13.91 13.98 13.77 13.5 C13.63 13.02 13.4 12.55 13.14 12.12 C12.87 11.68 12.54 11.27 12.18 10.88 C11.81 10.5 11.39 10.14 10.94 9.8 C10.49 9.47 9.99 9.16 9.46 8.88 C8.93 8.6 8.36 8.35 7.76 8.13 C7.16 7.91 6.52 7.72 5.85 7.57 C5.19 7.41 4.12 7.27 3.77 7.21 Z"],"nome":{"vb":"0 0 429 256","d":["M20 56 L55.18 56 A46.08 46.08 0 0 1 55.18 148.16 L45.96 148.16 L45.96 200 L20 200 Z M45.96 79.36 L55.18 79.36 A18.82 22.72 0 0 1 55.18 124.8 L45.96 124.8 Z","M33.2 148.11 C35.71 148.42 43.43 149.19 48.25 149.93 C53.08 150.68 57.72 151.59 62.16 152.6 C66.59 153.61 70.84 154.76 74.86 156 C78.89 157.25 82.71 158.61 86.3 160.05 C89.9 161.49 93.28 163.04 96.43 164.63 C99.57 166.23 102.49 167.92 105.17 169.63 C107.85 171.34 110.29 173.12 112.49 174.89 C114.68 176.67 116.63 178.5 118.33 180.28 C120.03 182.07 121.48 183.88 122.7 185.63 C123.92 187.37 124.89 189.1 125.65 190.75 C126.42 192.4 126.94 193.99 127.3 195.54 C127.66 197.08 127.73 199.26 127.82 200 L152.48 200 C152.29 198.34 152.07 193.28 151.34 190.03 C150.61 186.78 149.47 183.57 148.08 180.49 C146.68 177.42 144.94 174.43 142.97 171.58 C141 168.72 138.73 165.97 136.24 163.33 C133.76 160.7 131.01 158.17 128.05 155.76 C125.09 153.35 121.89 151.05 118.49 148.87 C115.08 146.68 111.45 144.61 107.62 142.66 C103.79 140.71 99.74 138.87 95.49 137.17 C91.25 135.46 86.8 133.88 82.16 132.45 C77.52 131.01 72.69 129.7 67.67 128.56 C62.65 127.41 57.43 126.4 52.05 125.57 C46.66 124.73 38.14 123.88 35.36 123.55 Z","M164.48 104 L186.48 104 L186.48 200 L164.48 200 Z","M161.73 76.25 A13.75 13.75 0 1 1 189.23 76.25 A13.75 13.75 0 1 1 161.73 76.25 Z","M199.48 104 L221.48 104 L221.48 244 L199.48 244 Z","M199.48 152 A49.5 49.5 0 1 1 298.48 152 A49.5 49.5 0 1 1 199.48 152 Z M221.48 152 A27.5 29.7 0 1 0 276.48 152 A27.5 29.7 0 1 0 221.48 152 Z","M309.48 152 A49.5 49.5 0 1 1 408.48 152 A49.5 49.5 0 1 1 309.48 152 Z M331.48 152 A27.5 29.7 0 1 0 386.48 152 A27.5 29.7 0 1 0 331.48 152 Z"]},"nomed":{"vb":"0 0 429 256","d":["M20.65 56.65 L55.18 56.65 A45.43 45.43 0 0 1 55.18 147.51 L45.31 147.51 L45.31 199.35 L20.65 199.35 Z M45.31 78.71 L55.18 78.71 A19.47 23.37 0 0 1 55.18 125.45 L45.31 125.45 Z","M33.26 147.47 C35.77 147.77 43.51 148.54 48.35 149.29 C53.19 150.04 57.85 150.95 62.3 151.96 C66.75 152.98 71.01 154.13 75.05 155.38 C79.09 156.63 82.94 158 86.55 159.45 C90.16 160.89 93.56 162.45 96.72 164.05 C99.88 165.66 102.83 167.36 105.52 169.08 C108.22 170.8 110.68 172.6 112.9 174.39 C115.11 176.18 117.08 178.03 118.8 179.84 C120.53 181.65 122 183.48 123.24 185.26 C124.48 187.03 125.46 188.79 126.24 190.48 C127.03 192.17 127.56 193.91 127.93 195.39 C128.3 196.87 128.38 198.69 128.47 199.35 L151.83 199.35 C151.64 197.82 151.43 193.27 150.71 190.17 C149.98 187.07 148.87 183.8 147.49 180.76 C146.11 177.72 144.39 174.78 142.44 171.95 C140.48 169.12 138.24 166.39 135.77 163.78 C133.31 161.17 130.58 158.66 127.64 156.27 C124.7 153.87 121.52 151.59 118.13 149.41 C114.75 147.24 111.14 145.18 107.32 143.23 C103.51 141.29 99.48 139.46 95.25 137.77 C91.03 136.07 86.59 134.5 81.97 133.07 C77.35 131.64 72.52 130.33 67.52 129.19 C62.52 128.05 57.32 127.04 51.95 126.21 C46.58 125.38 38.07 124.53 35.3 124.19 Z","M164.48 104 L186.48 104 L186.48 200 L164.48 200 Z","M161.73 76.25 A13.75 13.75 0 1 1 189.23 76.25 A13.75 13.75 0 1 1 161.73 76.25 Z","M199.48 104 L221.48 104 L221.48 244 L199.48 244 Z","M199.48 152 A49.5 49.5 0 1 1 298.48 152 A49.5 49.5 0 1 1 199.48 152 Z M221.48 152 A27.5 29.7 0 1 0 276.48 152 A27.5 29.7 0 1 0 221.48 152 Z","M309.48 152 A49.5 49.5 0 1 1 408.48 152 A49.5 49.5 0 1 1 309.48 152 Z M331.48 152 A27.5 29.7 0 1 0 386.48 152 A27.5 29.7 0 1 0 331.48 152 Z"]},"prima":{"t":"translate(36 28)","d":["M0 0 L40 0 L40 200 L0 200 Z","M0 0 L52.8 0 A64 64 0 0 1 52.8 128 L0 128 Z M40 40 L52.8 40 A24 24 0 0 1 52.8 88 L40 88 Z","M22 128  C26.24 128.27 39.43 128.6 47.46 129.62 C55.49 130.65 63.08 132.24 70.18 134.14 C77.28 136.04 83.93 138.43 90.06 141.03 C96.18 143.63 101.84 146.64 106.95 149.76 C112.07 152.89 116.69 156.33 120.75 159.78 C124.81 163.23 128.35 166.91 131.33 170.48 C134.31 174.05 136.73 177.75 138.63 181.21 C140.53 184.67 141.85 188.11 142.74 191.25 C143.64 194.38 143.79 198.54 144 200 L184 200 C183.55 196.77 183.01 186.94 181.31 180.64 C179.62 174.33 177.01 168.12 173.82 162.18 C170.63 156.24 166.68 150.47 162.17 145.01 C157.67 139.55 152.49 134.3 146.79 129.42 C141.08 124.53 134.76 119.9 127.94 115.71 C121.11 111.52 113.71 107.63 105.83 104.27 C97.95 100.91 89.53 97.92 80.67 95.54 C71.81 93.15 62.43 91.22 52.65 89.96 C42.88 88.7 27.11 88.33 22 88 Z"]}}/*FINE*/;
+const BLU = "#1F5BFF", REV = "#1326FD";
 const Q = {
- q1:[{id:"pulito",l:"A · Pulito costruito",d:"Gamba lunga, piede diritto.",rec:true},
-     {id:"slitta",l:"B · Slitta costruita",d:"Gamba che corre bassa e risale."},
-     {id:"collo",l:"C · Collo ritagliato",d:"La R vuota dentro una scatola."},
-     {id:"rifare",l:"Nessuna delle tre",d:"Scrivi nella nota cosa non va: riparto da lì."}],
- q2:[{id:"si",l:"Sì, prepara i file finali",d:"Con il confronto affiancato con Revolut e la versione per i 16 punti.",rec:true},
-     {id:"rivedi",l:"Prima rivedi ancora la R",d:"Scrivi nella nota cosa cambiare."}]
+ q1:[{id:"40",l:"Com'è (asta 40)",d:"La R scelta nel giro 12, rifinita. La più leggera del gruppo."},
+     {id:"44",l:"Un po' più piena (asta 44)",d:"Più solida in piccolo e in stampa; il vuoto resta aperto.",rec:true},
+     {id:"48",l:"Piena (asta 48)",d:"La più pesante; il vuoto dell'occhiello si stringe."}],
+ q2:[{id:"apposta",l:"Sì, la R per i 16 punti",d:"Più nitida nella scheda del browser.",rec:true},
+     {id:"ridotta",l:"No, la R normale rimpicciolita",d:"Un disegno solo, ma sfocato a 16 pixel."}],
+ q3:[{id:"#5280FF",l:"Blu vivo #5280FF",d:"Il più vicino al blu elettrico; contrasto 5,2 sul nero."},
+     {id:"#668FFF",l:"Blu medio #668FFF",d:"Ancora elettrico, contrasto 6,1: leggibile anche sul grigio scuro.",rec:true},
+     {id:"#7A9EFF",l:"Blu pallido #7A9EFF",d:"Il più leggibile, 7,2; più vicino all'azzurro."}],
+ q4:[{id:"blu",l:"R bianca su blu",d:"Si trova subito tra le altre icone.",rec:true},
+     {id:"bianco",l:"R blu su bianco",d:"Più sobria; sui fondi chiari si perde."},
+     {id:"nero",l:"R bianca su nero",d:"Forte e neutra; il blu resta solo nel programma."}],
+ q5:[{id:"si",l:"Sì, si distingue",d:"Si chiude il disegno.",rec:true},
+     {id:"no",l:"No, rivedi la gamba",d:"Scrivi nella nota cosa ti sembra troppo vicino."}],
+ q6:[{id:"io",l:"La provo io con il foglio di prova",d:"Mi dici la misura più piccola che si legge; la scrivo nella guida.",rec:true},
+     {id:"dopo",l:"Più avanti",d:"La guida tiene 5 mm e 15 mm come proposta da verificare."}]
 };
-let S = {q1:"",q2:"",note:{}};
-try{ const d = JSON.parse(localStorage.getItem("brand-kit-g12")||"null"); if(d) S = Object.assign(S,d); }catch(e){}
+const KEYS = Object.keys(Q);
+let S = {note:{}}; KEYS.forEach(k=>S[k]="");
+try{ const d = JSON.parse(localStorage.getItem("brand-kit-g13")||"null"); if(d) S = Object.assign(S,d); }catch(e){}
 const esc = s => String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const sym = (k,cls,label,px) => { const o=D.sym[k]; return `<svg class="${cls||""}" viewBox="0 0 256 256"${px?` width="${px}" height="${px}"`:""} role="img" aria-label="${esc(label)}">${o.g}${o.d.map(d=>`<path fill="currentColor" fill-rule="evenodd" d="${d}"/>`).join("")}</g></svg>`; };
-const word = (k,cls,label) => { const o=D.nome[k]; return `<svg class="${cls||""}" viewBox="${o.vb}" role="img" aria-label="${esc(label||"Ripo")}">${o.d.map(d=>`<path fill="currentColor" fill-rule="evenodd" d="${d}"/>`).join("")}</svg>`; };
+const rec = k => Q[k].find(o=>o.rec).id;
+const val = k => S[k] || rec(k);                     // l'esempio mostra la consigliata finché non scegli
+const paths = (ds,fill) => ds.map(d=>`<path fill="${fill}" fill-rule="evenodd" d="${d}"/>`).join("");
+function sym(opt){ // opt: {w, fill, dark, bg, scala, r, px, cls, label}
+  const o = (opt.dark ? D.symd : D.sym)[opt.w || val("q1")]; const sc = opt.scala || 1;
+  const back = opt.bg ? `<rect width="256" height="256" rx="${opt.r||0}" fill="${opt.bg}"/>` : "";
+  return `<svg class="${opt.cls||""}" viewBox="0 0 256 256"${opt.px?` width="${opt.px}" height="${opt.px}"`:""} role="img" aria-label="${esc(opt.label||"Ripo")}">${back}<g transform="translate(128 128) scale(${sc}) translate(-128 -128) ${o.t}">${paths(o.d,opt.fill||"currentColor")}</g></svg>`;
+}
+function word(opt){ const o = opt.dark ? D.nomed : D.nome;
+  return `<svg class="${opt.cls||""}" viewBox="${o.vb}" role="img" aria-label="Ripo">${paths(o.d,opt.fill||"currentColor")}</svg>`; }
+function prima(){ const o=D.prima; return `<svg viewBox="0 0 256 256" role="img" aria-label="R del giro 12"><g transform="${o.t}">${paths(o.d,"currentColor")}</g></svg>`; }
+function other(n,px){ const o=(D.altri||{})[n]; if(!o) return `<svg viewBox="0 0 24 24" width="${px}" height="${px}" role="img" aria-label="${n}, solo nella pagina pubblicata"><rect x="1" y="1" width="22" height="22" fill="none" stroke="#9ca3af" stroke-dasharray="2 2"/></svg>`; return `<svg viewBox="${o.vb}" width="${px}" height="${px}" role="img" aria-label="${n}" preserveAspectRatio="xMidYMid meet">${paths(o.d,"#000")}</svg>`; }
+function tight(px,fill){ // la nostra R senza margine, per confrontarla alla pari con le altre
+  const o=D.sym[val("q1")]; const m=o.t.match(/translate\(([-\d.]+) ([-\d.]+)\)/);
+  return `<svg viewBox="${+m[1]} ${+m[2]} 186 200" width="${px}" height="${px}" role="img" aria-label="Ripo" preserveAspectRatio="xMidYMid meet"><g transform="${o.t}">${paths(o.d,fill)}</g></svg>`;
+}
+function tile(kind, px, r){ const t={blu:[BLU,"#fff",true],bianco:["#fff",BLU,false],nero:["#000","#fff",true]}[kind];
+  return sym({fill:t[1],dark:t[2],bg:t[0],scala:0.72,r:r??57.6,px}); }
+const fav16 = (mode) => `<canvas width="16" height="16" data-f16="${mode}" role="img" aria-label="Icona a 16 pixel"></canvas>`;
+function drawCanvases(){
+  document.querySelectorAll("canvas[data-f16]").forEach(cv=>{
+    const mode=cv.dataset.f16, ctx=cv.getContext("2d");
+    const svg = mode==="apposta"
+      ? `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">${paths(D.s16,BLU)}</svg>`
+      : sym({fill:BLU,scala:1.12,px:16}).replace("<svg ",'<svg xmlns="http://www.w3.org/2000/svg" ');
+    const img=new Image(); img.onload=()=>{ ctx.clearRect(0,0,16,16); ctx.drawImage(img,0,0,16,16); };
+    img.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg);
+  });
+}
+function L(h){ const c=[1,3,5].map(i=>parseInt(h.slice(i,i+2),16)/255).map(x=>x<=.04045?x/12.92:((x+.055)/1.055)**2.4); return .2126*c[0]+.7152*c[1]+.0722*c[2]; }
+const cr=(a,b)=>{const x=L(a),y=L(b); return ((Math.max(x,y)+.05)/(Math.min(x,y)+.05)).toFixed(1).replace(".",",");};
+
+function kit(){
+  const bc = val("q3");
+  document.getElementById("pd").innerHTML = `<figure>${prima()}<figcaption>Giro 12</figcaption></figure>
+    <figure>${sym({})}<figcaption>Ora · asta ${val("q1")}</figcaption></figure>`;
+  const V = [["Nero su bianco","#fff","#000",false],["Blu su bianco","#fff",BLU,false],["Bianco su blu",BLU,"#fff",true],
+             ["Bianco su nero","#000","#fff",true],["Blu chiaro su scuro","#121212",bc,true]];
+  document.getElementById("vers").innerHTML = V.map(([n,bg,fg,dk])=>`<div class="v" style="background:${bg};color:${fg};border-color:${bg==="#fff"?"#d5dbe2":bg}">
+     ${sym({cls:"s",fill:fg,dark:dk})}${word({cls:"n",fill:fg,dark:dk})}<span>${n}</span></div>`).join("");
+  const f16 = val("q2"), ic = val("q4");
+  document.getElementById("uso").innerHTML = `
+    <div class="c"><div class="home">${["","","",""].map((_,i)=>i===1?`<div class="app">${tile(ic,44,57.6)}</div>`:`<div class="app"></div>`).join("")}</div><span class="lbl">Icona sul telefono</span></div>
+    <div class="c"><div class="tab">${fav16(f16)}Ripo · Ricevimento</div><span class="lbl">Scheda del browser, 16 px reali</span></div>
+    <div class="c"><div class="hdr">${word({fill:BLU})}<span class="sp">Prelievo · Ordine 2291</span></div><span class="lbl">Testata chiara</span></div>
+    <div class="c dk"><div class="hdr dk">${word({fill:bc,dark:true})}<span class="sp">Ricevimento · DDT 418</span></div><span class="lbl">Testata, tema scuro</span></div>
+    <div class="c"><div class="label">${word({fill:"#000"}).replace("<svg ",'<svg style="height:20px;width:auto" ')}<span>UBIC. A-03-2 · DDT 418 · 12 colli</span></div><span class="lbl">Etichetta termica, nero</span></div>
+    <div class="c"><div class="doc">${word({fill:"#000"}).replace("<svg ",'<svg style="height:18px;width:auto" ')}<b>Documento di trasporto 418</b><div class="r"></div><div class="r" style="width:70%"></div></div><span class="lbl">Documento in bianco e nero</span></div>`;
+  const mins = S.q6==="io" ? "5 mm (da confermare con la prova)" : "5 mm (proposta, da provare)";
+  document.getElementById("guida").innerHTML = `
+    <section><b>1 · Il logo</b><ul><li>Simbolo: la R con la gamba lunga, per icone e spazi quadrati.</li><li>Nome: «Ripo», per testate e documenti.</li><li>Mai affiancati, mai la R ricomposta con un carattere qualsiasi.</li></ul></section>
+    <section><b>2 · Spazio libero</b><ul><li>Intorno a simbolo e nome, almeno la larghezza dell'asta della R, su tutti i lati.</li><li>Lo spazio cresce con il logo: niente misure fisse.</li></ul></section>
+    <section><b>3 · Misure minime</b><ul><li>Simbolo: 16 px a schermo${f16==="apposta"?" (con la R per i 16 punti)":""}; ${mins} in stampa.</li><li>Nome: 72 px di larghezza a schermo; 15 mm in stampa.</li></ul></section>
+    <section><b>4 · Colori</b><div class="tw"><table class="col"><tbody>
+      <tr><td><span class="sw" style="background:${BLU}"></span>Blu elettrico</td><td>${BLU}</td><td>RGB 31 91 255</td><td>${cr(BLU,"#FFFFFF")} sul bianco</td></tr>
+      <tr><td><span class="sw" style="background:${bc}"></span>Blu chiaro</td><td>${bc}</td><td>tema scuro</td><td>${cr(bc,"#121212")} sul nero</td></tr>
+      <tr><td><span class="sw" style="background:#000"></span>Nero</td><td>#000000</td><td>stampe</td><td></td></tr>
+      <tr><td><span class="sw" style="background:#fff"></span>Bianco</td><td>#FFFFFF</td><td>su blu e nero</td><td></td></tr></tbody></table></div>
+      <small class="note">CMYK e Pantone non servono ora: le stampe sono in bianco e nero (368).</small></section>
+    <section><b>5 · Fondi ammessi</b><ul><li>Blu o nero su bianco; bianco su blu o su nero; blu chiaro sul tema scuro.</li><li>Su foto o fondi mossi: solo dentro l'icona.</li></ul></section>
+    <section><b>6 · Da non fare</b><ul><li>Niente deformazioni, rotazioni, ombre, contorni, sfumature o effetti.</li><li>Niente colori fuori da questi quattro; niente rosso, verde o giallo (367).</li></ul></section>`;
+  drawCanvases();
+}
+
+function examples(){
+  const w = val("q1");
+  document.getElementById("ex-q1").innerHTML = `<div class="cap">Asta ${w} accanto alle altre R, in nero</div>
+    <div class="c"><div class="row">${[40,44,48].map(x=>`<div class="it">${sym({w:x,px:64,fill:x===+w?"#000":"#9ca3af"})}${x}</div>`).join("")}</div><span class="lbl">Le tre versioni</span></div>
+    <div class="c"><div class="row"><div class="it">${tight(48,"#000")}Ripo</div>${["Revolut","Rakuten","Remix","Riot","Rax"].map(n=>`<div class="it">${other(n,48)}${n}</div>`).join("")}</div>
+    <div class="row"><div class="it">${tight(20,"#000")}</div>${["Revolut","Rakuten","Remix","Riot","Rax"].map(n=>`<div class="it">${other(n,20)}</div>`).join("")}</div><span class="lbl">A 48 e a 20 pixel</span></div>`;
+  const m = val("q2");
+  document.getElementById("ex-q2").innerHTML = `<div class="cap">I 16 pixel ingranditi</div>
+    <div class="c"><div class="pix"><div class="it">${fav16("apposta")}<small>Apposta${m==="apposta"?" · scelta":""}</small></div><div class="it">${fav16("ridotta")}<small>Rimpicciolita${m==="ridotta"?" · scelta":""}</small></div></div><span class="lbl">Ogni quadretto è un pixel</span></div>
+    <div class="c"><div class="tab">${fav16(m)}Ripo · Ricevimento</div><span class="lbl">Misura vera</span></div>`;
+  const b = val("q3");
+  document.getElementById("ex-q3").innerHTML = `<div class="cap">${b} sul tema scuro</div>
+    <div class="c dk"><div class="hdr dk">${word({fill:b,dark:true})}<span class="sp">Ricevimento · DDT 418</span></div><span class="lbl">Sul nero: ${cr(b,"#121212")} a 1</span></div>
+    <div class="c dk" style="background:#1c1c1e"><div class="row">${sym({fill:b,dark:true,px:56})}${word({fill:b,dark:true}).replace("<svg ",'<svg style="height:40px;width:auto" ')}</div><span class="lbl">Sul grigio scuro: ${cr(b,"#1C1C1E")} a 1</span></div>
+    <div class="c dk"><div class="row">${["#1F5BFF","#5280FF","#668FFF","#7A9EFF"].map(c=>`<div class="it" style="color:#9aa7b6">${sym({fill:c,dark:true,px:40})}${c===BLU?"elettrico":c}</div>`).join("")}</div><span class="lbl">Il blu elettrico a sinistra, per confronto</span></div>`;
+  const k = val("q4");
+  const grid = cls => `<div class="home ${cls}">${[0,1,2,3,4].map(i=>i===2?`<div class="app">${tile(k,44,57.6)}</div>`:`<div class="app" style="background:${["#f97316","#334155","","#10b981","#64748b"][i]}"></div>`).join("")}</div>`;
+  document.getElementById("ex-q4").innerHTML = `<div class="cap">${esc(Q.q4.find(o=>o.id===k).l)}</div>
+    <div class="c">${grid("")}<span class="lbl">Schermata Home scura</span></div>
+    <div class="c">${grid("light")}<span class="lbl">Schermata Home chiara</span></div>
+    <div class="c"><div class="row">${[180,96,48].map(px=>`<div class="it">${tile(k,px*0.6)}${px}</div>`).join("")}</div><span class="lbl">Icona a varie misure (ridotte qui)</span></div>`;
+  document.getElementById("ex-q5").innerHTML = `<div class="cap">In nero, alla stessa altezza</div>
+    <div class="c"><div class="row"><div class="it">${tight(72,"#000")}Ripo</div><div class="it">${other("Revolut",72)}Revolut</div><div class="it">${other("Rakuten",72)}Rakuten</div></div>
+      <div class="row">${[32,24,16].map(px=>`<div class="it">${tight(px,"#000")}</div><div class="it">${other("Revolut",px)}</div>`).join("")}</div><span class="lbl">Ripo e Revolut a 32, 24 e 16 pixel</span></div>
+    <div class="c"><div class="row"><div class="it">${tight(64,BLU)}#1F5BFF</div><div class="it">${D.altri&&D.altri.Revolut?`<svg viewBox="${D.altri.Revolut.vb}" width="64" height="64" role="img" aria-label="Revolut">${paths(D.altri.Revolut.d,REV)}</svg>`:other("Revolut",64)}#1326FD</div></div><span class="lbl">Nel colore: il nostro blu e quello di Revolut</span></div>
+    <small>Le R di Revolut e Rakuten sono da Simple Icons; Remix, Riot e Rax dalla raccolta della skill. Sono marchi dei loro proprietari: stanno qui solo per il confronto e non entrano nel repository.</small>`;
+  const p = val("q6");
+  document.getElementById("ex-q6").innerHTML = `<div class="cap">Le misure del foglio di prova (a schermo sono indicative)</div>
+    <div class="mm">${[4,5,6,8,10].map(mm=>`<div class="it">${sym({fill:"#000"}).replace("<svg ",`<svg style="height:${mm*1.28}mm;width:auto" `)}${mm} mm</div>`).join("")}</div>
+    <div class="mm">${[12,15,20,30].map(mm=>`<div class="it">${word({fill:"#000"}).replace("<svg ",`<svg style="width:${mm}mm;height:auto" `)}${mm} mm</div>`).join("")}</div>
+    <ol class="steps">${(p==="io"?[["Stampi brand/prova-stampa.svg sulla termica",1],["Mi dici la misura più piccola che si legge bene",1],["La scrivo nella guida",0]]:[["La guida tiene 5 mm e 15 mm come proposta",1],["La prova resta tra le cose da fare",0]]).map(([t,h])=>`<li class="${h?"hl":""}">${esc(t)}</li>`).join("")}</ol>`;
+  drawCanvases();
+}
+
 const opts = (name,list,cur) => list.map(o=>`<label class="opt"><input type="radio" name="${name}" value="${o.id}" ${cur===o.id?"checked":""}>
   <span><b>${esc(o.l)}</b>${o.rec?'<span class="rec">Consigliata</span>':""}<span class="d">${esc(o.d)}</span></span></label>`).join("");
-const lab = (list,id) => (list.find(o=>o.id===id)||{l:"da scegliere"}).l;
-
-function concepts(){
-  document.getElementById("concepts").innerHTML = ORD.map(k=>{ const c=C[k]; return `
-   <article class="cc ${S.q1===k?"sel":""}" aria-labelledby="cc-${k}">
-     <div class="art">${sym(k,"big","Simbolo "+c.L)}${word(k,"wm","Ripo, concetto "+c.L)}
-       <div class="mini"><span class="tile">${sym(k,"","Icona blu")}</span>${[32,16].map(px=>`<span>${sym(k,"",px+" punti",px)}${px}px</span>`).join("")}</div></div>
-     <div class="hd"><b id="cc-${k}">${c.L} · ${esc(c.nome)}</b>${k==="pulito"?'<span class="rec">Consigliata</span>':""}</div>
-     <p>${esc(c.idea)}</p>
-     <div class="risk"><b>Rischio:</b> ${esc(c.rischio)}</div>
-   </article>`; }).join("");
-}
-function refresh(){
-  concepts();
-  const k = ORD.includes(S.q1) ? S.q1 : null;
-  document.getElementById("ex-q1").innerHTML = !k ? `<div class="cap">Dove si vedrà</div><small>${S.q1==="rifare"?"Riparto dalla tua nota.":"Scegli una R per vederla al lavoro."}</small>`
-   : `<div class="cap">${esc(C[k].L+" · "+C[k].nome)} al lavoro</div>
-   <div class="ctx">
-     <div class="c"><div class="home"><div class="app me">${sym(k,"","Icona")}</div><div class="app"></div><div class="app"></div><div class="app"></div></div><span class="lbl">Icona sul telefono</span></div>
-     <div class="c"><div class="tab">${sym(k,"","Icona")}Ripo · Ricevimento</div><span class="lbl">Scheda del browser, 16 punti</span></div>
-     <div class="c"><div class="hdr">${word(k,"","Ripo")}<span class="sp">Prelievo · Ordine 2291</span></div><span class="lbl">Testata</span></div>
-     <div class="c"><div class="label">${word(k,"","Ripo")}<span>UBIC. A-03-2 · DDT 418</span></div><span class="lbl">Etichetta termica</span></div>
-   </div>`;
-  const st = S.q2==="rivedi" ? [["La R scelta rifatta con la tua nota",1],["Di nuovo questa pagina",0],["Poi i file del kit",0]]
-    : [["Rifinitura della R scelta: correzioni ottiche e versione per le misure piccole",S.q2==="si"?1:0],["Variante chiara del blu per il tema scuro",0],["File: nero, bianco, blu; icone del telefono e della scheda del browser",0],["Tavola d'uso e guida di una pagina",0],["Riepilogo da confermare",0]];
-  document.getElementById("ex-q2").innerHTML = `<div class="cap">I prossimi passi</div><ol class="steps">${st.map(([t,h])=>`<li class="${h?"hl":""}">${esc(t)}</li>`).join("")}</ol>`;
-  document.getElementById("copybox").textContent = asText();
-}
-function render(){ for(const k of ["q1","q2"]){ document.getElementById(k+"-opts").innerHTML = opts(k,Q[k],S[k]); document.getElementById("n-"+k).value = S.note[k]||""; } refresh(); }
+const lab = (k) => (Q[k].find(o=>o.id===S[k])||{l:"da scegliere"}).l;
+function refresh(){ kit(); examples(); document.getElementById("copybox").textContent = asText(); }
+function render(){ for(const k of KEYS){ document.getElementById(k+"-opts").innerHTML = opts(k,Q[k],S[k]); document.getElementById("n-"+k).value = S.note[k]||""; } refresh(); }
 function asText(){ const n = k => S.note[k] ? " — nota: "+S.note[k] : "";
-  return ["Brand kit Ripo – giro 12","1. La R: "+lab(Q.q1,S.q1)+n("q1"),"2. Kit: "+lab(Q.q2,S.q2)+n("q2")].join("\n"); }
+  const T = {q1:"Peso del simbolo",q2:"R per i 16 punti",q3:"Blu chiaro",q4:"Icona dell'app",q5:"Confronto",q6:"Prova di stampa"};
+  return ["Brand kit Ripo – giro 13"].concat(KEYS.map((k,i)=>`${i+1}. ${T[k]}: ${lab(k)}${n(k)}`)).join("\n"); }
 
 let db=null,timer=null,saving=false,pending=false;
 function setStatus(t,cls){ ["status","status2"].forEach(id=>{const el=document.getElementById(id); el.textContent=t; el.className="status "+(cls||"");}); }
-function local(){ try{ localStorage.setItem("brand-kit-g12", JSON.stringify(S)); }catch(e){} }
+function local(){ try{ localStorage.setItem("brand-kit-g13", JSON.stringify(S)); }catch(e){} }
 function changed(){ local(); refresh(); clearTimeout(timer); timer=setTimeout(save,900); setStatus(db?"Modifiche da salvare…":"Salvate solo su questo dispositivo", db?"":"warn"); }
 async function save(){
   clearTimeout(timer);
   if(!db){ setStatus("Salvataggio non disponibile qui: usa «Copia le risposte» e incollale in chat","warn"); document.getElementById("copybox").hidden=false; return; }
   if(saving){ pending=true; return; }
   saving=true;
-  try{ await db.doc("giri/"+GIRO).set({q1:S.q1,q2:S.q2,note:S.note,testo:asText(),aggiornato:new Date().toISOString()});
+  const doc={note:S.note,testo:asText(),aggiornato:new Date().toISOString()}; KEYS.forEach(k=>doc[k]=S[k]);
+  try{ await db.doc("giri/"+GIRO).set(doc);
     setStatus("Salvate alle "+new Date().toLocaleTimeString("it-IT",{hour:"2-digit",minute:"2-digit"}),"ok");
   }catch(e){ setStatus("Non salvate ("+(e&&e.code||"errore")+"). Riprova con «Salva adesso» o copia le risposte.","warn"); document.getElementById("copybox").hidden=false; }
   saving=false; if(pending){ pending=false; save(); }
 }
-document.addEventListener("change", e=>{ const t=e.target; if(["q1","q2"].includes(t.name)){ S[t.name]=t.value; changed(); } });
+document.addEventListener("change", e=>{ const t=e.target; if(KEYS.includes(t.name)){ S[t.name]=t.value; changed(); } });
 document.addEventListener("input", e=>{ const t=e.target; if(t.dataset && t.dataset.note){ S.note[t.dataset.note]=t.value; changed(); } });
-document.getElementById("accept-all").addEventListener("click",()=>{ for(const k of ["q1","q2"]) S[k]=Q[k].find(o=>o.rec).id; render(); changed(); });
+document.getElementById("accept-all").addEventListener("click",()=>{ for(const k of KEYS) S[k]=rec(k); render(); changed(); });
 document.getElementById("save").addEventListener("click", save);
 document.getElementById("copy").addEventListener("click", async()=>{
   const box=document.getElementById("copybox"); box.hidden=false;
@@ -255,7 +414,7 @@ render();
   if(!db){ setStatus("Salvataggio non disponibile qui: le risposte restano su questo dispositivo. Usa «Copia le risposte».","warn"); return; }
   const to=setTimeout(()=>setStatus("Le risposte salvate non arrivano: puoi continuare, si salvano alla prossima modifica.","warn"),10000);
   try{ const snap=await db.doc("giri/"+GIRO).get(); clearTimeout(to);
-    if(snap.exists){ const d=snap.data(); S.q1=d.q1||""; S.q2=d.q2||""; S.note=d.note||{}; render(); setStatus("Risposte salvate caricate","ok"); }
+    if(snap.exists){ const d=snap.data(); KEYS.forEach(k=>S[k]=d[k]||""); S.note=d.note||{}; render(); setStatus("Risposte salvate caricate","ok"); }
     else setStatus("Nessuna risposta salvata finora: le tue si salvano da sole","");
   }catch(e){ clearTimeout(to); setStatus("Non riesco a leggere le risposte salvate: le tue si salvano comunque alla prossima modifica.","warn"); }
 })();
