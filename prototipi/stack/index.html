@@ -345,13 +345,15 @@ function deduzioni(){
     pg ? "Il confronto tra le impronte è una ricerca esatta dentro PostgreSQL (pgvector), senza indici approssimati (407). Se le prove dicono che supera il secondo (195), si tiene l'elenco in memoria e si cerca lì; dimensione delle impronte e modello li fissa il ticket «Impronte e server in sede, dopo la prova»."
        : "Il confronto tra le impronte si fa su un elenco in memoria, ricaricato quando cambia un articolo; dimensione delle impronte e modello li fissa il ticket «Impronte e server in sede, dopo la prova».",
     "Codice stampato, quantità scritta e (dopo la prova) modello visivo girano in un processo a parte sul server, «riconoscimento»: il programma resta leggero e il ticket «Impronte e server in sede, dopo la prova» lo può cambiare senza toccare il resto.",
-    "I lavori a intervalli (scambio ogni 5 minuti, Shopify, mail dei resi, pulizia delle foto dei 30 giorni, controllo degli aggiornamenti) girano in un processo «lavori» con la coda nel database: niente programmi in più.",
-    "Certificato: Caddy davanti al programma fa sia il certificato del dominio con la sfida DNS sia quello interno (123), e parla HTTP/2, che serve al canale aperto con molte schede.",
+    "I lavori a intervalli (scambio ogni 5 minuti, Shopify, mail dei resi, pulizia delle foto dei 30 giorni, controllo degli aggiornamenti) girano in un processo «lavori» con la coda nel database: niente programmi in più. I «Tasks» di Django da soli non eseguono i lavori: serve una libreria per la coda (Procrastinate o django-tasks-db), da scegliere quando si scrive il primo lavoro.",
+    "Certificato: Caddy davanti al programma fa sia il certificato del dominio con la sfida DNS sia quello interno (123), e parla HTTP/2, che serve al canale aperto (con HTTP/1.1 il browser ne tiene al massimo 6 per indirizzo). Per i domini su Aruba o Register.it, che non hanno un collegamento con Caddy, si delega la sola voce della sfida (_acme-challenge) a un gestore DNS che ce l'ha, come Cloudflare o OVH. Dal 2027 Let's Encrypt accorcia i certificati a 64 e poi 45 giorni: il rinnovo da solo diventa indispensabile.",
+    "Versioni di partenza (ricerca del 20/11/2026): Django 6 (con la 6.2, a lunga durata, da aprile 2027), PostgreSQL 18 (la 19 è appena uscita e pgvector non la dichiara ancora), htmx 2 (la 4 diventa quella di serie nel 2027: un passaggio da mettere in conto).",
+    "Le operazioni in attesa partono appena torna la rete: la cancellazione di Safari dopo 7 giorni senza uso non le tocca. Se il browser non dà la memoria persistente, la regola della 127 resta: se si perde, il programma lo dice.",
     "PDF dei documenti e delle etichette (415): dalle stesse pagine HTML del programma, con una libreria che trasforma l'HTML in PDF.",
     "Moduli"+(py?" in Python, come la base":"")+": ogni punto d'aggancio è un'interfaccia scritta con il suo numero di versione; il modulo dichiara quale versione usa e l'aggiornatore lo controlla prima di installare (307).",
     "Shopify e scambio a file: con le librerie di base del linguaggio, senza kit esterni.",
     "Prove automatiche: quelle del linguaggio sul server e Playwright (già nel progetto) per le schermate.",
-    "Invio delle mail dalla casella del responsabile (223, 311): si sceglie nel prossimo giro, perché Microsoft 365 e Google chiedono un permesso apposta."
+    "Invio delle mail dalla casella del responsabile (223, 311): si sceglie nel prossimo giro. Microsoft 365 spegne l'accesso con la sola password a fine dicembre 2026 e Google l'ha già spento: serve un permesso apposta."
   ];
   document.getElementById("deduzioni").innerHTML = L.map(t=>`<li>${esc(t)}</li>`).join("");
 }
