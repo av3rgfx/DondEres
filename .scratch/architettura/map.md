@@ -27,10 +27,9 @@ percorso delle schermate e aspetto grafico, compresi nome e brand kit (decisioni
   mobile-native, accessibility-audit (obiettivo WCAG 2.2 AA), emil-design-eng.
 - La decisione 12 porta l'esecuzione dentro la mappa: la prova visiva è un ticket di tipo task, con le foto reali
   fornite dall'utente. Prima di raccoglierle, chiedere all'utente dove conservarle e se possono stare nel repository.
-- Le decisioni 13 (stack) e 14 (grafica) sono le ultime della mappa: dipendono da app nativa o web, rete assente
-  (decisione 23) e divisione tra le macchine. Dal 20/11/2026 non aspettano più la prova visiva (405): ciò che dipende
-  dai suoi numeri sta nel ticket «Impronte e server in sede, dopo la prova». Le scelte di aspetto sono di gusto, spettano
-  all'utente e si fanno con prototipi da guardare. Una sola direzione visiva, registrata in `docs/decisioni.md`.
+- La decisione 13 (stack) è chiusa il 20/11/2026 (422–437); la 14 (grafica) è l'ultima della mappa e non aspetta più
+  nessun ticket. Ciò che dipende dai numeri della prova visiva sta nel ticket «Impronte e server in sede, dopo la
+  prova» (405). Le scelte di aspetto sono di gusto, spettano all'utente e si fanno con prototipi da guardare. Una sola direzione visiva, registrata in `docs/decisioni.md`.
 - Anche nome e brand kit sono scelte di gusto dell'utente (decisione 20). La skill logo-design si installa nel
   progetto, in `.claude/skills` e `.agents/skills` uguali, dopo averne letto il contenuto; mai a livello globale.
 - Due magazzini reali fanno da banco di prova per la base, senza diventarne la specializzazione: UFP affianca due
@@ -139,6 +138,10 @@ tre livelli di conferma, quantità letta dalla scatola, ubicazioni facoltative, 
   ferma, scatto da solo, grilletto senza foto; schermi condivisi aggiornati da soli; fascia «Senza rete» dopo 3 secondi
   con l'operazione in attesa a nome di chi l'ha fatta; altre foto 30 giorni, fuori dalle copie; stampa dal browser
   (decisioni 406–421).
+- [Stack](issues/15-stack.md): Python 3.14 e Django 6.1, PostgreSQL 18 con pgvector, foto in cartelle; pagine dal
+  server con htmx 4 e piccoli componenti; avvisi dal server senza Redis; barcode del browser o zxing-cpp; contenitori
+  Docker Compose, aggiornamenti da internet, moduli nella base; posta con il permesso dell'amministratore; pagina di
+  prova dei dispositivi come ticket nuovo; Ripo nel codice da ora (decisioni 422–437).
 
 ## Not yet specified
 
@@ -147,7 +150,10 @@ tre livelli di conferma, quantità letta dalla scatola, ubicazioni facoltative, 
 - **Installazione e configurazione iniziale in un magazzino nuovo:** procedura guidata (dove si sceglie se usare le
   ubicazioni, decisione 26, e dominio o certificato interno, 123), rinnovo del certificato, aggiornamenti (chi segna
   quelli obbligatori, ritorno alla versione precedente se il programma non riparte, 125), copie di sicurezza e
-  ripristino (dove vanno le copie; senza le foto dei 30 giorni, 419).
+  ripristino (dove vanno le copie; senza le foto dei 30 giorni, 419). Dallo stack (422–437): contenitori Docker Compose,
+  aggiornatore da scrivere (Watchtower è archiviato) che scarica da internet, copia con il database più le cartelle
+  «riferimento» e «bolle», permesso della posta dall'amministratore (435) e posta dei due magazzini da chiedere (436),
+  delega della voce della sfida del certificato per i domini su Aruba o Register.it.
 - **Catalogo visivo per la vendita assistita** (idea dell'utente, decisioni 78 e 86; «banco» diventa «vendita assistita», 178): cercare un articolo e vederne
   disponibilità, prezzo, giacenza e ubicazione, anche quando il cliente non sa bene cosa vuole. Tocca identificazione e
   schermate.
@@ -161,8 +167,6 @@ tre livelli di conferma, quantità letta dalla scatola, ubicazioni facoltative, 
   banco e ha più casi particolari da controllare.
 - **Descrizione proposta da un modello che legge immagini e scrive testo** per l'articolo nuovo: se tenerla, e quale
   modello, dipende dalla prova e dal server. Oggi la scrive l'operatore con le parole lette sull'etichetta (108).
-- **Cambio del nome provvisorio DondEres:** dove compare (repository, documenti, pagine) e quando sostituirlo con il
-  nome definitivo (in R, 379–383; per ora Ripo, 386); il brand kit è chiuso (404), quindi si decide con lo stack.
 - **Prova di stampa del marchio** su una stampante termica vera, con `brand/prova-stampa.svg` (403): conferma o
   corregge le misure minime della guida (5 mm il simbolo, 15 mm il nome). Si fa quando c'è la stampante.
 

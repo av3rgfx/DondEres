@@ -699,7 +699,7 @@ Prima di scegliere lo stack (127):
 
 - Cosa gira sul dispositivo e cosa sul server per ogni inquadratura, cosa viaggia in rete: risolto nella sezione
   «Divisione tra telefono, computer e server in sede» (406–421).
-- Librerie del browser, del server e del meccanismo di aggiornamento: ticket «Stack».
+- Librerie del browser, del server e del meccanismo di aggiornamento: risolto nella sezione «Stack» (422–437).
 - Schermate della prima apertura dal QR, della guida a «Consenti» su iPhone, dell'avviso di aggiornamento, del campo
   per il grilletto; la barra di Safari visibile su iPhone: ticket «Percorso delle schermate».
 - Foto «di arrivo» della prova scattate dal browser dei telefoni: ticket «Piano della prova di accuratezza visiva».
@@ -813,7 +813,8 @@ Si aggiungono alle prove della sezione «Dispositivi e forma del programma» (12
 
 - Dove si calcolano le impronte (browser o server), programma che fa girare il modello, macchina in sede: ticket
   «Impronte e server in sede, dopo la prova» (405).
-- Librerie per il canale aperto, la memoria del browser, il database e l'archivio delle foto: ticket «Stack».
+- Librerie per il canale aperto, la memoria del browser, il database e l'archivio delle foto: risolto nella sezione
+  «Stack» (422–437).
 - Fascia «Senza rete», «Inviata», «non riuscita» e «1 operazione di Mario in attesa» nelle schermate: ticket «Aspetto
   grafico» per la forma; i testi seguono la skill ux-writing.
 - Dove vanno le copie di sicurezza e come si ripristinano: installazione e configurazione iniziale, nebbia della mappa.
@@ -1906,11 +1907,13 @@ di posta collegato restano «Copia testo» e «Scarica PDF» (215). La mail rest
   rivenditore. Come Ad Hoc riceve documento di reso, «reso da cliente» e inventario, e se legge le fatture: domande 24,
   26, 27 e 28.
 - Etichette e distinta del corriere: nebbia della mappa; se serviranno, diventano un collegamento in più.
-- Come si scrivono i moduli (linguaggio, forma delle regole dei punti d'aggancio): ticket «Stack».
+- Come si scrivono i moduli (linguaggio, forma delle regole dei punti d'aggancio): risolto nella sezione «Stack»
+  (422, 428).
 
 ## Stack
 
-Dal ticket «Stack», 20/11/2026. Decisioni 422–432 (giro 1) e 433–436 (giro 2). Pagina delle domande:
+Dal ticket «Stack», chiuso il 20/11/2026. Decisioni 422–432 (giro 1), 433–436 (giro 2) e 437 (riepilogo). Pagina
+delle domande:
 https://claude.ai/artifact/CEKPn8iQVsJ1B1dsAnUbwr (copia in `prototipi/stack/index.html`). Ricerche:
 `docs/research/2026-11-20-librerie-stack.md` (versioni, licenze, manutenzione),
 `docs/research/2026-11-20-confronti-stack.md` (schermate, canale aperto, contenitori, posta) e
@@ -1967,7 +1970,7 @@ dimensione delle impronte e la macchina in sede (scheda grafica, memoria, sistem
 Nessuna scelta dello stack aspetta le prove (127): fissano numeri e confermano ipotesi, con un ripiego che non cambia lo
 stack. Due tornate (429):
 
-1. **Pagina di prova**, pubblicata come la pagina di scatto (ramo `gh-pages`, sottocartella `prova-dispositivi`), da
+1. **Pagina di prova** (ticket «Pagina di prova dei dispositivi», 437), pubblicata come la pagina di scatto (ramo `gh-pages`, sottocartella `prova-dispositivi`), da
    aprire su un iPhone, un Android e un palmare di UFP, solo come link pubblico (430): permesso della fotocamera in
    Safari (124), lettore del barcode, grilletto come tastiera (119), scatto da solo dopo mezzo secondo (409), peso della
    foto (408), operazione in attesa dopo ricarica e chiusura del browser (127, 201). I risultati si copiano in chat.

@@ -1,13 +1,55 @@
 # Prompt per la prossima sessione (Wayfinder sull'architettura)
 
 Da incollare all'avvio di una nuova sessione sul ramo principale aggiornato. La mappa esiste già: si lavora un ticket
-per sessione, più le ricerche. 20/11/2026: chiuso il ticket «Divisione tra telefono, computer e server in sede»
-(decisioni 406–421, sezione omonima di `docs/architettura.md`): dati, assegnazione, impronte e foto sul server; codice
-letto più foto a ogni inquadratura; fascia «Senza rete» con l'operazione in attesa. Prossimo passo: prompt J (stack).
-Poi, con i numeri della prova visiva, il ticket «Impronte e server in sede, dopo la prova», e infine l'aspetto grafico.
-Quando nei repository privati ci sono foto o bolle da aprire, sessioni a parte lavorano la prova visiva (prompt B) e la
-prova delle bolle (prompt C). Restano fuori dai ticket la prova di stampa del marchio (403) e la ricerca europea dei
-marchi dal consulente (387). I prompt A, D, E, F, G, H e I restano come esempi di forma.
+per sessione, più le ricerche. 20/11/2026: chiuso il ticket «Stack» (decisioni 422–437, sezione «Stack» di
+`docs/architettura.md`): Python e Django, PostgreSQL con pgvector, htmx 4, avvisi dal server, contenitori. Prossimo
+passo, a scelta dell'utente: **prompt K** (pagina di prova dei dispositivi, consigliato: non aspetta niente) oppure
+**prompt L** (aspetto grafico, che non aspetta più nessun ticket). Con i numeri della prova visiva, poi, il ticket
+«Impronte e server in sede, dopo la prova». Quando nei repository privati ci sono foto o bolle da aprire, sessioni a
+parte lavorano la prova visiva (prompt B) e la prova delle bolle (prompt C). Restano fuori dai ticket la prova di
+stampa del marchio (403) e la ricerca europea dei marchi dal consulente (387). Gli altri prompt restano come esempi di
+forma.
+
+**Prompt K: pagina di prova dei dispositivi**
+
+```text
+/wayfinder .scratch/architettura/map.md
+
+Leggi prima AGENTS.md, poi la mappa (solo map.md, non tutti i ticket). Lavora il ticket «Pagina di prova dei
+dispositivi» (task con me): leggi la sua domanda, le decisioni 124, 127, 409, 410, 425, 429, 430, 433 e 434 e la sezione
+«Stack» di docs/architettura.md. Scrivi una pagina statica con le sette prove del ticket, una schermata guidata per
+prova, che alla fine mostra i risultati (modello del dispositivo, browser, esito e tempi di ogni prova) da copiare in
+chat; nessun dato lascia il telefono e le foto della prova si cancellano alla fine. Per il barcode usa la libreria
+barcode-detector (zxing-cpp) con il file WebAssembly servito dalla pagina stessa, non da un CDN. Verificala nel browser
+con playwright-cli (servendola con un server locale), poi pubblicala nel ramo gh-pages nella sottocartella
+prova-dispositivi, senza toccare la pagina di scatto (149), e dammi l'indirizzo. Io la apro su un iPhone, un Android e
+un palmare di UFP (solo come link pubblico, 430) e ti incollo i risultati: mostrameli senza abbellirli e proponimi le
+soglie (mezzo secondo, peso della foto) e cosa cambia se una prova va male.
+Registra ogni mia decisione in docs/decisioni.md, con data e motivo; scrivi la tua parte in docs/architettura.md.
+Parlami in italiano, con domande semplici: cosa chiedi, perché conta, cosa comporta ogni opzione.
+Per le domande crea una pagina privata nuova, come quella dello stack (copia in prototipi/prova-dispositivi/index.html),
+con opzione consigliata, «Accetta tutte le consigliate», note facoltative e risposte salvate che leggi tu quando scrivo
+«fatto». Poi chiudi il ticket, aggiorna la mappa e prepara il prompt della sessione successiva.
+```
+
+**Prompt L: aspetto grafico**
+
+```text
+/wayfinder .scratch/architettura/map.md
+
+Leggi prima AGENTS.md, poi la mappa (solo map.md, non tutti i ticket). Lavora il ticket «Aspetto grafico» (prototype):
+leggi i suoi commenti, il brand kit in brand/ (decisioni 362–404), il percorso delle schermate (sezione omonima di
+docs/architettura.md) e le decisioni 292, 432 e 433: pagine dal server con htmx 4 e piccoli componenti, aspetto fatto
+con il CSS, versione da computer ricca per i responsabili. Usa le skill prototype, ux-strategy, ux-writing,
+mobile-native, emil-design-eng e accessibility-audit (WCAG 2.2 AA); apple-design solo come lettura esterna. Mostrami
+poche varianti da guardare, sul telefono e sul computer, con schermate vere (DDT, elenco del prelievo, fascia «Senza
+rete»); le scelte di gusto sono mie. Una sola direzione visiva, registrata in docs/decisioni.md con data e motivo.
+Parlami in italiano, con domande semplici: cosa chiedi, perché conta, cosa comporta ogni opzione.
+Per le domande crea una pagina privata nuova (copia in prototipi/aspetto-grafico/index.html), con esempi visivi che
+cambiano con la risposta, opzione consigliata, «Accetta tutte le consigliate», note facoltative e risposte salvate che
+leggi tu quando scrivo «fatto». Lavora a giri: registra le risposte di ogni giro prima del successivo e chiudi con un
+riepilogo da confermare. Poi chiudi il ticket, aggiorna la mappa e prepara il prompt della sessione successiva.
+```
 
 **Prompt J: stack**
 
@@ -204,21 +246,17 @@ consigliata, «Accetta tutte le consigliate», note facoltative e risposte salva
 Lavora a giri: registra le risposte di ogni giro prima del successivo e chiudi con un riepilogo da confermare.
 ```
 
-## Frontiera al 19/11/2026, sera tardi
+## Frontiera al 20/11/2026, sera
 
-In ordine di numero:
-
-1. «Esecuzione della prova visiva e scelta del modello» (task con l'utente): **in corso**, su più sessioni. Il
+1. «Pagina di prova dei dispositivi» (task con l'utente): libera, consigliata (prompt K).
+2. «Aspetto grafico» (prototype): libero con la chiusura dello stack (prompt L).
+3. «Esecuzione della prova visiva e scelta del modello» (task con l'utente): **in corso**, su più sessioni. Il
    repository privato `av3rgfx/prova-visiva-foto` esiste; la pagina di scatto è su https://av3rgfx.github.io/DondEres/
    (ramo `gh-pages`, da non cancellare; se la pagina cambia va copiata anche lì). Tocca all'utente scegliere gli
    articoli, scattare e caricare gli ZIP in `da-caricare` (decisioni 149–159). Poi prompt B.
-2. Ricerca «Shopify: resi, rimborsi e cosa si può collegare» e poi «Resi del cliente nel magazzino Shopify»: liberi,
-   consigliati (prompt A, decisione 321).
-3. «Nome del prodotto»: libero (prompt D); poi «Unicità dei nomi scelti» e «Brand kit con la skill logo-design».
 4. «Esecuzione della prova di lettura delle bolle» (task con l'utente): parte quando le bolle sono nella cartella
    `bolle/` del repository privato (prompt C).
-5. «Stack»: aspetta solo la divisione tra telefono, computer e server, che aspetta la prova visiva. «Punti di
-   estensione» è chiuso (decisioni 301–320).
+5. «Impronte e server in sede, dopo la prova»: aspetta solo la prova visiva.
 
 ## In sospeso fuori dalla mappa
 
@@ -233,26 +271,28 @@ In ordine di numero:
   ambiente di prova, come scrive ARS, frequenza delle letture, costi), da far mandare a UFP quando adotterà il
   programma; (B) una ricerca online sulle poche domande generali (importazione da file, servizi web, «NEX Logistica»,
   fatture elettroniche). Non bloccano la mappa: il collegamento Ad Hoc sta nella specializzazione.
-- Punto tecnico aperto: mandare le mail dalla casella aziendale di ogni responsabile (223, 311) chiede un permesso al
-  server di posta dell'azienda; si sceglie con lo stack e all'installazione.
+- Posta dalla casella del responsabile: scelta con lo stack (435, permesso dell'amministratore); la posta usata da UFP
+  e dal magazzino Shopify si chiede all'installazione (436).
 
 ## Ultimo ticket chiuso
 
-19/11/2026: «Punti di estensione per la specializzazione», in due giri più il riepilogo, con la pagina
-https://claude.ai/artifact/H5oSLLHmbpw3qMAXpNFEkz (privata). Decisioni 301–320, sezione «Punti di estensione» di
-`docs/architettura.md`, termini nuovi in `GLOSSARY.md` (base, specializzazione, configurazione, modulo, collegamento,
-punto d'aggancio, partita, lettore di etichette, campo aggiuntivo, «Da registrare nel gestionale»), domanda 29 per il
-rivenditore. Prima, lo stesso giorno: «Elenco del prelievo e correzione della quantità» (270–300).
+20/11/2026: «Stack», in due giri più il riepilogo, con la pagina https://claude.ai/artifact/CEKPn8iQVsJ1B1dsAnUbwr
+(privata, copia in `prototipi/stack/index.html`). Decisioni 422–437, sezione «Stack» di `docs/architettura.md`, due
+ricerche (`docs/research/2026-11-20-librerie-stack.md`, `docs/research/2026-11-20-confronti-stack.md`), ticket nuovo
+«Pagina di prova dei dispositivi». Prima, lo stesso giorno: «Divisione tra telefono, computer e server in sede»
+(406–421).
 
 ## Ultima sessione
 
-20/11/2026: «Brand kit con la skill logo-design», dodici giri (decisioni 362–397), pagina privata
-https://claude.ai/artifact/JQ2vwNwRMfT2qi4BDWNnX5. Skill installata nel progetto senza la raccolta di loghi altrui
-(362). Concetti sulla V scartati (369, 374); ordine invertito, prima la lettera e poi il nome (375). Varko in riserva
-(376); nome per ora **Ripo** dopo una verifica UIBM riportata dall'utente (386, 387). Blu elettrico (388). Dopo due
-ricerche sui loghi a lettera singola, R scelta: **Pulito costruito** (396). Il kit finale è il prossimo passo (397).
+20/11/2026: «Stack». L'utente ha chiesto cosa sono le impronte e se Rust avesse senso (risposta in chat; Rust aggiunto
+alle opzioni e non scelto, 422), un confronto completo tra htmx e un framework e tra i modi di tenere il canale aperto,
+la spiegazione di Redis e una ricerca su contenitori e macchine virtuali (432–434). Nome Ripo in README e pacchetto
+(431); il glossario diceva ancora Varko ed è stato corretto.
 
 ## Cose dell'utente, senza sessione
+
+- A prova visiva finita: rinominare il repository da DondEres a Ripo in GitHub (Settings → General); l'indirizzo della
+  pagina di scatto cambia e il vecchio non viene reindirizzato (431). Poi aggiornare i collegamenti nei documenti.
 
 - Quando si parla con il consulente in marchi: ricerca europea per somiglianza su Ripo (il RIPPO di AISLUX in classe
   35 da guardare) e sulla R come marchio figurativo (387, 359).
