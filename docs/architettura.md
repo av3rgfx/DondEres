@@ -1972,3 +1972,12 @@ Logo: R · Rampa (380). Nome: dieci proposte che cominciano con la R, con le reg
 fatti noti, non da una ricerca): Rako (marchio di piastrelle), Rolo (caramelle), Rekto (doppio senso di «retto»); Rivo
 e Rigo hanno un marchio identico (361). Dopo i preferiti in ordine si fa la verifica dei marchi, come per Varko.
 
+### Giro 7: verifica dei preferiti (decisioni 382 e 383)
+
+Preferiti in ordine: 1. Reko, 2. Ripo, 3. Rodo (383); l'unico «sì» è Ripo (382). Ricerca in
+`docs/research/2026-11-20-unicita-nomi-in-r.md`, **incompleta**: domini, App Store, GitHub e ricerca web sì; registri dei
+marchi no (TMview blocca i programmi automatici e in questa sessione non è stato usato il browser automatico; EUIPO
+eSearch non risponde). Giudizio provvisorio (deduzione): Reko ostacoli da valutare (REKO internazionale in classe 42,
+app di trasporti), Ripo nessun ostacolo trovato finora, Rodo ostacoli da valutare (casa di moda italiana; «RODO» è il
+GDPR in Polonia). Tutti i domini sono presi. Nel giro 7 l'utente sceglie come completare i registri e se il kit aspetta.
+

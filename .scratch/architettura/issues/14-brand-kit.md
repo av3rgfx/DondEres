@@ -29,3 +29,5 @@ Risultato atteso: il brand kit nel repository, il link qui e la direzione scelta
   nome cambia, serve una nuova verifica dei marchi prima di sceglierlo: da aggiungere come ticket alla chiusura.
 - 20/11/2026, giro 5: Varko in riserva, lettere R e Q, nome con l'iniziale del logo (376–379); tre concetti su R e Q
   in `prototipi/brand-kit/concetti-3/`. Dopo la scelta: nomi, verifica dei marchi, kit.
+- 20/11/2026, giri 6 e 7: nomi in R (382), preferiti Reko, Ripo, Rodo (383); ricerca parziale in
+  `docs/research/2026-11-20-unicita-nomi-in-r.md`, registri dei marchi ancora da fare.
