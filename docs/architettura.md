@@ -2054,3 +2054,55 @@ separati): si leggeva «IQ».
   (`presentation_board.py`); guida di una pagina (`templates/brand-guidelines-template.md`); confronto affiancato con
   Revolut e con le R della raccolta; misura minima di stampa da provare su una termica vera.
 
+### Giro 13: il kit
+
+File finali in `brand/`, generati da `brand/genera.py` (Python senza dipendenze; per i PNG e il `favicon.ico` usa
+`render_png.py` della skill). Il generatore è autonomo: non dipende dai prototipi.
+
+- **Rifinitura ottica** della R · Pulito costruito (396): orizzontali dell'occhiello a 0,9 dell'asta, parte tonda a
+  1,05, gamba a 0,95 e di spessore costante; il vuoto è un semi-ellisse; la gamba passa sotto il vuoto (controllo
+  numerico nel generatore, almeno mezza unità di distacco); simbolo alzato di 2 su 256 (centro ottico). Versioni
+  bianca e blu chiaro più sottili di un'unità su 256 (sul fondo scuro il chiaro sembra più pesante).
+- **R per i 16 punti** (`svg/ripo-simbolo-16.svg`): disegnata sulla griglia di 16, asta di 3 pixel, orizzontali di 2,
+  vuoto alto 4 e largo 3,5, gamba più corta. Solo per il favicon a 16; da 32 in su la R normale.
+- **Nome «Ripo»** a peso medio (374): stesse correzioni sugli anelli di p e o (orizzontali a 0,9), spazi 12, 13 e 11.
+- **Versioni**: `svg/ripo-simbolo-{nero,blu,bianco,blu-chiaro}.svg` e `svg/ripo-nome-…` uguali. Nero puro #000000
+  per le stampe.
+- **Icone** (`icone/`): `favicon.ico` (16 dalla R per i 16 punti, 32 e 48 dal simbolo), `favicon.svg`,
+  `apple-touch-icon.png` (180), `icon-192.png`, `icon-512.png`, `maskable-512.png` (segno dentro la zona sicura
+  dell'80 %), `icona-app.svg`, `site.webmanifest` (nome Ripo, lingua it), `head-snippet.html`. Non si usa
+  `export_variants.py --web-icons`: userebbe la R per i 16 punti anche per le icone grandi.
+- **Prova di stampa** (`prova-stampa.svg`, etichetta 100 x 70 mm, da stampare al 100 %): simbolo alto 4–10 mm, nome
+  largo 12–30 mm. Calcolo a 203 dpi (8 punti per mm): con il simbolo a 5 mm il vuoto dell'occhiello misura circa
+  0,8 mm (6 punti); con il nome a 15 mm lo stacco tra puntino e asta della i misura circa 0,5 mm (4 punti). Proposta:
+  minimo 5 mm e 15 mm, da confermare con una stampa vera.
+- **Tavola d'uso**: `presentation_board.py` della skill produce contesti generici in inglese (badge da evento, sito
+  con un dominio che non è nostro), quindi non si usa; la tavola è nella pagina delle domande, con i contesti della
+  368, e diventa un file dopo la conferma.
+- **Confronto** con Revolut e Rakuten (icone di Simple Icons 13.0.0) e con le R della raccolta (Remix, Riot, Rax), in
+  nero a 72, 48, 32, 24, 20 e 16 pixel: la gamba lunga e curva è l'unica del gruppo; Revolut ha gamba diritta e
+  occhiello squadrato; la nostra R a peso 40 è la più leggera. I loghi altrui stanno solo nella pagina pubblicata e
+  in una cartella temporanea, non nel repository (come la raccolta, 362).
+- **Blu chiaro per il tema scuro**, candidati della stessa tinta del #1F5BFF (contrasto sul #121212 / sul #1C1C1E):
+  #5280FF 5,25 / 4,77; #668FFF 6,19 / 5,62; #7A9EFF 7,28 / 6,61. Il blu elettrico sul nero ha 3,57.
+
+Domande del giro 13 (pagina https://claude.ai/artifact/JQ2vwNwRMfT2qi4BDWNnX5, copia in
+`prototipi/brand-kit/index.html` senza i loghi altrui): peso del simbolo (asta 40, 44 o 48 su 200), R per i 16 punti
+sì o no, blu chiaro, fondo dell'icona dell'app (blu, bianco, nero), confronto sufficiente o gamba da rivedere, chi fa
+la prova di stampa. Dopo le risposte: file rigenerati con le scelte, `brand/guida.md`, tavola d'uso come file,
+riepilogo da confermare.
+
+### Giro 14: scelte del giro 13 e riepilogo (decisioni 398–403)
+
+Scelte: asta 44 (398), R per i 16 pixel (399), blu chiaro #668FFF (400), icona R bianca su blu (401), il disegno è
+chiuso (402), prova di stampa rimandata con 5 mm e 15 mm come proposta (403). I valori sono i predefiniti di
+`brand/genera.py`; i file in `brand/` sono rigenerati. Aggiunti `brand/guida.md` (guida di una pagina) e
+`brand/tavola.html` con `brand/tavola.png` (tavola d'uso con i contesti della 368). Nella pagina, il riepilogo da
+confermare: se l'utente conferma, il ticket si chiude.
+
+### Esito (decisione 404)
+
+Kit confermato dall'utente; ticket chiuso. Riferimento per chi usa il marchio: `brand/guida.md`. Per l'aspetto grafico
+delle schermate (ticket «Aspetto grafico») valgono il blu elettrico per il marchio e il #668FFF sul tema scuro; rosso,
+verde e giallo restano agli stati del programma (367). Aperti: prova di stampa (403) e ricerca europea dei marchi (387).
+

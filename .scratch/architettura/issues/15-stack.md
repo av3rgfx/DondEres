@@ -3,12 +3,13 @@
 Type: grilling
 Label: wayfinder:grilling
 Status: open
-Blocked by: 07, 09, 10, 11
+Blocked by: 07, 10, 11 (07 e 11 chiusi). Non aspetta più la prova visiva (decisione 405).
 
 ## Question
 
-Con quali linguaggi, database e programmi per il modello visivo si costruisce la base (decisione 13)? Va scelto a
-partire da app nativa o web, divisione tra le macchine, modello scelto nella prova e punti di estensione. Si
+Con quali linguaggi, database e programmi si costruisce la base (decisione 13)? Va scelto a
+partire da app nativa o web, divisione tra le macchine e punti di estensione. Il programma che fa girare il modello
+visivo si sceglie nel ticket «Impronte e server in sede, dopo la prova» (405). Si
 riusano prima le funzioni native e le librerie mature; si guardano le licenze (analisi §4.1).
 
 Risultato atteso: lo stack e il motivo di ogni scelta in `docs/architettura.md` e in `docs/decisioni.md`.
@@ -28,3 +29,4 @@ Risultato atteso: lo stack e il motivo di ogni scelta in `docs/architettura.md` 
   modificarla (301), accesi e spenti dall'admin (302), con regole dei punti d'aggancio a versione e il controllo prima
   di ogni aggiornamento (307); quattro punti d'aggancio (collegamento, lettore di etichette, precedenza, partita) e campi
   aggiuntivi da configurazione (306). Da scegliere qui: come si scrivono i moduli e la forma delle regole.
+- 20/11/2026: non aspetta più la prova visiva; la parte del modello passa al ticket «Impronte e server in sede, dopo la prova» (405).

@@ -1,13 +1,35 @@
 # Prompt per la prossima sessione (Wayfinder sull'architettura)
 
 Da incollare all'avvio di una nuova sessione sul ramo principale aggiornato. La mappa esiste già: si lavora un ticket
-per sessione, più le ricerche. 20/11/2026: il ticket «Brand kit con la skill logo-design» è quasi finito (decisioni
-362–397). Nome per ora **Ripo** (386), Varko in riserva (376); logo **R · Pulito costruito** (396); blu elettrico
-(388). Manca il kit finale (397): prompt H. La ricerca europea dei marchi resta al consulente (387). Lo stack aspetta
-ancora la divisione tra le macchine, che aspetta la prova visiva; «Aspetto grafico» aspetta brand kit e stack (vale
-anche la vista da computer, decisione 292). Quando nei repository privati ci sono foto o bolle da aprire, sessioni a
-parte lavorano la prova visiva (prompt B) e la prova delle bolle (prompt C). I prompt A, D, E, F e G restano come
-esempi di forma.
+per sessione, più le ricerche. 20/11/2026: il ticket «Brand kit con la skill logo-design» è chiuso (decisioni 362–404): nome per ora **Ripo**
+(386), logo **R · Pulito costruito** con asta 44, kit in `brand/` con la guida `brand/guida.md`. La mappa è riordinata
+(405): «Divisione tra telefono, computer e server in sede» e «Stack» non aspettano più la prova visiva; ciò che dipende
+dai suoi numeri sta nel ticket nuovo «Impronte e server in sede, dopo la prova». Prossimo passo: prompt I (divisione),
+poi lo stack. Quando nei repository privati ci sono foto o bolle da aprire, sessioni a parte lavorano la prova visiva
+(prompt B) e la prova delle bolle (prompt C). Restano fuori dai ticket la prova di stampa del marchio (403) e la
+ricerca europea dei marchi dal consulente (387). I prompt A, D, E, F, G e H restano come esempi di forma.
+
+**Prompt I: divisione tra telefono, computer e server in sede**
+
+```text
+/wayfinder .scratch/architettura/map.md
+
+Leggi prima AGENTS.md, poi la mappa (solo map.md, non tutti i ticket). Lavora il ticket «Divisione tra telefono,
+computer e server in sede»: leggi i suoi commenti e la decisione 405, che lo ha diviso in due. Qui si decide solo ciò
+che non dipende dai numeri della prova visiva: database, archivio delle foto, assegnazione, ricerca tra le impronte,
+lettura di barcode, codice stampato e quantità, cosa viaggia in rete per ogni inquadratura, cosa resta sul telefono
+quando cade la rete (23, 127). Dove si calcolano le impronte e che macchina serve in sede restano al ticket «Impronte e
+server in sede, dopo la prova». Consulta le decisioni già prese senza rimetterle in discussione (soprattutto 87–104,
+119–127, 143, 301–320) e le ricerche in docs/research/ quando servono.
+Usa le skill grilling e domain-modeling; termini chiariti in GLOSSARY.md, la tua parte in docs/architettura.md.
+Registra ogni mia decisione in docs/decisioni.md, con data e motivo. Parlami in italiano, con domande semplici: cosa
+chiedi, perché conta, cosa comporta ogni opzione.
+Per le domande crea una pagina privata nuova, come quella del brand kit (copia in prototipi/divisione/index.html),
+con esempi visivi che cambiano con la risposta (per esempio uno schema di cosa gira dove), opzione consigliata,
+«Accetta tutte le consigliate», note facoltative e risposte salvate che leggi tu quando scrivo «fatto». Lavora a giri:
+registra le risposte di ogni giro prima del successivo e chiudi con un riepilogo da confermare. Poi chiudi il ticket,
+aggiorna la mappa e prepara il prompt per lo stack.
+```
 
 **Prompt H: kit finale di Ripo**
 

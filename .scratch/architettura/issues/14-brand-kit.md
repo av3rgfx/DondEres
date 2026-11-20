@@ -2,7 +2,7 @@
 
 Type: task
 Label: wayfinder:task
-Status: open
+Status: resolved
 Assignee: sessione del 20/11/2026 con l'utente
 Blocked by: 13, 29 (13 chiuso il 20/11/2026)
 
@@ -37,3 +37,13 @@ Risultato atteso: il brand kit nel repository, il link qui e la direzione scelta
 - 20/11/2026, ripresa: nome Ripo (386), verifica chiusa per ora (387); si prosegue con il kit.
 - 20/11/2026, fine della sessione: R scelta **Pulito costruito** (396); si fanno i file finali del kit (397). Resta
   aperto e preso in carico; prossimo passo nel prompt H di `docs/prossima-sessione.md`.
+- 20/11/2026, giro 13: kit in `brand/` (`genera.py`): R rifinita, R per i 16 punti, versioni nera, blu, bianca e blu
+  chiaro, icone e manifest, foglio di prova di stampa; confronto con Revolut e le R della raccolta nella pagina. Sei
+  domande di gusto nella pagina; sezione «Giro 13» di `docs/architettura.md`.
+- 20/11/2026, giro 14: risposte del giro 13 nelle decisioni 398–403; file rigenerati, guida e tavola d'uso in `brand/`;
+  riepilogo da confermare nella pagina.
+- 20/11/2026, risoluzione: kit confermato dall'utente (404). Logo R · Pulito costruito (396) con asta 44 (398), R per i
+  16 pixel (399), blu elettrico #1F5BFF (388) e blu chiaro #668FFF per il tema scuro (400), icona R bianca su blu (401),
+  disegno chiuso dopo il confronto con Revolut (402); nome Ripo per ora (386). File in `brand/`: guida
+  `brand/guida.md`, tavola `brand/tavola.png`, generatore `brand/genera.py`. Aperti: prova di stampa su una termica
+  vera (403, `brand/prova-stampa.svg`) e ricerca europea dei marchi dal consulente (387).

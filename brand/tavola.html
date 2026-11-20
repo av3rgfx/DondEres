@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ripo · tavola d'uso</title>
+<style>
+/* Tavola d'uso del marchio di Ripo (decisioni 368, 391, 396–403). Usa i file di questa cartella. */
+:root{--bg:#f3f5f7;--fg:#17202b;--muted:#5a6675;--line:#d5dbe2;--blu:#1F5BFF;--chiaro:#668FFF}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:32px}
+.w{max-width:1120px;margin:0 auto;display:grid;gap:20px}
+h1{margin:0;font-size:28px} p{margin:0;color:var(--muted)}
+.g{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.c{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;gap:12px;align-content:space-between;min-height:170px}
+.c.dk{background:#121212;border-color:#121212;color:#e6ebf1}
+.l{font:600 11px/1.2 ui-monospace,Menlo,monospace;letter-spacing:.06em;text-transform:uppercase;color:#4b5563}
+.dk .l{color:#9aa7b6}
+.home{display:flex;gap:10px;background:#0f1720;border-radius:14px;padding:12px}
+.home i{width:56px;height:56px;border-radius:13px;background:#334155;display:block}
+.home img{width:56px;height:56px;border-radius:13px}
+.tab{display:flex;align-items:center;gap:8px;background:#e5e7eb;border-radius:8px 8px 0 0;padding:7px 10px;font-size:13px}
+.hd{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:13px}
+.dk .hd{border-color:#2c3846}
+.hd img{height:30px} .hd span{margin-left:auto;opacity:.75}
+.lab{border:1px dashed #9ca3af;padding:10px;font:12px/1.5 ui-monospace,Menlo,monospace;display:grid;gap:6px}
+.doc{border:1px solid #d1d5db;padding:12px;display:grid;gap:8px;font-size:13px}
+.doc i{display:block;height:6px;background:#d1d5db;border-radius:3px}
+.v{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.v div{border-radius:12px;padding:16px 10px;display:grid;gap:10px;justify-items:center;border:1px solid var(--line)}
+.v img.s{width:64px;height:64px} .v img.n{width:86%}
+.v span{font:600 11px/1.2 ui-monospace,Menlo,monospace;text-transform:uppercase;letter-spacing:.04em}
+</style>
+</head>
+<body>
+<div class="w">
+  <h1>Ripo · tavola d'uso</h1>
+  <p>Simbolo per le icone, nome per testate e documenti, mai affiancati. Nero per le stampe, blu sul chiaro, bianco sul blu e sul nero, blu chiaro sul tema scuro.</p>
+  <div class="v">
+    <div style="background:#fff"><img class="s" src="svg/ripo-simbolo-nero.svg" alt="Simbolo nero"><img class="n" src="svg/ripo-nome-nero.svg" alt="Nome nero"><span>Nero</span></div>
+    <div style="background:#fff;color:var(--blu)"><img class="s" src="svg/ripo-simbolo-blu.svg" alt="Simbolo blu"><img class="n" src="svg/ripo-nome-blu.svg" alt="Nome blu"><span>Blu #1F5BFF</span></div>
+    <div style="background:var(--blu);border-color:var(--blu);color:#fff"><img class="s" src="svg/ripo-simbolo-bianco.svg" alt="Simbolo bianco"><img class="n" src="svg/ripo-nome-bianco.svg" alt="Nome bianco"><span>Bianco su blu</span></div>
+    <div style="background:#000;border-color:#000;color:#fff"><img class="s" src="svg/ripo-simbolo-bianco.svg" alt="Simbolo bianco"><img class="n" src="svg/ripo-nome-bianco.svg" alt="Nome bianco"><span>Bianco su nero</span></div>
+    <div style="background:#121212;border-color:#121212;color:var(--chiaro)"><img class="s" src="svg/ripo-simbolo-blu-chiaro.svg" alt="Simbolo blu chiaro"><img class="n" src="svg/ripo-nome-blu-chiaro.svg" alt="Nome blu chiaro"><span>Blu chiaro #668FFF</span></div>
+  </div>
+  <div class="g">
+    <div class="c"><div class="home"><i></i><img src="icone/icon-192.png" alt="Icona di Ripo"><i></i><i></i></div><span class="l">Icona sul telefono e sui palmari</span></div>
+    <div class="c"><div class="tab"><img src="icone/favicon-16.png" width="16" height="16" alt="">Ripo · Ricevimento</div><span class="l">Scheda del browser, 16 px reali</span></div>
+    <div class="c"><div class="hd"><img src="svg/ripo-nome-blu.svg" alt="Ripo"><span>Prelievo · Ordine 2291</span></div><span class="l">Testata, tema chiaro</span></div>
+    <div class="c dk"><div class="hd"><img src="svg/ripo-nome-blu-chiaro.svg" alt="Ripo"><span>Ricevimento · DDT 418</span></div><span class="l">Testata, tema scuro</span></div>
+    <div class="c"><div class="lab"><img src="svg/ripo-nome-nero.svg" alt="Ripo" style="width:15mm;min-width:72px"><span>UBIC. A-03-2 · DDT 418 · 12 colli</span></div><span class="l">Etichetta termica, nero, nome almeno 15 mm</span></div>
+    <div class="c"><div class="doc"><img src="svg/ripo-nome-nero.svg" alt="Ripo" style="height:26px;width:auto"><b>Documento di trasporto 418</b><i></i><i style="width:70%"></i></div><span class="l">Documento in bianco e nero</span></div>
+  </div>
+</div>
+</body>
+</html>

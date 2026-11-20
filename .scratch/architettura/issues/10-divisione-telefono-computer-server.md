@@ -3,16 +3,18 @@
 Type: grilling
 Label: wayfinder:grilling
 Status: open
-Blocked by: 07, 09
+Blocked by: 07 (chiuso). Non aspetta più la prova visiva (decisione 405).
 
 ## Question
 
 Cosa gira sul telefono, cosa sul computer e cosa sul server in sede? Lettura di barcode, codice stampato e quantità;
-calcolo delle impronte e ricerca; archivio delle foto; database; assegnazione. Come si conserva sul telefono
-l'operazione in corso quando cade la rete (decisione 23)? Che macchina serve in sede, alla luce dei tempi misurati
-nella prova?
+ricerca tra le impronte; archivio delle foto; database; assegnazione. Come si conserva sul telefono l'operazione in
+corso quando cade la rete (decisione 23)? Cosa viaggia in rete per ogni inquadratura?
 
-Risultato atteso: la divisione in `docs/architettura.md` e i requisiti minimi del server.
+Fuori da questo ticket (decisione 405): dove si calcolano le impronte (nel browser o sul server) e che macchina serve
+in sede. Dipendono dai numeri della prova visiva e stanno nel ticket «Impronte e server in sede, dopo la prova».
+
+Risultato atteso: la divisione in `docs/architettura.md`.
 
 ## Comments
 
@@ -28,3 +30,4 @@ Risultato atteso: la divisione in `docs/architettura.md` e i requisiti minimi de
   Claude, per confrontare i modelli; computer e server aziendali non si usano finché non c'è una versione da provare, e
   l'utente potrà fare una prima misura sul suo computer fisso (143). I tempi della macchina vera e della rete vanno
   presi altrove: prove su dispositivi veri (127) e scelta del server.
+- 20/11/2026: diviso in due (405); qui la parte che si decide senza i numeri della prova.
