@@ -18,7 +18,9 @@ Per Reko, Ripo e Rodo: marchi vivi identici o simili nelle classi 9, 35, 39, 42 
 
 ## Metodo
 
-- **Marchi: non verificato.** TMview (https://www.tmdn.org/tmview/) blocca i programmi automatici; la ricerca
+- **Marchi: non verificato.** Con il permesso dell'utente (decisione 384) TMview è stato aperto con il browser
+  automatico (Playwright): la pagina resta allo stato di caricamento e non mostra il campo di ricerca nemmeno dopo
+  30 secondi; nessuna ricerca è partita (FATTO, 20/11/2026). In precedenza: TMview (https://www.tmdn.org/tmview/) blocca i programmi automatici; la ricerca
   precedente lo interrogava con un browser automatico, e in questa sessione non l'abbiamo fatto. EUIPO eSearch
   (https://euipo.europa.eu/eSearch/) non ha risposto dal container. WIPO Global Brand Database e la banca dati UIBM
   rispondono, ma sono applicazioni da usare a mano. Unico dato sui marchi: una ricerca web (sotto, per Reko).
