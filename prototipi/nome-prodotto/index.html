@@ -1,0 +1,320 @@
+<title>Nome del prodotto</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@112,600;112,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: colonna unica di domande; ogni domanda ha a destra (sotto, sul telefono) il suo esempio che cambia.
+   Tono: segnaletica di magazzino, etichette e cartellini, senza decorazioni. */
+:root{
+  --bg:#f3f5f7; --surface:#ffffff; --fg:#17202b; --muted:#5a6675; --line:#d5dbe2;
+  --accent:#1f4e8c; --accent-soft:#e3ebf6; --tag:#f2b705; --tag-fg:#2a2100; --ok:#1d7a46; --warn:#a85a00;
+  --phone:#0f1720; --phone-fg:#e9eef4;
+  --f-display:"Archivo","Arial Narrow",system-ui,sans-serif;
+  --f-body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f141a; --surface:#18202a; --fg:#e6ebf1; --muted:#9aa7b6; --line:#2c3846;
+  --accent:#7fb0ef; --accent-soft:#1d2d42; --tag:#f2b705; --tag-fg:#2a2100; --ok:#5fcf8e; --warn:#f0a447;
+  --phone:#05080c; --phone-fg:#e9eef4; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f141a; --surface:#18202a; --fg:#e6ebf1; --muted:#9aa7b6; --line:#2c3846;
+  --accent:#7fb0ef; --accent-soft:#1d2d42; --tag:#f2b705; --tag-fg:#2a2100; --ok:#5fcf8e; --warn:#f0a447;
+  --phone:#05080c; --phone-fg:#e9eef4; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:15px/1.55 var(--f-body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 96px}
+.wrap{max-width:1040px;margin:0 auto;display:grid;gap:28px}
+h1,h2,h3{font-family:var(--f-display);font-stretch:112%;text-wrap:balance;margin:0;line-height:1.15}
+h1{font-size:clamp(28px,5vw,40px);font-weight:800}
+h2{font-size:22px;font-weight:800}
+h3{font-size:18px;font-weight:600}
+p{margin:0;max-width:68ch}
+.eyebrow{font:600 12px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.intro{display:grid;gap:12px}
+.intro .meta{display:flex;flex-wrap:wrap;gap:8px 16px;color:var(--muted);font-size:13px}
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+button{font:600 14px/1 var(--f-body);border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--fg);padding:11px 14px;cursor:pointer}
+button.primary{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+button:focus-visible,input:focus-visible,textarea:focus-visible,label.opt:focus-within{outline:3px solid var(--tag);outline-offset:2px}
+.status{font-size:13px;color:var(--muted)}
+.status.ok{color:var(--ok)} .status.warn{color:var(--warn)}
+.try{display:grid;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px}
+.try input{font:600 18px/1.2 var(--f-body);padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg);width:100%;max-width:360px}
+.q{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:20px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px}
+@media (max-width:760px){.q{grid-template-columns:minmax(0,1fr)}}
+.q .main{display:grid;gap:12px;min-width:0}
+.why{color:var(--muted)}
+.opts{display:grid;gap:8px}
+label.opt{display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;align-items:start;border:1px solid var(--line);border-radius:10px;padding:12px;cursor:pointer}
+label.opt:has(input:checked){border-color:var(--accent);background:var(--accent-soft)}
+label.opt input{margin:3px 0 0;width:18px;height:18px;accent-color:var(--accent)}
+.opt b{font-weight:600}
+.opt .d{display:block;color:var(--muted);font-size:14px;margin-top:2px}
+.rec{display:inline-block;margin-left:6px;font:600 11px/1 var(--f-mono);letter-spacing:.04em;text-transform:uppercase;background:var(--tag);color:var(--tag-fg);padding:4px 6px;border-radius:4px;vertical-align:2px}
+textarea{width:100%;min-height:56px;font:14px/1.45 var(--f-body);padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg);resize:vertical}
+.notelabel{font-size:13px;color:var(--muted)}
+.ex{align-self:start;display:grid;gap:10px;border-left:1px dashed var(--line);padding-left:20px;min-width:0}
+@media (max-width:760px){.ex{border-left:0;padding-left:0;border-top:1px dashed var(--line);padding-top:14px}}
+.ex .cap{font:600 11px/1.2 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.ex small{color:var(--muted);font-size:12.5px;line-height:1.45}
+/* telefono */
+.phone{background:var(--phone);color:var(--phone-fg);border-radius:22px;padding:14px 12px 16px;display:grid;gap:12px;max-width:260px}
+.home{display:grid;grid-template-columns:repeat(4,1fr);gap:10px 6px}
+.app{display:grid;justify-items:center;gap:4px;min-width:0}
+.ico{width:44px;height:44px;border-radius:11px;display:grid;place-items:center;font:800 20px/1 var(--f-display);color:#fff}
+.lbl{font-size:10.5px;max-width:58px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center}
+.topbar{background:#1b2633;border-radius:10px;padding:10px 12px;display:flex;justify-content:space-between;gap:8px;font-size:13px;min-width:0}
+.topbar b{font-family:var(--f-display);font-stretch:112%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.url{font:13px/1.3 var(--f-mono);background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:7px 12px;overflow-wrap:anywhere}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:13px;border:1px solid var(--line);border-radius:999px;padding:4px 10px;background:var(--bg)}
+.scale{display:grid;gap:6px}
+.scale .row{display:grid;grid-template-columns:96px minmax(0,1fr);gap:8px;align-items:center;font-size:12.5px}
+.track{height:8px;border-radius:4px;background:var(--line);position:relative}
+.track i{position:absolute;inset:0 auto 0 0;border-radius:4px;background:var(--accent)}
+.flag{font-size:13px;display:grid;grid-template-columns:18px minmax(0,1fr);gap:6px}
+.flag.ok{color:var(--ok)} .flag.warn{color:var(--warn)}
+.sum{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px;display:grid;gap:12px}
+.sum ol{margin:0;padding-left:20px;display:grid;gap:6px}
+.copybox{font:12.5px/1.45 var(--f-mono);white-space:pre-wrap;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px;max-height:220px;overflow:auto}
+.dock{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);
+  padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));z-index:5}
+.dock .bar{max-width:1040px;margin:0 auto;justify-content:space-between}
+@media (prefers-reduced-motion:no-preference){label.opt{transition:background .15s,border-color .15s}}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;gap:10px;align-content:start;min-width:0}
+.card.v-tengo{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.card.v-scarto{opacity:.62}
+.card .nm{display:flex;align-items:center;gap:12px}
+.card .nm .ico{flex:none}
+.card .nm b{font:800 26px/1 var(--f-display);font-stretch:112%;overflow-wrap:anywhere}
+.card dl{margin:0;display:grid;grid-template-columns:76px minmax(0,1fr);gap:4px 10px;font-size:13.5px}
+.card dt{color:var(--muted)} .card dd{margin:0}
+.verdict{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.verdict label{display:grid;place-items:center;border:1px solid var(--line);border-radius:8px;padding:9px 4px;font-weight:600;font-size:13.5px;cursor:pointer;text-align:center}
+.verdict input{position:absolute;opacity:0;pointer-events:none}
+.verdict label:has(input:checked){background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.verdict label:focus-within{outline:3px solid var(--tag);outline-offset:2px}
+.recline{font-size:12.5px;color:var(--muted)}
+.shelf{position:sticky;top:env(safe-area-inset-top,0px);z-index:3;background:var(--bg);padding-block:8px;display:grid;gap:6px}
+.shelf .phone{max-width:none}
+.shelf .home{grid-template-columns:repeat(auto-fill,minmax(54px,1fr))}
+details.prev{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+details.prev summary{cursor:pointer;font-weight:600}
+details.prev ol{margin:10px 0 0;padding-left:20px;display:grid;gap:4px;color:var(--muted)}
+
+.rank{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.rank li{display:grid;grid-template-columns:28px 44px minmax(0,1fr) auto;gap:10px;align-items:center;border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:var(--bg)}
+.rank .pos{font:800 18px/1 var(--f-display);color:var(--accent);text-align:center}
+.rank .nmr{font:800 20px/1 var(--f-display);font-stretch:112%;overflow-wrap:anywhere}
+.rank .mv{display:flex;gap:4px}
+.rank .mv button{padding:8px 10px}
+.pool{display:flex;flex-wrap:wrap;gap:8px}
+.pool label{display:flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:6px 12px;cursor:pointer;font-weight:600}
+.pool label:has(input:checked){background:var(--accent-soft);border-color:var(--accent)}
+.pool .src{font-weight:400;font-size:12px;color:var(--muted)}
+.confirm{display:flex;gap:10px;align-items:flex-start;border:2px solid var(--accent);border-radius:10px;padding:12px;font-weight:600}
+.confirm input{width:20px;height:20px;margin-top:2px;accent-color:var(--accent)}
+</style>
+
+<div class="wrap">
+  <header class="intro">
+    <span class="eyebrow">Ticket «Nome del prodotto» · giro 3 di 3</span>
+    <h1>I preferiti, in ordine</h1>
+    <p>Tre passi: guarda i 7 nomi nuovi, vicini a quelli che hai tenuto; scegli da tre a cinque preferiti e mettili in
+      ordine; dimmi cosa fare se nessuno risulta libero. In fondo c'è il riepilogo di tutto il ticket da confermare.</p>
+    <p class="why">I nomi nuovi seguono quello che hai tenuto: due sillabe, finale in «-o», spesso il suono «k», nessuna
+      parola vera intera. Anche qui i controlli sono miei, a memoria: la ricerca nei registri viene dopo.</p>
+    <div class="bar"><button class="primary" id="accept-all" type="button">Accetta tutte le consigliate</button>
+      <span class="status" id="status" role="status" aria-live="polite">Caricamento delle risposte salvate…</span></div>
+  </header>
+
+  <details class="prev"><summary>Giri già registrati (decisioni 344–353)</summary><ol>
+    <li>Criteri: marchio vero; uguale in italiano e in inglese; velocità e ordine; parola modificata o composta; fino a 5 lettere; niente parole da startup né doppi sensi (344–351).</li>
+    <li>Tenuti: Vekto, Kardo, Rivo, Dokra. In dubbio: Trako, Sorto, Rigo, Movo. Scartati gli altri 11 (352).</li>
+    <li>Nel terzo giro nomi vicini, poi i preferiti in ordine (353).</li></ol></details>
+
+  <section style="display:grid;gap:12px" aria-labelledby="h-nuovi">
+    <span class="eyebrow">Passo 1 di 3</span><h2 id="h-nuovi">Nomi nuovi, vicini a quelli che tieni</h2>
+    <div class="cards" id="cards"></div>
+  </section>
+
+  <section class="q" aria-labelledby="h-pref"><div class="main">
+    <span class="eyebrow">Passo 2 di 3</span><h2 id="h-pref">Scegli da tre a cinque preferiti e mettili in ordine</h2>
+    <p class="why">Questi nomi vanno alla verifica di marchi e domini. Si controllano tutti; l'ordine dice quale prendi
+      se più di uno risulta libero. Qui sotto ci sono i nomi che hai tenuto, quelli in dubbio e i nuovi che segni «Tengo».</p>
+    <div class="pool" id="pool"></div>
+    <div class="recline">Il mio consiglio: <span class="rec">Vekto, Kardo, Rivo, Dokra</span>, in questo ordine, più i nuovi che tieni, fino a cinque.</div>
+    <ol class="rank" id="rank" aria-label="Preferiti in ordine"></ol>
+    <span class="status" id="rank-msg"></span>
+    <label class="notelabel" for="n-pref">Note (facoltative)</label><textarea id="n-pref" data-note="pref"></textarea>
+  </div><div class="ex" aria-live="polite"><div class="cap">Sul telefono, nell'ordine scelto</div><div class="phone"><div class="home" id="prefhome"></div></div>
+    <div class="topbar" style="color:var(--phone-fg)"><b id="prefbar">—</b><span>Ricevimento</span></div>
+    <small>Il primo della lista è quello che vedresti ogni giorno, se è libero.</small></div></section>
+
+  <section class="q" aria-labelledby="h-nessuno"><div class="main">
+    <span class="eyebrow">Passo 3 di 3</span><h2 id="h-nessuno">E se nessuno dei preferiti è libero?</h2>
+    <p class="why">Può succedere: i nomi corti sono i più usati. Mi serve saperlo prima, così la verifica non si ferma ad aspettarti.</p>
+    <fieldset style="border:0;padding:0;margin:0"><legend class="notelabel" style="margin-bottom:8px">Scegline una</legend><div class="opts" id="nessuno-opts"></div></fieldset>
+    <label class="notelabel" for="n-nessuno">Note (facoltative)</label><textarea id="n-nessuno" data-note="nessuno"></textarea>
+  </div><div class="ex" id="ex-nessuno" aria-live="polite"></div></section>
+
+  <section class="sum" aria-labelledby="sum-h">
+    <span class="eyebrow">Riepilogo del ticket da confermare</span>
+    <h2 id="sum-h">Il nome, fin qui</h2>
+    <ol id="sumlist"></ol>
+    <label class="confirm" for="conferma"><input type="checkbox" id="conferma"><span>Confermo il riepilogo. Le note qui sotto lo correggono dove serve.</span></label>
+    <label class="notelabel" for="n-riep">Correzioni al riepilogo (facoltative)</label><textarea id="n-riep" data-note="riep"></textarea>
+    <p class="why" id="fallback" hidden>Il salvataggio non è disponibile in questa vista. Copia il testo qui sotto e incollalo in chat.</p>
+    <div class="copybox" id="copybox" hidden></div>
+    <div class="bar"><button id="copy" type="button">Copia le risposte come testo</button></div>
+  </section>
+</div>
+
+<div class="dock"><div class="bar">
+  <span class="status" id="status2" aria-hidden="true"></span>
+  <button class="primary" id="save" type="button">Salva adesso</button>
+</div></div>
+
+<script>
+const GIRO = "giro3";
+const TENUTI = ["Vekto","Kardo","Rivo","Dokra"], DUBBIO = ["Trako","Sorto","Rigo","Movo"];
+const N = [
+ {n:"Velko", da:"«Veloce» con il suono «k» di Vekto e Kardo.", leggi:"«vèl-ko» in tutte e due le lingue.", att:"Nei paesi slavi è un nome di persona.", rec:"tengo"},
+ {n:"Varko", da:"Il «varco», il passaggio da cui entra ed esce la merce: flusso e ordine.", leggi:"«vàr-ko» in tutte e due le lingue.", att:"Può essere un cognome; nessun doppio senso che io conosca.", rec:"tengo"},
+ {n:"Kurso", da:"«Corsa» e «percorso»; in esperanto vuol dire «corso, rotta».", leggi:"«kùr-so»; in inglese a volte «kèr-so».", att:"La lettura inglese può scivolare sulla «u».", rec:"forse"},
+ {n:"Venko", da:"«Vento», con il suono «k».", leggi:"«vèn-ko» in tutte e due le lingue.", att:"In Bulgaria è un nome di persona. Richiama la velocità più dell'ordine.", rec:"forse"},
+ {n:"Arvo", da:"«Arrivo», come Rivo, con un'altra forma.", leggi:"«àr-vo» in tutte e due le lingue.", att:"In finlandese vuol dire «valore»; in Australia è il gergo per «pomeriggio».", rec:"forse"},
+ {n:"Volko", da:"«Volo», con il suono «k».", leggi:"«vòl-ko» in tutte e due le lingue.", att:"Ricorda «volk», «lupo» nelle lingue slave.", rec:"forse"},
+ {n:"Karto", da:"«Cartone» e «carta»: la scatola e il documento, il magazzino in ordine.", leggi:"«kàr-to» in tutte e due le lingue.", att:"Vicino a marchi come Kartell; la velocità non si sente.", rec:"scarto"}
+];
+const V = [["tengo","Tengo"],["forse","Forse"],["scarto","Scarto"]];
+const NESSUNO = [
+ {id:"dubbio", l:"Si riprende dai nomi in dubbio e dai nuovi segnati «Forse»", d:"Si verificano quelli, nell'ordine in cui compaiono; se va bene uno, te lo propongo prima di sceglierlo.", rec:true},
+ {id:"giro", l:"Si fa un nuovo giro di nomi con me", d:"Con gli stessi criteri e i nomi scartati come guida in negativo."},
+ {id:"modifica", l:"Si modifica il primo preferito", d:"Una lettera cambiata o aggiunta (per esempio Vekto → Vekta) e si rifà la verifica."}
+];
+const COLORS = ["#1f4e8c","#2a9d8f","#e46b2e","#7a4fb3","#b0413e","#3b82f6","#5b7f2a"];
+
+let S = {v:{}, note:{}, pref:[], nessuno:"", conferma:false};
+try{ const d = JSON.parse(localStorage.getItem("nome-"+GIRO)||"null"); if(d) S = Object.assign(S,d); }catch(e){}
+const esc = s => String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const col = n => COLORS[[...n].reduce((a,c)=>a+c.charCodeAt(0),0)%COLORS.length];
+const ico = n => `<div class="app"><div class="ico" style="background:${col(n)}">${esc(n[0])}</div><div class="lbl">${esc(n)}</div></div>`;
+function pool(){
+  const nuoviT = N.filter(x=>S.v[x.n]==="tengo").map(x=>[x.n,"nuovo"]), nuoviF = N.filter(x=>S.v[x.n]==="forse").map(x=>[x.n,"nuovo, forse"]);
+  return [...TENUTI.map(n=>[n,"tenuto"]), ...nuoviT, ...DUBBIO.map(n=>[n,"in dubbio"]), ...nuoviF];
+}
+function render(){
+  document.getElementById("cards").innerHTML = N.map((x,i)=>{
+    const v=S.v[x.n]||"", recl=V.find(a=>a[0]===x.rec)[1];
+    return `<article class="card v-${v}" id="c-${i}" aria-labelledby="t-${i}">
+      <div class="nm"><div class="ico" style="background:${col(x.n)}" aria-hidden="true">${esc(x.n[0])}</div><b id="t-${i}">${esc(x.n)}</b></div>
+      <div class="topbar" style="color:var(--phone-fg)" aria-hidden="true"><b>${esc(x.n)}</b><span>Ricevimento · DDT 418</span></div>
+      <dl><dt>Da dove</dt><dd>${esc(x.da)}</dd><dt>Si legge</dt><dd>${esc(x.leggi)}</dd><dt>Attenzione</dt><dd>${esc(x.att)}</dd><dt>Lettere</dt><dd>${[...x.n].length}</dd></dl>
+      <div class="recline">Il mio consiglio: <span class="rec">${recl}</span></div>
+      <fieldset style="border:0;padding:0;margin:0"><legend class="notelabel" style="margin-bottom:6px">Il tuo giudizio su ${esc(x.n)}</legend>
+      <div class="verdict">${V.map(([k,l])=>`<label><input type="radio" name="v-${i}" value="${k}" data-name="${esc(x.n)}" ${v===k?"checked":""}>${l}</label>`).join("")}</div></fieldset>
+      <label class="notelabel" for="n-${i}">Nota (facoltativa)</label><textarea id="n-${i}" data-note="${esc(x.n)}" style="min-height:40px">${esc(S.note[x.n]||"")}</textarea>
+    </article>`;}).join("");
+  document.getElementById("nessuno-opts").innerHTML = NESSUNO.map(o=>`<label class="opt"><input type="radio" name="nessuno" value="${o.id}" ${S.nessuno===o.id?"checked":""}>
+    <span><b>${esc(o.l)}</b>${o.rec?'<span class="rec">Consigliata</span>':""}<span class="d">${esc(o.d)}</span></span></label>`).join("");
+  ["pref","nessuno","riep"].forEach(k=>document.getElementById("n-"+k).value=S.note[k]||"");
+  document.getElementById("conferma").checked=!!S.conferma;
+  refresh();
+}
+function refresh(){
+  N.forEach((x,i)=>{ const c=document.getElementById("c-"+i); if(c) c.className="card v-"+(S.v[x.n]||""); });
+  const P = pool(), names = P.map(p=>p[0]);
+  S.pref = S.pref.filter(n=>names.includes(n));
+  document.getElementById("pool").innerHTML = P.map(([n,src])=>`<label><input type="checkbox" data-pref="${esc(n)}" ${S.pref.includes(n)?"checked":""}>${esc(n)} <span class="src">${src}</span></label>`).join("");
+  document.getElementById("rank").innerHTML = S.pref.map((n,i)=>`<li><span class="pos">${i+1}</span><div class="ico" style="background:${col(n)};width:40px;height:40px">${esc(n[0])}</div><span class="nmr">${esc(n)}</span>
+    <span class="mv"><button type="button" data-up="${i}" aria-label="Sposta ${esc(n)} più in alto" ${i===0?"disabled":""}>↑</button><button type="button" data-down="${i}" aria-label="Sposta ${esc(n)} più in basso" ${i===S.pref.length-1?"disabled":""}>↓</button></span></li>`).join("");
+  const k=S.pref.length, m=document.getElementById("rank-msg");
+  m.textContent = k===0 ? "Spunta i nomi qui sopra: compaiono nella lista in ordine." : k<3 ? `Ne hai scelti ${k}: ne servono almeno tre.` : k>5 ? `Ne hai scelti ${k}: al massimo cinque.` : `${k} preferiti: va bene.`;
+  m.className = "status "+(k>=3&&k<=5?"ok":(k?"warn":""));
+  document.getElementById("prefhome").innerHTML = k ? S.pref.map(ico).join("") : `<div class="lbl" style="grid-column:1/-1;max-width:none;white-space:normal;text-align:left">Ancora nessun preferito.</div>`;
+  document.getElementById("prefbar").textContent = S.pref[0]||"—";
+  const a=S.nessuno, rest=P.filter(p=>p[1]!=="tenuto"&&p[1]!=="nuovo"&&!S.pref.includes(p[0])).map(p=>p[0]);
+  document.getElementById("ex-nessuno").innerHTML = `<div class="cap">Cosa succede</div><small>${
+    !a ? "Scegli un'opzione." : a==="dubbio" ? `Si verificano ${rest.length?esc(rest.join(", ")):"i nomi rimasti in dubbio"}, in quest'ordine, e te ne propongo uno.`
+    : a==="giro" ? "Si apre un nuovo giro di questa pagina con nomi nuovi." : `Per esempio ${esc(S.pref[0]||"Vekto")} → ${esc(variant(S.pref[0]||"Vekto"))}: poi si rifà la verifica.`}</small>`;
+  document.getElementById("sumlist").innerHTML = summary().map(x=>`<li>${x}</li>`).join("");
+  document.getElementById("copybox").textContent = asText();
+}
+function variant(n){ return /o$/.test(n) ? n.slice(0,-1)+"a" : n+"o"; }
+function summary(){
+  const nt=N.filter(x=>S.v[x.n]==="tengo").map(x=>x.n), nf=N.filter(x=>S.v[x.n]==="forse").map(x=>x.n), ns=N.filter(x=>S.v[x.n]==="scarto").map(x=>x.n);
+  return [
+    "Il prodotto non si chiama DondEres (20). Il nome è un marchio vero, offerto anche ad altri magazzini (344).",
+    "Si legge uguale in italiano e in inglese; fa pensare a velocità e ordine; è una parola modificata o composta, di una o due sillabe e fino a 5 lettere; niente parole da startup né doppi sensi (345–348, 350).",
+    "Il dominio non decide il nome, ma nella verifica si controlla (349). Kiln resta solo per lo stile del brand kit (351).",
+    "Secondo giro: tenuti Vekto, Kardo, Rivo, Dokra; in dubbio Trako, Sorto, Rigo, Movo (352).",
+    `Nomi nuovi del terzo giro: tenuti ${esc(nt.join(", ")||"nessuno")}; forse ${esc(nf.join(", ")||"nessuno")}; scartati ${esc(ns.join(", ")||"nessuno")}.`,
+    `<b>Preferiti in ordine:</b> ${S.pref.length?esc(S.pref.map((n,i)=>(i+1)+". "+n).join("  ")):"ancora da scegliere"}.`,
+    `Se nessuno è libero: ${esc((NESSUNO.find(o=>o.id===S.nessuno)||{l:"da scegliere"}).l.toLowerCase())}.`,
+    "Poi: il ticket «Unicità dei nomi scelti» verifica marchi (EUIPO, UIBM, WIPO), domini e prodotti simili; tu scegli il nome; il brand kit parte da lì."
+  ];
+}
+function asText(){
+  const L=["Giro 3 – preferiti e riepilogo"];
+  N.forEach(x=>L.push(`${x.n}: ${S.v[x.n]||"senza giudizio"}${S.note[x.n]?" — nota: "+S.note[x.n]:""}`));
+  L.push("Preferiti in ordine: "+(S.pref.join(", ")||"nessuno")+(S.note.pref?" — nota: "+S.note.pref:""));
+  L.push("Se nessuno è libero: "+((NESSUNO.find(o=>o.id===S.nessuno)||{l:"senza risposta"}).l)+(S.note.nessuno?" — nota: "+S.note.nessuno:""));
+  L.push("Riepilogo: "+(S.conferma?"confermato":"non confermato")+(S.note.riep?" — correzioni: "+S.note.riep:""));
+  return L.join("\n");
+}
+
+let db=null,timer=null,saving=false,pending=false;
+function setStatus(t,cls){ ["status","status2"].forEach(id=>{const el=document.getElementById(id); el.textContent=t; el.className="status "+(cls||"");}); }
+function local(){ try{ localStorage.setItem("nome-"+GIRO, JSON.stringify(S)); }catch(e){} }
+function changed(){ local(); refresh(); clearTimeout(timer); timer=setTimeout(save,900); setStatus(db?"Modifiche da salvare…":"Salvate solo su questo dispositivo", db?"":"warn"); }
+async function save(){
+  clearTimeout(timer);
+  if(!db){ setStatus("Salvataggio non disponibile qui: usa «Copia le risposte» e incollale in chat","warn"); document.getElementById("fallback").hidden=false; document.getElementById("copybox").hidden=false; return; }
+  if(saving){ pending=true; return; }
+  saving=true;
+  try{ await db.doc("giri/"+GIRO).set({v:S.v, note:S.note, pref:S.pref, nessuno:S.nessuno, conferma:S.conferma, testo:asText(), aggiornato:new Date().toISOString()});
+    setStatus("Salvate alle "+new Date().toLocaleTimeString("it-IT",{hour:"2-digit",minute:"2-digit"}),"ok");
+  }catch(e){ setStatus("Non salvate ("+(e&&e.code||"errore")+"). Riprova con «Salva adesso» o copia le risposte.","warn"); document.getElementById("copybox").hidden=false; }
+  saving=false; if(pending){ pending=false; save(); }
+}
+document.addEventListener("change", e=>{
+  const t=e.target;
+  if(t.dataset && t.dataset.name){ S.v[t.dataset.name]=t.value; changed(); }
+  else if(t.dataset && t.dataset.pref){ const n=t.dataset.pref; S.pref = t.checked ? [...S.pref.filter(x=>x!==n), n] : S.pref.filter(x=>x!==n); changed(); }
+  else if(t.name==="nessuno"){ S.nessuno=t.value; changed(); }
+  else if(t.id==="conferma"){ S.conferma=t.checked; changed(); }
+});
+document.addEventListener("click", e=>{
+  const t=e.target.closest("button"); if(!t) return;
+  if(t.dataset.up!==undefined){ const i=+t.dataset.up; [S.pref[i-1],S.pref[i]]=[S.pref[i],S.pref[i-1]]; changed(); }
+  else if(t.dataset.down!==undefined){ const i=+t.dataset.down; [S.pref[i+1],S.pref[i]]=[S.pref[i],S.pref[i+1]]; changed(); }
+});
+document.addEventListener("input", e=>{ const t=e.target; if(t.dataset && t.dataset.note){ S.note[t.dataset.note]=t.value; changed(); } });
+document.getElementById("accept-all").addEventListener("click",()=>{
+  N.forEach(x=>S.v[x.n]=x.rec);
+  S.pref = [...TENUTI, ...N.filter(x=>x.rec==="tengo").map(x=>x.n)].slice(0,5);
+  S.nessuno="dubbio"; render(); changed();
+});
+document.getElementById("save").addEventListener("click", save);
+document.getElementById("copy").addEventListener("click", async()=>{
+  const box=document.getElementById("copybox"); box.hidden=false;
+  try{ await navigator.clipboard.writeText(asText()); setStatus("Testo copiato","ok"); }
+  catch(e){ const r=document.createRange(); r.selectNodeContents(box); const s=getSelection(); s.removeAllRanges(); s.addRange(r); setStatus("Testo selezionato: copialo con Copia","warn"); }
+});
+render();
+(async()=>{
+  let got=null;
+  try{ got = (window.claude && window.claude.use) ? await window.claude.use("db") : null; }catch(e){ got=null; }
+  db=got;
+  if(!db){ setStatus("Salvataggio non disponibile qui: le risposte restano su questo dispositivo. Usa «Copia le risposte».","warn"); return; }
+  const to=setTimeout(()=>setStatus("Le risposte salvate non arrivano: puoi continuare, si salvano alla prossima modifica.","warn"),10000);
+  try{ const snap=await db.doc("giri/"+GIRO).get(); clearTimeout(to);
+    if(snap.exists){ const d=snap.data(); S.v=d.v||{}; S.note=d.note||{}; S.pref=d.pref||[]; S.nessuno=d.nessuno||""; S.conferma=!!d.conferma; render(); setStatus("Risposte salvate caricate","ok"); }
+    else setStatus("Nessuna risposta salvata finora: le tue si salvano da sole","");
+  }catch(e){ clearTimeout(to); setStatus("Non riesco a leggere le risposte salvate: le tue si salvano comunque alla prossima modifica.","warn"); }
+})();
+</script>
