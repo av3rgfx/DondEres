@@ -23,3 +23,5 @@ Risultato atteso: il brand kit nel repository, il link qui e la direzione scelta
   (Varco, Mirino, Colli) in `prototipi/brand-kit/concetti/`, sezione «Brand kit» di `docs/architettura.md`.
 - 20/11/2026, esito del secondo giro: nessuno dei tre concetti (369), «o» tonda (370). Seconda parte del giro: cosa non
   va e nove idee abbozzate da giudicare, nella stessa pagina.
+- 20/11/2026, giro 3: risposte nelle decisioni 371–373; tre concetti nuovi (cartello di corsia, corsia, porta di carico)
+  con lettere ridisegnate, in `prototipi/brand-kit/concetti-2/`.

@@ -1918,3 +1918,24 @@ disegnare tre concetti nuovi si chiede all'utente cosa non andava (idee, peso, l
 del simbolo) e gli si fanno giudicare nove idee abbozzate: corsia, cartello di corsia, porta di carico, ripiani a V,
 ingresso, spunta, monogramma Vk, V a filo, solo il nome. I tre concetti nuovi si scelgono dai «sì», poi dai «forse».
 
+Risposte (decisioni 371–373): non andavano le idee e le lettere del nome; sì al cartello di corsia; forse a corsia,
+porta di carico, ingresso e solo il nome; no a ripiani a V, monogramma Vk e V a filo; all'utente piace molto la K di
+Kiln (deduzione: piace il modo, una lettera che porta l'idea e torna nel nome, non l'arco in sé, che resta di Kiln).
+
+### Concetti del giro 3
+
+File in `prototipi/brand-kit/concetti-2/`, generati da `genera.py` (lettere a spessore variabile: medio 22, leggero
+16, sull'altezza della x di 96; V a 75 gradi; k con braccio e gamba a 45 gradi; «o» tonda, 370); `concetti.png` è il
+foglio del punto di controllo; `dati_pagina.py` mette i tracciati nella pagina. Tutti i file passano `svg_audit.py`
+senza avvisi. Scelte mie, da far confermare: ingresso escluso perché è anch'esso una V in un quadrato, come il cartello;
+«solo il nome» è dentro tutti e tre.
+
+| | Concetto | Idea | Rischio |
+|---|---|---|---|
+| A | Cartello di corsia (consigliato: l'unico «sì») | targa quadrata arrotondata con la V ritagliata e due fori per appenderla | lettera in un quadrato è comune tra le icone delle app; i fori spariscono a 16 punti |
+| B | Corsia | la V a ripiani, uguale nel simbolo e nel nome | nel nome può sembrare stencil; a 16 punti resta una V piena |
+| C | Porta di carico | il portone con la serranda alzata a metà | il più letterale: garage, o il carattere cinese per «porta» |
+
+Un primo foro al centro della targa, sopra la V, sembrava un puntino sulla lettera, cioè il concetto «İ puntata» di
+Kiln: l'ho spostato in due fori agli angoli.
+
