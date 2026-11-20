@@ -2029,3 +2029,18 @@ ridisegnato con curve morbide: nel giro 10 era la differenza tra due ellissi e i
 Pulito** (spessore uguale, piede diritto; consigliata), **B · Affusolato** (si assottiglia fino a meno della metà e si
 posa scivolando in avanti), **C · Slitta** (corre basso e la punta risale a 30 gradi). Tra 99 e 100 in `svg_audit.py`.
 
+### Giro 12: la R costruita, dopo le ricerche (decisione 395)
+
+Piacciono A · Pulito e C · Slitta del giro 11, non B (395). Ricerche dello stesso giorno:
+`docs/research/2026-11-20-analisi-libreria-lettera-r.md` (261 loghi a lettera singola della raccolta della skill, prova a
+scaffale) e `docs/research/2026-11-20-loghi-lettera-singola-fonti.md` (fonti dei progettisti). Indicazioni prese:
+un dettaglio solo che nasce dalla lettera, spessore uniforme e fine netta, forme elementari e sagoma piena, il riquadro
+non distingue, R e blu è il territorio di Revolut (#1326FD, R geometrica come icona e nel nome), una versione per i 16
+punti e una misura minima di stampa da provare.
+
+File in `prototipi/brand-kit/concetti-7/` (`genera.py`): **A · Pulito costruito** (occhiello più grande, gamba lunga
+dello spessore dell'asta che nasce dove l'asta finisce; consigliata), **B · Slitta costruita** (la Slitta con spessore
+costante), **C · Collo ritagliato** (radicale: la R è il vuoto dentro un collo pieno; costruita come contorno unico con
+archi, così il ritaglio non lascia fili). Scartata prima di mostrarla una «Tre forme» (barra, anello, quarto d'anello
+separati): si leggeva «IQ».
+
