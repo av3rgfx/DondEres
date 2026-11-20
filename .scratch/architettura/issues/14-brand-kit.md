@@ -35,3 +35,5 @@ Risultato atteso: il brand kit nel repository, il link qui e la direzione scelta
   ancora da fare (384, 385), nel nuovo ticket «Verifica dei nomi in R nei registri dei marchi». Il kit aspetta. Resta
   preso in carico; si riprende dalla scelta del nome, poi il kit (colore, versioni, icone, guida) sulla R · Rampa.
 - 20/11/2026, ripresa: nome Ripo (386), verifica chiusa per ora (387); si prosegue con il kit.
+- 20/11/2026, fine della sessione: R scelta **Pulito costruito** (396); si fanno i file finali del kit (397). Resta
+  aperto e preso in carico; prossimo passo nel prompt H di `docs/prossima-sessione.md`.

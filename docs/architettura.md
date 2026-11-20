@@ -2044,3 +2044,13 @@ costante), **C · Collo ritagliato** (radicale: la R è il vuoto dentro un collo
 archi, così il ritaglio non lascia fili). Scartata prima di mostrarla una «Tre forme» (barra, anello, quarto d'anello
 separati): si leggeva «IQ».
 
+### Stato a fine sessione (decisioni 396 e 397)
+
+- **Nome:** Ripo, per ora (386); Varko in riserva (376); ricerca europea dei marchi al consulente (387).
+- **Logo:** R · Pulito costruito (396), `prototipi/brand-kit/concetti-7/pulito-simbolo.svg` e `pulito-nome.svg`.
+- **Colore:** blu elettrico #1F5BFF (388). **Puntino della i:** tondo (390). **Simbolo e nome:** separati (391).
+- **Da fare nel kit (397):** rifinitura ottica; R per i 16 punti; blu chiaro per il tema scuro; versioni nera, bianca,
+  blu; icone (favicon, icone dell'app, manifest, con `export_variants.py` della skill); tavola d'uso
+  (`presentation_board.py`); guida di una pagina (`templates/brand-guidelines-template.md`); confronto affiancato con
+  Revolut e con le R della raccolta; misura minima di stampa da provare su una termica vera.
+
