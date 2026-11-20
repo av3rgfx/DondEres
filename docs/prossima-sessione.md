@@ -1,14 +1,28 @@
 # Prompt per la prossima sessione (Wayfinder sull'architettura)
 
 Da incollare all'avvio di una nuova sessione sul ramo principale aggiornato. La mappa esiste già: si lavora un ticket
-per sessione, più le ricerche. I due ticket sui resi del cliente nel magazzino Shopify sono chiusi
-(19/11/2026, decisioni 322–343; il prompt A resta come esempio di forma). Anche «Nome del prodotto» è chiuso
-(20/11/2026, decisioni 344–357; il prompt D resta come esempio): preferiti in ordine Kurso, Varko, Velko. Consigliato
-ora: «Unicità dei nomi scelti» (prompt E), una ricerca che porta alla scelta del nome e al brand kit. Lo stack aspetta
-ancora la divisione tra le macchine, che aspetta la prova visiva; «Aspetto grafico» aspetta brand kit e stack (deve
-contare anche la vista da computer per responsabili e admin, decisione 292). Quando nei repository privati ci sono
-foto o bolle da aprire, sessioni a parte lavorano la prova visiva (prompt B) e la prova di lettura delle bolle
-(prompt C).
+per sessione, più le ricerche. Chiusi il 20/11/2026: «Nome del prodotto» (decisioni 344–357) e «Unicità dei nomi
+scelti» (358–361): il prodotto si chiama **Varko**. I prompt A, D ed E restano come esempi di forma. Consigliato ora:
+«Brand kit con la skill logo-design» (prompt F). Lo stack aspetta ancora la divisione tra le macchine, che aspetta la
+prova visiva; «Aspetto grafico» aspetta brand kit e stack (deve contare anche la vista da computer per responsabili e
+admin, decisione 292). Quando nei repository privati ci sono foto o bolle da aprire, sessioni a parte lavorano la prova
+visiva (prompt B) e la prova di lettura delle bolle (prompt C).
+
+**Prompt F: brand kit**
+
+```text
+/wayfinder .scratch/architettura/map.md
+
+Leggi prima AGENTS.md, poi la mappa (solo map.md, non tutti i ticket). Lavora il ticket «Brand kit con la skill
+logo-design» (leggi l'etichetta del ticket per il tipo). Leggi i commenti del ticket e le decisioni 20, 351, 358 e
+359. Prima di installare la skill logo-design nel progetto (.claude/skills e .agents/skills, uguali) leggine il
+contenuto e dimmi cosa fa; niente installazioni globali. Le scelte di gusto sono mie.
+Registra ogni mia decisione in docs/decisioni.md, con data e motivo; scrivi la tua parte in docs/architettura.md.
+Parlami in italiano, con domande semplici: cosa chiedi, perché conta, cosa comporta ogni opzione.
+Per le domande usa una pagina interattiva (Artifact) con esempi visivi che cambiano con la risposta, opzione
+consigliata, «Accetta tutte le consigliate», note facoltative e risposte salvate che leggi tu quando scrivo «fatto».
+Lavora a giri: registra le risposte di ogni giro prima del successivo e chiudi con un riepilogo da confermare.
+```
 
 **Prompt E: unicità dei nomi scelti**
 

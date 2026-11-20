@@ -13,3 +13,7 @@ brief, concetti, punto di controllo con l'utente, kit. L'utente ha indicato l'es
 riferimento di stile. Le scelte sono dell'utente.
 
 Risultato atteso: il brand kit nel repository, il link qui e la direzione scelta in `docs/decisioni.md`.
+
+## Comments
+- 20/11/2026: sbloccato. Nome scelto Varko (358); Kiln vale solo come riferimento di stile (351), quindi la domanda sul
+  Kiln è già risolta. Un parere negativo del consulente in marchi può far rifare nome e logo (359).

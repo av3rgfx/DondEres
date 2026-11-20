@@ -118,6 +118,9 @@ percorso delle schermate e aspetto grafico, compresi nome e brand kit (decisioni
 - [Nome del prodotto](issues/12-nome-del-prodotto.md): marchio vero, uguale in italiano e in inglese, veloce e
   ordinato, parola modificata fino a 5 lettere; Kiln solo per lo stile; preferiti in ordine Kurso, Varko, Velko, da
   verificare; se nessuno è libero si riprende dai nomi in dubbio (decisioni 344–357).
+- [Unicità dei nomi scelti](issues/13-unicita-dei-nomi.md): Kurso bloccato da un marchio tedesco per software, Velko
+  vicino a Velco; nome scelto **Varko** (omofoni «Varco» da valutare); consulente in marchi prima del deposito e
+  dell'offerta ad altri; domini tutti presi, nessuna azione (decisioni 358–361).
 
 Prese prima della mappa, nel secondo giro di domande del 15/11/2026: decisioni 15–28 in
 [`docs/decisioni.md`](../../docs/decisioni.md) (assegnazione parziale, codice stampato come tipo di articolo,
@@ -148,6 +151,8 @@ tre livelli di conferma, quantità letta dalla scatola, ubicazioni facoltative, 
   banco e ha più casi particolari da controllare.
 - **Descrizione proposta da un modello che legge immagini e scrive testo** per l'articolo nuovo: se tenerla, e quale
   modello, dipende dalla prova e dal server. Oggi la scrive l'operatore con le parole lette sull'etichetta (108).
+- **Cambio del nome provvisorio DondEres:** dove compare (repository, documenti, pagine) e quando sostituirlo con Varko
+  (358); da decidere con il brand kit o con lo stack.
 
 ## Out of scope
 

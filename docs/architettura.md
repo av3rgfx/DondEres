@@ -1825,10 +1825,38 @@ Nomi nuovi, vicini a quelli tenuti: tenuti Velko e Kurso; in dubbio Varko, Venko
 
 I tre preferiti vanno alla verifica (356). Se nessuno è libero si riprende, nell'ordine, da Trako, Sorto, Rigo, Movo e
 poi da Venko, Arvo, Volko (i nomi in dubbio del secondo giro e i nuovi segnati «Forse»), e il nome si
-propone all'utente prima di sceglierlo (354). Aperto: se nella riserva entrano anche Vekto, Kardo, Rivo e Dokra,
-tenuti nel secondo giro ma non scelti tra i preferiti; la 354 non li nomina. Si chiede all'utente solo se serve.
+propone all'utente prima di sceglierlo (354). Il punto aperto su Vekto, Kardo, Rivo e Dokra (se entrano nella riserva) è chiuso
+dalla verifica: hanno tutti un ostacolo forte (361).
 
 Il nome definitivo lo sceglie l'utente dopo la verifica (357); con quel nome parte il brand kit, con Kiln come
 riferimento di stile (351). Pagina delle domande, privata: https://claude.ai/artifact/7iL3QXfdar2NsqsjQSu9EC; copia nel
 repository in `prototipi/nome-prodotto/index.html` (mostra l'ultimo giro).
 
+### Verifica e nome scelto (decisioni 358–361)
+
+Ticket «Unicità dei nomi scelti». Ricerca del 20/11/2026 in `docs/research/2026-11-20-unicita-nomi-prodotto.md`: marchi
+in TMview (copia di EUIPO, UIBM e WIPO Madrid; i siti di EUIPO e UIBM non rispondevano), WIPO Global Brand Database e
+registro tedesco, nelle classi 9, 35, 39 e 42; domini; prodotti con lo stesso nome. È preliminare, non un parere legale.
+
+| Nome | Giudizio (deduzione) | Cosa pesa di più |
+|---|---|---|
+| Kurso | ostacolo forte | KURSO in Germania, software e SaaS, in uso (kurso.de) |
+| **Varko** | ostacoli da valutare, i più bassi | nessun identico nel settore; omofoni «Varco» in altri settori e due domande italiane 2026 in classe 42 da leggere |
+| Velko | ostacoli da valutare, vicini a forte | omofono Velco, software per flotte in Francia |
+| Volko | sembra libero | solo WOLCO, servizi lontani |
+| Trako, Sorto | ostacoli da valutare | TRAKO per fiere (35); Forto, logistica digitale |
+| Rigo, Movo, Venko, Arvo, Vekto, Kardo, Rivo, Dokra | ostacolo forte | marchi identici nelle classi del prodotto |
+
+Nessun `.com` è libero per nessun nome.
+
+- **Nome: Varko** (358), il «varco» da cui passa la merce; si legge «vàr-ko» in italiano e in inglese.
+- **Consulente in marchi** prima del deposito e prima di offrire il programma ad altri magazzini, con attenzione ai
+  marchi «Varco»; intanto il nome si usa nel progetto e il brand kit parte, sapendo che un parere negativo li fa
+  rifare (359).
+- **Domini:** nessuna azione ora; varko.com, .it, .eu, .io, .app sono presi (360).
+- Il brand kit parte con Varko, con Kiln come riferimento di stile (351). Nel codice e nei documenti già scritti il
+  nome provvisorio DondEres resta finché non si decide come e quando cambiarlo (deduzione: è un cambio di testi, non di
+  struttura).
+
+Pagina delle domande, privata: https://claude.ai/artifact/QWapLTTybQqGXbrajL7ErH; copia nel repository in
+`prototipi/unicita-nomi/index.html`.
