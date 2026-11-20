@@ -3,14 +3,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@112,600;112,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
 <style>
-/* Layout: in alto i tre concetti nuovi affiancati (punto di controllo della skill), poi tre domande con l'esempio che cambia.
-   Tono: segnaletica di magazzino, come le altre pagine dei ticket. Loghi neri su carta: il colore arriva con il kit. */
+/* Layout: prima la nuova strada (lettera, poi logo, poi nome) da confermare, poi otto lettere abbozzate da giudicare,
+   poi due domande brevi. Tono: segnaletica di magazzino, come le altre pagine dei ticket. Disegni neri su carta. */
 :root{
   --bg:#f3f5f7; --surface:#ffffff; --fg:#17202b; --muted:#5a6675; --line:#d5dbe2;
   --accent:#1f4e8c; --accent-soft:#e3ebf6; --tag:#f2b705; --tag-fg:#2a2100;
-  --ok:#1d7a46; --warn:#9a5200; --warn-soft:#fbeedd;
+  --ok:#1d7a46; --ok-soft:#e2f3e9; --warn:#9a5200; --warn-soft:#fbeedd;
   --ink:#141414; --paper:#ffffff; --tile:#1b2633;
-  --phone:#0f1720; --phone-bar:#1b2633;
   --f-display:"Archivo","Arial Narrow",system-ui,sans-serif;
   --f-body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
   --f-mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
@@ -18,15 +17,13 @@
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --bg:#0f141a; --surface:#18202a; --fg:#e6ebf1; --muted:#9aa7b6; --line:#2c3846;
   --accent:#7fb0ef; --accent-soft:#1d2d42; --tag:#f2b705; --tag-fg:#2a2100;
-  --ok:#5fcf8e; --warn:#f0a447; --warn-soft:#3a2a14;
-  --ink:#141414; --paper:#f4f4f2; --tile:#26323f;
-  --phone:#05080c; --phone-bar:#1b2633; color-scheme:dark}}
+  --ok:#5fcf8e; --ok-soft:#163324; --warn:#f0a447; --warn-soft:#3a2a14;
+  --ink:#141414; --paper:#f4f4f2; --tile:#26323f; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#0f141a; --surface:#18202a; --fg:#e6ebf1; --muted:#9aa7b6; --line:#2c3846;
   --accent:#7fb0ef; --accent-soft:#1d2d42; --tag:#f2b705; --tag-fg:#2a2100;
-  --ok:#5fcf8e; --warn:#f0a447; --warn-soft:#3a2a14;
-  --ink:#141414; --paper:#f4f4f2; --tile:#26323f;
-  --phone:#05080c; --phone-bar:#1b2633; color-scheme:dark}
+  --ok:#5fcf8e; --ok-soft:#163324; --warn:#f0a447; --warn-soft:#3a2a14;
+  --ink:#141414; --paper:#f4f4f2; --tile:#26323f; color-scheme:dark}
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--fg);font:15px/1.55 var(--f-body);
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 96px}
@@ -40,34 +37,14 @@ p{margin:0;max-width:68ch}
 .bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
 button{font:600 14px/1 var(--f-body);border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--fg);padding:11px 14px;cursor:pointer}
 button.primary{background:var(--accent);border-color:var(--accent);color:var(--surface)}
-button:focus-visible,input:focus-visible,textarea:focus-visible,label.opt:focus-within{outline:3px solid var(--tag);outline-offset:2px}
+button:focus-visible,input:focus-visible,textarea:focus-visible,label.opt:focus-within,label.pill:focus-within{outline:3px solid var(--tag);outline-offset:2px}
 .status{font-size:13px;color:var(--muted)}
 .status.ok{color:var(--ok)} .status.warn{color:var(--warn)}
-details.box{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:var(--surface);font-size:14px}
-details.box summary{cursor:pointer;font-weight:600}
-details.box ul{margin:8px 0 0;padding-left:20px;display:grid;gap:4px}
 .rec{display:inline-block;margin-left:8px;font:600 11px/1 var(--f-mono);letter-spacing:.05em;text-transform:uppercase;background:var(--tag);color:var(--tag-fg);padding:4px 6px;border-radius:4px;vertical-align:2px}
-
-.concepts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-@media (max-width:820px){.concepts{grid-template-columns:minmax(0,1fr)}}
-.cc{background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:14px;display:grid;gap:12px;align-content:start;min-width:0}
-.cc.sel{border-color:var(--accent)}
-.cc .art{background:var(--paper);color:var(--ink);border-radius:10px;padding:18px;display:grid;gap:16px;justify-items:center}
-.cc .art .big{width:62%;max-width:170px;height:auto}
-.lock{display:flex;align-items:center;justify-content:center;gap:7%;width:100%}
-.lock svg{height:52px;width:auto;max-width:100%}
-.lock svg.s{height:58px;flex:none}
-.ladder{display:flex;align-items:flex-end;gap:12px}
-.ladder span{display:grid;justify-items:center;gap:2px;font:10px var(--f-mono);color:#6b7280}
-.ladder svg{color:var(--ink)}
-.cc .hd{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
-.cc .hd b{font:800 20px/1 var(--f-display);font-stretch:112%}
-.cc .hd .t{font:600 11px/1 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
-.cc p{font-size:14px}
-.cc .risk{font-size:13px;color:var(--warn);background:var(--warn-soft);border-radius:8px;padding:8px 10px}
 
 .q{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:18px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px}
 @media (max-width:760px){.q{grid-template-columns:minmax(0,1fr)}}
+.q.full{grid-template-columns:minmax(0,1fr)}
 .q .ask{display:grid;gap:10px;align-content:start;min-width:0}
 .q .num{font:600 12px/1 var(--f-mono);letter-spacing:.08em;color:var(--muted)}
 .q .why{color:var(--muted);font-size:14px}
@@ -82,28 +59,37 @@ textarea{width:100%;min-height:56px;font:14px/1.4 var(--f-body);border:1px solid
 .ex{background:var(--bg);border:1px dashed var(--line);border-radius:12px;padding:14px;display:grid;gap:12px;align-content:start;min-width:0}
 .ex .cap{font:600 11px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .ex small{color:var(--muted);font-size:13px;display:block}
-.ctx{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-.c{background:var(--paper);color:var(--ink);border-radius:10px;padding:10px;display:grid;gap:8px;align-content:space-between;min-height:96px;min-width:0}
-.c .lbl{color:#4b5563;font:600 10.5px/1.2 var(--f-mono);letter-spacing:.04em;text-transform:uppercase}
-.home{display:flex;gap:8px;background:var(--phone);border-radius:10px;padding:8px}
-.app{width:38px;height:38px;border-radius:9px;display:grid;place-items:center;background:#334155;color:#fff}
-.app.me{background:var(--tile)}
-.app svg{width:66%;height:66%}
-.tab{display:flex;align-items:center;gap:6px;background:#e5e7eb;border-radius:6px 6px 0 0;padding:5px 8px;font-size:11px;color:#111}
-.tab svg{width:16px;height:16px;flex:none}
-.hdr{display:flex;align-items:center;gap:8px;background:var(--phone-bar);color:#fff;border-radius:8px;padding:8px 10px;font-size:11.5px;min-width:0}
-.hdr svg{height:22px;width:auto;flex:none}
-.hdr .sp{margin-left:auto;opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.label{border:1px dashed #9ca3af;padding:6px 8px;font:10px/1.4 var(--f-mono);display:grid;gap:4px}
-.label .l{display:flex;gap:6px;align-items:center}
-.label svg{height:18px;width:auto}
-.wordbig{background:var(--paper);color:var(--ink);border-radius:10px;padding:16px;display:grid;place-items:center}
-.wordbig .lock svg{height:64px} .wordbig .lock svg.s{height:72px}
-.cmp{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px}
-.cmp div{background:var(--paper);color:var(--ink);border-radius:8px;padding:10px;display:grid;gap:6px;justify-items:center;font:600 10.5px var(--f-mono);color:#4b5563}
-.cmp svg{width:100%;height:30px;color:var(--ink)}
-.kit{margin:0;padding-left:18px;display:grid;gap:4px;font-size:13.5px}
-.kit li.off{opacity:.4}
+ol.steps{margin:0;padding-left:22px;display:grid;gap:6px;font-size:14px}
+ol.steps li.hl{font-weight:600}
+ol.steps li.off{opacity:.45;text-decoration:line-through}
+
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+@media (max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:440px){.grid{grid-template-columns:minmax(0,1fr)}}
+.let{border:2px solid var(--line);border-radius:12px;padding:12px;display:grid;gap:8px;align-content:start;background:var(--bg);min-width:0}
+.let.si{border-color:var(--ok);background:var(--ok-soft)} .let.no{opacity:.5}
+.let .art{background:var(--paper);color:var(--ink);border-radius:8px;display:grid;place-items:center;padding:12px;gap:8px}
+.let .art svg.big{width:92px;height:92px}
+.let .mini{display:flex;gap:10px;align-items:flex-end}
+.let .mini svg{color:var(--ink)}
+.let .tile{display:grid;place-items:center;background:var(--tile);color:#fff;border-radius:9px;width:36px;height:36px}
+.let .tile svg{width:62%;height:62%}
+.let b.L{font:800 22px/1 var(--f-display);font-stretch:112%}
+.let .tw{font-weight:600;font-size:13.5px}
+.let p{font-size:13px;color:var(--muted)}
+.let .nm{font-size:12.5px;color:var(--fg)}
+.pills{display:flex;gap:6px;flex-wrap:wrap}
+label.pill{display:flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:6px 10px;font-size:13px;cursor:pointer;background:var(--surface)}
+label.pill:has(input:checked){border-color:var(--accent);background:var(--accent-soft);font-weight:600}
+label.pill input{accent-color:var(--accent);margin:0}
+.pill .r{font:600 10px var(--f-mono);color:var(--tag-fg);background:var(--tag);border-radius:3px;padding:2px 4px}
+.tally{font-size:14px}
+.casepair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.casepair div{background:var(--paper);color:var(--ink);border-radius:8px;padding:12px;display:grid;justify-items:center;gap:6px;font:600 10.5px var(--f-mono);color:#4b5563}
+.casepair div.on{outline:3px solid var(--accent)}
+.casepair span.g{font:800 54px/1 var(--f-display);color:var(--ink)}
+.namepre{background:var(--paper);color:var(--ink);border-radius:8px;padding:12px;font:800 30px/1 var(--f-display);font-stretch:112%;letter-spacing:.01em}
+.namepre i{font-style:normal;color:#9ca3af}
 
 .save{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--line);padding-block:12px calc(12px + env(safe-area-inset-bottom,0px));display:grid;gap:8px}
 #copybox{font:12.5px/1.5 var(--f-mono);white-space:pre-wrap;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px}
@@ -111,62 +97,66 @@ textarea{width:100%;min-height:56px;font:14px/1.4 var(--f-body);border:1px solid
 
 <div class="wrap">
   <header class="intro">
-    <div class="eyebrow">Ticket «Brand kit con la skill logo-design» · giro 3 · 20/11/2026</div>
-    <h1>Brand kit di Varko: tre concetti nuovi</h1>
-    <p>Rifatti da capo con le tue risposte: idee nuove, lettere del nome ridisegnate e più leggere, e il modo di Kiln
-      che ti piace (un'idea sola, che si vede nel simbolo e torna nel nome), senza copiarne l'arco. Il primo è
-      l'unica idea a cui hai detto sì; gli altri due sono i «forse» più diversi da lui.</p>
-    <details class="box">
-      <summary>Cosa ho preso dalle tue risposte (decisioni 369–373)</summary>
-      <ul>
-        <li>Idee nuove: cartello di corsia (sì), corsia e porta di carico (forse). Ingresso l'ho lasciato fuori perché è
-          anch'esso una V in un quadrato, come il cartello; «solo il nome» è dentro tutti e tre, con le lettere nuove.</li>
-        <li>Lettere ridisegnate: aste più sottili (22 invece di 30 su un'altezza della x di 96), V più stretta a 75 gradi,
-          k con il braccio e la gamba a 45 gradi, «o» tonda (370).</li>
-        <li>Kiln: un'idea per concetto, ripresa nel nome. Per non copiarlo, niente arco e niente puntino sulla lettera.</li>
-      </ul>
-    </details>
+    <div class="eyebrow">Ticket «Brand kit con la skill logo-design» · giro 4 · 20/11/2026</div>
+    <h1>Prima la lettera, poi il nome</h1>
+    <p>Come hai chiesto (decisione 375): scegliamo lettere belle da modificare, disegniamo il logo sulla lettera, e solo
+      dopo cerchiamo un nome che parta da lì. Qui sotto ti chiedo di confermare cosa cambia per Varko, poi ti mostro
+      otto lettere, ciascuna con una modifica d'esempio. Sono schizzi: servono a scegliere la lettera, non il logo.</p>
     <div class="bar"><button class="primary" id="accept-all" type="button">Accetta tutte le consigliate</button>
       <span class="status" id="status">Caricamento delle risposte salvate…</span></div>
   </header>
 
-  <section aria-label="I tre concetti nuovi" class="concepts" id="concepts"></section>
-
   <section class="q" aria-labelledby="h-q1">
     <div class="ask">
-      <div class="num">DOMANDA 1 · DIREZIONE</div>
-      <h3 id="h-q1">Quale strada prendiamo per il kit?</h3>
-      <p class="why">Da qui in avanti si lavora su una strada sola: rifinitura, colore, versioni e icone.</p>
+      <div class="num">DOMANDA 1 · IL NOME VARKO</div>
+      <h3 id="h-q1">Cosa succede a Varko?</h3>
+      <p class="why">Varko è stato scelto dopo una verifica dei marchi (358). Se il nome nasce dalla lettera, Varko si
+        accantona e il nome nuovo va verificato di nuovo. Le regole del nome già decise (344–350) erano: marchio vero,
+        uguale in italiano e in inglese, veloce e ordinato, parola modificata fino a 5 lettere, niente parole da startup.</p>
       <div class="opts" id="q1-opts"></div>
-      <label class="notelbl" for="n-q1">Nota facoltativa (cosa ti piace o non ti piace in ciascuno)</label>
+      <label class="notelbl" for="n-q1">Nota facoltativa (per esempio quale regola del nome cambiare)</label>
       <textarea id="n-q1" data-note="q1"></textarea>
     </div>
     <div class="ex" id="ex-q1" aria-live="polite"></div>
   </section>
 
-  <section class="q" aria-labelledby="h-q2">
+  <section class="q full" aria-labelledby="h-q2">
     <div class="ask">
-      <div class="num">DOMANDA 2 · PESO DELLE LETTERE</div>
-      <h3 id="h-q2">Quanto spesse le lettere del nome?</h3>
-      <p class="why">Le lettere di prima non ti piacevano. Il peso medio è vicino a Kiln; il leggero è più elegante ma in
-        piccolo, nella testata del telefono, si legge un po' meno. Cambia anche il simbolo.</p>
-      <div class="opts" id="q2-opts"></div>
-      <label class="notelbl" for="n-q2">Nota facoltativa</label>
+      <div class="num">DOMANDA 2 · OTTO LETTERE</div>
+      <h3 id="h-q2">Su quali lettere vale la pena giocare?</h3>
+      <p class="why">Giudica la lettera e quanto ti sembra bella da modificare, non lo schizzo in sé: ogni lettera si può
+        cambiare in molti modi. Dai «sì» scelgo una o due lettere e ci disegno tre concetti veri. La V è esclusa (374).</p>
+      <div class="grid" id="letters"></div>
+      <p class="tally" id="tally" aria-live="polite"></p>
+      <label class="notelbl" for="n-q2">Nota facoltativa (anche una lettera che qui non c'è)</label>
       <textarea id="n-q2" data-note="q2"></textarea>
     </div>
-    <div class="ex" id="ex-q2" aria-live="polite"></div>
   </section>
 
   <section class="q" aria-labelledby="h-q3">
     <div class="ask">
-      <div class="num">DOMANDA 3 · IL KIT</div>
-      <h3 id="h-q3">Preparo il kit completo sulla strada scelta?</h3>
-      <p class="why">Il kit ha senso solo su una strada che ti convince. Se vuoi cambiare qualcosa, lo rifaccio prima.</p>
+      <div class="num">DOMANDA 3 · MAIUSCOLA O MINUSCOLA</div>
+      <h3 id="h-q3">La lettera del logo è maiuscola o minuscola?</h3>
+      <p class="why">La K di Kiln è maiuscola. Alcune lettere minuscole (a, g, k, r) hanno forme più ricche da modificare;
+        le maiuscole sono più solide e si leggono meglio a 16 punti.</p>
       <div class="opts" id="q3-opts"></div>
-      <label class="notelbl" for="n-q3">Nota facoltativa (cosa cambiare, se scegli di rivedere)</label>
+      <label class="notelbl" for="n-q3">Nota facoltativa</label>
       <textarea id="n-q3" data-note="q3"></textarea>
     </div>
     <div class="ex" id="ex-q3" aria-live="polite"></div>
+  </section>
+
+  <section class="q" aria-labelledby="h-q4">
+    <div class="ask">
+      <div class="num">DOMANDA 4 · DOVE STA LA LETTERA NEL NOME</div>
+      <h3 id="h-q4">Il nome nuovo deve cominciare con la lettera del logo?</h3>
+      <p class="why">Se comincia con quella lettera, il simbolo è anche l'iniziale, come per Kiln, e l'icona del telefono
+        si legge da sola. Se può stare anche in mezzo, ci sono più nomi possibili.</p>
+      <div class="opts" id="q4-opts"></div>
+      <label class="notelbl" for="n-q4">Nota facoltativa</label>
+      <textarea id="n-q4" data-note="q4"></textarea>
+    </div>
+    <div class="ex" id="ex-q4" aria-live="polite"></div>
   </section>
 
   <div class="save">
@@ -179,122 +169,103 @@ textarea{width:100%;min-height:56px;font:14px/1.4 var(--f-body);border:1px solid
 </div>
 
 <script>
-const GIRO = "3";
-const D = /*DATI*/{"sym":{"cartello-medio":{"vb":"0 0 256 256","d":["M66 20 L190 20 A46 46 0 0 1 236 66 L236 190 A46 46 0 0 1 190 236 L66 236 A46 46 0 0 1 20 190 L20 66 A46 46 0 0 1 66 20 Z M68.49 76.64 L102.56 76.64 L128 171.57 L153.44 76.64 L187.51 76.64 L153.55 203.36 L102.45 203.36 Z M56 50 A8 8 0 1 0 72 50 A8 8 0 1 0 56 50 Z M184 50 A8 8 0 1 0 200 50 A8 8 0 1 0 184 50 Z"]},"corsia-medio":{"vb":"0 0 256 256","d":["M36.14 20.6 L84.03 20.6 L95.38 63.01 L47.51 63.01 Z","M219.87 20.6 L171.97 20.6 L160.61 63.01 L208.5 63.01 Z","M51 76.06 L98.88 76.06 L110.25 118.47 L62.37 118.47 Z","M205 76.06 L157.11 76.06 L145.76 118.47 L193.64 118.47 Z","M65.86 131.53 L113.74 131.53 L125.11 173.94 L77.23 173.94 Z","M190.14 131.53 L142.25 131.53 L130.89 173.94 L178.77 173.94 Z","M80.72 186.99 L175.28 186.99 L163.91 229.4 L92.08 229.4 Z"]},"cartello-leggero":{"vb":"0 0 256 256","d":["M66 20 L190 20 A46 46 0 0 1 236 66 L236 190 A46 46 0 0 1 190 236 L66 236 A46 46 0 0 1 20 190 L20 66 A46 46 0 0 1 66 20 Z M75.46 76.64 L100.24 76.64 L128 180.24 L155.76 76.64 L180.54 76.64 L146.59 203.36 L109.41 203.36 Z M56 50 A8 8 0 1 0 72 50 A8 8 0 1 0 56 50 Z M184 50 A8 8 0 1 0 200 50 A8 8 0 1 0 184 50 Z"]},"corsia-leggero":{"vb":"0 0 256 256","d":["M45.93 20.6 L80.76 20.6 L92.13 63.01 L57.3 63.01 Z","M210.07 20.6 L175.24 20.6 L163.88 63.01 L198.7 63.01 Z","M60.79 76.06 L95.62 76.06 L106.98 118.47 L72.16 118.47 Z","M195.21 76.06 L160.38 76.06 L149.01 118.47 L183.84 118.47 Z","M75.66 131.53 L110.49 131.53 L121.84 173.94 L87.03 173.94 Z","M180.35 131.53 L145.52 131.53 L134.15 173.94 L168.98 173.94 Z","M90.52 186.99 L125.35 186.99 L128 196.91 L130.66 186.99 L165.48 186.99 L154.12 229.4 L101.87 229.4 Z"]},"porta":{"vb":"0 0 256 256","d":["M32 36 L224 36 L224 70 L32 70 Z","M32 70 L66 70 L66 220 L32 220 Z","M190 70 L224 70 L224 220 L190 220 Z","M80 84 L176 84 L176 104 L80 104 Z","M80 114 L176 114 L176 134 L80 134 Z","M80 144 L176 144 L176 164 L80 164 Z"]}},"word":{"medio":{"vb":"0 0 528 256","d":["M24 56 L46.78 56 L79.67 178.75 L112.56 56 L135.33 56 L96.75 200 L62.58 200 Z","M127.33 152 A49 49 0 1 1 225.33 152 A49 49 0 1 1 127.33 152 Z M149.33 152 A27 27 0 1 0 203.33 152 A27 27 0 1 0 149.33 152 Z","M203.33 104 L226.33 104 L226.33 200 L203.33 200 Z","M237.33 200 L237.33 104 L299.33 104 L299.33 126 L274.73 126 A15.4 15.4 0 0 0 259.33 141.4 L259.33 200 Z","M311.33 56 L333.33 56 L333.33 200 L311.33 200 Z","M365.78 104 L396.89 104 L348.89 152 L396.89 200 L365.78 200 L333.33 167.56 L330.33 167.56 L330.33 136.44 L333.33 136.44 Z","M405.89 152 A49 49 0 1 1 503.89 152 A49 49 0 1 1 405.89 152 Z M427.89 152 A27 27 0 1 0 481.89 152 A27 27 0 1 0 427.89 152 Z"]},"medio-corsia":{"vb":"0 0 528 256","d":["M24 56 L46.78 56 L58.57 100 L35.79 100 Z","M135.33 56 L112.56 56 L100.77 100 L123.54 100 Z","M37.4 106 L60.17 106 L71.96 150 L49.19 150 Z","M121.94 106 L99.16 106 L87.37 150 L110.15 150 Z","M50.79 156 L73.57 156 L79.67 178.75 L85.76 156 L108.54 156 L96.75 200 L62.58 200 Z","M127.33 152 A49 49 0 1 1 225.33 152 A49 49 0 1 1 127.33 152 Z M149.33 152 A27 27 0 1 0 203.33 152 A27 27 0 1 0 149.33 152 Z","M203.33 104 L226.33 104 L226.33 200 L203.33 200 Z","M237.33 200 L237.33 104 L299.33 104 L299.33 126 L274.73 126 A15.4 15.4 0 0 0 259.33 141.4 L259.33 200 Z","M311.33 56 L333.33 56 L333.33 200 L311.33 200 Z","M365.78 104 L396.89 104 L348.89 152 L396.89 200 L365.78 200 L333.33 167.56 L330.33 167.56 L330.33 136.44 L333.33 136.44 Z","M405.89 152 A49 49 0 1 1 503.89 152 A49 49 0 1 1 405.89 152 Z M427.89 152 A27 27 0 1 0 481.89 152 A27 27 0 1 0 427.89 152 Z"]},"leggero":{"vb":"0 0 508 256","d":["M24 56 L40.56 56 L75.01 184.55 L109.45 56 L126.02 56 L87.43 200 L62.58 200 Z","M120.02 152 A49 49 0 1 1 218.02 152 A49 49 0 1 1 120.02 152 Z M136.02 152 A33 33 0 1 0 202.02 152 A33 33 0 1 0 136.02 152 Z","M202.02 104 L219.02 104 L219.02 200 L202.02 200 Z","M231.02 200 L231.02 104 L287.02 104 L287.02 120 L258.22 120 A11.2 11.2 0 0 0 247.02 131.2 L247.02 200 Z","M300.02 56 L316.02 56 L316.02 200 L300.02 200 Z","M352.7 104 L375.33 104 L327.33 152 L375.33 200 L352.7 200 L316.02 163.31 L313.02 163.31 L313.02 140.69 L316.02 140.69 Z","M385.33 152 A49 49 0 1 1 483.33 152 A49 49 0 1 1 385.33 152 Z M401.33 152 A33 33 0 1 0 467.33 152 A33 33 0 1 0 401.33 152 Z"]},"leggero-corsia":{"vb":"0 0 508 256","d":["M24 56 L40.56 56 L52.35 100 L35.79 100 Z","M126.02 56 L109.45 56 L97.66 100 L114.23 100 Z","M37.4 106 L53.96 106 L65.75 150 L49.19 150 Z","M112.62 106 L96.05 106 L84.26 150 L100.83 150 Z","M50.79 156 L67.36 156 L75.01 184.55 L82.66 156 L99.22 156 L87.43 200 L62.58 200 Z","M120.02 152 A49 49 0 1 1 218.02 152 A49 49 0 1 1 120.02 152 Z M136.02 152 A33 33 0 1 0 202.02 152 A33 33 0 1 0 136.02 152 Z","M202.02 104 L219.02 104 L219.02 200 L202.02 200 Z","M231.02 200 L231.02 104 L287.02 104 L287.02 120 L258.22 120 A11.2 11.2 0 0 0 247.02 131.2 L247.02 200 Z","M300.02 56 L316.02 56 L316.02 200 L300.02 200 Z","M352.7 104 L375.33 104 L327.33 152 L375.33 200 L352.7 200 L316.02 163.31 L313.02 163.31 L313.02 140.69 L316.02 140.69 Z","M385.33 152 A49 49 0 1 1 483.33 152 A49 49 0 1 1 385.33 152 Z M401.33 152 A33 33 0 1 0 467.33 152 A33 33 0 1 0 401.33 152 Z"]}},"lock":{},"old":{"vb":"0 0 574 256","d":["M24 56 L62 56 L92 146 L122 56 L160 56 L112 200 L72 200 Z","M150 152 A49 49 0 1 1 248 152 A49 49 0 1 1 150 152 Z M180 152 A19 19 0 1 0 218 152 A19 19 0 1 0 180 152 Z","M218 104 L249 104 L249 200 L218 200 Z","M262 200 L262 104 L326 104 L326 134 L311 134 A19 19 0 0 0 292 153 L292 200 Z","M340 56 L370 56 L370 200 L340 200 Z","M360 138 L394 104 L436 104 L360 180 Z","M390.07 148 L420.04 118.03 L442 200 L404 200 Z","M452 152 A49 49 0 1 1 550 152 A49 49 0 1 1 452 152 Z M482 152 A19 19 0 1 0 520 152 A19 19 0 1 0 482 152 Z"]}}/*FINE*/;
-const C = {
- A:{nome:"Cartello di corsia",tipo:"Simbolo e nome",sym:"cartello",word:"",
-    idea:"La targa appesa sopra le corsie, con la V del nome ritagliata e i due fori per appenderla.",
-    perche:"È l'idea a cui hai detto sì. Funziona da icona del telefono così com'è: è già un quadrato.",
-    rischio:"Una lettera in un quadrato arrotondato è comune tra le icone delle app: il dettaglio proprio sono i due fori, che a 16 punti spariscono."},
- B:{nome:"Corsia",tipo:"Lettera V e nome",sym:"corsia",word:"-corsia",
-    idea:"La V del nome a ripiani: due scaffali che si incontrano in fondo alla corsia. La stessa V apre il nome, come la K di Kiln.",
-    perche:"È il più vicino al modo di Kiln: la lettera porta l'idea ed è la stessa nel simbolo e nel nome.",
-    rischio:"Nel nome la V a fessure può sembrare una scritta a stencil. A 16 punti le fessure spariscono e resta una V piena."},
- C:{nome:"Porta di carico",tipo:"Simbolo e nome",sym:"porta",word:"",
-    idea:"Il portone della baia di carico con la serranda alzata a metà: da lì entra e esce la merce.",
-    perche:"Si capisce subito che parla di magazzino; regge bene in piccolo.",
-    rischio:"È il più letterale: può sembrare l'icona di un garage, o il carattere cinese che vuol dire «porta»."}
-};
+const GIRO = "4";
+const D = /*DATI*/{"K":["M14 10 L36 10 L36 90 L14 90 Z","M67.09 10 L92.49 10 L69.4 50 L92.49 90 L67.09 90 L48 56.93 L48 43.07 Z"],"R":["M14 10 L32 10 L32 90 L14 90 Z","M14 10 L56 10 A25 25 0 0 1 56 60 L14 60 Z M32 28 L56 28 A7 7 0 0 1 56 42 L32 42 Z","M62 60 L82 60 L82 90 L62 90 Z"],"S":["M38 10 L84 10 L84 28 L38 28 L38 41 L20 41 L20 28 A18 18 0 0 1 38 10 Z","M20 41 L84 41 L84 59 L20 59 Z","M66 59 L84 59 L84 72 A18 18 0 0 1 66 90 L16 90 L16 72 L66 72 Z"],"M":["M10 10 L90 10 L90 28 L10 28 Z","M10 28 L28 28 L28 90 L10 90 Z","M41 28 L59 28 L59 62 L41 62 Z","M72 28 L90 28 L90 90 L72 90 Z"],"A":["M50 8 L94 90 L60 90 L60 62 L40 62 L40 90 L6 90 Z"],"Q":["M10 48 A38 38 0 1 1 86 48 A38 38 0 1 1 10 48 Z M28 48 A20 20 0 1 0 68 48 A20 20 0 1 0 28 48 Z","M64 64 L92 64 L92 92 L64 92 Z"],"G":["M90 50 A40 40 0 1 1 70 15.36 L61 30.95 A22 22 0 1 0 72 50 Z","M52 50 L90 50 L90 66 L52 66 Z"],"X":["M14 8 L86 8 L50 42 Z","M14 92 L86 92 L50 58 Z","M8 14 L8 86 L42 50 Z","M92 14 L92 86 L58 50 Z"]}/*FINE*/;
+const L = [
+ {id:"K", tw:"K a scatto", d:"Asta e una «<» staccata, con una fessura tra le due.", gioco:"Braccio e gamba si possono staccare, piegare, tagliare. Va tenuta lontana dalla K di Kiln (gamba ad arco).", nm:"Nomi in K: suono duro, veloce; K ammessa (350).", rec:"forse"},
+ {id:"R", tw:"R con il piede", d:"Occhiello tondo e una gamba diritta, come un piede d'appoggio.", gioco:"Occhiello, gamba e attacco tra i due: tre parti da giocare.", nm:"Molte parole italiane e inglesi in R.", rec:"si"},
+ {id:"S", tw:"S a squadra", d:"Due curve a gomito tagliate a squadra, due angoli tondi.", gioco:"Si può fare con due archi, due blocchi, un nastro, un percorso.", nm:"Molte parole in S; attenzione a «sc» (345).", rec:"forse"},
+ {id:"M", tw:"M a scaffale", d:"Tre montanti appesi a una trave.", gioco:"Montanti, punte e vuoti: si presta alle scaffalature, ma è larga.", nm:"Molte parole in M.", rec:"forse"},
+ {id:"A", tw:"A a tenda", d:"Un triangolo pieno con una porta al posto della barra.", gioco:"Barra, punta e gambe: molto usata nei loghi, difficile da rendere propria.", nm:"Molte parole in A.", rec:"forse"},
+ {id:"Q", tw:"Q a blocco", d:"Un anello e una coda quadrata che esce in basso.", gioco:"La coda è il dettaglio perfetto da inventare; il resto è un cerchio pulito.", nm:"Pochi nomi: quasi sempre «Qu».", rec:"si"},
+ {id:"G", tw:"G tagliata", d:"Un anello aperto e una barra che rientra.", gioco:"Apertura, barra e sperone: tante varianti.", nm:"Solo «Ga», «Go», «Gu»: «ge» e «gi» si leggono diverse in inglese (345).", rec:"forse"},
+ {id:"X", tw:"X di smistamento", d:"Quattro triangoli che puntano al centro: la X è il vuoto, come un incrocio.", gioco:"Incroci, frecce, vuoti: racconta lo smistamento della merce.", nm:"Pochissimi nomi cominciano con X; spesso «Ks» o «Z» in inglese.", rec:"si"}
+];
 const Q = {
- q1:[{id:"A",l:"A · Cartello di corsia",d:"Targa con la V ritagliata, accanto al nome.",rec:true},
-     {id:"B",l:"B · Corsia",d:"V a ripiani, uguale nel simbolo e nel nome."},
-     {id:"C",l:"C · Porta di carico",d:"Il portone con la serranda, accanto al nome."},
-     {id:"rifare",l:"Nessuno dei tre",d:"Scrivi nella nota cosa non va: riparto da lì."}],
- q2:[{id:"medio",l:"Medio",d:"Vicino a Kiln: pieno ma non pesante. Si legge bene anche in piccolo.",rec:true},
-     {id:"leggero",l:"Leggero",d:"Più sottile ed elegante; in piccolo si legge un po' meno."}],
- q3:[{id:"si",l:"Sì, prepara il kit",d:"Nel giro successivo vedi il kit e scegli il colore.",rec:true},
-     {id:"rivedi",l:"Prima rivedi i concetti",d:"Scrivi nella nota cosa cambiare."}]
+ q1:[{id:"accantona",l:"Varko si accantona; il nome nuovo segue le stesse regole",d:"Regole 344–350 invariate; il nome nuovo ripassa dalla verifica dei marchi prima di essere scelto. Varko resta in riserva.",rec:true},
+     {id:"regole",l:"Varko si accantona e le regole del nome si rivedono",d:"Per esempio più di 5 lettere, o una parola intera. Scrivi nella nota quale regola."},
+     {id:"tieni",l:"Teniamo Varko, cambio solo il logo",d:"Il logo sulla lettera scelta va accanto a «Varko» anche se non è la sua iniziale."}],
+ q3:[{id:"maiuscola",l:"Maiuscola",d:"Come la K di Kiln: più solida, si legge meglio piccola.",rec:true},
+     {id:"minuscola",l:"Minuscola",d:"Forme più ricche e morbide; meno solida in piccolo."},
+     {id:"vediamo",l:"Decidiamo lettera per lettera",d:"Nei concetti provo la forma che rende di più."}],
+ q4:[{id:"iniziale",l:"Sì, il nome comincia con quella lettera",d:"Il simbolo è anche l'iniziale del nome.",rec:true},
+     {id:"dentro",l:"Basta che ci sia",d:"La lettera può stare anche in mezzo al nome; il simbolo la mette in evidenza."}]
 };
-let S = {q1:"",q2:"",q3:"",note:{}};
-try{ const d = JSON.parse(localStorage.getItem("brand-kit-g3")||"null"); if(d) S = Object.assign(S,d); }catch(e){}
+let S = {q1:"",q3:"",q4:"",lettere:{},note:{}};
+try{ const d = JSON.parse(localStorage.getItem("brand-kit-g4")||"null"); if(d) S = Object.assign(S,d); }catch(e){}
 const esc = s => String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const svg = (o,cls,label,size) => `<svg class="${cls||""}" viewBox="${o.vb}"${size?` width="${size}" height="${size}"`:""} role="img" aria-label="${esc(label)}">${o.d.map(d=>`<path fill="currentColor" fill-rule="evenodd" d="${d}"/>`).join("")}</svg>`;
+const svg = (paths,cls,label,size) => `<svg class="${cls||""}" viewBox="0 0 100 100"${size?` width="${size}" height="${size}"`:""} role="img" aria-label="${esc(label)}">${paths.map(d=>`<path fill="currentColor" fill-rule="evenodd" d="${d}"/>`).join("")}</svg>`;
 const opts = (name,list,cur) => list.map(o=>`<label class="opt"><input type="radio" name="${name}" value="${o.id}" ${cur===o.id?"checked":""}>
   <span><b>${esc(o.l)}</b>${o.rec?'<span class="rec">Consigliata</span>':""}<span class="d">${esc(o.d)}</span></span></label>`).join("");
 const lab = (list,id) => (list.find(o=>o.id===id)||{l:"da scegliere"}).l;
-const peso = () => S.q2==="leggero" ? "leggero" : "medio";
-const symOf = (k,p) => { const s=C[k].sym; return D.sym[s==="porta"?"porta":s+"-"+(p||peso())]; };
-const wordOf = (k,p) => D.word[(p||peso())+C[k].word];
-function lockup(k,p){
-  const w = svg(wordOf(k,p),"","Varko");
-  return k==="B" ? `<span class="lock">${w}</span>` : `<span class="lock">${svg(symOf(k,p),"s","Simbolo "+k)}${w}</span>`;
-}
-function concepts(){
-  document.getElementById("concepts").innerHTML = ["A","B","C"].map(k=>{ const c=C[k]; return `
-   <article class="cc ${S.q1===k?"sel":""}" aria-labelledby="cc-${k}">
-     <div class="art">${svg(symOf(k),"big","Concetto "+k+", simbolo")}${lockup(k)}
-       <div class="ladder">${[64,32,16].map(px=>`<span>${svg(symOf(k),"",k+" a "+px+" punti",px)}${px}px</span>`).join("")}</div></div>
-     <div class="hd"><b id="cc-${k}">${k} · ${esc(c.nome)}</b><span class="t">${esc(c.tipo)}</span>${k==="A"?'<span class="rec">Consigliata</span>':""}</div>
-     <p><b>Idea:</b> ${esc(c.idea)}</p>
-     <p><b>Perché:</b> ${esc(c.perche)}</p>
-     <div class="risk"><b>Rischio:</b> ${esc(c.rischio)}</div>
-   </article>`; }).join("");
-}
-function exQ1(){
-  const k = ["A","B","C"].includes(S.q1) ? S.q1 : null;
-  if(!k) return `<div class="cap">Dove si vedrà</div><small>${S.q1==="rifare"?"Riparto dai concetti, con quello che scrivi nella nota.":"Scegli una strada per vederla al lavoro."}</small>`;
-  const sym = symOf(k), w = svg(wordOf(k),"","Varko");
-  const head = k==="B" ? w : svg(sym,"","Simbolo")+w;
-  return `<div class="cap">La strada ${k} al lavoro (bianco e nero)</div>
-   <div class="ctx">
-     <div class="c"><div class="home"><div class="app me">${svg(sym,"","Icona")}</div><div class="app"></div><div class="app"></div><div class="app"></div></div><span class="lbl">Icona sul telefono</span></div>
-     <div class="c"><div class="tab">${svg(sym,"","Icona")}Varko · Ricevimento</div><span class="lbl">Scheda del browser, 16 punti</span></div>
-     <div class="c"><div class="hdr">${head}<span class="sp">Prelievo · Ordine 2291</span></div><span class="lbl">Testata delle schermate</span></div>
-     <div class="c"><div class="label"><span class="l">${head}</span><span>UBIC. A-03-2 · DDT 418</span></div><span class="lbl">Etichetta termica</span></div>
-   </div><small>Il colore vero si sceglie con il kit.</small>`;
-}
-function exQ2(){
-  const k = ["A","B","C"].includes(S.q1) ? S.q1 : "A";
-  const p = S.q2==="leggero" ? "leggero" : S.q2==="medio" ? "medio" : null;
-  const other = p==="medio" ? "leggero" : "medio";
-  return `<div class="cap">Strada ${k}${["A","B","C"].includes(S.q1)?"":" (scegli una strada nella domanda 1)"} · ${p||"scegli un peso"}</div>
-   <div class="wordbig">${lockup(k,p||"medio")}</div>
-   <div class="cmp"><div>${svg(D.word[(p?other:"leggero")+C[k].word],"","Varko")}${p?other:"leggero"}</div><div>${svg(D.old,"","Varko del giro 2")}giro 2, scartato</div></div>
-   <small>${p==="leggero"?"Più aria e più eleganza; nella testata del telefono le aste si assottigliano molto.":p==="medio"?"Pieno ma non pesante: le aste sono un quarto più sottili del giro 2.":"Scegli un'opzione."}</small>`;
-}
-function exQ3(){
-  const on = S.q3!=="rivedi";
-  const items = ["Forme rifinite e versione per le misure piccole","Colore: due o tre proposte lontane da rosso, verde e giallo, da scegliere","Versioni nero, bianco e a un colore","Nome orizzontale e simbolo sopra il nome","Icone per telefono e scheda del browser (favicon, icone dell'app, manifest)","Tavola con esempi d'uso: telefono, computer, etichetta, documento","Guida d'uso di una pagina: spazi, misure minime, colori, usi sbagliati"];
-  return `<div class="cap">${on?"Cosa contiene il kit":"Prima un altro giro di concetti"}</div>
-   <ul class="kit">${items.map(t=>`<li class="${on?"":"off"}">${esc(t)}</li>`).join("")}</ul>
-   <small>${S.q3==="si"?"File in prototipi/brand-kit/kit/; i colori li scegli tu.":S.q3==="rivedi"?(S.note.q3?"Cosa cambio: «"+esc(S.note.q3)+"».":"Scrivi nella nota cosa cambiare."):"Scegli un'opzione."}</small>`;
-}
+const first = () => (L.find(x=>S.lettere[x.id]==="si") || L.find(x=>S.lettere[x.id]==="forse") || {id:"R"}).id;
+
 function render(){
-  for(const k of ["q1","q2","q3"]){ document.getElementById(k+"-opts").innerHTML = opts(k,Q[k],S[k]); document.getElementById("n-"+k).value = S.note[k]||""; }
+  for(const k of ["q1","q3","q4"]) document.getElementById(k+"-opts").innerHTML = opts(k,Q[k],S[k]);
+  document.getElementById("letters").innerHTML = L.map(x=>{ const v=S.lettere[x.id]||""; return `
+   <article class="let ${v}" aria-labelledby="t-${x.id}">
+     <div class="art">${svg(D[x.id],"big","Lettera "+x.id+", schizzo")}
+       <div class="mini"><span class="tile">${svg(D[x.id],"","Icona")}</span>${svg(D[x.id],"","16 punti",16)}</div></div>
+     <div><b class="L" id="t-${x.id}">${x.id}</b> <span class="tw">${esc(x.tw)}</span></div>
+     <p>${esc(x.d)}</p><p><b>Su cosa si gioca:</b> ${esc(x.gioco)}</p><p class="nm"><b>Nomi:</b> ${esc(x.nm)}</p>
+     <div class="pills" role="radiogroup" aria-labelledby="t-${x.id}">${[["si","Sì"],["forse","Forse"],["no","No"]].map(([val,l])=>`<label class="pill"><input type="radio" name="l-${x.id}" value="${val}" ${v===val?"checked":""}>${l}${x.rec===val?'<span class="r">consigliata</span>':""}</label>`).join("")}</div>
+   </article>`; }).join("");
+  for(const k of ["q1","q2","q3","q4"]) document.getElementById("n-"+k).value = S.note[k]||"";
   refresh();
 }
 function refresh(){
-  concepts();
-  document.getElementById("ex-q1").innerHTML = exQ1();
-  document.getElementById("ex-q2").innerHTML = exQ2();
-  document.getElementById("ex-q3").innerHTML = exQ3();
+  document.querySelectorAll(".let").forEach((el,i)=>{ el.classList.remove("si","forse","no"); const v=S.lettere[L[i].id]; if(v) el.classList.add(v); });
+  const si = L.filter(x=>S.lettere[x.id]==="si"), fo = L.filter(x=>S.lettere[x.id]==="forse");
+  document.getElementById("tally").innerHTML = Object.keys(S.lettere).length
+    ? `Sì: <b>${si.length}</b> · Forse: <b>${fo.length}</b> · No: <b>${L.filter(x=>S.lettere[x.id]==="no").length}</b>. ${si.length?"Lavorerei su: "+si.slice(0,2).map(x=>x.id).join(" e ")+(si.length>2?" (sono più di due: scelgo le due più promettenti e te lo dico)":"")+".":fo.length?"Nessun sì: lavorerei sui forse "+fo.slice(0,2).map(x=>x.id).join(" e ")+".":""}`
+    : "Giudica le lettere: qui compare su quali lavorerei.";
+  // esempio 1: il percorso
+  const st = S.q1==="tieni"
+    ? [["Lettera scelta e tre concetti",1],["Kit del logo",0],["Il nome resta Varko",0],["Nuova verifica dei marchi",-1]]
+    : S.q1 ? [["Lettera scelta e tre concetti",1],["Nome nuovo a partire dalla lettera"+(S.q1==="regole"?", con regole riviste":", regole 344–350"),0],["Verifica dei marchi del nome nuovo",0],["Kit completo: logo e nome",0],["Consulente in marchi prima del deposito (359)",0]] : null;
+  document.getElementById("ex-q1").innerHTML = `<div class="cap">I prossimi passi</div>${st?`<ol class="steps">${st.map(([t,h])=>`<li class="${h>0?"hl":h<0?"off":""}">${esc(t)}</li>`).join("")}</ol>`:"<small>Scegli un'opzione.</small>"}
+    <small>${S.q1==="tieni"?"Il logo non sarà l'iniziale del nome: si lega a Varko solo con il disegno.":S.q1?"Varko resta in riserva: se il nome nuovo non è libero, si può tornare a lui.":""}</small>`;
+  // esempio 3: maiuscola o minuscola
+  const l = first();
+  document.getElementById("ex-q3").innerHTML = `<div class="cap">La lettera ${l} (la prima dei tuoi sì)</div>
+    <div class="casepair"><div class="${S.q3==="maiuscola"?"on":""}"><span class="g">${l}</span>maiuscola</div><div class="${S.q3==="minuscola"?"on":""}"><span class="g">${l.toLowerCase()}</span>minuscola</div></div>
+    <small>${S.q3==="vediamo"?"Nei concetti provo tutte e due e tengo quella che rende di più.":S.q3?"Lettere di un carattere già pronto, solo per vedere la forma.":"Scegli un'opzione."}</small>`;
+  // esempio 4: dove sta la lettera
+  const ex = S.q4==="dentro" ? `<i>_</i>${l}<i>___</i>` : `${l}<i>____</i>`;
+  document.getElementById("ex-q4").innerHTML = `<div class="cap">Forma del nome nuovo</div><div class="namepre" aria-label="Schema del nome">${ex}</div>
+    <small>${S.q4==="dentro"?"La lettera può stare dove serve; i trattini sono le altre lettere.":S.q4==="iniziale"?"La lettera apre il nome, fino a 5 lettere in tutto se restano le regole del nome.":"Scegli un'opzione."}</small>`;
   document.getElementById("copybox").textContent = asText();
 }
 function asText(){
   const n = k => S.note[k] ? " — nota: "+S.note[k] : "";
-  return ["Brand kit Varko – giro 3",
-    "1. Direzione: "+lab(Q.q1,S.q1)+n("q1"),
-    "2. Peso delle lettere: "+lab(Q.q2,S.q2)+n("q2"),
-    "3. Kit: "+lab(Q.q3,S.q3)+n("q3")].join("\n");
+  return ["Brand kit – giro 4",
+    "1. Varko: "+lab(Q.q1,S.q1)+n("q1"),
+    "2. Lettere: "+L.map(x=>x.id+" = "+({si:"sì",forse:"forse",no:"no"}[S.lettere[x.id]]||"—")).join("; ")+n("q2"),
+    "3. Maiuscola o minuscola: "+lab(Q.q3,S.q3)+n("q3"),
+    "4. Lettera nel nome: "+lab(Q.q4,S.q4)+n("q4")].join("\n");
 }
 
 let db=null,timer=null,saving=false,pending=false;
 function setStatus(t,cls){ ["status","status2"].forEach(id=>{const el=document.getElementById(id); el.textContent=t; el.className="status "+(cls||"");}); }
-function local(){ try{ localStorage.setItem("brand-kit-g3", JSON.stringify(S)); }catch(e){} }
+function local(){ try{ localStorage.setItem("brand-kit-g4", JSON.stringify(S)); }catch(e){} }
 function changed(){ local(); refresh(); clearTimeout(timer); timer=setTimeout(save,900); setStatus(db?"Modifiche da salvare…":"Salvate solo su questo dispositivo", db?"":"warn"); }
 async function save(){
   clearTimeout(timer);
   if(!db){ setStatus("Salvataggio non disponibile qui: usa «Copia le risposte» e incollale in chat","warn"); document.getElementById("copybox").hidden=false; return; }
   if(saving){ pending=true; return; }
   saving=true;
-  try{ await db.doc("giri/"+GIRO).set({q1:S.q1,q2:S.q2,q3:S.q3,note:S.note,testo:asText(),aggiornato:new Date().toISOString()});
+  try{ await db.doc("giri/"+GIRO).set({q1:S.q1,q3:S.q3,q4:S.q4,lettere:S.lettere,note:S.note,testo:asText(),aggiornato:new Date().toISOString()});
     setStatus("Salvate alle "+new Date().toLocaleTimeString("it-IT",{hour:"2-digit",minute:"2-digit"}),"ok");
   }catch(e){ setStatus("Non salvate ("+(e&&e.code||"errore")+"). Riprova con «Salva adesso» o copia le risposte.","warn"); document.getElementById("copybox").hidden=false; }
   saving=false; if(pending){ pending=false; save(); }
 }
-document.addEventListener("change", e=>{ const t=e.target; if(["q1","q2","q3"].includes(t.name)){ S[t.name]=t.value; changed(); } });
+document.addEventListener("change", e=>{
+  const t=e.target;
+  if(["q1","q3","q4"].includes(t.name)){ S[t.name]=t.value; changed(); }
+  else if(t.name && t.name.startsWith("l-")){ S.lettere[t.name.slice(2)]=t.value; changed(); }
+});
 document.addEventListener("input", e=>{ const t=e.target; if(t.dataset && t.dataset.note){ S.note[t.dataset.note]=t.value; changed(); } });
-document.getElementById("accept-all").addEventListener("click",()=>{ for(const k of ["q1","q2","q3"]) S[k]=Q[k].find(o=>o.rec).id; render(); changed(); });
+document.getElementById("accept-all").addEventListener("click",()=>{ for(const k of ["q1","q3","q4"]) S[k]=Q[k].find(o=>o.rec).id; for(const x of L) S.lettere[x.id]=x.rec; render(); changed(); });
 document.getElementById("save").addEventListener("click", save);
 document.getElementById("copy").addEventListener("click", async()=>{
   const box=document.getElementById("copybox"); box.hidden=false;
@@ -309,7 +280,7 @@ render();
   if(!db){ setStatus("Salvataggio non disponibile qui: le risposte restano su questo dispositivo. Usa «Copia le risposte».","warn"); return; }
   const to=setTimeout(()=>setStatus("Le risposte salvate non arrivano: puoi continuare, si salvano alla prossima modifica.","warn"),10000);
   try{ const snap=await db.doc("giri/"+GIRO).get(); clearTimeout(to);
-    if(snap.exists){ const d=snap.data(); S.q1=d.q1||""; S.q2=d.q2||""; S.q3=d.q3||""; S.note=d.note||{}; render(); setStatus("Risposte salvate caricate","ok"); }
+    if(snap.exists){ const d=snap.data(); S.q1=d.q1||""; S.q3=d.q3||""; S.q4=d.q4||""; S.lettere=d.lettere||{}; S.note=d.note||{}; render(); setStatus("Risposte salvate caricate","ok"); }
     else setStatus("Nessuna risposta salvata finora: le tue si salvano da sole","");
   }catch(e){ clearTimeout(to); setStatus("Non riesco a leggere le risposte salvate: le tue si salvano comunque alla prossima modifica.","warn"); }
 })();

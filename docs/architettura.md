@@ -1939,3 +1939,13 @@ senza avvisi. Scelte mie, da far confermare: ingresso escluso perché è anch'es
 Un primo foro al centro della targa, sopra la V, sembrava un puntino sulla lettera, cioè il concetto «İ puntata» di
 Kiln: l'ho spostato in due fori agli angoli.
 
+### Giro 4: prima la lettera (decisioni 374 e 375)
+
+Nessuno dei tre concetti del giro 3 va al kit; per le lettere del nome è preferito il peso medio (374). L'utente non
+ama la V come logo e chiede di invertire l'ordine: prima una lettera bella da modificare, poi il logo, poi il nome a
+partire dalla lettera (375). Nel giro 4 si chiede cosa succede a Varko (accantonato o tenuto, con le stesse regole del
+nome o con regole riviste), si giudicano otto lettere abbozzate (K, R, S, M, A, Q, G, X, in `prototipi/brand-kit/lettere/`),
+e si sceglie maiuscola o minuscola e se il nome comincia con la lettera. Conseguenza da tenere sulla mappa
+(deduzione): con un nome nuovo serve una nuova verifica dei marchi, come per Varko (ticket «Unicità dei nomi scelti»), e
+il consulente della 359 vale per il nome nuovo.
+

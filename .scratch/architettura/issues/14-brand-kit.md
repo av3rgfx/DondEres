@@ -25,3 +25,5 @@ Risultato atteso: il brand kit nel repository, il link qui e la direzione scelta
   va e nove idee abbozzate da giudicare, nella stessa pagina.
 - 20/11/2026, giro 3: risposte nelle decisioni 371–373; tre concetti nuovi (cartello di corsia, corsia, porta di carico)
   con lettere ridisegnate, in `prototipi/brand-kit/concetti-2/`.
+- 20/11/2026, giro 4: giro 3 scartato (374); si inverte l'ordine, prima la lettera e il logo, poi il nome (375). Se il
+  nome cambia, serve una nuova verifica dei marchi prima di sceglierlo: da aggiungere come ticket alla chiusura.
