@@ -1908,6 +1908,95 @@ di posta collegato restano «Copia testo» e «Scarica PDF» (215). La mail rest
 - Etichette e distinta del corriere: nebbia della mappa; se serviranno, diventano un collegamento in più.
 - Come si scrivono i moduli (linguaggio, forma delle regole dei punti d'aggancio): ticket «Stack».
 
+## Stack
+
+Dal ticket «Stack», in corso dal 20/11/2026. Decisioni 422–432 (giro 1). Pagina delle domande:
+https://claude.ai/artifact/CEKPn8iQVsJ1B1dsAnUbwr (copia in `prototipi/stack/index.html`). Ricerche:
+`docs/research/2026-11-20-librerie-stack.md` (versioni, licenze, manutenzione) e
+`docs/research/2026-11-15-addestramento-ed-esecuzione-locale.md` (§E–H).
+Restano al ticket «Impronte e server in sede, dopo la prova» (405) il programma che fa girare il modello visivo, la
+dimensione delle impronte e la macchina in sede (scheda grafica, memoria, sistema).
+
+### I pezzi
+
+| Dove | Pezzo | Con cosa | Decisioni |
+|---|---|---|---|
+| Server | Programma: pagine, regole, assegnazione, scambio | Python, Django | 422 |
+| Server | Riconoscimento: codice stampato, quantità scritta, poi il modello | Python, processo a parte; PaddleOCR nella prova | 422, 140 |
+| Server | Lavori a intervalli: scambio, Shopify, mail dei resi, pulizia delle foto, controllo degli aggiornamenti | Processo «lavori» con la coda nel database | 422, 423 |
+| Server | Database, registro, impronte | PostgreSQL con pgvector, ricerca esatta | 423, 407 |
+| Server | Foto | Cartelle `riferimento`, `bolle`, `inquadrature` | 424 |
+| Server | Certificato e HTTPS | Caddy (dominio con sfida DNS, oppure certificato interno) | 123 |
+| Server | Installazione e aggiornamenti | Contenitori con Docker Compose; aggiornatore che scarica da internet | 426, 427 |
+| Server | Moduli | Cartella `moduli` dello stesso repository | 428 |
+| Browser | Barcode | Lettore del browser dove c'è, altrimenti zxing-cpp in WebAssembly servito dal server | 425 |
+| Browser | Operazioni in attesa | IndexedDB, con la foto e l'identità dell'operazione | 127 |
+| Browser | Schermate e canale aperto | Da scegliere nel giro 2 dopo il confronto | 432 |
+
+### Scelte e motivi
+
+- **Python con Django** (422): il codice stampato e il modello visivo usano programmi scritti per Python (PaddleOCR,
+  script della prova visiva); Django ha già utenti, permessi, struttura del database e sue modifiche, pannello
+  dell'admin, testi tradotti (28) e invio di mail. Rust considerato su domanda dell'utente: i pezzi pesanti (modello,
+  OCR, database, ricerca tra le impronte) sono già scritti in C e C++, il telefono non ne guadagna, e mancano i pezzi
+  pronti di Django e PaddleOCR. Se una prova mostra un pezzo lento, si riscrive solo quello.
+- **PostgreSQL con pgvector** (423): più dispositivi scrivono insieme; le regole «mai sotto zero» (77) e «stessa
+  operazione una volta sola» (201) sono vincoli del database; le impronte stanno nella stessa base dati, con la ricerca
+  esatta (407). Versione di partenza 18: la 19 è uscita il 19/11/2026 e pgvector non la dichiara ancora (ricerca del
+  20/11/2026). Le impronte si salvano a mezza precisione (`halfvec`): 350.000 × 1024 dimensioni ≈ 0,7 GB.
+- **Foto in cartelle** (424): la copia di sicurezza è una scelta di cartelle; la pulizia dei 30 giorni tocca una
+  cartella sola; il database resta piccolo.
+- **Barcode** (425): `BarcodeDetector` c'è solo su Chrome per Android; su iPhone, Chrome per Windows e Linux e Firefox
+  no. La libreria `barcode-detector` (MIT) ha la stessa forma e usa zxing-cpp; il suo file WebAssembly (circa 1 MB) di
+  serie si scarica da internet, quindi va servito dal server in sede.
+- **Contenitori** (426): ogni pezzo ha la sua versione; aggiornare vuol dire avviare i contenitori nuovi, tornare
+  indietro rimettere quelli di prima più la copia del database. Docker Engine su Linux è gratuito (Apache 2.0); Docker
+  Desktop è a pagamento per le aziende con almeno 250 dipendenti o 10 milioni di dollari di fatturato. Watchtower,
+  l'aggiornatore automatico più noto, è archiviato dal 17/12/2025: l'aggiornatore lo scriviamo noi. Ricerca su macchine
+  virtuali e prestazioni: giro 2.
+- **Aggiornamenti da internet** (427): solo in uscita, verso il nostro archivio delle versioni; precisa la 123.
+- **Moduli nella base** (428): una versione si prova con tutti i moduli insieme (307). Ogni punto d'aggancio è
+  un'interfaccia Python con il suo numero di versione; il modulo dichiara quale usa e l'aggiornatore lo controlla prima
+  di installare.
+
+### Prove su dispositivi veri
+
+Nessuna scelta dello stack aspetta le prove (127): fissano numeri e confermano ipotesi, con un ripiego che non cambia lo
+stack. Due tornate (429):
+
+1. **Pagina di prova**, pubblicata come la pagina di scatto (ramo `gh-pages`, sottocartella `prova-dispositivi`), da
+   aprire su un iPhone, un Android e un palmare di UFP, solo come link pubblico (430): permesso della fotocamera in
+   Safari (124), lettore del barcode, grilletto come tastiera (119), scatto da solo dopo mezzo secondo (409), peso della
+   foto (408), operazione in attesa dopo ricarica e chiusura del browser (127, 201). I risultati si copiano in chat.
+2. **Con la prima versione**, sul computer di casa dell'utente (143): canale aperto con più telefoni (411), fascia dei
+   3 secondi (417), certificato con un router vero (123), prova di carico (195).
+
+### Nome nel repository
+
+Da ora codice nuovo e testi che descrivono il prodotto usano Ripo («ripo» per pacchetti e cartelle); decisioni e
+ricerche passate restano come sono. Il repository si rinomina a prova visiva finita: GitHub reindirizza web, git e API
+ma non l'indirizzo di GitHub Pages della pagina di scatto (431).
+
+### Fatti dalla ricerca del 20/11/2026 da tenere presenti
+
+- Django: ultima 6.1.3; la 6.2, a lunga durata, esce ad aprile 2027 (supporto fino ad aprile 2030). I «Tasks» di
+  Django non eseguono i lavori da soli: serve una libreria per la coda (Procrastinate o django-tasks-db).
+- Il canale aperto con avvisi dal server ha bisogno di HTTP/2 (con HTTP/1.1 il browser tiene al massimo 6 connessioni
+  per indirizzo); Caddy lo attiva di serie.
+- Certificato del dominio: nessun collegamento automatico per Aruba e Register.it; si delega la voce `_acme-challenge` a
+  un gestore DNS che ce l'ha. Let's Encrypt accorcia i certificati a 64 giorni dal 10/02/2027 e a 45 dal 16/02/2028.
+- Posta: Microsoft 365 spegne l'accesso SMTP con la sola password a fine dicembre 2026; Google l'ha spento il
+  14/03/2025. Si sceglie nel giro 2.
+- Safari cancella i dati scritti dalle pagine dopo 7 giorni senza uso: non tocca le operazioni in attesa, che partono
+  appena torna la rete.
+
+### In sospeso nel ticket
+
+- Schermate (htmx o framework) e canale aperto (avvisi dal server, WebSocket, domanda a intervalli), con la
+  spiegazione di htmx e Redis: giro 2, dopo il confronto (432).
+- Macchine virtuali, prestazioni dei contenitori: giro 2 (426).
+- Invio delle mail dalla casella del responsabile (223, 311): giro 2.
+
 ## Nome del prodotto
 
 Ticket «Nome del prodotto» (decisione 20). Il prodotto non si chiamerà DondEres. Qui stanno i criteri e la rosa; la

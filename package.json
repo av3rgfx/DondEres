@@ -1,5 +1,5 @@
 {
-  "name": "donderes",
+  "name": "ripo",
   "private": true,
   "description": "Strumenti di sviluppo per le skill del progetto (ocr, playwright-cli).",
   "devDependencies": {
