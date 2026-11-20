@@ -134,6 +134,11 @@ tre livelli di conferma, quantità letta dalla scatola, ubicazioni facoltative, 
 - [Brand kit con la skill logo-design](issues/14-brand-kit.md): R · Pulito costruito, asta 44, R apposta per i 16
   pixel; blu elettrico #1F5BFF e #668FFF sul tema scuro; icona R bianca su blu; simbolo e nome separati; kit in
   `brand/` con guida e tavola d'uso; prova di stampa rimandata (decisioni 362–404).
+- [Divisione tra telefono, computer e server in sede](issues/10-divisione-telefono-computer-server.md): dati,
+  assegnazione, confronto delle impronte e archivio delle foto sul server; a ogni inquadratura codice letto più foto
+  ferma, scatto da solo, grilletto senza foto; schermi condivisi aggiornati da soli; fascia «Senza rete» dopo 3 secondi
+  con l'operazione in attesa a nome di chi l'ha fatta; altre foto 30 giorni, fuori dalle copie; stampa dal browser
+  (decisioni 406–421).
 
 ## Not yet specified
 
@@ -142,7 +147,7 @@ tre livelli di conferma, quantità letta dalla scatola, ubicazioni facoltative, 
 - **Installazione e configurazione iniziale in un magazzino nuovo:** procedura guidata (dove si sceglie se usare le
   ubicazioni, decisione 26, e dominio o certificato interno, 123), rinnovo del certificato, aggiornamenti (chi segna
   quelli obbligatori, ritorno alla versione precedente se il programma non riparte, 125), copie di sicurezza e
-  ripristino.
+  ripristino (dove vanno le copie; senza le foto dei 30 giorni, 419).
 - **Catalogo visivo per la vendita assistita** (idea dell'utente, decisioni 78 e 86; «banco» diventa «vendita assistita», 178): cercare un articolo e vederne
   disponibilità, prezzo, giacenza e ubicazione, anche quando il cliente non sa bene cosa vuole. Tocca identificazione e
   schermate.

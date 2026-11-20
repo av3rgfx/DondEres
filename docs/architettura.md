@@ -387,8 +387,8 @@ Dal ticket «Percorso di identificazione e lettura della quantità», chiuso il 
 Ricerche: `docs/research/2026-11-15-modelli-visivi-riconoscimento-articoli.md` (§6, OCR e barcode) e
 `docs/research/2026-11-15-addestramento-ed-esecuzione-locale.md` (§C, rifiuto degli sconosciuti e ciclo di conferma).
 
-Qui si descrive cosa vede e cosa fa l'operatore, non dove gira il calcolo: la divisione tra telefono e server è nel
-ticket «Divisione tra telefono, computer e server in sede». Le soglie numeriche si fissano con la prova visiva (104).
+Qui si descrive cosa vede e cosa fa l'operatore, non dove gira il calcolo: la divisione tra telefono e server è nella
+sezione «Divisione tra telefono, computer e server in sede» (406–421). Le soglie numeriche si fissano con la prova visiva (104).
 
 ### Un'inquadratura sola
 
@@ -512,8 +512,8 @@ etichette (304, sezione «Punti di estensione»).
 
 ### Rimandato ad altri ticket
 
-- Dove girano lettura del barcode, del testo e confronto dell'aspetto: ticket «Divisione tra telefono, computer e server
-  in sede» e «App nativa o web app».
+- Dove girano lettura del barcode, del testo e confronto dell'aspetto: sezione «Divisione tra telefono, computer e
+  server in sede» (406–421); dove si calcolano le impronte, ticket «Impronte e server in sede, dopo la prova».
 - Le schermate (scheda «È questo», scelta tra più codici, «× colli», uscite del «non lo so»): ticket «Percorso delle
   schermate».
 - Chi può creare l'articolo nuovo dall'uscita «Articolo nuovo»: sezione «Articolo nuovo da foto».
@@ -615,7 +615,7 @@ Dal ticket «App nativa o web app», chiuso il 16/11/2026. Decisioni 9, 22, 23, 
 | Computer con telecamera | Azienda | Telecamera, con il lettore del browser dove c'è, altrimenti la libreria | Telecamera |
 
 Il codice stampato si legge sul server, con la foto che viaggia sulla rete interna (121, 127). Dove gira ogni altro passo
-dell'identificazione lo decide il ticket «Divisione tra telefono, computer e server in sede».
+dell'identificazione: sezione «Divisione tra telefono, computer e server in sede» (406–421).
 
 IPOTESI da verificare sul palmare di UFP: il lettore a grilletto scrive il codice nel campo attivo come una tastiera
 (per esempio il profilo «tastiera» di Zebra DataWedge), quindi la pagina tiene sempre pronto un campo che lo riceve
@@ -688,6 +688,8 @@ Prima di scegliere lo stack (127):
   (201; difetto riferito da utenti di Odoo 17);
 - prima della consegna, una prova di carico sul server in sede con il catalogo intero e più telefoni insieme, per i
   tempi massimi della 195.
+- peso della foto, scatto da solo, fascia «Senza rete» e aggiornamento degli schermi: sezione «Divisione tra telefono,
+  computer e server in sede» (421).
 
 ### Configurazione per magazzino
 
@@ -695,8 +697,8 @@ Prima di scegliere lo stack (127):
 
 ### Rimandato ad altri ticket o alla nebbia della mappa
 
-- Cosa gira sul dispositivo e cosa sul server per ogni inquadratura, cosa viaggia in rete: ticket «Divisione tra
-  telefono, computer e server in sede».
+- Cosa gira sul dispositivo e cosa sul server per ogni inquadratura, cosa viaggia in rete: risolto nella sezione
+  «Divisione tra telefono, computer e server in sede» (406–421).
 - Librerie del browser, del server e del meccanismo di aggiornamento: ticket «Stack».
 - Schermate della prima apertura dal QR, della guida a «Consenti» su iPhone, dell'avviso di aggiornamento, del campo
   per il grilletto; la barra di Safari visibile su iPhone: ticket «Percorso delle schermate».
@@ -706,10 +708,11 @@ Prima di scegliere lo stack (127):
 
 ## Divisione tra telefono, computer e server in sede
 
-Dal ticket «Divisione tra telefono, computer e server in sede», in corso dal 20/11/2026 (giro 1: decisioni 406–415; giro 2: 416–420).
+Dal ticket «Divisione tra telefono, computer e server in sede», chiuso il 20/11/2026. Decisioni 406–421 (giro 1:
+406–415; giro 2: 416–420; riepilogo: 421).
 Restano fuori, perché dipendono dai numeri della prova visiva, dove si calcolano le impronte e che macchina serve in
 sede: ticket «Impronte e server in sede, dopo la prova» (405). Pagina delle domande:
-https://claude.ai/artifact/YbyLuy2kMFmVgEH5xdBPXu (privata; copia in `prototipi/divisione/index.html`).
+https://claude.ai/artifact/YbyLuy2kMFmVgEH5xdBPXu (copia in `prototipi/divisione/index.html`).
 
 ### Cosa gira dove
 
@@ -731,6 +734,11 @@ Deduzioni (senza domanda, dalle decisioni già prese):
   notturni) girano sul server e non richiedono un computer acceso.
 - Più codici nell'inquadratura (102): il dispositivo manda tutti quelli letti, il server decide se sono lo stesso
   articolo o se l'operatore deve scegliere.
+- Lo stesso utente può essere aperto su più dispositivi insieme (per esempio il responsabile al computer e al
+  telefono); ogni dispositivo tiene le sue operazioni in attesa (421).
+- La foto viaggia comunque, qualunque cosa decida il ticket «Impronte e server in sede, dopo la prova»: serve a
+  quantità, codice stampato e foto di riferimento (408). Se l'impronta si calcolerà nel browser, passerà in più
+  l'impronta (421).
 
 ### Ogni inquadratura
 
@@ -773,7 +781,8 @@ Dove vanno le copie e come si ripristinano resta all'installazione (nebbia della
 ### Rete assente
 
 - Sul dispositivo restano solo le operazioni in attesa: codice letto, foto, quantità scritta, chi e quando, con la
-  loro identità (127).
+  loro identità (127). Quando compare la fascia lo scatto da solo si ferma: di solito resta in attesa una sola
+  operazione (421).
 - La schermata resta com'era, con la fascia «Senza rete» e l'ora dei dati; fotocamera e tasti che cambiano dati sono
   spenti. Quando la rete torna l'operazione parte da sola e la fascia dice «Inviata» (413).
 - Su un telefono condiviso l'operazione parte a nome di chi l'ha fatta anche se nel frattempo è entrato un altro; se
@@ -790,6 +799,25 @@ Dove vanno le copie e come si ripristinano resta all'installazione (nebbia della
 
 Il server prepara il PDF; si stampa dal browser del dispositivo, con la stampante che conosce già. Nessuna stampante si
 configura sul server; la stampa diretta su una termica sarà un collegamento in più (415).
+
+### Da misurare nelle prove su dispositivi veri
+
+Si aggiungono alle prove della sezione «Dispositivi e forma del programma» (127, 421):
+
+- il peso della foto di ogni inquadratura (stima 0,3–0,6 MB) e il tempo dell'esito sulla rete del magazzino (195);
+- il mezzo secondo di immagine ferma che fa partire la foto (409);
+- i 3 secondi dopo i quali compare la fascia, con il Wi-Fi debole nei punti peggiori del magazzino (417);
+- il canale aperto con più telefoni insieme, per gli aggiornamenti entro pochi secondi (411).
+
+### Rimandato ad altri ticket o alla nebbia della mappa
+
+- Dove si calcolano le impronte (browser o server), programma che fa girare il modello, macchina in sede: ticket
+  «Impronte e server in sede, dopo la prova» (405).
+- Librerie per il canale aperto, la memoria del browser, il database e l'archivio delle foto: ticket «Stack».
+- Fascia «Senza rete», «Inviata», «non riuscita» e «1 operazione di Mario in attesa» nelle schermate: ticket «Aspetto
+  grafico» per la forma; i testi seguono la skill ux-writing.
+- Dove vanno le copie di sicurezza e come si ripristinano: installazione e configurazione iniziale, nebbia della mappa.
+- Registro e foto davanti alla legge: punti aperti per la parte legale (420).
 
 ## Prova di accuratezza visiva
 

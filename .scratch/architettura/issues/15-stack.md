@@ -3,7 +3,7 @@
 Type: grilling
 Label: wayfinder:grilling
 Status: open
-Blocked by: 07, 10, 11 (07 e 11 chiusi). Non aspetta più la prova visiva (decisione 405).
+Blocked by: 07, 10, 11 (tutti chiusi; 10 il 20/11/2026). Non aspetta più la prova visiva (decisione 405).
 
 ## Question
 
@@ -30,3 +30,9 @@ Risultato atteso: lo stack e il motivo di ogni scelta in `docs/architettura.md` 
   di ogni aggiornamento (307); quattro punti d'aggancio (collegamento, lettore di etichette, precedenza, partita) e campi
   aggiuntivi da configurazione (306). Da scegliere qui: come si scrivono i moduli e la forma delle regole.
 - 20/11/2026: non aspetta più la prova visiva; la parte del modello passa al ticket «Impronte e server in sede, dopo la prova» (405).
+- 20/11/2026, dal ticket «Divisione tra telefono, computer e server in sede» (406–421): dati solo sul server; per ogni
+  inquadratura codice letto più foto ferma (0,3–0,6 MB, stima); confronto dell'aspetto tra 175.000–350.000 impronte sul
+  server (ricerca esatta, ricerca del 15/11 §E); canale aperto con ogni dispositivo per aggiornare gli schermi condivisi
+  entro pochi secondi (411); operazioni in attesa nella memoria del browser, con la loro identità, fascia dopo 3 secondi
+  e due messaggi (413, 416–418); archivio delle foto con cancellazione dopo 30 giorni e copie di sicurezza senza quelle
+  foto (412, 419); stampa dei PDF dal browser (415). Da scegliere qui le librerie per tutto questo.
