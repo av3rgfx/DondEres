@@ -113,61 +113,131 @@ table.mini td.n{font-variant-numeric:tabular-nums;white-space:nowrap}
 @media (prefers-reduced-motion:no-preference){.chip.new{transition:box-shadow .2s}}
 </style>
 <style>
-/* Aggiunte per lo stack: albero di cartelle, contenitore, piccole etichette. */
 .tree{font:12.5px/1.6 var(--f-mono);white-space:pre;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin:0;overflow-x:auto}
 .tree .k{color:var(--muted)}
 .tree .x{color:var(--warn)}
-.chip.box{border-style:solid;border-color:var(--muted)}
-.pill{display:inline-block;font:600 10.5px/1 var(--f-mono);letter-spacing:.04em;text-transform:uppercase;border-radius:4px;padding:3px 5px;margin-left:6px;vertical-align:1px;background:var(--accent-soft);color:var(--accent)}
-.pill.w{background:var(--warn-soft);color:var(--warn)}
-.pill.o{background:var(--ok-soft);color:var(--ok)}
 .steps{margin:0;padding-left:20px;display:grid;gap:5px;font-size:13.5px}
+.explain{display:grid;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px}
+.explain .cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media (max-width:760px){.explain .cols{grid-template-columns:minmax(0,1fr)}}
+.explain .col{border:1px solid var(--line);border-radius:12px;padding:12px;background:var(--bg);display:grid;gap:8px;align-content:start;min-width:0}
+.explain .col h3{font-size:15px}
+.explain ul{margin:0;padding-left:18px;display:grid;gap:4px;font-size:14px}
+.src{font-size:12.5px;color:var(--muted)}
+.bars{display:grid;gap:6px}
+.barrow{display:grid;grid-template-columns:150px minmax(0,1fr) 64px;gap:8px;align-items:center;font-size:13px}
+@media (max-width:480px){.barrow{grid-template-columns:96px minmax(0,1fr) 56px}}
+.barrow .b{height:12px;border-radius:3px;background:var(--accent)}
+.barrow .b.w{background:var(--warn)}
+.barrow .n{font:12px var(--f-mono);text-align:right;font-variant-numeric:tabular-nums}
 </style>
 
 <div class="wrap">
   <header class="intro">
-    <div class="eyebrow">Ticket «Stack» · giro 1 · 20/11/2026</div>
-    <h1>Con cosa si costruisce Ripo</h1>
-    <p>Qui si scelgono i linguaggi, il database e i programmi già pronti con cui costruire la base. Le scelte di cosa
-      fa il programma sono già prese (app nel browser servita dal server in sede, divisione tra le macchine, moduli):
-      qui si sceglie solo <em>con che cosa</em> le si realizza. Restano fuori, al ticket «Impronte e server in sede,
-      dopo la prova», il programma che fa girare il modello visivo e la macchina in sede: le scelte di questa pagina
-      non li bloccano.</p>
-    <p>Per ogni domanda c'è una risposta consigliata; l'esempio a destra e lo schema qui sotto cambiano con quello che
-      scegli. Molte domande sono tecniche: se non hai una preferenza, la consigliata va bene.</p>
+    <div class="eyebrow">Ticket «Stack» · giro 2 · 20/11/2026</div>
+    <h1>Schermate, canale aperto e posta</h1>
+    <p>Ho registrato le risposte del giro 1 (decisioni 422–432). Qui ci sono i confronti che hai chiesto, con le
+      spiegazioni di htmx, di Redis e dei contenitori, e le domande che restano. Le fonti sono nella ricerca
+      <code>docs/research/2026-11-20-confronti-stack.md</code>; dove l'unica fonte è chi fa lo strumento, lo dico.</p>
     <div class="bar"><button class="primary" id="accept-all" type="button">Accetta tutte le consigliate</button>
       <span class="status" id="status">Caricamento delle risposte salvate…</span></div>
   </header>
 
   <section class="map" aria-labelledby="h-map">
     <h2 id="h-map">I pezzi del programma</h2>
-    <p>Cosa gira sul dispositivo, cosa passa in rete e quali pezzi stanno sul server in sede. In blu il server; i
-      riquadri tratteggiati si decidono nel ticket «Impronte e server in sede, dopo la prova».</p>
+    <p>Quello che hai già scelto, più le scelte di questo giro (bordo blu a sinistra). I riquadri tratteggiati restano al
+      ticket «Impronte e server in sede, dopo la prova».</p>
     <div class="lanes" id="lanes"></div>
   </section>
 
-  <section class="given" aria-labelledby="h-given">
-    <h2 id="h-given">Cosa si può scegliere prima delle prove sui dispositivi</h2>
-    <p>La decisione 127 chiede prove su un iPhone, un Android e un palmare di UFP prima di scegliere lo stack. Ho
-      guardato cosa potrebbe cambiare con i loro risultati: nessuna delle scelte di questa pagina. Le prove fissano
-      numeri (peso della foto, mezzo secondo, 3 secondi) e confermano tre ipotesi; per ognuna c'è già un ripiego che
-      non cambia lo stack.</p>
-    <div class="tw"><table class="mini"><thead><tr><th>Cosa si prova</th><th>Se va male</th><th>Cambia lo stack?</th></tr></thead><tbody>
-      <tr><td>Permesso della fotocamera in Safari su iPhone (124)</td><td>Si usa Safari senza icona sulla Home, come già deciso</td><td>No</td></tr>
-      <tr><td>Lettore del barcode del browser su Android; libreria nella pagina su iPhone</td><td>La libreria nella pagina anche su Android (domanda 6)</td><td>No</td></tr>
-      <tr><td>Grilletto del palmare che scrive come una tastiera (ipotesi, 119)</td><td>Si imposta il profilo tastiera del palmare, o un campo apposta</td><td>No</td></tr>
-      <tr><td>Operazione in attesa che resta dopo ricarica e chiusura del browser (127, 201)</td><td>Si chiede al browser la memoria «persistente»; avviso se non la dà</td><td>No</td></tr>
-      <tr><td>Canale aperto con più telefoni, fascia dei 3 secondi, certificato con il router</td><td>Ripieghi già previsti (richiesta ogni pochi secondi; nome risolto dal DNS interno)</td><td>No</td></tr>
-    </tbody></table></div>
-    <p class="note">Le prove si fanno comunque prima della consegna; come farle è la domanda 10.</p>
+  <section class="explain" aria-labelledby="h-htmx">
+    <h2 id="h-htmx">Cos'è htmx, e cosa cambia rispetto a un framework</h2>
+    <div class="cols">
+      <div class="col">
+        <h3>Pagine dal server, con htmx</h3>
+        <p>htmx è una piccola libreria (13 KB) che si aggiunge alle pagine. Quando tocchi un pulsante, chiede al server
+          solo il pezzo di pagina che cambia, già pronto, e lo sostituisce, senza ricaricare la pagina. Le regole e le
+          schermate stanno tutte sul server, in un posto solo.</p>
+        <ul>
+          <li>Pochissimo codice da scaricare: le pagine si aprono in fretta anche sui telefoni economici.</li>
+          <li>Un progetto solo; nessun passaggio di «costruzione» a ogni versione.</li>
+          <li>Secondo i suoi autori non va bene per il lavoro senza rete, per schermate dove tante parti dipendono l'una
+            dall'altra mentre scrivi, e per le librerie di componenti fatte per React. Da noi il lavoro senza rete è
+            escluso (23) e le schermate sono soprattutto elenchi e moduli.</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>App nel browser, con un framework</h3>
+        <p>React, Svelte o Vue costruiscono la schermata nel browser del telefono: il server manda solo i dati. È il modo
+          delle app web più note.</p>
+        <ul>
+          <li>Gesti e animazioni ricche facili da fare, molte librerie di componenti pronte (con React).</li>
+          <li>Più codice da scaricare ed eseguire: su un telefono economico lo stesso JavaScript costa più di 6 volte
+            che su uno di fascia alta (misura di V8, 2019).</li>
+          <li>Il vantaggio grande dei framework è usare i dati già nel telefono. Da noi i dati stanno solo sul server
+            (406): ogni tocco che conta passa comunque dal server.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="cap eyebrow">JavaScript da scaricare, compresso (misura della ricerca sui pacchetti di oggi)</div>
+    <div class="bars" aria-label="Peso del JavaScript">
+      <div class="barrow"><span>htmx 4 + avvisi</span><span class="b" style="width:14%"></span><span class="n">15,8 KB</span></div>
+      <div class="barrow"><span>Lit (componenti)</span><span class="b" style="width:6%"></span><span class="n">6,2 KB</span></div>
+      <div class="barrow"><span>Vue 3.5</span><span class="b w" style="width:39%"></span><span class="n">43 KB</span></div>
+      <div class="barrow"><span>React DOM 19.3</span><span class="b w" style="width:100%"></span><span class="n">≤ 110 KB</span></div>
+    </div>
+    <p class="src">React misurato sul file non ridotto: con la riduzione sarà meno, non misurato. Il caso di un'azienda passata
+      da React a htmx (Contexte: −67% di codice, caricamento da 2–6 s a 1–2 s) è pubblicato sul sito di htmx, quindi fonte
+      di parte, e dice da sé che non tutte le app vedranno quei numeri.</p>
+    <p><b>Sulla versione da computer ricca e ben studiata:</b> l'aspetto e la comodità vengono dal progetto grafico (ticket
+      «Aspetto grafico») e dal CSS, uguali nelle due strade. Le transizioni animate fra schermate ci sono in tutti i
+      browser principali (Chrome 111, Safari 18, Firefox 144) e htmx le usa. Per i pochi pezzi davvero ricchi (per esempio
+      trascinare gli ordini nei piani di spedizione, una tabella che si ordina e si filtra) si scrive un piccolo componente
+      a parte, che vive nella pagina accanto a htmx: la stessa cosa che serve comunque per fotocamera e operazioni in
+      attesa.</p>
+  </section>
+
+  <section class="explain" aria-labelledby="h-redis">
+    <h2 id="h-redis">Cos'è Redis, e perché qui non serve</h2>
+    <p>Redis è un programma separato che tiene i dati nella memoria del server invece che sul disco: per questo è
+      velocissimo. Si usa per tre cose: ricordare risposte già calcolate (cache), mettere in fila i lavori (coda) e
+      passare messaggi tra programmi (avvisi). È molto diffuso e molto apprezzato.</p>
+    <ul>
+      <li>Da noi la coda dei lavori e gli avvisi li fa già PostgreSQL (decisione 423), e il server in sede serve poche
+        decine di dispositivi: Redis sarebbe un pezzo in più da installare, aggiornare e copiare.</li>
+      <li>Servirebbe solo con i WebSocket di Django (Django Channels), che lo usano per passare i messaggi.</li>
+      <li>Dalla versione 7.4 Redis non ha più una licenza libera come prima; dalla 8 si può usare con la licenza AGPL.
+        Esiste una copia libera, Valkey (licenza BSD), se un giorno servisse.</li>
+    </ul>
+  </section>
+
+  <section class="explain" aria-labelledby="h-box">
+    <h2 id="h-box">Contenitori e macchine virtuali</h2>
+    <div class="cols">
+      <div class="col"><h3>Macchina virtuale</h3><p>Un computer finto, con il suo sistema operativo completo, dentro il
+        computer vero. Isola tutto, ma costa: nelle misure di IBM (2014) il disco va a metà velocità e un database perde
+        oltre il 40%.</p></div>
+      <div class="col"><h3>Contenitore</h3><p>Un programma chiuso in una scatola, con le sue librerie, che usa il sistema
+        del computer vero. Nelle stesse misure va come il programma installato direttamente. È la scelta fatta (426).</p></div>
+    </div>
+    <ul>
+      <li><b>Docker Machine</b> era un vecchio strumento per creare macchine virtuali con Docker dentro: è archiviato dal
+        luglio 2025 e qui non c'entra.</li>
+      <li><b>Una macchina virtuale serve solo se il server in sede sarà Windows</b>: i contenitori girano in una macchina
+        virtuale Linux. Lì conta come la si fa (con WSL2 il server di base non si raggiunge dalla rete del magazzino): si
+        decide con la macchina, nel ticket «Impronte e server in sede, dopo la prova».</li>
+      <li><b>Per far rendere al massimo i contenitori</b> valgono le regole documentate, che adotto senza domanda (elenco
+        in fondo): database su un disco dedicato, contenitori piccoli, riavvio da soli se si fermano, registri che non
+        riempiono il disco, numero giusto di processi.</li>
+    </ul>
   </section>
 
   <div id="questions" style="display:grid;gap:28px"></div>
 
   <section class="given" aria-labelledby="h-ded">
     <h2 id="h-ded">Deduzioni, senza domanda</h2>
-    <p>Seguono dalle scelte consigliate e dalle decisioni già prese; cambiano se cambi le risposte sopra. Se una non ti
-      torna, scrivilo in una nota qualsiasi.</p>
+    <p>Seguono dalle scelte consigliate e dalle ricerche; cambiano se cambi le risposte sopra. Se una non ti torna,
+      scrivilo in una nota qualsiasi.</p>
     <ul id="deduzioni"></ul>
   </section>
 
@@ -181,66 +251,31 @@ table.mini td.n{font-variant-numeric:tabular-nums;white-space:nowrap}
 </div>
 
 <script>
-const GIRO = "1", LS = "stack-g1";
+const GIRO = "2", LS = "stack-g2";
 const esc = s => String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 
 const Q = [
- {k:"server", t:"Con che linguaggio si scrive il programma sul server?",
-  why:"È la scelta da cui dipendono quasi tutte le altre. Il server fa il grosso del lavoro: dati, assegnazione, codice stampato, confronto delle impronte, scambio con gestionale e Shopify. Il codice stampato e il modello visivo girano con programmi scritti per Python (PaddleOCR, gli script della prova visiva).",
-  o:[{id:"django",l:"Python, con Django",d:"Un linguaggio solo sul server, lo stesso di OCR e modello. Django ha già utenti, permessi, database con aggiornamenti della struttura, pannello dell'admin, testi tradotti e invio delle mail: li scriviamo una volta in meno.",rec:true},
-     {id:"fastapi",l:"Python, con FastAPI",d:"Stesso linguaggio, struttura più leggera. Utenti, permessi, pannello e aggiornamenti del database si montano con altri pezzi, da scegliere e tenere aggiornati."},
-     {id:"node",l:"TypeScript (Node.js)",d:"Lo stesso linguaggio delle pagine nel browser. Ma codice stampato e modello visivo restano in Python: sul server girano due programmi in due linguaggi."},
-     {id:"rust",l:"Rust",d:"Il più veloce e il più leggero in memoria. Ma i pezzi pesanti (modello, OCR, database, ricerca delle impronte) sono già scritti in C e C++ e non accelerano; utenti, permessi, pannello, aggiornamenti del database e traduzioni vanno scritti o montati a mano; PaddleOCR non c'è e va sostituito; il telefono non diventa più veloce. Più tempo per arrivare alla prima versione."}]},
- {k:"db", t:"Quale database tiene catalogo, giacenze, ordini e impronte?",
-  why:"Il database decide quanto è facile non sbagliare: due telefoni che confermano l'ultimo pezzo insieme, la stessa operazione che arriva due volte, la giacenza che non va mai sotto zero (77, 201, 421).",
-  o:[{id:"pg",l:"PostgreSQL, con pgvector per le impronte",d:"Più dispositivi scrivono insieme. «Mai sotto zero» e «operazione già arrivata» diventano regole del database stesso. Le impronte stanno nello stesso database, con la ricerca esatta già decisa (407). Avvisa da solo il programma quando un dato cambia.",rec:true},
-     {id:"sqlite",l:"SQLite",d:"Un file solo, facilissimo da copiare. Scrive uno alla volta (con molti telefoni si mettono in fila) e le impronte vanno tenute in un elenco a parte, da tenere allineato."}]},
- {k:"foto", t:"Dove si conservano le foto?",
-  why:"A ogni inquadratura arriva una foto (circa 0,4 GB ogni 1.000 inquadrature, stima). Le foto dei 30 giorni si cancellano da sole e non vanno nelle copie di sicurezza; quelle di riferimento e delle bolle sì (412, 419).",
-  o:[{id:"cartelle",l:"In cartelle sul disco del server, una per tipo",d:"Il database tiene solo il nome del file. La copia di sicurezza prende le cartelle «riferimento» e «bolle» e salta «inquadrature»; la pulizia dei 30 giorni svuota una cartella sola.",rec:true},
-     {id:"dentro",l:"Dentro il database",d:"Tutto in un posto. Il database però cresce in fretta, le copie diventano lente, e togliere le foto dei 30 giorni dalle copie è più complicato."},
-     {id:"oggetti",l:"In un programma d'archivio separato",d:"Il modo dei servizi in cloud (archivio a «oggetti»). Serve con molti server; con un server solo è un pezzo in più da installare e aggiornare."}]},
  {k:"pagine", t:"Come si costruiscono le schermate?",
-  why:"Le schermate sono tante (DDT, prelievo, inventario, resi, Configurazione). Conta per la velocità di sviluppo, per quanto codice resta da mantenere e per le rifiniture dell'aspetto grafico.",
-  o:[{id:"server",l:"Pagine preparate dal server, con htmx",d:"Il server manda la pagina pronta e htmx ne aggiorna solo i pezzi che cambiano. Pochi file JavaScript, solo dove servono davvero: fotocamera, barcode, operazioni in attesa, canale aperto. Un progetto solo, nessun passaggio di «costruzione» delle pagine.",rec:true},
-     {id:"spa",l:"App nel browser con un framework (React o Svelte)",d:"La pagina si costruisce nel browser e chiede i dati al server. Transizioni e gesti più ricchi; ma due progetti, due linguaggi e un passaggio di costruzione a ogni versione. Con React si possono usare le animazioni di Animate UI."}]},
+  why:"Conta per la velocità sui telefoni economici, per quanto codice resta da mantenere e per la versione da computer più ricca che vuoi. Il confronto è qui sopra.",
+  o:[{id:"htmx",l:"Pagine dal server con htmx, più piccoli componenti dove serve",d:"Quasi tutte le schermate dal server, aggiornate a pezzi da htmx. Piccoli componenti JavaScript (Web Components) per fotocamera, operazioni in attesa e i pochi pezzi ricchi della versione da computer. Un progetto solo, pagine leggere.",rec:true},
+     {id:"isole",l:"Come la prima, con Svelte per le schermate da computer più ricche",d:"Le schermate dei responsabili più complesse (piani di spedizione, Configurazione) si scrivono con Svelte, il resto con htmx. Più libertà su quelle schermate; due modi di scrivere le pagine e un passaggio di costruzione per quella parte."},
+     {id:"spa",l:"Tutta l'app nel browser, con React",d:"Ogni schermata con React; il server manda solo i dati. Animazioni e componenti pronti (Animate UI, shadcn/ui); più codice da scaricare e mantenere, due progetti, e i telefoni economici lavorano di più."}]},
  {k:"canale", t:"Come si tiene il canale aperto con ogni dispositivo?",
-  why:"Serve per aggiornare da sole, entro pochi secondi, le schermate di lavoro condiviso quando un collega registra qualcosa (411), e per l'avviso di ricarica dopo un aggiornamento (125).",
-  o:[{id:"sse",l:"Avvisi dal server (Server-Sent Events)",d:"Il server manda «è cambiato l'ordine 123» e la pagina ricarica quel pezzo. È già nel browser e si riconnette da solo. Le registrazioni partono con richieste normali.",rec:true},
-     {id:"ws",l:"WebSocket",d:"Un canale nei due sensi. Sul server serve un pezzo in più (Django Channels con Redis) che qui non usiamo: le registrazioni vanno già bene come richieste normali."},
-     {id:"poll",l:"Domanda ogni pochi secondi",d:"La pagina chiede «novità?» ogni 3 secondi. Il più semplice, ma ritardo fino a 3 secondi e tante richieste inutili con molti telefoni."}]},
- {k:"barcode", t:"Come legge il barcode il browser?",
-  why:"Su Android Chrome ha un lettore suo; su iPhone e sui computer Windows non c'è, e serve una libreria nella pagina (zxing-cpp, decisione 127). Sul palmare legge il grilletto.",
-  o:[{id:"misto",l:"Il lettore del browser dove c'è, altrimenti la libreria",d:"La libreria ha la stessa forma del lettore del browser: il programma non vede differenze. Su Android si usa il lettore di sistema; dove manca, la libreria.",rec:true},
-     {id:"sempre",l:"Sempre la libreria, su tutti",d:"Stesso comportamento su ogni dispositivo, quindi una prova sola. Su Android si rinuncia al lettore di sistema."}]},
- {k:"installa", t:"Come si installa il programma sul server in sede?",
-  why:"Conta per gli aggiornamenti con ritorno indietro (125, 307) e per l'installazione in un magazzino nuovo. La macchina, la scheda grafica e il sistema li sceglie il ticket «Impronte e server in sede, dopo la prova»: qui solo la forma.",
-  o:[{id:"docker",l:"In contenitori (Docker Compose)",d:"Database, programma, certificato e riconoscimento in pezzi separati, ognuno con la sua versione. Aggiornare vuol dire scaricare la versione nuova; tornare indietro, rimettere quella di prima. Girano su Linux; su una macchina Windows o Mac girano dentro una macchina virtuale Linux. Possono usare la scheda grafica.",rec:true},
-     {id:"diretto",l:"Installazione diretta sul sistema",d:"Un livello in meno. Ma aggiornamento, ritorno indietro e installazione in un magazzino nuovo vanno scritti a mano per quel sistema."}]},
- {k:"aggiorna", t:"Da dove arrivano gli aggiornamenti?",
-  why:"Gli aggiornamenti obbligatori partono da soli di notte (125): il server deve poter prendere la versione nuova senza che nessuno porti niente. La 123 diceva che il server va su internet solo per rinnovare il certificato: questa domanda la precisa.",
-  o:[{id:"internet",l:"Il server li scarica da internet",d:"Dal nostro archivio delle versioni (su GitHub), solo in uscita, come per il certificato: da fuori il server resta irraggiungibile. Prima di installare: copia di sicurezza e controllo dei moduli accesi (307).",rec:true},
-     {id:"chiavetta",l:"Solo a mano, con una chiavetta o un file",d:"Il server non va mai su internet per gli aggiornamenti. Ma gli obbligatori notturni non possono partire da soli: contraddice la 125."},
-     {id:"tutti",l:"Internet di serie, chiavetta come ripiego",d:"Come la prima, più un modo a mano per i magazzini che non vogliono uscita verso internet. Un pezzo in più da scrivere e provare."}]},
- {k:"moduli", t:"Dove sta il codice dei moduli delle specializzazioni?",
-  why:"I moduli li scriviamo solo noi (302) e ogni specializzazione si prova prima di pubblicare un aggiornamento (307). Il repository di Ripo oggi è pubblico: chiunque può leggere il codice.",
-  o:[{id:"insieme",l:"Insieme alla base, in una cartella «moduli»",d:"Ogni versione si prova con tutti i moduli insieme, in un colpo. Il codice di un modulo (per esempio quello per Ad Hoc) diventa leggibile come la base; dati e impostazioni del cliente restano fuori, sul suo server.",rec:true},
-     {id:"privati",l:"In un repository privato per specializzazione",d:"Il codice per un cliente non è pubblico. Ma ogni versione va provata repository per repository, e l'aggiornamento deve mettere insieme i pezzi."},
-     {id:"tuttoprivato",l:"Base e moduli insieme, in un repository privato",d:"Il codice di Ripo non è più leggibile da tutti (anche la base). Le pagine pubbliche (pagina di scatto) restano dove sono. Va deciso se e quando renderlo pubblico."}]},
- {k:"prove", t:"Come si fanno le prove sui dispositivi veri?",
-  why:"Nessuna scelta di questa pagina le aspetta, ma vanno fatte prima della consegna (127, 421). Computer e server aziendali non si toccano finché non c'è una versione da provare (143).",
-  o:[{id:"pagina",l:"Subito una pagina di prova, poi il resto con la prima versione",d:"Una pagina pubblicata come la pagina di scatto (stesso indirizzo, sottocartella «prova-dispositivi»), da aprire sui telefoni: permesso della fotocamera, lettore del barcode, grilletto, scatto da solo dopo mezzo secondo, peso della foto, operazione in attesa dopo ricarica e chiusura. Mostra i risultati da copiare in chat. Le prove con il server (canale con più telefoni, fascia dei 3 secondi, certificato con il router, carico) quando c'è la prima versione, sul tuo computer di casa.",rec:true},
-     {id:"dopo",l:"Tutte insieme, con la prima versione",d:"Una sola tornata di prove, sul tuo computer di casa. Le sorprese dei telefoni (per esempio il permesso su iPhone) arrivano dopo aver scritto il codice."}]},
- {k:"palmare", t:"Si può aprire la pagina di prova su un palmare di UFP?",
-  why:"Il palmare è un dispositivo dell'azienda. La pagina di prova non installa niente e non tocca ARS: si apre dal browser, come un sito qualsiasi, e non manda i dati da nessuna parte. Serve a vedere se il grilletto scrive come una tastiera (119).",
-  o:[{id:"si",l:"Sì, posso aprirla su un palmare",d:"Aggiungo alla pagina la prova del grilletto, con le istruzioni passo passo.",rec:true},
-     {id:"chiedo",l:"Devo chiedere in UFP",d:"Preparo la prova del grilletto; la fai quando hai il permesso."},
-     {id:"no",l:"No, per ora no",d:"La prova del palmare resta per la prima versione da provare (143)."}]},
- {k:"nome", t:"Quando si sostituisce il nome provvisorio DondEres con Ripo nel repository?",
-  why:"Il codice non è ancora cominciato: cambiare il nome adesso costa poco. Ripo però è «per ora» (386) e il consulente in marchi non l'ha ancora guardato. Il nome del repository compare anche nell'indirizzo della pagina di scatto della prova visiva, che è in uso.",
-  o:[{id:"codice",l:"Ora nel codice e nei testi; il repository dopo la prova visiva",d:"Il codice nuovo nasce con il nome «ripo»; aggiorno README, nome del pacchetto e titoli delle pagine. Le decisioni e le ricerche passate restano come sono scritte. Il repository su GitHub lo rinomini tu, a prova visiva finita, così l'indirizzo della pagina di scatto non cambia mentre scatti.",rec:true},
-     {id:"tutto",l:"Tutto adesso, anche il repository",d:"Rinomini il repository oggi; aggiorno io i collegamenti. L'indirizzo della pagina di scatto cambia: se l'hai salvato sul telefono va sostituito."},
-     {id:"aspetta",l:"Aspetta il consulente in marchi",d:"Intanto resta DondEres ovunque, anche nel codice nuovo; si cambia tutto in una volta quando il nome è sicuro. Più file da cambiare dopo."}]}
+  why:"Aggiorna da sole le schermate di lavoro condiviso entro pochi secondi (411). Su iPhone c'è un difetto aperto di Safari: dopo che il telefono torna dallo standby, un WebSocket nuovo verso un server della rete interna resta bloccato finché non si ricarica la pagina.",
+  o:[{id:"sse",l:"Avvisi dal server (Server-Sent Events)",d:"Il server manda «è cambiato l'ordine 123», la pagina ricarica quel pezzo. Già nel browser e in Django; il campanello lo suona PostgreSQL; niente Redis. Quando lo schermo si spegne il canale si chiude, e alla riaccensione la pagina si rimette in pari.",rec:true},
+     {id:"ws",l:"WebSocket, con Django Channels e Redis",d:"Canale nei due sensi. Richiede Redis (o Valkey) e Django Channels, che è fermo da un anno e dichiara di funzionare solo fino a Django 6.0. Il difetto di Safari lo tocca."},
+     {id:"poll",l:"Domanda ogni pochi secondi",d:"La pagina chiede «novità?» ogni 3 secondi. Il più semplice; ritardo fino a 3 secondi e molte richieste inutili."}]},
+ {k:"posta", t:"Come manda il programma le mail dalla casella del responsabile?",
+  why:"Richieste di reso, segnalazioni e ordini fornitore partono dalla mail aziendale del responsabile, con copia a lui (223, 311). Microsoft 365 spegne l'accesso con la sola password a fine dicembre 2026 e Google l'ha già spento: serve un permesso apposta.",
+  o:[{id:"admin",l:"Un permesso dato una volta dall'amministratore della posta",d:"Con Microsoft 365 o Google Workspace, chi amministra la posta dà al programma il permesso di mandare solo dalle caselle dei responsabili. Le mail finiscono nella loro Posta inviata. Con Aruba, Register.it o altri gestori: la casella con la sua password, salvata sul server.",rec:true},
+     {id:"utente",l:"Ogni responsabile accede una volta con il suo account",d:"Il responsabile tocca «Collega la mia posta» e accede con Microsoft o Google. Nessun lavoro per l'amministratore se l'azienda lo permette (spesso chiede comunque il suo consenso); da rifare se l'accesso scade."},
+     {id:"casella",l:"Una casella del magazzino, con il responsabile in copia",d:"Per esempio magazzino@azienda.it, con la risposta che torna al responsabile. Un permesso solo e semplice; ma la mail non parte dalla casella del responsabile: cambia le decisioni 223 e 311."}]},
+ {k:"ufp", t:"Che posta usa UFP?",
+  why:"Il primo collegamento di posta da scrivere è quello dei magazzini di prova. È un fatto che sai tu; se non lo sai, va bene «Non lo so».",
+  o:[{id:"ms",l:"Microsoft 365 (Outlook)",d:""},{id:"google",l:"Google Workspace (Gmail aziendale)",d:""},{id:"altro",l:"Aruba, Register.it o un altro gestore",d:"Scrivi nella nota quale, se lo sai."},{id:"boh",l:"Non lo so",d:"Si chiede quando si installa.",rec:true}]},
+ {k:"shopify", t:"Che posta usa il magazzino Shopify?",
+  why:"Stesso motivo della domanda precedente.",
+  o:[{id:"ms",l:"Microsoft 365 (Outlook)",d:""},{id:"google",l:"Google Workspace (Gmail aziendale)",d:""},{id:"altro",l:"Aruba, Register.it o un altro gestore",d:"Scrivi nella nota quale, se lo sai."},{id:"boh",l:"Non lo so",d:"Si chiede quando si installa.",rec:true}]}
 ];
 const KEYS = Q.map(q=>q.k);
 let S = {note:{}}; KEYS.forEach(k=>S[k]="");
@@ -251,113 +286,66 @@ const lab = k => { const q=Q.find(q=>q.k===k); return (q.o.find(o=>o.id===S[k])|
 
 function chip(t,small,cls){ return `<span class="chip ${cls||""}">${esc(t)}${small?`<small>${esc(small)}</small>`:""}</span>`; }
 function lanes(){
-  const box = v("installa")==="docker";
-  const C = (t,s,cls)=>chip(t + (box?" ▣":""), s, cls);
+  const p=v("pagine"), c=v("canale");
   const tel=[
-    chip(v("pagine")==="server"?"Pagine dal server, aggiornate a pezzi (htmx)":"App nel browser (React o Svelte)", v("pagine")==="server"?"più pochi file JavaScript":"costruita a ogni versione", "new"),
-    chip("Fotocamera e scatto da solo","409"),
-    chip(v("barcode")==="misto"?"Barcode: lettore del browser, o libreria zxing-cpp":"Barcode: libreria zxing-cpp su tutti","grilletto sul palmare (410)"),
-    chip("Operazioni in attesa, con la foto","memoria del browser (IndexedDB), 127"),
+    chip(({htmx:"Pagine dal server, aggiornate a pezzi (htmx 4)",isole:"Pagine dal server con htmx; Svelte per le schermate da computer più ricche",spa:"App nel browser con React"})[p], ({htmx:"più piccoli componenti",isole:"due modi di scrivere le pagine",spa:"costruita a ogni versione"})[p], "new"),
+    chip("Fotocamera e scatto da solo","componente, 409"),
+    chip("Barcode: lettore del browser, o zxing-cpp","425; grilletto sul palmare"),
+    chip("Operazioni in attesa, con la foto","IndexedDB, componente, 127"),
     chip("Calcolo delle impronte?","dopo la prova (405)","out")];
-  const net = ({sse:"avvisi dal server (SSE)",ws:"WebSocket",poll:"domanda ogni 3 s"})[v("canale")];
-  const lang = ({django:"Python · Django",fastapi:"Python · FastAPI",node:"TypeScript · Node.js",rust:"Rust"})[v("server")];
+  const net=({sse:"avvisi dal server (SSE)",ws:"WebSocket",poll:"domanda ogni 3 s"})[c];
   const srv=[
-    C("Certificato e HTTPS (Caddy)","dominio o interno, 123"),
-    C("Programma: "+lang, "pagine, regole, assegnazione, scambio"),
-    C("Lavori a intervalli", "scambio, Shopify, mail, pulizia foto"),
-    v("server")==="node" ? C("Secondo programma in Python","codice stampato e quantità","warn") : C("Riconoscimento: codice stampato e quantità", v("server")==="rust"?"processo a parte, OCR da sostituire":"Python, processo a parte", v("server")==="rust"?"warn":""),
+    chip("Caddy: certificato, HTTPS, HTTP/2","123"),
+    chip("Programma: Python, Django"+(p==="spa"?" (solo dati)":""),"422"),
+    chip("Lavori a intervalli","coda nel database"),
+    chip("Riconoscimento: codice stampato e quantità","Python, processo a parte"),
     chip("Modello visivo e macchina","dopo la prova (405)","out"),
-    C(v("db")==="pg"?"PostgreSQL + pgvector":"SQLite + elenco impronte a parte", v("db")==="pg"?"dati, registro, impronte":"impronte da tenere allineate", v("db")==="pg"?"":"warn"),
-    ({cartelle:chip("Cartelle delle foto","riferimento · bolle · inquadrature (30 gg)"),
-      dentro:chip("Foto dentro il database","copie più pesanti","warn"),
-      oggetti:C("Archivio a oggetti","un pezzo in più","warn")})[v("foto")],
-    C("Aggiornatore", ({internet:"scarica da internet",chiavetta:"solo a mano",tutti:"internet o chiavetta"})[v("aggiorna")] + "; copia prima di installare"),
-    chip("Moduli", ({insieme:"nella cartella «moduli» della base",privati:"da repository privati",tuttoprivato:"con la base, repository privato"})[v("moduli")])];
-  if(v("canale")==="ws") srv.splice(3,0,C("Redis per i WebSocket","pezzo in più","warn"));
+    chip("PostgreSQL 18 + pgvector", c==="sse"?"dati, impronte e campanello degli avvisi":"dati e impronte"),
+    chip("Cartelle delle foto","424"),
+    chip("Posta", ({admin:"permesso dell'amministratore, solo caselle dei responsabili",utente:"accesso di ogni responsabile",casella:"casella del magazzino"})[v("posta")], "new"),
+    chip("Aggiornatore e moduli","427, 428")];
+  if(c==="ws") srv.splice(3,0,chip("Redis (o Valkey) e Django Channels","pezzi in più","warn"));
   document.getElementById("lanes").innerHTML=
    `<div class="lane"><h3>Telefono, palmare, computer</h3><span class="sub">Nel browser, senza installare nulla</span>${tel.join("")}</div>
     <div class="wire" aria-label="Cosa passa in rete">
       <div class="arrow">verso il server<b>codice + foto, in HTTPS</b></div>
       <div class="arrow">di ritorno<b>${esc(net)}</b></div></div>
-    <div class="lane srv"><h3>Server in sede${box?" · contenitori ▣":""}</h3><span class="sub">Solo rete interna (121)</span>${srv.join("")}</div>`;
+    <div class="lane srv"><h3>Server in sede · contenitori</h3><span class="sub">Solo rete interna (121)</span>${srv.join("")}</div>`;
 }
-
 const tbl = (h,rows)=>`<div class="tw"><table class="mini"><thead><tr>${h.map(x=>`<th>${esc(x)}</th>`).join("")}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
 const EX = {
- server:()=>{ const r = {
-   django:[["Utenti, ruoli, PIN","già pronto"],["Struttura del database e sue modifiche","già pronto"],["Pannello per l'admin","già pronto"],["Testi separati e tradotti (28)","già pronto"],["Codice stampato, modello","stesso linguaggio"]],
-   fastapi:[["Utenti, ruoli, PIN","da montare"],["Struttura del database e sue modifiche","altri due pezzi"],["Pannello per l'admin","da scrivere"],["Testi separati e tradotti (28)","da montare"],["Codice stampato, modello","stesso linguaggio"]],
-   node:[["Utenti, ruoli, PIN","da montare"],["Struttura del database e sue modifiche","altri pezzi"],["Pannello per l'admin","da scrivere"],["Testi separati e tradotti (28)","da montare"],["Codice stampato, modello","<b>secondo programma in Python</b>"]],
-   rust:[["Utenti, ruoli, PIN","da scrivere"],["Struttura del database e sue modifiche","altri pezzi"],["Pannello per l'admin","da scrivere"],["Testi separati e tradotti (28)","da montare"],["Codice stampato, modello","<b>OCR da sostituire</b>; modello con ONNX Runtime"]]}[v("server")];
-   return `<div class="cap">Cosa c'è già e cosa si scrive</div>${tbl(["Serve alla base","Con questa scelta"],r)}`; },
- db:()=> v("db")==="pg"
-   ? `<div class="cap">Mario e Luca confermano l'ultimo pezzo insieme</div><ol class="flow"><li><span class="who">Mario</span><span class="net">conferma 1 pz · giacenza 1 → 0</span></li><li><span class="who">Luca</span><span class="net">conferma 1 pz · giacenza 0 → −1</span></li><li><span class="who s">Database</span><span>rifiuta: la regola «mai sotto zero» è scritta nel database. Luca vede «già preso».</span></li></ol><small>Allo stesso modo un'operazione in attesa con la stessa identità non entra due volte.</small>`
-   : `<div class="cap">Mario e Luca confermano l'ultimo pezzo insieme</div><ol class="flow"><li><span class="who">Mario</span><span class="net">scrive · giacenza 1 → 0</span></li><li><span class="who">Luca</span><span class="net">aspetta il suo turno</span></li><li><span class="who s">Programma</span><span>controlla la regola e risponde «già preso». Con molti telefoni le scritture si mettono in fila.</span></li></ol><small>Le impronte stanno in un elenco a parte, da ricaricare quando cambia un articolo.</small>`,
- foto:()=> ({cartelle:`<div class="cap">Sul disco del server</div><pre class="tree">foto/
-├── riferimento/   <span class="k">→ nelle copie</span>
-├── bolle/         <span class="k">→ nelle copie</span>
-└── inquadrature/  <span class="x">→ fuori dalle copie, 30 giorni</span>
-    └── 2026-11-20/
-        └── 7f3a…c1.jpg</pre><small>Il database tiene il nome del file accanto all'impronta e al DDT.</small>`,
-   dentro:`<div class="cap">Dentro il database</div><pre class="tree">database  <span class="k">≈ 12 GB dopo un mese di 1.000 inquadrature al giorno (stima)</span>
-└── tabella foto  <span class="x">→ la copia di ogni notte porta anche queste</span></pre>`,
-   oggetti:`<div class="cap">Archivio a oggetti</div><pre class="tree">server in sede
-├── programma
-├── database
-└── archivio a oggetti  <span class="x">→ un programma in più da installare e aggiornare</span></pre>`})[v("foto")],
- pagine:()=> v("pagine")==="server"
-   ? `<div class="cap">Dove sta il codice</div>${tbl(["Pezzo","Linguaggio"],[["Schermate e regole","Python + HTML"],["Aggiornare un pezzo di pagina","htmx (attributi nell'HTML)"],["Fotocamera, barcode, attese, canale","JavaScript, pochi file"]])}<small>Un progetto solo. Le rifiniture e le animazioni dell'aspetto grafico (ticket 17) si fanno con CSS.</small>`
-   : `<div class="cap">Dove sta il codice</div>${tbl(["Pezzo","Linguaggio"],[["Regole e dati","Python (o il linguaggio del server)"],["Tutte le schermate","TypeScript + React o Svelte"],["Fotocamera, barcode, attese, canale","TypeScript"]])}<small>Due progetti; a ogni versione le pagine si «costruiscono» prima di pubblicarle.</small>`,
- canale:()=>{ const t = ({sse:["subito, con l'avviso «ordine 123 cambiato»","ricarica solo la riga dell'ordine"],ws:["subito, sul canale nei due sensi","ricarica solo la riga dell'ordine"],poll:["alla prossima domanda, entro 3 secondi","ricarica la lista"]})[v("canale")];
-   return `<div class="cap">Luca preleva, Mario guarda l'elenco del prelievo</div><ol class="flow"><li><span class="who">Luca</span><span class="net">conferma 2 pz dell'ordine 123</span></li><li><span class="who s">Server</span><span>${esc(t[0])}</span></li><li><span class="who">Mario</span><span>${esc(t[1])}</span></li></ol>`; },
- barcode:()=>{ const m=v("barcode")==="misto";
-   return `<div class="cap">Chi legge il barcode</div>${tbl(["Dispositivo","Lettore"],[["Telefono Android, Chrome",m?"lettore del browser":"libreria zxing-cpp"],["iPhone, Safari","libreria zxing-cpp"],["Computer Windows","libreria zxing-cpp"],["Palmare","grilletto (e la libreria con «Inquadra»)"]])}<small>La libreria è un file scaricato dal server in sede insieme alla pagina: non serve internet.</small>`; },
- installa:()=> v("installa")==="docker"
-   ? `<div class="cap">Un aggiornamento, di notte</div><ol class="steps"><li>Copia di sicurezza del database e delle cartelle «riferimento» e «bolle».</li><li>Controllo dei moduli accesi con la versione nuova (307).</li><li>Si scaricano i contenitori nuovi e si avviano.</li><li>Se il programma non riparte: si rimettono i contenitori di prima e la copia.</li></ol>`
-   : `<div class="cap">Un aggiornamento, di notte</div><ol class="steps"><li>Copia di sicurezza.</li><li>Controllo dei moduli.</li><li>Si sostituiscono i file del programma e delle librerie sul sistema.</li><li>Se non riparte: script scritto da noi per rimettere i file di prima, diverso per ogni sistema.</li></ol>`,
- aggiorna:()=>{ const a=v("aggiorna");
-   return `<div class="cap">Notte, aggiornamento obbligatorio</div><ol class="flow"><li><span class="who s">Server</span><span>${a==="chiavetta"?"non può prenderlo da solo: aspetta il responsabile con la chiavetta":"lo scarica da internet, in uscita"}</span></li><li><span class="who s">Server</span><span>${a==="chiavetta"?"il mattino dopo: «Aggiornamento da installare a mano»":"copia, controllo dei moduli, installazione"}</span></li><li><span class="who">Mattino</span><span>${a==="chiavetta"?"l'errore corretto resta finché qualcuno non arriva":"i telefoni si ricaricano alla prima pausa (125)"}</span></li></ol>${a==="tutti"?"<small>Nei magazzini senza uscita verso internet si usa la chiavetta, e gli obbligatori aspettano.</small>":""}`; },
- moduli:()=> ({insieme:`<div class="cap">Un repository, una versione</div><pre class="tree">ripo/
-├── base/
-└── moduli/
-    ├── scambio_file/   <span class="k">di serie</span>
-    ├── shopify/
-    └── adhoc/          <span class="k">specializzazione UFP</span></pre><small>Impostazioni e dati di UFP restano sul suo server, mai nel repository.</small>`,
-   privati:`<div class="cap">Più repository</div><pre class="tree">ripo/            <span class="k">pubblico: base, scambio a file, Shopify</span>
-ripo-ufp/        <span class="x">privato: modulo Ad Hoc</span>
-ripo-…/          <span class="x">uno per specializzazione</span></pre>`,
-   tuttoprivato:`<div class="cap">Un repository privato</div><pre class="tree">ripo/  <span class="x">privato</span>
-├── base/
-└── moduli/</pre><small>La pagina di scatto resta pubblica sul ramo gh-pages solo se il piano di GitHub lo permette con un repository privato: da verificare.</small>`})[v("moduli")],
- prove:()=> v("prove")==="pagina"
-   ? `<div class="cap">Due tornate</div><ol class="steps"><li><b>Ora</b>, pagina di prova sui telefoni: fotocamera su iPhone, lettore del barcode, grilletto, scatto da solo, peso della foto, attesa dopo ricarica.</li><li><b>Con la prima versione</b>, sul tuo computer di casa: canale con più telefoni, fascia dei 3 secondi, certificato con un router vero, prova di carico.</li></ol>`
-   : `<div class="cap">Una tornata</div><ol class="steps"><li><b>Con la prima versione</b>, sul tuo computer di casa: tutte le prove insieme.</li></ol>`,
- palmare:()=>`<div class="cap">Prova del grilletto</div><ol class="steps"><li>Apri la pagina dal browser del palmare.</li><li>Tocca «Prova grilletto» e premi il grilletto su un barcode.</li><li>La pagina dice se il codice è arrivato come da una tastiera e in quanto tempo.</li></ol><small>${({si:"Si fa con le altre prove.",chiedo:"Si fa quando UFP dà il permesso.",no:"Rimandata alla prima versione."})[v("palmare")]}</small>`,
- nome:()=>{ const n=v("nome");
-   const rows = n==="codice"?[["Codice nuovo, pacchetti","ripo, da subito"],["README, titoli delle pagine","Ripo, da subito"],["Decisioni e ricerche passate","restano come sono"],["Repository e pagina di scatto","DondEres fino a fine prova visiva"]]
-     : n==="tutto"?[["Codice nuovo, pacchetti","ripo, da subito"],["README, titoli delle pagine","Ripo, da subito"],["Decisioni e ricerche passate","restano come sono"],["Repository e pagina di scatto","Ripo da oggi: indirizzo nuovo"]]
-     :[["Codice nuovo, pacchetti","donderes, da cambiare dopo"],["README, titoli delle pagine","DondEres"],["Decisioni e ricerche passate","restano come sono"],["Repository e pagina di scatto","DondEres"]];
-   return `<div class="cap">Dove compare il nome</div>${tbl(["Dove","Nome"],rows)}`; }
+ pagine:()=>{ const p=v("pagine");
+   const rows={htmx:[["Elenco del prelievo, DDT, inventario","htmx"],["Piani di spedizione (trascinare)","componente piccolo"],["Configurazione","htmx"],["Fotocamera, attese","componente"]],
+     isole:[["Elenco del prelievo, DDT, inventario","htmx"],["Piani di spedizione (trascinare)","Svelte"],["Configurazione","Svelte"],["Fotocamera, attese","componente"]],
+     spa:[["Elenco del prelievo, DDT, inventario","React"],["Piani di spedizione (trascinare)","React"],["Configurazione","React"],["Fotocamera, attese","React"]]}[p];
+   return `<div class="cap">Con cosa si scrive ogni schermata</div>${tbl(["Schermata","Con"],rows)}<small>${({htmx:"Se una schermata si rivela troppo ricca per htmx, la si riscrive da sola come componente: la scelta si può correggere pezzo per pezzo.",isole:"Due modi di scrivere le pagine da tenere coerenti nell'aspetto grafico.",spa:"Le regole di validazione stanno sul server e vanno ripetute nell'app perché l'operatore le veda subito."})[p]}</small>`; },
+ canale:()=>{ const c=v("canale");
+   const t=({sse:["chiude il canale","riapre il canale e chiede «cosa è cambiato?»","ordine 123 aggiornato"],ws:["il WebSocket resta aperto o cade","apre un WebSocket nuovo: su iPhone può restare bloccato (difetto di Safari)","serve ricaricare la pagina"],poll:["smette di chiedere","riprende a chiedere ogni 3 s","ordine 123 aggiornato entro 3 s"]})[c];
+   return `<div class="cap">Mario spegne lo schermo e lo riaccende</div><ol class="flow"><li><span class="who">Schermo spento</span><span>${esc(t[0])}</span></li><li><span class="who">Riacceso</span><span>${esc(t[1])}</span></li><li><span class="who">Mario vede</span><span>${esc(t[2])}</span></li></ol>`; },
+ posta:()=>{ const p=v("posta");
+   const rows={admin:[["Microsoft 365","l'amministratore dà il permesso «manda come» solo per il gruppo dei responsabili (da 30 minuti a 2 ore per l'effetto)"],["Google Workspace","il super amministratore attiva la delega per l'invio (fino a 24 ore)"],["Aruba, Register.it, altri","indirizzo e password della casella; la mail non compare nella Posta inviata"]],
+     utente:[["Microsoft 365","il responsabile accede; l'azienda può chiedere il consenso dell'amministratore"],["Google Workspace","il responsabile accede; l'app va registrata come «interna»"],["Aruba, Register.it, altri","indirizzo e password della casella"]],
+     casella:[["Qualsiasi gestore","una casella del magazzino con la sua password o il suo permesso; risposta al responsabile"],["Posta inviata del responsabile","la mail non c'è: c'è la copia"],["Decisioni 223 e 311","da cambiare"]]}[p];
+   return `<div class="cap">Cosa si fa all'installazione</div>${tbl(["Gestore","Cosa serve"],rows)}<small>Senza posta collegata restano «Copia testo» e «Scarica PDF» (215).</small>`; },
+ ufp:()=>`<div class="cap">Cosa cambia</div><p class="note">${({ms:"Il primo collegamento da scrivere è quello di Microsoft 365.",google:"Il primo collegamento da scrivere è quello di Google Workspace.",altro:"Il primo collegamento da scrivere è quello con indirizzo e password (SMTP).",boh:"L'ordine dei collegamenti si decide all'installazione."})[v("ufp")]}</p>`,
+ shopify:()=>`<div class="cap">Cosa cambia</div><p class="note">${({ms:"Serve il collegamento di Microsoft 365.",google:"Serve il collegamento di Google Workspace.",altro:"Serve il collegamento con indirizzo e password (SMTP).",boh:"Si chiede all'installazione."})[v("shopify")]}</p>`
 };
 
 function deduzioni(){
-  const py = v("server")==="django"||v("server")==="fastapi", pg = v("db")==="pg";
-  const L = [
-    "Le operazioni in attesa si salvano nella memoria del browser fatta per i file (IndexedDB), che tiene anche la foto; ognuna ha un'identità creata nel browser"+(pg?" e il database rifiuta la stessa identità due volte (niente doppioni, 201).":"; il programma scarta la stessa identità due volte (201)."),
-    pg ? "Il confronto tra le impronte è una ricerca esatta dentro PostgreSQL (pgvector), senza indici approssimati (407). Se le prove dicono che supera il secondo (195), si tiene l'elenco in memoria e si cerca lì; dimensione delle impronte e modello li fissa il ticket «Impronte e server in sede, dopo la prova»."
-       : "Il confronto tra le impronte si fa su un elenco in memoria, ricaricato quando cambia un articolo; dimensione delle impronte e modello li fissa il ticket «Impronte e server in sede, dopo la prova».",
-    "Codice stampato, quantità scritta e (dopo la prova) modello visivo girano in un processo a parte sul server, «riconoscimento»: il programma resta leggero e il ticket «Impronte e server in sede, dopo la prova» lo può cambiare senza toccare il resto.",
-    "I lavori a intervalli (scambio ogni 5 minuti, Shopify, mail dei resi, pulizia delle foto dei 30 giorni, controllo degli aggiornamenti) girano in un processo «lavori» con la coda nel database: niente programmi in più. I «Tasks» di Django da soli non eseguono i lavori: serve una libreria per la coda (Procrastinate o django-tasks-db), da scegliere quando si scrive il primo lavoro.",
-    "Certificato: Caddy davanti al programma fa sia il certificato del dominio con la sfida DNS sia quello interno (123), e parla HTTP/2, che serve al canale aperto (con HTTP/1.1 il browser ne tiene al massimo 6 per indirizzo). Per i domini su Aruba o Register.it, che non hanno un collegamento con Caddy, si delega la sola voce della sfida (_acme-challenge) a un gestore DNS che ce l'ha, come Cloudflare o OVH. Dal 2027 Let's Encrypt accorcia i certificati a 64 e poi 45 giorni: il rinnovo da solo diventa indispensabile.",
-    "Versioni di partenza (ricerca del 20/11/2026): Django 6 (con la 6.2, a lunga durata, da aprile 2027), PostgreSQL 18 (la 19 è appena uscita e pgvector non la dichiara ancora), htmx 2 (la 4 diventa quella di serie nel 2027: un passaggio da mettere in conto).",
-    "Le operazioni in attesa partono appena torna la rete: la cancellazione di Safari dopo 7 giorni senza uso non le tocca. Se il browser non dà la memoria persistente, la regola della 127 resta: se si perde, il programma lo dice.",
-    "PDF dei documenti e delle etichette (415): dalle stesse pagine HTML del programma, con una libreria che trasforma l'HTML in PDF.",
-    "Moduli"+(py?" in Python, come la base":"")+": ogni punto d'aggancio è un'interfaccia scritta con il suo numero di versione; il modulo dichiara quale versione usa e l'aggiornatore lo controlla prima di installare (307).",
-    "Shopify e scambio a file: con le librerie di base del linguaggio, senza kit esterni.",
-    "Prove automatiche: quelle del linguaggio sul server e Playwright (già nel progetto) per le schermate.",
-    "Invio delle mail dalla casella del responsabile (223, 311): si sceglie nel prossimo giro. Microsoft 365 spegne l'accesso con la sola password a fine dicembre 2026 e Google l'ha già spento: serve un permesso apposta."
+  const p=v("pagine"), c=v("canale");
+  const L=[
+    p!=="spa" ? "htmx nella versione 4 (uscita ad agosto 2026, con gli avvisi dal server nello stesso pacchetto, licenza 0BSD), invece della 2: si evita un passaggio di versione nel 2027." : "React 19 con un passaggio di costruzione; Django manda i dati con un'interfaccia (API).",
+    "Fotocamera, scatto da solo e operazioni in attesa sono piccoli componenti JavaScript che htmx non tocca, così un aggiornamento di pagina non spegne la fotocamera né perde un'attesa.",
+    "Accessibilità (WCAG 2.2 AA): dopo ogni aggiornamento di un pezzo di pagina si sposta il punto attivo dove serve e i messaggi come «Salvata» o «Senza rete» si leggono ad alta voce con aria-live.",
+    c==="sse" ? "Il canale: Django risponde in streaming sotto ASGI; un ascoltatore per processo riceve il campanello di PostgreSQL (LISTEN/NOTIFY, che porta solo «cosa è cambiato», mai i dati) e lo gira alle pagine aperte. Per questo l'ascoltatore usa una connessione diretta al database." : "Il canale: Django Channels con Redis (o Valkey) come passaggio dei messaggi.",
+    "Quando la pagina è nascosta (schermo spento, altra app) il canale si chiude; quando torna visibile la pagina chiede cosa è cambiato. Da provare su un iPhone vero con la pagina di prova.",
+    "Connessioni al database: il gruppo di connessioni di psycopg dentro ogni processo; niente PgBouncer, che non regge l'ascolto del campanello.",
+    "Contenitori: PostgreSQL su un disco (volume) dedicato, con il percorso nuovo della versione 18; immagini piccole costruite in due passaggi; riavvio da solo e controllo di salute per ogni pezzo; registri con il driver «local», che li fa ruotare; nessun file di lavoro dentro il contenitore; porte aperte solo da Caddy.",
+    "Processi del programma: un server ASGI (uvicorn) con un processo per ogni nucleo del processore, da regolare con la prova di carico.",
+    "Se la macchina in sede sarà Windows: contenitori in una macchina virtuale Linux raggiungibile dalla rete del magazzino; il modo si sceglie nel ticket «Impronte e server in sede, dopo la prova».",
+    v("posta")!=="casella" ? "Posta: tre collegamenti possibili (Microsoft 365, Google Workspace, indirizzo e password); si scrivono prima quelli dei magazzini di prova. Le password e i permessi stanno solo sul server in sede, mai nel repository." : "Posta: una casella del magazzino; decisioni 223 e 311 da aggiornare."
   ];
-  document.getElementById("deduzioni").innerHTML = L.map(t=>`<li>${esc(t)}</li>`).join("");
+  document.getElementById("deduzioni").innerHTML=L.map(t=>`<li>${esc(t)}</li>`).join("");
 }
 
 function build(){
@@ -375,7 +363,7 @@ function build(){
   </section>`).join("");
 }
 const opts=(q,cur)=>q.o.map(o=>`<label class="opt"><input type="radio" name="${q.k}" id="${q.k}-${o.id}" value="${o.id}" ${cur===o.id?"checked":""}>
-  <span><b>${esc(o.l)}</b>${o.rec?'<span class="rec">Consigliata</span>':""}<span class="d">${esc(o.d)}</span></span></label>`).join("");
+  <span><b>${esc(o.l)}</b>${o.rec?'<span class="rec">Consigliata</span>':""}${o.d?`<span class="d">${esc(o.d)}</span>`:""}</span></label>`).join("");
 function refresh(){ lanes(); deduzioni(); for(const q of Q) document.getElementById("ex-"+q.k).innerHTML=EX[q.k](); document.getElementById("copybox").textContent=asText(); }
 function render(){ for(const q of Q){ document.getElementById(q.k+"-opts").innerHTML=opts(q,S[q.k]); document.getElementById("n-"+q.k).value=S.note[q.k]||""; } refresh(); }
 function asText(){ const n=k=>S.note[k]?" — nota: "+S.note[k]:""; return ["Stack – giro "+GIRO].concat(Q.map((q,i)=>`${i+1}. ${q.t} ${lab(q.k)}${n(q.k)}`)).join("\n"); }
