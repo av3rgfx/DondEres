@@ -1994,3 +1994,21 @@ blu elettrico, tutti con contrasto almeno 5,2 a 1 sul bianco), R a rampa o norma
 quadrato, simbolo e nome separati o anche affiancati. Dopo le risposte: file finali (nero, bianco, a colori, icone,
 favicon, manifest), tavola d'uso e guida di una pagina.
 
+### Giro 9: la R più curva (decisioni 388–392)
+
+Scelte del giro 8: blu elettrico #1F5BFF (388, contrasto 5,25 con il bianco; serve una variante chiara per il tema
+scuro), puntino tondo (390), simbolo e nome separati (391). La R va ridisegnata più curva, dallo schizzo dell'utente
+(389, `prototipi/brand-kit/concetti-4/schizzo-utente.jpg`, salvato senza i dati della foto); l'utente chiede anche idee
+più ardite (392). File in `prototipi/brand-kit/concetti-4/`, generati da `genera.py` (ogni R è una funzione di altezza
+e asta, usata per il simbolo e per il nome; le minuscole sono quelle del kit a peso medio). Tutti tra 99 e 100 in
+`svg_audit.py`.
+
+| | Concetto | Idea | Rischio |
+|---|---|---|---|
+| A | Il tuo schizzo · Gancio | la gamba scende e risale a U, staccata dall'asta | nel nome può leggersi «Ru»; a 16 punti la U si chiude |
+| B | Ri (consigliato) | la U risale e diventa la i del nome, con il puntino: il simbolo dice «Ri» | lettura «Rj»; il più delicato in piccolo |
+| C | Stencil | la R di A in tre pezzi, come le scritte a mascherina sulle casse | stencil comune nei marchi industriali |
+| D | Scivolo | la rampa del giro 5 diventa curva, come lo scivolo a rulli | il più sobrio; coda sottile da ingrossare per le stampe termiche |
+
+Un concetto «Muletto» (gamba con le forche) è stato scartato prima di mostrarlo: si leggeva «PL».
+

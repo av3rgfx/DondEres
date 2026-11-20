@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 422 256" width="422" height="256" role="img" aria-labelledby="t">
+  <title id="t">Ripo, nome, concetto scivolo</title>
+  <path fill="#111111" fill-rule="evenodd" d="M20 56 L46 56 L46 200 L20 200 Z"/>
+  <path fill="#111111" fill-rule="evenodd" d="M20 56 L87.68 56 A47.52 47.52 0 0 1 87.68 151.04 L20 151.04 Z M46 82 L92 82 L92 125.04 L46 125.04 Z"/>
+  <path fill="#111111" fill-rule="evenodd" d="M63.2 143.84 L89.2 143.84 A56.16 56.16 0 0 0 145.36 200 L63.2 200 Z"/>
+  <path fill="#111111" fill-rule="evenodd" d="M157.36 104 L179.36 104 L179.36 200 L157.36 200 Z"/>
+  <path fill="#111111" fill-rule="evenodd" d="M154.61 76.25 A13.75 13.75 0 1 1 182.11 76.25 A13.75 13.75 0 1 1 154.61 76.25 Z"/>
+  <path fill="#111111" fill-rule="evenodd" d="M193.36 104 L215.36 104 L215.36 244 L193.36 244 Z"/>
+  <path fill="#111111" fill-rule="evenodd" d="M193.36 152 A49 49 0 1 1 291.36 152 A49 49 0 1 1 193.36 152 Z M215.36 152 A27 27 0 1 0 269.36 152 A27 27 0 1 0 215.36 152 Z"/>
+  <path fill="#111111" fill-rule="evenodd" d="M303.36 152 A49 49 0 1 1 401.36 152 A49 49 0 1 1 303.36 152 Z M325.36 152 A27 27 0 1 0 379.36 152 A27 27 0 1 0 325.36 152 Z"/>
+</svg>
