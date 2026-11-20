@@ -2,7 +2,7 @@
 
 Type: task
 Label: wayfinder:task
-Status: open
+Status: resolved
 Assignee: sessione del 20/11/2026 con l'utente
 Blocked by: 13, 29 (13 chiuso il 20/11/2026)
 
@@ -42,3 +42,8 @@ Risultato atteso: il brand kit nel repository, il link qui e la direzione scelta
   domande di gusto nella pagina; sezione «Giro 13» di `docs/architettura.md`.
 - 20/11/2026, giro 14: risposte del giro 13 nelle decisioni 398–403; file rigenerati, guida e tavola d'uso in `brand/`;
   riepilogo da confermare nella pagina.
+- 20/11/2026, risoluzione: kit confermato dall'utente (404). Logo R · Pulito costruito (396) con asta 44 (398), R per i
+  16 pixel (399), blu elettrico #1F5BFF (388) e blu chiaro #668FFF per il tema scuro (400), icona R bianca su blu (401),
+  disegno chiuso dopo il confronto con Revolut (402); nome Ripo per ora (386). File in `brand/`: guida
+  `brand/guida.md`, tavola `brand/tavola.png`, generatore `brand/genera.py`. Aperti: prova di stampa su una termica
+  vera (403, `brand/prova-stampa.svg`) e ricerca europea dei marchi dal consulente (387).

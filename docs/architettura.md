@@ -2100,3 +2100,9 @@ chiuso (402), prova di stampa rimandata con 5 mm e 15 mm come proposta (403). I 
 `brand/tavola.html` con `brand/tavola.png` (tavola d'uso con i contesti della 368). Nella pagina, il riepilogo da
 confermare: se l'utente conferma, il ticket si chiude.
 
+### Esito (decisione 404)
+
+Kit confermato dall'utente; ticket chiuso. Riferimento per chi usa il marchio: `brand/guida.md`. Per l'aspetto grafico
+delle schermate (ticket «Aspetto grafico») valgono il blu elettrico per il marchio e il #668FFF sul tema scuro; rosso,
+verde e giallo restano agli stati del programma (367). Aperti: prova di stampa (403) e ricerca europea dei marchi (387).
+

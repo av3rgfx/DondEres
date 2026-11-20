@@ -1,13 +1,13 @@
 # Prompt per la prossima sessione (Wayfinder sull'architettura)
 
 Da incollare all'avvio di una nuova sessione sul ramo principale aggiornato. La mappa esiste già: si lavora un ticket
-per sessione, più le ricerche. 20/11/2026: il ticket «Brand kit con la skill logo-design» è quasi finito (decisioni
-362–397). Nome per ora **Ripo** (386), Varko in riserva (376); logo **R · Pulito costruito** (396); blu elettrico
-(388). Manca il kit finale (397): prompt H. La ricerca europea dei marchi resta al consulente (387). Lo stack aspetta
-ancora la divisione tra le macchine, che aspetta la prova visiva; «Aspetto grafico» aspetta brand kit e stack (vale
-anche la vista da computer, decisione 292). Quando nei repository privati ci sono foto o bolle da aprire, sessioni a
-parte lavorano la prova visiva (prompt B) e la prova delle bolle (prompt C). I prompt A, D, E, F e G restano come
-esempi di forma.
+per sessione, più le ricerche. 20/11/2026: il ticket «Brand kit con la skill logo-design» è chiuso (decisioni 362–404): nome per ora **Ripo**
+(386), logo **R · Pulito costruito** con asta 44, kit in `brand/` con la guida `brand/guida.md`. Restano fuori dalla
+mappa dei ticket la prova di stampa su una termica vera (403, nella nebbia) e la ricerca europea dei marchi dal
+consulente (387). Lo stack aspetta ancora la divisione tra le macchine, che aspetta la prova visiva; «Aspetto grafico»
+ora aspetta solo lo stack (vale anche la vista da computer, decisione 292). I ticket prendibili sono le due prove: la
+prova visiva (prompt B) e la prova delle bolle (prompt C), quando nei repository privati ci sono foto o bolle da aprire.
+I prompt A, D, E, F, G e H restano come esempi di forma.
 
 **Prompt H: kit finale di Ripo**
 

@@ -130,6 +130,9 @@ tre livelli di conferma, quantità letta dalla scatola, ubicazioni facoltative, 
 
 - [Verifica dei nomi in R nei registri dei marchi](issues/29-verifica-nomi-in-r.md): risultati UIBM riportati
   dall'utente; nome per ora **Ripo**, che può cambiare senza toccare il logo R; ricerca europea al consulente (386–387).
+- [Brand kit con la skill logo-design](issues/14-brand-kit.md): R · Pulito costruito, asta 44, R apposta per i 16
+  pixel; blu elettrico #1F5BFF e #668FFF sul tema scuro; icona R bianca su blu; simbolo e nome separati; kit in
+  `brand/` con guida e tavola d'uso; prova di stampa rimandata (decisioni 362–404).
 
 ## Not yet specified
 
@@ -156,7 +159,9 @@ tre livelli di conferma, quantità letta dalla scatola, ubicazioni facoltative, 
 - **Descrizione proposta da un modello che legge immagini e scrive testo** per l'articolo nuovo: se tenerla, e quale
   modello, dipende dalla prova e dal server. Oggi la scrive l'operatore con le parole lette sull'etichetta (108).
 - **Cambio del nome provvisorio DondEres:** dove compare (repository, documenti, pagine) e quando sostituirlo con il
-  nome definitivo (in R, 379–383, dopo la verifica dei marchi); da decidere con il brand kit o con lo stack.
+  nome definitivo (in R, 379–383; per ora Ripo, 386); il brand kit è chiuso (404), quindi si decide con lo stack.
+- **Prova di stampa del marchio** su una stampante termica vera, con `brand/prova-stampa.svg` (403): conferma o
+  corregge le misure minime della guida (5 mm il simbolo, 15 mm il nome). Si fa quando c'è la stampante.
 
 ## Out of scope
 
