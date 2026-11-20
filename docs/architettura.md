@@ -1813,3 +1813,22 @@ Tenuti: Vekto, Kardo, Rivo, Dokra. In dubbio: Trako, Sorto, Rigo, Movo. Scartati
 Lampa, Vola, Ordo, Brio, Corso, Pronto. Deduzione, non detta dall'utente: sono state scartate tutte le parole vere
 intere; restano nomi di due sillabe che finiscono in «-o» o «-a», spesso con il suono «k».
 
+### Terzo giro e preferiti (decisioni 354–357)
+
+Nomi nuovi, vicini a quelli tenuti: tenuti Velko e Kurso; in dubbio Varko, Venko, Arvo, Volko; scartato Karto (355).
+
+| Ordine | Nome | Da dove viene | Si legge | Da controllare |
+|---|---|---|---|---|
+| 1 | Kurso | «corsa», «percorso»; in esperanto «corso, rotta» | «kùr-so» | In inglese può diventare «kèr-so» (345): prova a voce |
+| 2 | Varko | il «varco» da cui passa la merce | «vàr-ko» | Può essere un cognome |
+| 3 | Velko | «veloce», con il suono «k» | «vèl-ko» | Nei paesi slavi è un nome di persona |
+
+I tre preferiti vanno alla verifica (356). Se nessuno è libero si riprende, nell'ordine, da Trako, Sorto, Rigo, Movo e
+poi da Venko, Arvo, Volko (i nomi in dubbio del secondo giro e i nuovi segnati «Forse»), e il nome si
+propone all'utente prima di sceglierlo (354). Aperto: se nella riserva entrano anche Vekto, Kardo, Rivo e Dokra,
+tenuti nel secondo giro ma non scelti tra i preferiti; la 354 non li nomina. Si chiede all'utente solo se serve.
+
+Il nome definitivo lo sceglie l'utente dopo la verifica (357); con quel nome parte il brand kit, con Kiln come
+riferimento di stile (351). Pagina delle domande, privata: https://claude.ai/artifact/7iL3QXfdar2NsqsjQSu9EC; copia nel
+repository in `prototipi/nome-prodotto/index.html` (mostra l'ultimo giro).
+

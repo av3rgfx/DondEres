@@ -2,11 +2,28 @@
 
 Da incollare all'avvio di una nuova sessione sul ramo principale aggiornato. La mappa esiste già: si lavora un ticket
 per sessione, più le ricerche. I due ticket sui resi del cliente nel magazzino Shopify sono chiusi
-(19/11/2026, decisioni 322–343; il prompt A resta come esempio di forma). Consigliato ora: «Nome del prodotto»
-(prompt D), che porta a «Unicità dei nomi scelti» e al brand kit. Lo stack aspetta ancora la divisione tra le
-macchine, che aspetta la prova visiva; «Aspetto grafico» aspetta brand kit e stack (deve contare anche la vista da
-computer per responsabili e admin, decisione 292). Quando nei repository privati ci sono foto o bolle da aprire,
-sessioni a parte lavorano la prova visiva (prompt B) e la prova di lettura delle bolle (prompt C).
+(19/11/2026, decisioni 322–343; il prompt A resta come esempio di forma). Anche «Nome del prodotto» è chiuso
+(20/11/2026, decisioni 344–357; il prompt D resta come esempio): preferiti in ordine Kurso, Varko, Velko. Consigliato
+ora: «Unicità dei nomi scelti» (prompt E), una ricerca che porta alla scelta del nome e al brand kit. Lo stack aspetta
+ancora la divisione tra le macchine, che aspetta la prova visiva; «Aspetto grafico» aspetta brand kit e stack (deve
+contare anche la vista da computer per responsabili e admin, decisione 292). Quando nei repository privati ci sono
+foto o bolle da aprire, sessioni a parte lavorano la prova visiva (prompt B) e la prova di lettura delle bolle
+(prompt C).
+
+**Prompt E: unicità dei nomi scelti**
+
+```text
+/wayfinder .scratch/architettura/map.md
+
+Leggi prima AGENTS.md, poi la mappa (solo map.md, non tutti i ticket). Risolvi la ricerca «Unicità dei nomi scelti»
+con la skill research: fonti primarie (registri EUIPO, UIBM, WIPO; domini; prodotti simili nel settore), un file in
+docs/research/ con data e link. Leggi i commenti del ticket e le decisioni 349, 354 e 356. È una ricerca, non un
+parere legale. Poi mostrami i risultati senza abbellirli e fammi scegliere il nome, con le stesse regole delle
+domande: registra ogni mia decisione in docs/decisioni.md, con data e motivo; scrivi la tua parte in
+docs/architettura.md. Parlami in italiano, con domande semplici: cosa chiedi, perché conta, cosa comporta ogni
+opzione. Per le domande usa una pagina interattiva (Artifact) con esempi visivi che cambiano con la risposta, opzione
+consigliata, «Accetta tutte le consigliate», note facoltative e risposte salvate che leggi tu quando scrivo «fatto».
+```
 
 **Prompt A: resi del cliente nel magazzino Shopify**
 

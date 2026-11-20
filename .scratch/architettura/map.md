@@ -115,6 +115,9 @@ percorso delle schermate e aspetto grafico, compresi nome e brand kit (decisioni
   collegamento, senza app; modulo nostro nella pagina dell'ordine con la scelta del rimborso e l'indirizzo del ritiro;
   mail dei resi lette dal programma, modello solo dopo una prova; il responsabile approva, prenota il ritiro GLS o
   carica l'etichetta FedEx e conferma il rimborso; 14 giorni contati; tre punti per la parte legale (decisioni 322–343).
+- [Nome del prodotto](issues/12-nome-del-prodotto.md): marchio vero, uguale in italiano e in inglese, veloce e
+  ordinato, parola modificata fino a 5 lettere; Kiln solo per lo stile; preferiti in ordine Kurso, Varko, Velko, da
+  verificare; se nessuno è libero si riprende dai nomi in dubbio (decisioni 344–357).
 
 Prese prima della mappa, nel secondo giro di domande del 15/11/2026: decisioni 15–28 in
 [`docs/decisioni.md`](../../docs/decisioni.md) (assegnazione parziale, codice stampato come tipo di articolo,
