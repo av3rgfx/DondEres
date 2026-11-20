@@ -1,158 +1,259 @@
 <title>Brand kit Varko</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@112,600;112,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&family=Outfit:wght@700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@112,600;112,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
 <style>
-/* Layout: il logo scelto in alto, poi il riepilogo della sessione per punti, poi la conferma con una nota.
-   Tono: segnaletica di magazzino, come le altre pagine dei ticket. */
+/* Layout: in alto il nome Ripo disegnato con il logo, poi quattro domande sul kit con l'esempio che cambia accanto.
+   Tono: segnaletica di magazzino, come le altre pagine dei ticket. Il colore del marchio è una variabile della pagina. */
 :root{
   --bg:#f3f5f7; --surface:#ffffff; --fg:#17202b; --muted:#5a6675; --line:#d5dbe2;
   --accent:#1f4e8c; --accent-soft:#e3ebf6; --tag:#f2b705; --tag-fg:#2a2100;
   --ok:#1d7a46; --warn:#9a5200; --warn-soft:#fbeedd;
-  --ink:#141414; --paper:#ffffff; --tile:#1b2633;
+  --ink:#141414; --paper:#ffffff; --brand:#3341A6; --phone:#0f1720;
   --f-display:"Archivo","Arial Narrow",system-ui,sans-serif;
   --f-body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
   --f-mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
-  --f-name:"Outfit","Inter",system-ui,sans-serif;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --bg:#0f141a; --surface:#18202a; --fg:#e6ebf1; --muted:#9aa7b6; --line:#2c3846;
   --accent:#7fb0ef; --accent-soft:#1d2d42; --tag:#f2b705; --tag-fg:#2a2100;
   --ok:#5fcf8e; --warn:#f0a447; --warn-soft:#3a2a14;
-  --ink:#141414; --paper:#f4f4f2; --tile:#26323f; color-scheme:dark}}
+  --ink:#141414; --paper:#f4f4f2; --phone:#05080c; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#0f141a; --surface:#18202a; --fg:#e6ebf1; --muted:#9aa7b6; --line:#2c3846;
   --accent:#7fb0ef; --accent-soft:#1d2d42; --tag:#f2b705; --tag-fg:#2a2100;
   --ok:#5fcf8e; --warn:#f0a447; --warn-soft:#3a2a14;
-  --ink:#141414; --paper:#f4f4f2; --tile:#26323f; color-scheme:dark}
+  --ink:#141414; --paper:#f4f4f2; --phone:#05080c; color-scheme:dark}
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--fg);font:15px/1.55 var(--f-body);
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 96px}
-.wrap{max-width:900px;margin:0 auto;display:grid;gap:24px}
+.wrap{max-width:1040px;margin:0 auto;display:grid;gap:28px}
 h1,h3{font-family:var(--f-display);font-stretch:112%;text-wrap:balance;margin:0;line-height:1.15}
 h1{font-size:clamp(28px,5vw,40px);font-weight:800}
 h3{font-size:18px;font-weight:600}
 p{margin:0;max-width:68ch}
 .eyebrow{font:600 12px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .intro{display:grid;gap:12px}
-.hero{display:flex;gap:18px;align-items:center;flex-wrap:wrap;background:var(--paper);color:var(--ink);border-radius:14px;padding:18px}
-.hero svg{width:96px;height:96px;flex:none}
-.hero .t{display:grid;gap:6px;min-width:0}
-.hero b{font:700 30px/1 var(--f-name)}
-.hero small{color:#4b5563;font-size:13px}
-.tile{background:var(--tile);color:#fff;border-radius:18px;width:64px;height:64px;display:grid;place-items:center}
-.tile svg{width:64%;height:64%}
-.sum{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;display:grid;gap:14px}
-.sum section{display:grid;gap:6px}
-.sum ul{margin:0;padding-left:20px;display:grid;gap:5px;font-size:14.5px}
-.sum .k{font:600 11.5px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-.open{border:1px solid var(--warn);background:var(--warn-soft);border-radius:10px;padding:12px 14px;font-size:14px;display:grid;gap:6px}
-.conf{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;display:grid;gap:10px}
-label.chk{display:flex;gap:10px;align-items:flex-start;font-weight:600;cursor:pointer}
-label.chk input{accent-color:var(--accent);width:18px;height:18px;margin-top:2px}
-textarea{width:100%;min-height:70px;font:14px/1.4 var(--f-body);border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:var(--bg);color:var(--fg);resize:vertical}
-.notelbl{font-size:13px;color:var(--muted)}
 .bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
 button{font:600 14px/1 var(--f-body);border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--fg);padding:11px 14px;cursor:pointer}
 button.primary{background:var(--accent);border-color:var(--accent);color:var(--surface)}
-button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--tag);outline-offset:2px}
+button:focus-visible,input:focus-visible,textarea:focus-visible,label.opt:focus-within{outline:3px solid var(--tag);outline-offset:2px}
 .status{font-size:13px;color:var(--muted)}
 .status.ok{color:var(--ok)} .status.warn{color:var(--warn)}
+.rec{display:inline-block;margin-left:8px;font:600 11px/1 var(--f-mono);letter-spacing:.05em;text-transform:uppercase;background:var(--tag);color:var(--tag-fg);padding:4px 6px;border-radius:4px;vertical-align:2px}
+.hero{display:grid;grid-template-columns:auto minmax(0,1fr);gap:24px;align-items:center;background:var(--paper);color:var(--ink);border-radius:14px;padding:22px}
+@media (max-width:600px){.hero{grid-template-columns:minmax(0,1fr);justify-items:center}}
+.hero .tile{width:112px;height:112px;border-radius:26px;background:var(--brand);color:#fff;display:grid;place-items:center}
+.hero .tile svg{width:62%;height:62%}
+.hero .wm svg{width:100%;max-width:420px;height:auto}
+
+.q{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:18px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px}
+@media (max-width:760px){.q{grid-template-columns:minmax(0,1fr)}}
+.q .ask{display:grid;gap:10px;align-content:start;min-width:0}
+.q .num{font:600 12px/1 var(--f-mono);letter-spacing:.08em;color:var(--muted)}
+.q .why{color:var(--muted);font-size:14px}
+.opts{display:grid;gap:8px}
+label.opt{display:grid;grid-template-columns:22px minmax(0,1fr);gap:8px;align-items:start;border:1px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer;background:var(--bg)}
+label.opt:has(input:checked){border-color:var(--accent);background:var(--accent-soft)}
+label.opt input{margin:3px 0 0;accent-color:var(--accent);width:16px;height:16px}
+label.opt b{font-weight:600}
+label.opt .d{display:block;color:var(--muted);font-size:13.5px;margin-top:2px}
+.sw{display:inline-block;width:14px;height:14px;border-radius:4px;vertical-align:-2px;margin-right:6px;border:1px solid rgba(0,0,0,.15)}
+textarea{width:100%;min-height:56px;font:14px/1.4 var(--f-body);border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:var(--bg);color:var(--fg);resize:vertical}
+.notelbl{font-size:13px;color:var(--muted)}
+.ex{background:var(--bg);border:1px dashed var(--line);border-radius:12px;padding:14px;display:grid;gap:12px;align-content:start;min-width:0}
+.ex .cap{font:600 11px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.ex small{color:var(--muted);font-size:13px;display:block}
+.ctx{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.c{background:var(--paper);color:var(--ink);border-radius:10px;padding:10px;display:grid;gap:8px;align-content:space-between;min-height:96px;min-width:0}
+.c .lbl{color:#4b5563;font:600 10.5px/1.2 var(--f-mono);letter-spacing:.04em;text-transform:uppercase}
+.home{display:flex;gap:8px;background:var(--phone);border-radius:10px;padding:8px}
+.app{width:38px;height:38px;border-radius:9px;display:grid;place-items:center;background:#334155;color:#fff}
+.app.me{background:var(--brand)}
+.app svg{width:62%;height:62%}
+.hdr{display:flex;align-items:center;gap:10px;background:var(--brand);color:#fff;border-radius:8px;padding:8px 10px;font-size:11.5px;min-width:0}
+.hdr svg{height:22px;width:auto;flex:none}
+.hdr .sp{margin-left:auto;opacity:.85;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.states{display:flex;gap:6px;flex-wrap:wrap}
+.st{font:600 11px/1 var(--f-body);padding:5px 7px;border-radius:999px}
+.st.r{background:#f8e3e2;color:#9b1c17} .st.g{background:#e2f3e9;color:#155c35} .st.y{background:#fbeedd;color:#7a4100}
+.btnb{background:var(--brand);color:#fff;border-radius:8px;padding:8px 12px;font:600 12px var(--f-body);display:inline-block}
+.wordbig{background:var(--paper);color:var(--ink);border-radius:10px;padding:16px;display:grid;place-items:center}
+.wordbig svg{width:100%;max-width:300px;height:auto}
+.pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.pair div{background:var(--paper);color:var(--ink);border-radius:8px;padding:10px;display:grid;gap:6px;justify-items:center;font:600 10.5px var(--f-mono);color:#4b5563}
+.pair div.on{outline:3px solid var(--accent)}
+.pair svg{width:100%;height:auto;color:var(--ink)}
+.lock{display:flex;align-items:center;gap:14px;background:var(--paper);color:var(--ink);border-radius:10px;padding:14px;justify-content:center;flex-wrap:wrap}
+.lock .t{width:52px;height:52px;border-radius:12px;background:var(--brand);color:#fff;display:grid;place-items:center}
+.lock .t svg{width:62%;height:62%}
+.lock .w svg{height:48px;width:auto}
+.kit{margin:0;padding-left:18px;display:grid;gap:4px;font-size:13.5px}
+
+.save{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--line);padding-block:12px calc(12px + env(safe-area-inset-bottom,0px));display:grid;gap:8px}
 #copybox{font:12.5px/1.5 var(--f-mono);white-space:pre-wrap;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px}
 </style>
 
 <div class="wrap">
   <header class="intro">
-    <div class="eyebrow">Ticket «Brand kit con la skill logo-design» · riepilogo della sessione · 20/11/2026</div>
-    <h1>Riepilogo da confermare</h1>
-    <p>Tutto quello che hai deciso oggi, decisioni 362–385 in <code>docs/decisioni.md</code>. Se qualcosa non torna,
-      scrivilo nella nota: lo correggo prima di chiudere la sessione.</p>
+    <div class="eyebrow">Ticket «Brand kit con la skill logo-design» · giro 8: il kit · 20/11/2026</div>
+    <h1>Il kit di Ripo</h1>
+    <p>Nome Ripo (386), logo R · Rampa (380). Qui il nome è disegnato con lettere vere, peso medio (374), e la R del nome
+      è la stessa del simbolo, come la K di Kiln. Restano quattro scelte di gusto prima di preparare i file finali.</p>
+    <div class="bar"><button class="primary" id="accept-all" type="button">Accetta tutte le consigliate</button>
+      <span class="status" id="status">Caricamento delle risposte salvate…</span></div>
   </header>
 
-  <div class="hero" aria-label="Logo scelto">
-    <span id="sym"></span><span class="tile" id="tile"></span>
-    <div class="t"><b>R · Rampa</b><small>Logo scelto (380), in bianco e nero. Il nome e il colore arrivano dopo.</small></div>
-  </div>
+  <div class="hero" id="hero" aria-label="Simbolo e nome"></div>
 
-  <div class="sum">
-    <section><span class="k">Skill e brief</span><ul>
-      <li>Skill logo-design nel progetto, uguale nelle due cartelle, senza i 1.432 loghi di altre aziende (362).</li>
-      <li>Carattere solido e preciso (363); lettere geometriche e piene come Kiln (364); colore lontano da rosso, verde e
-        giallo, scelto con il kit (367); deve reggere icona del telefono, scheda del browser a 16 punti, testata e stampe
-        in bianco e nero (368).</li></ul></section>
-    <section><span class="k">Concetti scartati</span><ul>
-      <li>Giro 2: Varco, Mirino, Colli; «o» tonda (369, 370). Non andavano le idee e le lettere del nome (371).</li>
-      <li>Delle nove idee: sì al cartello di corsia, forse a corsia, porta di carico, ingresso, solo il nome (372). Ti
-        piace la K di Kiln (373).</li>
-      <li>Giro 3: cartello di corsia, corsia, porta di carico; peso medio delle lettere (374). La V come logo non piace.</li></ul></section>
-    <section><span class="k">Prima la lettera, poi il nome</span><ul>
-      <li>Ordine invertito: lettera, logo, poi nome che comincia con la lettera (375, 379).</li>
-      <li>Varko accantonato e in riserva; il nome nuovo segue le regole 344–350 e ripassa dalla verifica dei marchi (376).</li>
-      <li>Lettere: sì a R e Q (377); maiuscola o minuscola lettera per lettera (378). Logo: <b>R · Rampa</b> (380).</li></ul></section>
-    <section><span class="k">Nome</span><ul>
-      <li>Dei dieci nomi in R: sì a Ripo, forse a Reko e Rodo (382). Preferiti in ordine: <b>1. Reko, 2. Ripo, 3. Rodo</b> (383).</li>
-      <li>Ricerca parziale: domini tutti presi; Reko e Rodo con ostacoli da valutare, Ripo senza ostacoli trovati finora;
-        registri dei marchi non consultati (384).</li>
-      <li>Il kit aspetta la verifica (385).</li></ul></section>
-  </div>
+  <section class="q" aria-labelledby="h-q1">
+    <div class="ask">
+      <div class="num">DOMANDA 1 · COLORE</div>
+      <h3 id="h-q1">Quale colore per il marchio?</h3>
+      <p class="why">Sarà il colore del programma: icona, testata, tasti principali. Tutti e quattro reggono il testo bianco
+        (contrasto almeno 5,2 a 1, sopra il minimo 4,5 di WCAG AA) e stanno lontani da rosso, verde e giallo (367). Il logo
+        resta anche nero su bianco.</p>
+      <div class="opts" id="q1-opts"></div>
+      <label class="notelbl" for="n-q1">Nota facoltativa (anche un colore tuo)</label>
+      <textarea id="n-q1" data-note="q1"></textarea>
+    </div>
+    <div class="ex" id="ex-q1" aria-live="polite"></div>
+  </section>
 
-  <div class="open"><b>Cosa resta aperto</b>
-    <span>La ricerca nei registri dei marchi per Reko, Ripo e Rodo, nel nuovo ticket «Verifica dei nomi in R nei registri
-      dei marchi»: la fai tu a mano su TMview (passi in <code>docs/research/2026-11-20-unicita-nomi-in-r.md</code>) o il
-      consulente. Poi, con il prompt G di <code>docs/prossima-sessione.md</code>: scelta del nome e kit completo sulla R · Rampa.
-      Il ticket del brand kit resta aperto e preso in carico.</span></div>
+  <section class="q" aria-labelledby="h-q2">
+    <div class="ask">
+      <div class="num">DOMANDA 2 · LA R DEL NOME</div>
+      <h3 id="h-q2">Nel nome scritto la R ha la gamba a rampa?</h3>
+      <p class="why">Con la rampa, simbolo e nome sono la stessa idea, come la K di Kiln. Con la R normale il nome è più
+        neutro e la rampa vive solo nel simbolo.</p>
+      <div class="opts" id="q2-opts"></div>
+      <label class="notelbl" for="n-q2">Nota facoltativa</label>
+      <textarea id="n-q2" data-note="q2"></textarea>
+    </div>
+    <div class="ex" id="ex-q2" aria-live="polite"></div>
+  </section>
 
-  <div class="conf">
-    <h3>Confermi?</h3>
-    <label class="chk" for="ok"><input type="checkbox" id="ok"> Confermo il riepilogo</label>
-    <label class="notelbl" for="note">Correzioni o aggiunte (facoltative)</label>
-    <textarea id="note"></textarea>
+  <section class="q" aria-labelledby="h-q3">
+    <div class="ask">
+      <div class="num">DOMANDA 3 · IL PUNTINO DELLA I</div>
+      <h3 id="h-q3">Il puntino della i è tondo o quadrato?</h3>
+      <p class="why">Un dettaglio piccolo, ma si vede in ogni testata. Tondo come la «o»; quadrato come un collo, più
+        «magazzino».</p>
+      <div class="opts" id="q3-opts"></div>
+      <label class="notelbl" for="n-q3">Nota facoltativa</label>
+      <textarea id="n-q3" data-note="q3"></textarea>
+    </div>
+    <div class="ex" id="ex-q3" aria-live="polite"></div>
+  </section>
+
+  <section class="q" aria-labelledby="h-q4">
+    <div class="ask">
+      <div class="num">DOMANDA 4 · SIMBOLO E NOME INSIEME</div>
+      <h3 id="h-q4">Simbolo e nome si mettono uno accanto all'altro?</h3>
+      <p class="why">Se il nome comincia già con la R a rampa, il simbolo accanto ripete la R. Si può tenere il simbolo per
+        le icone e il nome per le testate e i documenti.</p>
+      <div class="opts" id="q4-opts"></div>
+      <label class="notelbl" for="n-q4">Nota facoltativa</label>
+      <textarea id="n-q4" data-note="q4"></textarea>
+    </div>
+    <div class="ex" id="ex-q4" aria-live="polite"></div>
+  </section>
+
+  <div class="save">
     <div class="bar"><button class="primary" id="save" type="button">Salva adesso</button>
       <button id="copy" type="button">Copia le risposte</button>
-      <span class="status" id="status">Caricamento…</span></div>
-    <small class="status">Quando hai finito, scrivi «fatto» in chat: leggo la conferma salvata.</small>
+      <span class="status" id="status2"></span></div>
+    <small class="status">Quando hai finito, scrivi «fatto» in chat: leggo le risposte e preparo i file del kit.</small>
     <div id="copybox" hidden></div>
   </div>
 </div>
 
 <script>
-const D = /*DATI*/{"r-rampa":["M37 28 L81 28 L81 228 L37 228 Z","M37 28 L125 28 A66 66 0 0 1 125 160 L37 160 Z M81 72 L125 72 A22 22 0 0 1 125 116 L81 116 Z","M113 150 L141 150 L219 228 L113 228 Z"],"q-collo":["M30 122 A92 92 0 1 1 214 122 A92 92 0 1 1 30 122 Z M74 122 A48 48 0 1 0 170 122 A48 48 0 1 0 74 122 Z","M162 162 L226 162 L226 226 L162 226 Z"],"q-nastro":["M14 128 A92 92 0 1 1 198 128 A92 92 0 1 1 14 128 Z M58 128 A48 48 0 1 0 154 128 A48 48 0 1 0 58 128 Z","M106 198 L234 198 L242 203.5 L234 209 L242 214.5 L234 220 L106 220 Z"]}/*FINE*/;
-const R = D["r-rampa"];
-const svg = l => `<svg viewBox="0 0 256 256" role="img" aria-label="${l}">${R.map(d=>`<path fill="currentColor" fill-rule="evenodd" d="${d}"/>`).join("")}</svg>`;
-document.getElementById("sym").innerHTML = svg("Logo R · Rampa");
-document.getElementById("tile").innerHTML = svg("Icona del telefono");
-let S = {ok:false,note:""};
-try{ const d = JSON.parse(localStorage.getItem("brand-kit-riep")||"null"); if(d) S = Object.assign(S,d); }catch(e){}
-const asText = () => "Brand kit – riepilogo\nConferma: "+(S.ok?"confermato":"non confermato")+(S.note?"\nCorrezioni: "+S.note:"");
-function show(){ document.getElementById("ok").checked=S.ok; document.getElementById("note").value=S.note; document.getElementById("copybox").textContent=asText(); }
-let db=null,timer=null;
-function setStatus(t,c){ const el=document.getElementById("status"); el.textContent=t; el.className="status "+(c||""); }
+const GIRO = "8";
+const D = /*DATI*/{"sym":["M36.91 28 L80.91 28 L80.91 228 L36.91 228 Z","M36.91 28 L124.69 28 A66 66 0 0 1 124.69 160 L36.91 160 Z M80.91 72 L124.69 72 A22 22 0 0 1 124.69 116 L80.91 116 Z","M112.81 150.1 L141.19 150.1 L219.09 228 L112.81 228 Z"],"nome":{"rampa-tondo":{"vb":"0 0 426 256","d":["M20 56 L45.96 56 L45.96 200 L20 200 Z","M20 56 L83.2 56 A47.52 47.52 0 0 1 83.2 151.04 L20 151.04 Z M45.96 81.96 L83.2 81.96 A21.56 21.56 0 0 1 83.2 125.08 L45.96 125.08 Z","M74.65 143.91 L95.08 143.91 L151.17 200 L74.65 200 Z","M161.17 104 L183.17 104 L183.17 200 L161.17 200 Z","M158.42 76.25 A13.75 13.75 0 1 1 185.92 76.25 A13.75 13.75 0 1 1 158.42 76.25 Z","M197.17 104 L219.17 104 L219.17 244 L197.17 244 Z","M197.17 152 A49 49 0 1 1 295.17 152 A49 49 0 1 1 197.17 152 Z M219.17 152 A27 27 0 1 0 273.17 152 A27 27 0 1 0 219.17 152 Z","M307.17 152 A49 49 0 1 1 405.17 152 A49 49 0 1 1 307.17 152 Z M329.17 152 A27 27 0 1 0 383.17 152 A27 27 0 1 0 329.17 152 Z"]},"rampa-quadrato":{"vb":"0 0 426 256","d":["M20 56 L45.96 56 L45.96 200 L20 200 Z","M20 56 L83.2 56 A47.52 47.52 0 0 1 83.2 151.04 L20 151.04 Z M45.96 81.96 L83.2 81.96 A21.56 21.56 0 0 1 83.2 125.08 L45.96 125.08 Z","M74.65 143.91 L95.08 143.91 L151.17 200 L74.65 200 Z","M161.17 104 L183.17 104 L183.17 200 L161.17 200 Z","M158.42 62.5 L185.92 62.5 L185.92 90 L158.42 90 Z","M197.17 104 L219.17 104 L219.17 244 L197.17 244 Z","M197.17 152 A49 49 0 1 1 295.17 152 A49 49 0 1 1 197.17 152 Z M219.17 152 A27 27 0 1 0 273.17 152 A27 27 0 1 0 219.17 152 Z","M307.17 152 A49 49 0 1 1 405.17 152 A49 49 0 1 1 307.17 152 Z M329.17 152 A27 27 0 1 0 383.17 152 A27 27 0 1 0 329.17 152 Z"]},"normale-tondo":{"vb":"0 0 426 256","d":["M20 56 L45.96 56 L45.96 200 L20 200 Z","M20 56 L83.2 56 A47.52 47.52 0 0 1 83.2 151.04 L20 151.04 Z M45.96 81.96 L83.2 81.96 A21.56 21.56 0 0 1 83.2 125.08 L45.96 125.08 Z","M58.37 143.91 L95.08 143.91 L151.17 200 L114.46 200 Z","M161.17 104 L183.17 104 L183.17 200 L161.17 200 Z","M158.42 76.25 A13.75 13.75 0 1 1 185.92 76.25 A13.75 13.75 0 1 1 158.42 76.25 Z","M197.17 104 L219.17 104 L219.17 244 L197.17 244 Z","M197.17 152 A49 49 0 1 1 295.17 152 A49 49 0 1 1 197.17 152 Z M219.17 152 A27 27 0 1 0 273.17 152 A27 27 0 1 0 219.17 152 Z","M307.17 152 A49 49 0 1 1 405.17 152 A49 49 0 1 1 307.17 152 Z M329.17 152 A27 27 0 1 0 383.17 152 A27 27 0 1 0 329.17 152 Z"]},"normale-quadrato":{"vb":"0 0 426 256","d":["M20 56 L45.96 56 L45.96 200 L20 200 Z","M20 56 L83.2 56 A47.52 47.52 0 0 1 83.2 151.04 L20 151.04 Z M45.96 81.96 L83.2 81.96 A21.56 21.56 0 0 1 83.2 125.08 L45.96 125.08 Z","M58.37 143.91 L95.08 143.91 L151.17 200 L114.46 200 Z","M161.17 104 L183.17 104 L183.17 200 L161.17 200 Z","M158.42 62.5 L185.92 62.5 L185.92 90 L158.42 90 Z","M197.17 104 L219.17 104 L219.17 244 L197.17 244 Z","M197.17 152 A49 49 0 1 1 295.17 152 A49 49 0 1 1 197.17 152 Z M219.17 152 A27 27 0 1 0 273.17 152 A27 27 0 1 0 219.17 152 Z","M307.17 152 A49 49 0 1 1 405.17 152 A49 49 0 1 1 307.17 152 Z M329.17 152 A27 27 0 1 0 383.17 152 A27 27 0 1 0 329.17 152 Z"]}}}/*FINE*/;
+const COL = {indaco:"#3341A6", prugna:"#6B3FA0", petrolio:"#0E6B78", elettrico:"#1F5BFF"};
+const Q = {
+ q1:[{id:"indaco",l:"Indaco",hex:COL.indaco,d:"Blu profondo, serio e calmo; contrasto 8,6 con il bianco. Il più lontano dagli stati.",rec:true},
+     {id:"prugna",l:"Prugna",hex:COL.prugna,d:"Viola pieno, poco usato nei gestionali: si ricorda di più. Contrasto 7,4."},
+     {id:"petrolio",l:"Petrolio",hex:COL.petrolio,d:"Blu verde, pulito. Contrasto 6,2. Vicino al verde di «fatto»: va distinto con le icone."},
+     {id:"elettrico",l:"Blu elettrico",hex:COL.elettrico,d:"Acceso, molto «app». Contrasto 5,2, il più basso dei quattro."}],
+ q2:[{id:"rampa",l:"Sì, la R a rampa anche nel nome",d:"Simbolo e nome sono la stessa idea, come in Kiln.",rec:true},
+     {id:"normale",l:"No, una R normale nel nome",d:"Il nome è più neutro; la rampa resta nel simbolo."}],
+ q3:[{id:"tondo",l:"Tondo",d:"Coerente con la «o» e con l'occhiello della R.",rec:true},
+     {id:"quadrato",l:"Quadrato",d:"Un piccolo collo sopra la i: un dettaglio in più da ricordare."}],
+ q4:[{id:"separati",l:"Separati: simbolo per le icone, nome per testate e documenti",d:"Niente R ripetuta. Il simbolo da solo sul telefono e nella scheda del browser.",rec:true},
+     {id:"insieme",l:"Anche insieme, simbolo accanto al nome",d:"Una versione in più per il sito e le presentazioni; la R si vede due volte."}]
+};
+let S = {q1:"",q2:"",q3:"",q4:"",note:{}};
+try{ const d = JSON.parse(localStorage.getItem("brand-kit-g8")||"null"); if(d) S = Object.assign(S,d); }catch(e){}
+const esc = s => String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const sym = label => `<svg viewBox="0 0 256 256" role="img" aria-label="${esc(label)}">${D.sym.map(d=>`<path fill="currentColor" fill-rule="evenodd" d="${d}"/>`).join("")}</svg>`;
+const word = (g,dot,label) => { const o=D.nome[(g||"rampa")+"-"+(dot||"tondo")]; return `<svg viewBox="${o.vb}" role="img" aria-label="${esc(label||"Ripo")}">${o.d.map(d=>`<path fill="currentColor" fill-rule="evenodd" d="${d}"/>`).join("")}</svg>`; };
+const opts = (name,list,cur) => list.map(o=>`<label class="opt"><input type="radio" name="${name}" value="${o.id}" ${cur===o.id?"checked":""}>
+  <span><b>${o.hex?`<span class="sw" style="background:${o.hex}"></span>`:""}${esc(o.l)}</b>${o.rec?'<span class="rec">Consigliata</span>':""}<span class="d">${esc(o.d)}</span></span></label>`).join("");
+const lab = (list,id) => (list.find(o=>o.id===id)||{l:"da scegliere"}).l;
+const G = () => S.q2||"rampa", P = () => S.q3||"tondo";
+
+function render(){ for(const k of ["q1","q2","q3","q4"]){ document.getElementById(k+"-opts").innerHTML = opts(k,Q[k],S[k]); document.getElementById("n-"+k).value = S.note[k]||""; } refresh(); }
+function refresh(){
+  document.documentElement.style.setProperty("--brand", COL[S.q1]||"#5b6573");
+  document.getElementById("hero").innerHTML = `<span class="tile">${sym("Icona")}</span><span class="wm">${word(G(),P(),"Ripo")}</span>`;
+  document.getElementById("ex-q1").innerHTML = `<div class="cap">${S.q1?esc(lab(Q.q1,S.q1))+" al lavoro":"Scegli un colore"}</div>
+   <div class="ctx">
+     <div class="c"><div class="home"><div class="app me">${sym("Icona")}</div><div class="app"></div><div class="app"></div><div class="app"></div></div><span class="lbl">Icona sul telefono</span></div>
+     <div class="c"><div class="hdr">${word(G(),P(),"Ripo")}<span class="sp">Ricevimento · DDT 418</span></div><span class="lbl">Testata</span></div>
+     <div class="c"><div class="states"><span class="st g">Fatto</span><span class="st y">Attenzione</span><span class="st r">Errore</span></div><span class="btnb">Conferma</span><span class="lbl">Stati e tasto principale</span></div>
+     <div class="c"><div style="display:flex;gap:8px;align-items:center"><span style="width:40px;height:40px;color:var(--ink)">${sym("Nero")}</span><span style="width:40px;height:40px;color:var(--brand)">${sym("A colori")}</span></div><span class="lbl">Nero e a colori</span></div>
+   </div><small>${S.q1==="petrolio"?"Accanto a «Fatto» il petrolio si distingue meno: nel programma gli stati avranno anche un'icona.":S.q1?"Il colore preciso (codici per stampa e schermo) va nella guida del kit.":"Prima del colore, il grigio è solo un segnaposto."}</small>`;
+  const alt = G()==="rampa" ? "normale" : "rampa";
+  document.getElementById("ex-q2").innerHTML = `<div class="cap">La R del nome</div>
+   <div class="pair"><div class="${G()==="rampa"&&S.q2?"on":""}">${word("rampa",P(),"R a rampa")}a rampa</div><div class="${S.q2==="normale"?"on":""}">${word("normale",P(),"R normale")}normale</div></div>
+   <small>${S.q2==="rampa"?"La gamba a cuneo torna nel nome: si riconosce anche senza il simbolo.":S.q2==="normale"?"Il nome si legge come una parola qualsiasi; il dettaglio resta nel simbolo.":"Scegli un'opzione."}</small>`;
+  document.getElementById("ex-q3").innerHTML = `<div class="cap">Il puntino della i</div>
+   <div class="pair"><div class="${S.q3==="tondo"?"on":""}">${word(G(),"tondo","Puntino tondo")}tondo</div><div class="${S.q3==="quadrato"?"on":""}">${word(G(),"quadrato","Puntino quadrato")}quadrato</div></div>
+   <small>${S.q3?"Guarda le due versioni in piccolo nella testata della domanda 1.":"Scegli un'opzione."}</small>`;
+  document.getElementById("ex-q4").innerHTML = `<div class="cap">${S.q4==="insieme"?"Simbolo accanto al nome":"Simbolo e nome separati"}</div>
+   ${S.q4==="insieme" ? `<div class="lock"><span class="t">${sym("Simbolo")}</span><span class="w">${word(G(),P(),"Ripo")}</span></div>`
+     : `<div class="lock"><span class="t">${sym("Simbolo")}</span></div><div class="lock"><span class="w">${word(G(),P(),"Ripo")}</span></div>`}
+   <small>${S.q4==="insieme"?"Versione in più per sito e presentazioni; nel programma si usa il nome da solo.":S.q4==="separati"?"Nel kit: simbolo, nome orizzontale, icone. Niente versione affiancata.":"Scegli un'opzione."}</small>`;
+  document.getElementById("copybox").textContent = asText();
+}
+function asText(){ const n = k => S.note[k] ? " — nota: "+S.note[k] : "";
+  return ["Brand kit Ripo – giro 8","1. Colore: "+lab(Q.q1,S.q1)+n("q1"),"2. R del nome: "+lab(Q.q2,S.q2)+n("q2"),"3. Puntino della i: "+lab(Q.q3,S.q3)+n("q3"),"4. Simbolo e nome: "+lab(Q.q4,S.q4)+n("q4")].join("\n"); }
+
+let db=null,timer=null,saving=false,pending=false;
+function setStatus(t,cls){ ["status","status2"].forEach(id=>{const el=document.getElementById(id); el.textContent=t; el.className="status "+(cls||"");}); }
+function local(){ try{ localStorage.setItem("brand-kit-g8", JSON.stringify(S)); }catch(e){} }
+function changed(){ local(); refresh(); clearTimeout(timer); timer=setTimeout(save,900); setStatus(db?"Modifiche da salvare…":"Salvate solo su questo dispositivo", db?"":"warn"); }
 async function save(){
   clearTimeout(timer);
-  if(!db){ setStatus("Salvataggio non disponibile qui: usa «Copia le risposte»","warn"); document.getElementById("copybox").hidden=false; return; }
-  try{ await db.doc("giri/riepilogo").set({ok:S.ok,note:S.note,testo:asText(),aggiornato:new Date().toISOString()});
-    setStatus("Salvato alle "+new Date().toLocaleTimeString("it-IT",{hour:"2-digit",minute:"2-digit"}),"ok"); }
-  catch(e){ setStatus("Non salvato ("+(e&&e.code||"errore")+"): riprova o copia le risposte","warn"); document.getElementById("copybox").hidden=false; }
+  if(!db){ setStatus("Salvataggio non disponibile qui: usa «Copia le risposte» e incollale in chat","warn"); document.getElementById("copybox").hidden=false; return; }
+  if(saving){ pending=true; return; }
+  saving=true;
+  try{ await db.doc("giri/"+GIRO).set({q1:S.q1,q2:S.q2,q3:S.q3,q4:S.q4,note:S.note,testo:asText(),aggiornato:new Date().toISOString()});
+    setStatus("Salvate alle "+new Date().toLocaleTimeString("it-IT",{hour:"2-digit",minute:"2-digit"}),"ok");
+  }catch(e){ setStatus("Non salvate ("+(e&&e.code||"errore")+"). Riprova con «Salva adesso» o copia le risposte.","warn"); document.getElementById("copybox").hidden=false; }
+  saving=false; if(pending){ pending=false; save(); }
 }
-function changed(){ try{ localStorage.setItem("brand-kit-riep", JSON.stringify(S)); }catch(e){} document.getElementById("copybox").textContent=asText(); clearTimeout(timer); timer=setTimeout(save,800); setStatus(db?"Modifiche da salvare…":"Salvate solo su questo dispositivo", db?"":"warn"); }
-document.getElementById("ok").addEventListener("change", e=>{ S.ok=e.target.checked; changed(); });
-document.getElementById("note").addEventListener("input", e=>{ S.note=e.target.value; changed(); });
+document.addEventListener("change", e=>{ const t=e.target; if(["q1","q2","q3","q4"].includes(t.name)){ S[t.name]=t.value; changed(); } });
+document.addEventListener("input", e=>{ const t=e.target; if(t.dataset && t.dataset.note){ S.note[t.dataset.note]=t.value; changed(); } });
+document.getElementById("accept-all").addEventListener("click",()=>{ for(const k of ["q1","q2","q3","q4"]) S[k]=Q[k].find(o=>o.rec).id; render(); changed(); });
 document.getElementById("save").addEventListener("click", save);
 document.getElementById("copy").addEventListener("click", async()=>{
   const box=document.getElementById("copybox"); box.hidden=false;
   try{ await navigator.clipboard.writeText(asText()); setStatus("Testo copiato","ok"); }
   catch(e){ const r=document.createRange(); r.selectNodeContents(box); const s=getSelection(); s.removeAllRanges(); s.addRange(r); setStatus("Testo selezionato: copialo","warn"); }
 });
-show();
+render();
 (async()=>{
   let got=null;
   try{ got = (window.claude && window.claude.use) ? await window.claude.use("db") : null; }catch(e){ got=null; }
   db=got;
-  if(!db){ setStatus("Salvataggio non disponibile qui: usa «Copia le risposte»","warn"); return; }
-  const to=setTimeout(()=>setStatus("La conferma salvata non arriva: puoi continuare.","warn"),10000);
-  try{ const snap=await db.doc("giri/riepilogo").get(); clearTimeout(to);
-    if(snap.exists){ const d=snap.data(); S.ok=!!d.ok; S.note=d.note||""; show(); setStatus("Conferma salvata caricata","ok"); }
-    else setStatus("Nessuna conferma salvata finora","");
-  }catch(e){ clearTimeout(to); setStatus("Non riesco a leggere la conferma salvata: si salva alla prossima modifica.","warn"); }
+  if(!db){ setStatus("Salvataggio non disponibile qui: le risposte restano su questo dispositivo. Usa «Copia le risposte».","warn"); return; }
+  const to=setTimeout(()=>setStatus("Le risposte salvate non arrivano: puoi continuare, si salvano alla prossima modifica.","warn"),10000);
+  try{ const snap=await db.doc("giri/"+GIRO).get(); clearTimeout(to);
+    if(snap.exists){ const d=snap.data(); for(const k of ["q1","q2","q3","q4"]) S[k]=d[k]||""; S.note=d.note||{}; render(); setStatus("Risposte salvate caricate","ok"); }
+    else setStatus("Nessuna risposta salvata finora: le tue si salvano da sole","");
+  }catch(e){ clearTimeout(to); setStatus("Non riesco a leggere le risposte salvate: le tue si salvano comunque alla prossima modifica.","warn"); }
 })();
 </script>

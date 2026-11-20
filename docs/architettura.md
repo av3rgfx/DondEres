@@ -1981,3 +1981,16 @@ eSearch non risponde). Giudizio provvisorio (deduzione): Reko ostacoli da valuta
 app di trasporti), Ripo nessun ostacolo trovato finora, Rodo ostacoli da valutare (casa di moda italiana; «RODO» è il
 GDPR in Polonia). Tutti i domini sono presi. Nel giro 7 l'utente sceglie come completare i registri e se il kit aspetta.
 
+### Nome e kit (decisioni 384–387)
+
+TMview non si carica dal browser automatico (384) e il blocco non si aggira (385). L'utente riporta i risultati UIBM
+(sezione «Aggiornamento» della ricerca sui nomi in R, non controllati da noi) e sceglie per ora **Ripo** (386): se
+cambia, il logo resta, perché l'iniziale è la R. La ricerca europea per somiglianza va al consulente (387).
+
+Kit, giro 8: file in `prototipi/brand-kit/kit/`, generati da `genera.py`. La R del simbolo e quella del nome escono
+dalla stessa funzione (occhiello alto due terzi, tratto dritto 1,33 raggi, gamba a cuneo a 45 gradi); il nome «Ripo» ha
+le minuscole a peso medio (asta 22, 374) e la R un po' più spessa. Domande del giro: colore (indaco, prugna, petrolio,
+blu elettrico, tutti con contrasto almeno 5,2 a 1 sul bianco), R a rampa o normale nel nome, puntino della i tondo o
+quadrato, simbolo e nome separati o anche affiancati. Dopo le risposte: file finali (nero, bianco, a colori, icone,
+favicon, manifest), tavola d'uso e guida di una pagina.
+
