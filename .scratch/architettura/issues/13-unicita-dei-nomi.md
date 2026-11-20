@@ -2,7 +2,8 @@
 
 Type: research
 Label: wayfinder:research
-Status: open
+Status: in progress
+Assignee: sessione del 20/11/2026 con l'utente
 Blocked by: 12
 
 ## Question
