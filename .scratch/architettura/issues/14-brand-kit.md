@@ -40,3 +40,5 @@ Risultato atteso: il brand kit nel repository, il link qui e la direzione scelta
 - 20/11/2026, giro 13: kit in `brand/` (`genera.py`): R rifinita, R per i 16 punti, versioni nera, blu, bianca e blu
   chiaro, icone e manifest, foglio di prova di stampa; confronto con Revolut e le R della raccolta nella pagina. Sei
   domande di gusto nella pagina; sezione «Giro 13» di `docs/architettura.md`.
+- 20/11/2026, giro 14: risposte del giro 13 nelle decisioni 398–403; file rigenerati, guida e tavola d'uso in `brand/`;
+  riepilogo da confermare nella pagina.

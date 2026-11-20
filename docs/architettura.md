@@ -2054,7 +2054,7 @@ separati): si leggeva «IQ».
   (`presentation_board.py`); guida di una pagina (`templates/brand-guidelines-template.md`); confronto affiancato con
   Revolut e con le R della raccolta; misura minima di stampa da provare su una termica vera.
 
-### Giro 13: il kit (in corso)
+### Giro 13: il kit
 
 File finali in `brand/`, generati da `brand/genera.py` (Python senza dipendenze; per i PNG e il `favicon.ico` usa
 `render_png.py` della skill). Il generatore è autonomo: non dipende dai prototipi.
@@ -2091,3 +2091,12 @@ Domande del giro 13 (pagina https://claude.ai/artifact/JQ2vwNwRMfT2qi4BDWNnX5, c
 sì o no, blu chiaro, fondo dell'icona dell'app (blu, bianco, nero), confronto sufficiente o gamba da rivedere, chi fa
 la prova di stampa. Dopo le risposte: file rigenerati con le scelte, `brand/guida.md`, tavola d'uso come file,
 riepilogo da confermare.
+
+### Giro 14: scelte del giro 13 e riepilogo (decisioni 398–403)
+
+Scelte: asta 44 (398), R per i 16 pixel (399), blu chiaro #668FFF (400), icona R bianca su blu (401), il disegno è
+chiuso (402), prova di stampa rimandata con 5 mm e 15 mm come proposta (403). I valori sono i predefiniti di
+`brand/genera.py`; i file in `brand/` sono rigenerati. Aggiunti `brand/guida.md` (guida di una pagina) e
+`brand/tavola.html` con `brand/tavola.png` (tavola d'uso con i contesti della 368). Nella pagina, il riepilogo da
+confermare: se l'utente conferma, il ticket si chiude.
+

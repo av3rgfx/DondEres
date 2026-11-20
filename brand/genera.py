@@ -21,12 +21,12 @@ OUT = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(OUT)
 SKILL = os.path.join(ROOT, ".claude", "skills", "logo-design", "scripts")
 
-# Colori (decisione 388; variante chiara da confermare nel giro 13)
+# Colori (decisioni 388 e 400)
 NERO, BIANCO, BLU = "#000000", "#FFFFFF", "#1F5BFF"
 BLU_CHIARO = os.environ.get("RIPO_BLU_CHIARO", "#668FFF")
 INCHIOSTRO = "#111111"      # nero dei file di lavoro e delle anteprime
-ASTA = float(os.environ.get("RIPO_ASTA", "40"))   # asta del simbolo su 200 di altezza (da confermare nel giro 13)
-ICONA = os.environ.get("RIPO_ICONA", "blu")       # fondo dell'icona dell'app: blu, bianco o nero (giro 13)
+ASTA = float(os.environ.get("RIPO_ASTA", "44"))   # asta del simbolo su 200 di altezza (decisione 398)
+ICONA = os.environ.get("RIPO_ICONA", "blu")       # fondo dell'icona dell'app (decisione 401)
 
 
 def f(v):
