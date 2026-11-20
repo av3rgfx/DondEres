@@ -18,3 +18,6 @@ Risultato atteso: la direzione visiva in `docs/architettura.md` e in `docs/decis
   sempre dal computer (292): aspetto e schermate vanno progettati anche per il computer, non solo per il telefono. Al
   computer le quantità si scrivono con la tastiera, con l'icona a calcolatrice che apre il tastierino (290). Le icone
   vere (📷 dell'elenco, calcolatrice) arrivano qui (267).
+- 20/11/2026, dal ticket «Divisione tra telefono, computer e server in sede»: da disegnare la fascia «Senza rete» con i
+  due messaggi e l'ora dei dati, «Inviata», l'esito «non riuscita» con il motivo e «1 operazione di Mario in attesa»
+  (413, 414, 416–418).

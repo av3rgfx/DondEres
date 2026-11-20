@@ -1,13 +1,42 @@
 # Prompt per la prossima sessione (Wayfinder sull'architettura)
 
 Da incollare all'avvio di una nuova sessione sul ramo principale aggiornato. La mappa esiste già: si lavora un ticket
-per sessione, più le ricerche. 20/11/2026: il ticket «Brand kit con la skill logo-design» è chiuso (decisioni 362–404): nome per ora **Ripo**
-(386), logo **R · Pulito costruito** con asta 44, kit in `brand/` con la guida `brand/guida.md`. La mappa è riordinata
-(405): «Divisione tra telefono, computer e server in sede» e «Stack» non aspettano più la prova visiva; ciò che dipende
-dai suoi numeri sta nel ticket nuovo «Impronte e server in sede, dopo la prova». Prossimo passo: prompt I (divisione),
-poi lo stack. Quando nei repository privati ci sono foto o bolle da aprire, sessioni a parte lavorano la prova visiva
-(prompt B) e la prova delle bolle (prompt C). Restano fuori dai ticket la prova di stampa del marchio (403) e la
-ricerca europea dei marchi dal consulente (387). I prompt A, D, E, F, G e H restano come esempi di forma.
+per sessione, più le ricerche. 20/11/2026: chiuso il ticket «Divisione tra telefono, computer e server in sede»
+(decisioni 406–421, sezione omonima di `docs/architettura.md`): dati, assegnazione, impronte e foto sul server; codice
+letto più foto a ogni inquadratura; fascia «Senza rete» con l'operazione in attesa. Prossimo passo: prompt J (stack).
+Poi, con i numeri della prova visiva, il ticket «Impronte e server in sede, dopo la prova», e infine l'aspetto grafico.
+Quando nei repository privati ci sono foto o bolle da aprire, sessioni a parte lavorano la prova visiva (prompt B) e la
+prova delle bolle (prompt C). Restano fuori dai ticket la prova di stampa del marchio (403) e la ricerca europea dei
+marchi dal consulente (387). I prompt A, D, E, F, G, H e I restano come esempi di forma.
+
+**Prompt J: stack**
+
+```text
+/wayfinder .scratch/architettura/map.md
+
+Leggi prima AGENTS.md, poi la mappa (solo map.md, non tutti i ticket). Lavora il ticket «Stack»: leggi i suoi
+commenti. Si scelgono linguaggi, database e librerie della base (decisione 13), partendo da web app servita dal server
+in sede (119–127), punti di estensione e moduli (301–320) e divisione tra le macchine (406–421, sezione «Divisione tra
+telefono, computer e server in sede» di docs/architettura.md): lettura del barcode nel browser, canale aperto con ogni
+dispositivo, operazioni in attesa nella memoria del browser, database e archivio delle foto, confronto esatto tra le
+impronte, certificato e aggiornamenti con copia di sicurezza, moduli a versione. Il programma che fa girare il modello
+visivo e la macchina in sede restano al ticket «Impronte e server in sede, dopo la prova» (405): scegli uno stack che
+non li blocchi. La 127 chiede prove su dispositivi veri (iPhone, Android, palmare di UFP) prima di scegliere: dimmi cosa
+si può scegliere prima e proponimi come farle (per esempio una pagina di prova pubblicata come la pagina di scatto,
+149), ricordando che computer e server aziendali non si toccano finché non c'è una versione da provare (143). Decidi
+con me anche quando sostituire il nome provvisorio DondEres con Ripo nel repository (nebbia della mappa).
+Consulta le decisioni già prese senza rimetterle in discussione e le ricerche in docs/research/ quando servono (per le
+librerie soprattutto docs/research/2026-11-15-addestramento-ed-esecuzione-locale.md, §E–H); se serve un fatto nuovo
+(versioni, licenze, manutenzione), fai una ricerca con la skill research e salvala in docs/research/. Usa le skill
+grilling, domain-modeling e ponytail (full); termini chiariti in GLOSSARY.md, la tua parte in docs/architettura.md.
+Registra ogni mia decisione in docs/decisioni.md, con data e motivo. Parlami in italiano, con domande semplici: cosa
+chiedi, perché conta, cosa comporta ogni opzione.
+Per le domande crea una pagina privata nuova, come quella della divisione (copia in prototipi/stack/index.html), con
+esempi visivi che cambiano con la risposta (per esempio lo schema dei pezzi del programma), opzione consigliata,
+«Accetta tutte le consigliate», note facoltative e risposte salvate che leggi tu quando scrivo «fatto». Lavora a giri:
+registra le risposte di ogni giro prima del successivo e chiudi con un riepilogo da confermare. Poi chiudi il ticket,
+aggiorna la mappa e prepara il prompt della sessione successiva.
+```
 
 **Prompt I: divisione tra telefono, computer e server in sede**
 

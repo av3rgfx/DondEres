@@ -387,8 +387,8 @@ Dal ticket «Percorso di identificazione e lettura della quantità», chiuso il 
 Ricerche: `docs/research/2026-11-15-modelli-visivi-riconoscimento-articoli.md` (§6, OCR e barcode) e
 `docs/research/2026-11-15-addestramento-ed-esecuzione-locale.md` (§C, rifiuto degli sconosciuti e ciclo di conferma).
 
-Qui si descrive cosa vede e cosa fa l'operatore, non dove gira il calcolo: la divisione tra telefono e server è nel
-ticket «Divisione tra telefono, computer e server in sede». Le soglie numeriche si fissano con la prova visiva (104).
+Qui si descrive cosa vede e cosa fa l'operatore, non dove gira il calcolo: la divisione tra telefono e server è nella
+sezione «Divisione tra telefono, computer e server in sede» (406–421). Le soglie numeriche si fissano con la prova visiva (104).
 
 ### Un'inquadratura sola
 
@@ -512,8 +512,8 @@ etichette (304, sezione «Punti di estensione»).
 
 ### Rimandato ad altri ticket
 
-- Dove girano lettura del barcode, del testo e confronto dell'aspetto: ticket «Divisione tra telefono, computer e server
-  in sede» e «App nativa o web app».
+- Dove girano lettura del barcode, del testo e confronto dell'aspetto: sezione «Divisione tra telefono, computer e
+  server in sede» (406–421); dove si calcolano le impronte, ticket «Impronte e server in sede, dopo la prova».
 - Le schermate (scheda «È questo», scelta tra più codici, «× colli», uscite del «non lo so»): ticket «Percorso delle
   schermate».
 - Chi può creare l'articolo nuovo dall'uscita «Articolo nuovo»: sezione «Articolo nuovo da foto».
@@ -615,7 +615,7 @@ Dal ticket «App nativa o web app», chiuso il 16/11/2026. Decisioni 9, 22, 23, 
 | Computer con telecamera | Azienda | Telecamera, con il lettore del browser dove c'è, altrimenti la libreria | Telecamera |
 
 Il codice stampato si legge sul server, con la foto che viaggia sulla rete interna (121, 127). Dove gira ogni altro passo
-dell'identificazione lo decide il ticket «Divisione tra telefono, computer e server in sede».
+dell'identificazione: sezione «Divisione tra telefono, computer e server in sede» (406–421).
 
 IPOTESI da verificare sul palmare di UFP: il lettore a grilletto scrive il codice nel campo attivo come una tastiera
 (per esempio il profilo «tastiera» di Zebra DataWedge), quindi la pagina tiene sempre pronto un campo che lo riceve
@@ -688,6 +688,8 @@ Prima di scegliere lo stack (127):
   (201; difetto riferito da utenti di Odoo 17);
 - prima della consegna, una prova di carico sul server in sede con il catalogo intero e più telefoni insieme, per i
   tempi massimi della 195.
+- peso della foto, scatto da solo, fascia «Senza rete» e aggiornamento degli schermi: sezione «Divisione tra telefono,
+  computer e server in sede» (421).
 
 ### Configurazione per magazzino
 
@@ -695,14 +697,127 @@ Prima di scegliere lo stack (127):
 
 ### Rimandato ad altri ticket o alla nebbia della mappa
 
-- Cosa gira sul dispositivo e cosa sul server per ogni inquadratura, cosa viaggia in rete: ticket «Divisione tra
-  telefono, computer e server in sede».
+- Cosa gira sul dispositivo e cosa sul server per ogni inquadratura, cosa viaggia in rete: risolto nella sezione
+  «Divisione tra telefono, computer e server in sede» (406–421).
 - Librerie del browser, del server e del meccanismo di aggiornamento: ticket «Stack».
 - Schermate della prima apertura dal QR, della guida a «Consenti» su iPhone, dell'avviso di aggiornamento, del campo
   per il grilletto; la barra di Safari visibile su iPhone: ticket «Percorso delle schermate».
 - Foto «di arrivo» della prova scattate dal browser dei telefoni: ticket «Piano della prova di accuratezza visiva».
 - Procedura guidata, rinnovo del certificato, copie di sicurezza, ritorno alla versione precedente: installazione e
   configurazione iniziale, sezione «Not yet specified» della mappa.
+
+## Divisione tra telefono, computer e server in sede
+
+Dal ticket «Divisione tra telefono, computer e server in sede», chiuso il 20/11/2026. Decisioni 406–421 (giro 1:
+406–415; giro 2: 416–420; riepilogo: 421).
+Restano fuori, perché dipendono dai numeri della prova visiva, dove si calcolano le impronte e che macchina serve in
+sede: ticket «Impronte e server in sede, dopo la prova» (405). Pagina delle domande:
+https://claude.ai/artifact/YbyLuy2kMFmVgEH5xdBPXu (copia in `prototipi/divisione/index.html`).
+
+### Cosa gira dove
+
+| Dove | Cosa | Decisioni |
+|---|---|---|
+| Telefono, palmare | Fotocamera e inquadratura; lettura del barcode (Chrome, libreria nella pagina, grilletto); scatto da solo; operazione in attesa senza rete | 127, 162, 409, 410, 413 |
+| Computer | Lo stesso browser e le stesse schermate; stampa dei PDF | 122, 415 |
+| Server in sede | Database (catalogo, giacenze, ordini, movimenti, registro); assegnazione; significato del barcode (articolo, GS1, lettori di etichette); codice stampato e quantità scritta; elenco delle impronte e confronto; archivio delle foto; avvisi ai dispositivi aperti; scambio con gestionale e Shopify, lettura di bolle e mail dei resi, aggiornamenti | 121, 304, 305, 406, 407, 411, 412 |
+| Da decidere dopo la prova | Dove si calcola l'impronta della foto (browser o server); programma che fa girare il modello; macchina in sede | 405 |
+
+Deduzioni (senza domanda, dalle decisioni già prese):
+
+- L'assegnazione «dal più vecchio», con VEND che vince, si calcola sul server in un posto solo (16, 305) e si rifà a
+  ogni movimento. Due dispositivi che confermano l'ultimo pezzo insieme non lo prendono due volte: il server accetta il
+  primo e al secondo risponde «già preso» (mai sotto zero, 77).
+- Il dispositivo non tiene dati: un telefono personale perso o di un dipendente che se ne va non porta via niente
+  (127, 406).
+- I lavori che partono da soli (scambio ogni 5 minuti, interrogazione di Shopify, mail dei resi, aggiornamenti
+  notturni) girano sul server e non richiedono un computer acceso.
+- Più codici nell'inquadratura (102): il dispositivo manda tutti quelli letti, il server decide se sono lo stesso
+  articolo o se l'operatore deve scegliere.
+- Lo stesso utente può essere aperto su più dispositivi insieme (per esempio il responsabile al computer e al
+  telefono); ogni dispositivo tiene le sue operazioni in attesa (421).
+- La foto viaggia comunque, qualunque cosa decida il ticket «Impronte e server in sede, dopo la prova»: serve a
+  quantità, codice stampato e foto di riferimento (408). Se l'impronta si calcolerà nel browser, passerà in più
+  l'impronta (421).
+
+### Ogni inquadratura
+
+1. L'inquadratura è sempre accesa nelle schermate che la usano (162). La foto parte da sola quando il dispositivo legge
+   un barcode o quando l'immagine resta ferma su una scatola per circa mezzo secondo (da tarare); la stessa scatola non
+   riparte finché non esce dall'inquadratura. «Scatta» resta come ripiego (409).
+2. Verso il server: il codice letto, se c'è, e una foto ferma (stima 0,3–0,6 MB, da misurare), con DDT o ordine,
+   utente, dispositivo e l'identità dell'operazione, che evita i doppioni (408; requisiti di affidabilità).
+3. Sul server: il barcode registra subito (99); dalla stessa foto si leggono quantità scritta e codice stampato, si
+   prova l'aspetto se serve, e la foto passa i filtri della 96 per diventare foto di riferimento.
+4. Di ritorno: articolo, quantità proposta, proposte con foto se serve un tocco, esito (salvata, in attesa, non
+   riuscita). Esito di una lettura entro 1 secondo (195).
+
+Sul palmare il grilletto manda solo il codice; la foto si fa con «Inquadra» quando il barcode manca o non si trova
+(410). Lì la quantità viene dal GS1 o da «come l'ultima volta» (100).
+
+### Aggiornamento degli schermi
+
+Le schermate di lavoro condiviso si aggiornano da sole entro pochi secondi quando un collega registra qualcosa: elenco
+del prelievo, coda «Prossimo ordine», DDT aperto da più operatori (68), cose in sospeso, giacenze dell'articolo aperto.
+Le altre si aggiornano quando si aprono. Il server tiene un canale aperto con ogni dispositivo (411); lo stesso canale
+può portare l'avviso di ricarica dopo un aggiornamento (125).
+
+### Archivio delle foto
+
+| Foto | Quanto resta | Decisioni |
+|---|---|---|
+| Foto di riferimento | Finché il responsabile non la toglie; tetto per articolo dopo la prova | 96, 104 |
+| Foto della bolla | Con il DDT, nei Documenti | 184, 199 |
+| Altre foto delle inquadrature | 30 giorni, poi si cancellano da sole; giorni in «Configurazione» | 412 |
+| Dato dell'identificazione | Sempre, nel registro | 104 |
+
+Le foto originali si conservano accanto alle impronte, per ricalcolarle se cambia il modello (sezione «Percorso di
+identificazione»). Nessuna foto esce dalla rete interna (121, 412). Stima dello spazio: circa 0,4 GB ogni 1.000
+inquadrature per le foto tenute 30 giorni (deduzione dalla stima della foto, da misurare).
+
+Le copie di sicurezza tengono dati e registro, foto di riferimento e foto delle bolle, non le foto dei 30 giorni (419).
+Dove vanno le copie e come si ripristinano resta all'installazione (nebbia della mappa).
+
+### Rete assente
+
+- Sul dispositivo restano solo le operazioni in attesa: codice letto, foto, quantità scritta, chi e quando, con la
+  loro identità (127). Quando compare la fascia lo scatto da solo si ferma: di solito resta in attesa una sola
+  operazione (421).
+- La schermata resta com'era, con la fascia «Senza rete» e l'ora dei dati; fotocamera e tasti che cambiano dati sono
+  spenti. Quando la rete torna l'operazione parte da sola e la fascia dice «Inviata» (413).
+- Su un telefono condiviso l'operazione parte a nome di chi l'ha fatta anche se nel frattempo è entrato un altro; se
+  all'arrivo serve una scelta, la trova chi l'ha fatta tra le sue cose in sospeso (414).
+- La fascia compare dopo 3 secondi senza risposta, oppure subito se il dispositivo sa di non avere rete; fino ad allora
+  la lettura dice «in attesa», e la fascia sparisce alla prima richiesta riuscita (417).
+- Due messaggi, stesso comportamento: «Senza rete: il telefono non è collegato al Wi-Fi del magazzino» e «Il server non
+  risponde: avvisa il responsabile» (418).
+- Un'operazione che arriva quando non si può più applicare (DDT chiuso, pezzo già preso, ordine annullato) non si
+  registra da sola: esito «non riuscita» con il motivo, e torna con la foto tra le cose in sospeso di chi l'ha fatta; se
+  il DDT è chiuso va anche al responsabile in «Da controllare», che decide se farne un carico in più (82) (416).
+
+### Stampe
+
+Il server prepara il PDF; si stampa dal browser del dispositivo, con la stampante che conosce già. Nessuna stampante si
+configura sul server; la stampa diretta su una termica sarà un collegamento in più (415).
+
+### Da misurare nelle prove su dispositivi veri
+
+Si aggiungono alle prove della sezione «Dispositivi e forma del programma» (127, 421):
+
+- il peso della foto di ogni inquadratura (stima 0,3–0,6 MB) e il tempo dell'esito sulla rete del magazzino (195);
+- il mezzo secondo di immagine ferma che fa partire la foto (409);
+- i 3 secondi dopo i quali compare la fascia, con il Wi-Fi debole nei punti peggiori del magazzino (417);
+- il canale aperto con più telefoni insieme, per gli aggiornamenti entro pochi secondi (411).
+
+### Rimandato ad altri ticket o alla nebbia della mappa
+
+- Dove si calcolano le impronte (browser o server), programma che fa girare il modello, macchina in sede: ticket
+  «Impronte e server in sede, dopo la prova» (405).
+- Librerie per il canale aperto, la memoria del browser, il database e l'archivio delle foto: ticket «Stack».
+- Fascia «Senza rete», «Inviata», «non riuscita» e «1 operazione di Mario in attesa» nelle schermate: ticket «Aspetto
+  grafico» per la forma; i testi seguono la skill ux-writing.
+- Dove vanno le copie di sicurezza e come si ripristinano: installazione e configurazione iniziale, nebbia della mappa.
+- Registro e foto davanti alla legge: punti aperti per la parte legale (420).
 
 ## Prova di accuratezza visiva
 
@@ -1523,6 +1638,9 @@ account.
   coprirla; se basti l'accesso con il codice mandato per mail è discusso.
 - Ritiro gratuito solo per chi sceglie il credito: il costo diretto del ritorno si può lasciare al cliente se lo sa
   prima; il credito al posto del rimborso vale solo con il suo accordo espresso, che il modulo conserva (330).
+- Registro e foto delle inquadrature (420): cosa dire ai dipendenti sul registro (chi, cosa, quando, da quale
+  dispositivo) e sulle foto, dove possono comparire persone o etichette con nomi di clienti, e per quanto tenerli. Il
+  programma intanto non cambia: i 30 giorni restano modificabili (412).
 
 ### Danni al trasporto
 

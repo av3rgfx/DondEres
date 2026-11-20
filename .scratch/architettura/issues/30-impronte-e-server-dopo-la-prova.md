@@ -3,7 +3,7 @@
 Type: grilling
 Label: wayfinder:grilling
 Status: open
-Blocked by: 09, 10, 15
+Blocked by: 09, 10, 15 (10 chiuso il 20/11/2026)
 
 ## Question
 
@@ -17,3 +17,6 @@ sede: requisiti minimi» della nebbia della mappa.
 Risultato atteso: la scelta e i requisiti minimi del server in `docs/architettura.md` e in `docs/decisioni.md`.
 
 ## Comments
+- 20/11/2026, dal ticket «Divisione tra telefono, computer e server in sede»: il confronto tra le impronte si fa sul
+  server, con un elenco solo (407); la foto viaggia comunque a ogni inquadratura (408), quindi calcolare l'impronta nel
+  browser toglierebbe lavoro al server ma non traffico; se si calcolerà nel browser, passerà in più l'impronta (421).
