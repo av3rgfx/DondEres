@@ -128,6 +128,9 @@ Prese prima della mappa, nel secondo giro di domande del 15/11/2026: decisioni 1
 35.000 articoli, base principale o affiancata, prelievo e spedizione, Android e iPhone, niente lavoro senza rete,
 tre livelli di conferma, quantità letta dalla scatola, ubicazioni facoltative, due ruoli, testi separati).
 
+- [Verifica dei nomi in R nei registri dei marchi](issues/29-verifica-nomi-in-r.md): risultati UIBM riportati
+  dall'utente; nome per ora **Ripo**, che può cambiare senza toccare il logo R; ricerca europea al consulente (386–387).
+
 ## Not yet specified
 
 - **Server in sede: requisiti minimi.** Scheda grafica sì o no, memoria, sistema operativo: si chiarisce con i

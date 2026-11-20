@@ -34,3 +34,4 @@ Risultato atteso: il brand kit nel repository, il link qui e la direzione scelta
 - 20/11/2026, fine della sessione: R · Rampa scelto (380); preferiti Reko, Ripo, Rodo (383); verifica nei registri
   ancora da fare (384, 385), nel nuovo ticket «Verifica dei nomi in R nei registri dei marchi». Il kit aspetta. Resta
   preso in carico; si riprende dalla scelta del nome, poi il kit (colore, versioni, icone, guida) sulla R · Rampa.
+- 20/11/2026, ripresa: nome Ripo (386), verifica chiusa per ora (387); si prosegue con il kit.

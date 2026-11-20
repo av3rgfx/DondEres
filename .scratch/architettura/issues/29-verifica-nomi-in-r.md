@@ -2,7 +2,8 @@
 
 Type: task
 Label: wayfinder:task
-Status: open
+Status: resolved
+Assignee: sessione del 20/11/2026 con l'utente
 Blocked by: nessuno (serve l'utente o il consulente)
 
 ## Question
@@ -18,3 +19,5 @@ Risultato atteso: i risultati scritti nella ricerca, il giudizio per nome e il n
 `docs/decisioni.md`; poi riparte il ticket «Brand kit con la skill logo-design».
 
 ## Comments
+- 20/11/2026, risoluzione: l'utente riporta i risultati UIBM (sezione «Aggiornamento» della ricerca, non controllati da
+  noi); nome scelto per ora **Ripo** (386); ricerca europea per somiglianza al consulente (387).

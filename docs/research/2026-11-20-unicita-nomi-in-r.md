@@ -145,3 +145,24 @@ Nessun dominio è libero; per la 349 il dominio non decide il nome.
    varianti: è la parte che decide.
 2. Per Reko: controllare se la registrazione internazionale di REKO (USA 7734472, serie 79393813) designa l'UE.
 3. Poi il consulente in marchi prima del deposito (359, 376).
+
+## Aggiornamento: risultati riportati dall'utente (20/11/2026)
+
+Fonte: l'utente, che ha provato la ricerca a mano («risultava tutto registrato», senza dettagli) e ha poi fatto
+interrogare la banca dati UIBM (https://www.uibm.gov.it/bancadati/) da un altro assistente, perché anche da lì TMview
+non era raggiungibile. **Non controllati da noi**: numeri e titolari sono come riportati.
+
+| Nome cercato | Esito riportato (Italia, UIBM) |
+|---|---|
+| Ripo | nessun risultato per RIPO o RIPPO; da considerare un **RIPPO** dell'Unione europea, titolare AISLUX, classe 35 |
+| Reko | **RK REKO**, IT 302019000093732, classi 12 e 25 (fuori dalle quattro classi); nessun risultato per REKKO |
+| Reco | **RECO**, IT 302019000076109, RECO S.p.A., classi 9, 35 e 37 (prodotti audiovisivi, vendita, installazione, riparazione) |
+| Rodo | **RODO FIRENZE**, IT 302006901435819, classi 18 e 25 (pelletteria e cinture); nessun risultato per RODDO o RHODO |
+
+L'altro assistente segnala anche che l'EUIPO offre un'API ufficiale del registro, con account e sottoscrizione (non
+verificato da noi).
+
+DEDUZIONE: in Italia Ripo è il nome con meno riscontri diretti; il RIPPO dell'Unione europea in classe 35 (gestione
+commerciale) è il punto da far guardare al consulente. Reko ha un RECO italiano in classe 9 e 35 che a orecchio è
+uguale. La ricerca per somiglianza a livello europeo resta da fare (decisione 387).
+
