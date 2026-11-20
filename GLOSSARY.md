@@ -62,6 +62,14 @@ _Evitare_: errore, articolo non trovato
 Una foto di un articolo conservata per riconoscerlo dall'aspetto.
 _Evitare_: immagine campione
 
+**Inquadratura**:
+Il momento in cui l'operatore punta la fotocamera su una scatola; ne nasce al più una foto, da cui parte l'identificazione.
+_Evitare_: scatto (è solo la foto), scansione (è il gesto registrato)
+
+**Impronta**:
+Il riassunto numerico di una foto che permette di confrontarne l'aspetto con le foto di riferimento.
+_Evitare_: embedding, vettore, firma
+
 **Unità di magazzino**:
 L'unità in cui si conta un articolo in giacenza (pezzo, chilo, metro); ogni articolo ne ha una sola.
 _Evitare_: unità di misura (da sola), UM
@@ -355,6 +363,10 @@ _Evitare_: master, fonte di verità, sistema esterno
 Il computer del magazzino, sulla sua rete interna, che tiene i dati e serve il programma a telefoni, palmari e
 computer.
 _Evitare_: cloud, hosting
+
+**Operazione in attesa**:
+Un gesto fatto sul dispositivo che non è ancora arrivato al server perché manca la rete; resta sul dispositivo, a nome di chi l'ha fatto, e parte quando la rete torna.
+_Evitare_: coda offline, bozza
 
 **Palmare**:
 Un dispositivo portatile robusto con un lettore di barcode a grilletto, usato in magazzino al posto del telefono.
