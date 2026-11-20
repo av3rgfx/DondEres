@@ -28,7 +28,8 @@ percorso delle schermate e aspetto grafico, compresi nome e brand kit (decisioni
 - La decisione 12 porta l'esecuzione dentro la mappa: la prova visiva è un ticket di tipo task, con le foto reali
   fornite dall'utente. Prima di raccoglierle, chiedere all'utente dove conservarle e se possono stare nel repository.
 - Le decisioni 13 (stack) e 14 (grafica) sono le ultime della mappa: dipendono da app nativa o web, rete assente
-  (decisione 23), divisione tra le macchine e risultati della prova. Le scelte di aspetto sono di gusto, spettano
+  (decisione 23) e divisione tra le macchine. Dal 20/11/2026 non aspettano più la prova visiva (405): ciò che dipende
+  dai suoi numeri sta nel ticket «Impronte e server in sede, dopo la prova». Le scelte di aspetto sono di gusto, spettano
   all'utente e si fanno con prototipi da guardare. Una sola direzione visiva, registrata in `docs/decisioni.md`.
 - Anche nome e brand kit sono scelte di gusto dell'utente (decisione 20). La skill logo-design si installa nel
   progetto, in `.claude/skills` e `.agents/skills` uguali, dopo averne letto il contenuto; mai a livello globale.
@@ -136,9 +137,6 @@ tre livelli di conferma, quantità letta dalla scatola, ubicazioni facoltative, 
 
 ## Not yet specified
 
-- **Server in sede: requisiti minimi.** Scheda grafica sì o no, memoria, sistema operativo: si chiarisce con i
-  risultati della prova e la divisione tra le macchine. La prova misura i tempi solo nel cloud (decisione 143): la
-  macchina vera va misurata a parte, quando c'è una versione da provare.
 - **Adattamento del modello visivo** (metric learning) sulle foto del magazzino: solo se i numeri della prova lo
   giustificano.
 - **Installazione e configurazione iniziale in un magazzino nuovo:** procedura guidata (dove si sceglie se usare le
