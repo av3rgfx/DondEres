@@ -4,7 +4,7 @@ Type: task
 Label: wayfinder:task
 Status: open
 Assignee: sessione del 20/11/2026 con l'utente
-Blocked by: 13
+Blocked by: 13, 29 (13 chiuso il 20/11/2026)
 
 ## Question
 
@@ -31,3 +31,6 @@ Risultato atteso: il brand kit nel repository, il link qui e la direzione scelta
   in `prototipi/brand-kit/concetti-3/`. Dopo la scelta: nomi, verifica dei marchi, kit.
 - 20/11/2026, giri 6 e 7: nomi in R (382), preferiti Reko, Ripo, Rodo (383); ricerca parziale in
   `docs/research/2026-11-20-unicita-nomi-in-r.md`, registri dei marchi ancora da fare.
+- 20/11/2026, fine della sessione: R · Rampa scelto (380); preferiti Reko, Ripo, Rodo (383); verifica nei registri
+  ancora da fare (384, 385), nel nuovo ticket «Verifica dei nomi in R nei registri dei marchi». Il kit aspetta. Resta
+  preso in carico; si riprende dalla scelta del nome, poi il kit (colore, versioni, icone, guida) sulla R · Rampa.
