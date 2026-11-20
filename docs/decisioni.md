@@ -385,6 +385,8 @@ Le decisioni tecniche ancora aperte non stanno qui: stanno in `docs/analisi-prog
 | 377 | 20/11/2026 | Delle otto lettere abbozzate: **sì a R e Q**; forse ad A e S; no a K, M, G e X. | Scelte dell'utente; diverse dal consiglio per K (consigliato forse, no) e per X (consigliato sì, no); motivo non indicato (giro 4 del ticket «Brand kit con la skill logo-design», pagina https://claude.ai/artifact/JQ2vwNwRMfT2qi4BDWNnX5, privata). |
 | 378 | 20/11/2026 | Maiuscola o minuscola si decide lettera per lettera, nei concetti. | Scelta dell'utente, diversa dalla consigliata (maiuscola); motivo non indicato (giro 4 del ticket «Brand kit con la skill logo-design», pagina https://claude.ai/artifact/JQ2vwNwRMfT2qi4BDWNnX5, privata). |
 | 379 | 20/11/2026 | Il nome nuovo **comincia con la lettera del logo**. | Proposta accettata (giro 4 del ticket «Brand kit con la skill logo-design», pagina https://claude.ai/artifact/JQ2vwNwRMfT2qi4BDWNnX5, privata). |
+| 380 | 20/11/2026 | Il logo parte dal concetto **A · R · Rampa**: R maiuscola piena (asta 44 su 256) con la gamba a cuneo a 45 gradi, come la rampa della baia di carico (`prototipi/brand-kit/concetti-3/r-rampa.svg`). La rifinitura si fa nel kit. | Proposta accettata (giro 5 del ticket «Brand kit con la skill logo-design», pagina https://claude.ai/artifact/JQ2vwNwRMfT2qi4BDWNnX5, privata). |
+| 381 | 20/11/2026 | Con la R si cerca il nome: una rosa di nomi che cominciano con la R (379), con le regole 344–350, da giudicare; poi la verifica dei marchi del nome scelto; poi il kit. | Proposta accettata (giro 5 del ticket «Brand kit con la skill logo-design», pagina https://claude.ai/artifact/JQ2vwNwRMfT2qi4BDWNnX5, privata). |
 
 ## Note di lettura
 
