@@ -82,33 +82,64 @@ textarea{width:100%;min-height:56px;font:14px/1.45 var(--f-body);padding:8px 10p
   padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));z-index:5}
 .dock .bar{max-width:1040px;margin:0 auto;justify-content:space-between}
 @media (prefers-reduced-motion:no-preference){label.opt{transition:background .15s,border-color .15s}}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;gap:10px;align-content:start;min-width:0}
+.card.v-tengo{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.card.v-scarto{opacity:.62}
+.card .nm{display:flex;align-items:center;gap:12px}
+.card .nm .ico{flex:none}
+.card .nm b{font:800 26px/1 var(--f-display);font-stretch:112%;overflow-wrap:anywhere}
+.card dl{margin:0;display:grid;grid-template-columns:76px minmax(0,1fr);gap:4px 10px;font-size:13.5px}
+.card dt{color:var(--muted)} .card dd{margin:0}
+.verdict{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.verdict label{display:grid;place-items:center;border:1px solid var(--line);border-radius:8px;padding:9px 4px;font-weight:600;font-size:13.5px;cursor:pointer;text-align:center}
+.verdict input{position:absolute;opacity:0;pointer-events:none}
+.verdict label:has(input:checked){background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.verdict label:focus-within{outline:3px solid var(--tag);outline-offset:2px}
+.recline{font-size:12.5px;color:var(--muted)}
+.shelf{position:sticky;top:env(safe-area-inset-top,0px);z-index:3;background:var(--bg);padding-block:8px;display:grid;gap:6px}
+.shelf .phone{max-width:none}
+.shelf .home{grid-template-columns:repeat(auto-fill,minmax(54px,1fr))}
+details.prev{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+details.prev summary{cursor:pointer;font-weight:600}
+details.prev ol{margin:10px 0 0;padding-left:20px;display:grid;gap:4px;color:var(--muted)}
 </style>
 
 <div class="wrap">
   <header class="intro">
-    <span class="eyebrow">Ticket «Nome del prodotto» · giro 1 di 3</span>
-    <h1>Prima di cercare i nomi: cosa deve fare il nome</h1>
-    <p>Il programma non si chiamerà DondEres (decisione 20). Prima di proporti dei nomi ti chiedo poche cose: chi lo vedrà,
-      in che lingue, cosa deve far venire in mente, che forma deve avere. Con le tue risposte preparo, nel secondo giro,
-      una rosa di nomi da guardare e scartare. Nel terzo giro ne tieni da tre a cinque, che poi si controllano tra i marchi
-      registrati e i domini.</p>
-    <div class="meta"><span>Ogni domanda ha un'opzione consigliata e uno spazio per le note, facoltativo.</span>
-      <span>Le risposte si salvano da sole. Quando hai finito, scrivi «fatto» in chat.</span></div>
+    <span class="eyebrow">Ticket «Nome del prodotto» · giro 2 di 3</span>
+    <h1>La rosa: tieni, forse, scarta</h1>
+    <p>Sono 19 nomi costruiti sui tuoi criteri: corti, veloci e ordinati, leggibili uguali in italiano e in inglese,
+      senza finali da startup. Per ognuno trovi da dove viene, come si legge e cosa può dare fastidio. Segna
+      <b>Tengo</b>, <b>Forse</b> o <b>Scarto</b>. Nel terzo giro metti in ordine i preferiti, da tre a cinque.</p>
+    <p class="why">I controlli qui sono miei, fatti a memoria su significati e pronuncia: non sono una ricerca nei registri
+      dei marchi. Quella si fa dopo, nel ticket «Unicità dei nomi scelti», insieme ai domini (decisione 349).</p>
     <div class="bar"><button class="primary" id="accept-all" type="button">Accetta tutte le consigliate</button>
       <span class="status" id="status" role="status" aria-live="polite">Caricamento delle risposte salvate…</span></div>
   </header>
 
-  <section class="try" aria-labelledby="try-h">
-    <h3 id="try-h">Prova un nome qualsiasi</h3>
-    <p class="why">Facoltativo. Scrivi un nome che ti piace, anche per gioco: gli esempi accanto alle domande lo usano al posto
-      di quello di prova. Se hai già dei nomi in mente, scrivili qui sotto: entrano nella rosa del secondo giro.</p>
-    <label class="notelabel" for="tryname">Nome da provare negli esempi</label>
-    <input id="tryname" type="text" autocomplete="off" maxlength="30" placeholder="Per esempio Scaffo">
-    <label class="notelabel" for="mynames">Nomi che hai già in mente (separati da virgole)</label>
-    <textarea id="mynames" placeholder="Facoltativo"></textarea>
+  <details class="prev"><summary>Giro 1, già registrato (decisioni 344–351)</summary><ol>
+    <li>Marchio vero, offerto anche ad altri magazzini.</li><li>Uguale in italiano e in inglese.</li>
+    <li>Fa pensare a velocità e ordine.</li><li>Parola vera modificata o composta.</li>
+    <li>Corto: una o due sillabe, fino a 5 lettere.</li><li>Il dominio non decide; si controlla comunque.</li>
+    <li>Niente parole da startup né doppi sensi.</li><li>Kiln vale solo per lo stile del brand kit.</li></ol></details>
+
+  <section class="shelf" aria-label="I nomi che tieni, come icone del telefono">
+    <span class="cap eyebrow" id="shelf-cap">I nomi che tieni compaiono qui, come icone sul telefono</span>
+    <div class="phone"><div class="home" id="shelf"></div></div>
   </section>
 
-  <div id="questions" style="display:grid;gap:20px"></div>
+  <div class="cards" id="cards"></div>
+
+  <section class="q" aria-labelledby="h-altri"><div class="main">
+    <span class="eyebrow">Ultima domanda del giro</span><h2 id="h-altri">Vuoi vedere altri nomi?</h2>
+    <p class="why">Se in questa rosa ce ne sono già da tre a cinque che ti convincono, il terzo giro serve solo a metterli
+      in ordine. Se no, nel terzo giro aggiungo altri nomi.</p>
+    <fieldset style="border:0;padding:0;margin:0"><legend class="notelabel" style="margin-bottom:8px">Scegline una</legend><div class="opts" id="altri-opts"></div></fieldset>
+    <label class="notelabel" for="n-altri">Note (facoltative): per esempio una direzione, un suono, una parola di partenza</label>
+    <textarea id="n-altri" data-note="altri"></textarea>
+  </div><div class="ex" id="ex-altri" aria-live="polite"></div></section>
 
   <section class="sum" aria-labelledby="sum-h">
     <h2 id="sum-h">Le tue risposte di questo giro</h2>
@@ -125,216 +156,85 @@ textarea{width:100%;min-height:56px;font:14px/1.45 var(--f-body);padding:8px 10p
 </div></div>
 
 <script>
-const GIRO = "giro1";
-const OTHER_APPS = [["Posta","#3b82f6","P"],["Foto","#e46b2e","F"],["Meteo","#2a9d8f","M"]];
-const TYPE_EXAMPLE = {descr:"ScorteFacili", figur:"Faro", modif:"Scaffo", invent:"Varlo"};
-
-const Q = [
- {id:"pubblico", t:"Dove si vedrà il nome?",
-  why:"Se il nome resta dentro le vostre due aziende basta che si capisca. Se il programma andrà anche ad altri magazzini (la base è pensata per qualsiasi magazzino, decisione 4), il nome diventa un marchio: deve essere unico e registrabile.",
-  o:[
-   {id:"interno", l:"Solo dentro le vostre aziende", d:"UFP e il magazzino Shopify. Basta un nome chiaro; la verifica dei marchi può essere leggera."},
-   {id:"esterno", l:"Anche fuori, offerto ad altri magazzini", d:"Serve un marchio vero: unico, registrabile, con un sito. La verifica dei marchi sarà completa.", rec:true},
-   {id:"forse", l:"Non lo so ancora", d:"Si sceglie come se andasse fuori: costa poco di più e non si deve cambiare nome dopo."}
-  ], ex:exPubblico},
- {id:"lingue", t:"In che lingue deve funzionare?",
-  why:"Un nome si dice a voce al telefono, si scrive in una mail, si legge su un sito. Il magazzino Shopify vende anche in Austria, Germania e nel resto del mondo, e i testi del programma sono già pensati per essere tradotti (decisione 28).",
-  o:[
-   {id:"it", l:"Solo italiano", d:"Può essere una parola italiana. Fuori dall'Italia si legge male o non si capisce."},
-   {id:"it-en", l:"Italiano e inglese", d:"Si legge e si pronuncia allo stesso modo nelle due lingue, senza significati strani in nessuna.", rec:true},
-   {id:"molte", l:"Molte lingue (anche tedesco, francese, spagnolo)", d:"Restano soprattutto parole brevi o inventate; si controllano i significati in ogni lingua."}
-  ], ex:exLingue},
- {id:"evoca", t:"Cosa deve far venire in mente? (al massimo due)", multi:2,
-  why:"Il nome non deve spiegare tutto il programma: basta un'immagine. Le due cose che lo distinguono dagli altri gestionali sono il riconoscimento dell'articolo dalla telecamera e l'assegnazione delle scorte agli ordini più vecchi.",
-  o:[
-   {id:"vedere", l:"Vedere e riconoscere", d:"La telecamera che riconosce l'articolo da barcode, codice o immagine.", rec:true},
-   {id:"giusto", l:"Il pezzo giusto all'ordine giusto", d:"Le scorte che vanno da sole agli ordini, dal più vecchio.", rec:true},
-   {id:"ordine", l:"Ordine e precisione", d:"Ogni pezzo al suo posto, niente errori."},
-   {id:"veloce", l:"Velocità", d:"Si riceve e si prepara in fretta."},
-   {id:"magazzino", l:"Il magazzino in sé", d:"Scaffali, colli, bancali, banchine."},
-   {id:"fiducia", l:"Affidabilità e calma", d:"Niente va perso, tutto si ritrova."}
-  ], ex:exEvoca},
- {id:"tipo", t:"Che tipo di parola?",
-  why:"Più un nome dice cosa fa, più è difficile registrarlo come marchio, perché somiglia a tanti altri. Più è inventato, più è facile da registrare, ma all'inizio non dice niente.",
-  o:[
-   {id:"descr", l:"Descrittiva: dice cosa fa", d:"Si capisce subito. Quasi impossibile da registrare; somiglia a molti gestionali."},
-   {id:"figur", l:"Parola vera in senso figurato", d:"Come Kiln (fornace), Slack, Notion. Si ricorda bene; spesso è già presa."},
-   {id:"modif", l:"Parola modificata o composta", d:"Una parola vera cambiata o unita a un'altra. Tiene un'immagine e lascia più nomi liberi.", rec:true},
-   {id:"invent", l:"Inventata", d:"Come Kodak o Zalando. La più facile da registrare; il senso lo costruisce il marchio."}
-  ], ex:exTipo},
- {id:"lunghezza", t:"Quanto lungo?",
-  why:"Sul telefono il nome sta sotto l'icona: oltre una decina di lettere viene tagliato. Un nome corto si ricorda meglio, ma quelli molto corti sono quasi tutti già usati.",
-  o:[
-   {id:"corto", l:"Corto: una o due sillabe, fino a 5 lettere", d:"Molto facile da ricordare; pochissimi liberi."},
-   {id:"medio", l:"Medio: due o tre sillabe, da 5 a 9 lettere", d:"Entra intero sotto l'icona e lascia più scelta.", rec:true},
-   {id:"lungo", l:"Lungo o di due parole", d:"Sotto l'icona si legge tagliato; nei testi si accorcia."}
-  ], ex:exLunghezza},
- {id:"dominio", t:"Serve un indirizzo internet con il nome?",
-  why:"Il programma gira nella rete interna (decisione 120), quindi l'indirizzo serve solo per un sito di presentazione. Pretendere il .com esatto scarta quasi tutti i nomi brevi.",
-  o:[
-   {id:"com", l:"Sì, il .com esatto", d:"Il più forte, ma scarta moltissimi nomi già registrati."},
-   {id:"flessibile", l:"Sì, .com o .it, anche con un'aggiunta", d:"Per esempio nomeapp.com o usanome.it. Si sceglie il nome per com'è, non per il dominio.", rec:true},
-   {id:"no", l:"Per ora non serve", d:"Si controllano solo i marchi; il dominio si cerca più avanti."}
-  ], ex:exDominio},
- {id:"evitare", t:"Cosa vuoi evitare?", multi:5,
-  why:"Sono limiti di gusto: aiutano a scartare in fretta. Puoi sceglierne quanti vuoi, o nessuno.",
-  o:[
-   {id:"startup", l:"Le parole da startup", d:"Finali come -ify, -ly, -hub, e «Smart», «AI», «Pro».", rec:true},
-   {id:"generiche", l:"«Magazzino», «Stock», «Warehouse» nel nome", d:"Parole del settore, usate da tutti."},
-   {id:"lettere", l:"Lettere poco italiane: K, J, W, X, Y", d:"Si dettano male al telefono a chi non le conosce."},
-   {id:"doppi", l:"Doppi sensi in italiano o nei dialetti", d:"Si controlla ogni nome prima di proportelo.", rec:true}
-  ], ex:exEvitare},
- {id:"kiln", t:"«Kiln» vale anche per il nome?",
-  why:"Per il brand kit hai indicato l'esempio «Kiln» della skill logo-design (decisione 20). Nella skill Kiln è una torrefazione di caffè inventata, con uno stile «caldo, artigianale, moderno» e un marchio fatto di una K disegnata più la scritta del nome. Mi serve sapere se ti piace anche la forma del nome o solo lo stile del logo, che si decide nel brand kit.",
-  o:[
-   {id:"si", l:"Sì, un nome con quella forma", d:"Una parola vera, breve, con un'immagine concreta."},
-   {id:"stile", l:"No, vale solo per lo stile del brand kit", d:"Il nome si sceglie con le risposte qui sopra; Kiln torna nel brand kit.", rec:true},
-   {id:"nessuno", l:"Non è più un riferimento", d:"Né per il nome né per il logo."}
-  ], ex:exKiln}
+const GIRO = "giro2";
+const N = [
+ {n:"Vekto", da:"«Vettore»: una direzione e una spinta, cioè velocità con una rotta.", leggi:"«vèk-to» in tutte e due le lingue.", att:"Esistono marchi vicini (Vecto, Vector): da verificare.", rec:"tengo"},
+ {n:"Trako", da:"«Traccia» e l'inglese «track»: la corsia veloce, il pezzo seguito passo per passo.", leggi:"«trà-ko» in tutte e due le lingue.", att:"Vicino a «Trak», usato da prodotti di tracciamento: da verificare.", rec:"tengo"},
+ {n:"Kardo", da:"Il «cardo», la strada principale delle città romane: dritta, tracciata, in ordine.", leggi:"«kàr-do» in tutte e due le lingue.", att:"In italiano «cardo» è anche una pianta spinosa; con la K si distingue.", rec:"tengo"},
+ {n:"Pista", da:"Parola vera: dove si corre e la corsia tracciata. «Pista!» si dice per farsi largo.", leggi:"«pì-sta» in tutte e due le lingue.", att:"Parola comune, quasi certamente registrata in altri settori: se è presa, si modifica.", rec:"forse"},
+ {n:"Rivo", da:"«Arrivo», dove comincia il lavoro del magazzino.", leggi:"«rì-vo»; in inglese a volte «ràiv-o».", att:"In italiano poetico «rivo» è un ruscello. La lettura inglese può oscillare.", rec:"forse"},
+ {n:"Ritmo", da:"Parola vera: velocità regolare, il passo del lavoro fatto bene.", leggi:"«rìt-mo» in tutte e due le lingue.", att:"Ricorda la Fiat Ritmo; parola comune, probabilmente già usata da altri programmi.", rec:"forse"},
+ {n:"Dardo", da:"Parola vera: veloce e preciso, arriva dritto al bersaglio.", leggi:"«dàr-do» in tutte e due le lingue.", att:"È anche il nome di un mezzo blindato dell'Esercito italiano.", rec:"forse"},
+ {n:"Sorto", da:"L'inglese «sort» (smistare, mettere in ordine) con la «o» italiana.", leggi:"«sòr-to» in tutte e due le lingue.", att:"In italiano è il participio di «sorgere». La velocità si sente poco.", rec:"forse"},
+ {n:"Prelo", da:"«Prelievo», il lavoro di chi prepara gli ordini.", leggi:"«prè-lo» in tutte e due le lingue.", att:"Il «prelo» è anche il vecchio torchio da stampa. Velocità poco evidente.", rec:"forse"},
+ {n:"Snel", da:"«Veloce» in olandese, vicino all'italiano «snello».", leggi:"«snèl» in tutte e due le lingue.", att:"Una sillaba sola, suona secca. In olandese è una parola comune.", rec:"forse"},
+ {n:"Lampa", da:"«Lampo», con la «a» finale.", leggi:"«làm-pa» in tutte e due le lingue.", att:"In rumeno e in polacco vuol dire «lampada». Richiama la velocità più dell'ordine.", rec:"forse"},
+ {n:"Dokra", da:"Il tuo nome di prova. In India il «Dhokra» è un'antica tecnica di fusione del metallo.", leggi:"«dò-kra» in tutte e due le lingue.", att:"Non richiama né velocità né ordine: funziona per il suono.", rec:"forse"},
+ {n:"Vola", da:"«Volare», all'imperativo: «vola!».", leggi:"«vò-la»; in inglese «vóu-la».", att:"Parola vera usatissima nei marchi; si modifica poco.", rec:"scarto"},
+ {n:"Ordo", da:"«Ordine» in latino.", leggi:"«òr-do» in tutte e due le lingue.", att:"Nome già usato da molti prodotti e aziende. Non dice velocità.", rec:"scarto"},
+ {n:"Brio", da:"Parola vera in italiano e in inglese («con brio»): energia, vivacità.", leggi:"«brì-o» in tutte e due le lingue.", att:"Usatissima nei marchi, quasi certamente presa.", rec:"scarto"},
+ {n:"Corso", da:"Da «corsa» e «corsia».", leggi:"«còr-so» in tutte e due le lingue.", att:"In italiano vuol dire anche lezione e via principale; molto comune.", rec:"scarto"},
+ {n:"Rigo", da:"Da «riga»: le righe del DDT, la fila in ordine.", leggi:"«rì-go»; in inglese spesso «ràigo».", att:"La lettura inglese cambia il suono.", rec:"scarto"},
+ {n:"Movo", da:"Da «muovo».", leggi:"in inglese oscilla tra «mù-vo» e «mò-vo».", att:"Lettura incerta in inglese (decisione 345).", rec:"scarto"},
+ {n:"Pronto", da:"In italiano la merce evasa è pronta; in inglese «pronto» vuol dire «subito».", leggi:"«pròn-to» in tutte e due le lingue.", att:"6 lettere, una più del limite (decisione 348). Parola comunissima.", rec:"scarto"}
 ];
+const V = [["tengo","Tengo"],["forse","Forse"],["scarto","Scarto"]];
+const ALTRI = [
+ {id:"no", l:"No, scelgo tra questi", d:"Il terzo giro mette in ordine i nomi che tieni."},
+ {id:"vicini", l:"Sì, altri vicini a quelli che tengo", d:"Nel terzo giro aggiungo qualche nome con lo stesso suono o la stessa origine, poi li metti in ordine.", rec:true},
+ {id:"diversi", l:"Sì, in un'altra direzione", d:"Scrivi nelle note quale: un suono, una parola di partenza, un esempio."}
+];
+const COLORS = ["#1f4e8c","#2a9d8f","#e46b2e","#7a4fb3","#b0413e","#3b82f6","#5b7f2a"];
 
-let S = {ans:{}, note:{}, tryname:"", mynames:""};
+let S = {v:{}, note:{}, altri:""};
 try{ const d = JSON.parse(localStorage.getItem("nome-"+GIRO)||"null"); if(d) S = Object.assign(S,d); }catch(e){}
-
 const esc = s => String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const pick = id => S.ans[id];
-const has = (id,v) => [].concat(S.ans[id]||[]).includes(v);
-function previewName(){
-  const t = (S.tryname||"").trim(); if(t) return t;
-  return TYPE_EXAMPLE[pick("tipo")] || "Scaffo";
-}
-function sampleTag(){ return (S.tryname||"").trim() ? "il tuo nome di prova" : "nome di esempio, non è una proposta"; }
-
-function phone(name){
-  const apps = OTHER_APPS.map(([n,c,l])=>`<div class="app"><div class="ico" style="background:${c}">${l}</div><div class="lbl">${n}</div></div>`).join("");
-  const ini = esc((name[0]||"?").toUpperCase());
-  return `<div class="phone" aria-label="Schermata del telefono con l'icona del programma">
-    <div class="home">${apps}<div class="app"><div class="ico" style="background:#1f4e8c">${ini}</div><div class="lbl">${esc(name)}</div></div></div>
-    <div class="topbar"><b>${esc(name)}</b><span>Ricevimento</span></div></div>`;
-}
-
-function exPubblico(){
-  const n = previewName(), p = pick("pubblico");
-  let extra = "";
-  if(p==="esterno"||p==="forse") extra = `<div class="cap">e sul sito, per chi compra</div><div class="url">${esc(slug(n))}.com</div>
-    <small>«${esc(n)}: il gestionale che riconosce gli articoli dalla telecamera.» Serve un marchio registrabile.</small>`;
-  else if(p==="interno") extra = `<small>Lo vedono solo magazzinieri e responsabili, sui telefoni e sui computer di sede.</small>`;
-  return `<div class="cap">Come lo vede chi lavora · ${sampleTag()}</div>${phone(n)}${extra}`;
-}
-function slug(n){ return n.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[^a-z0-9]/g,"") || "nome"; }
-function pronFlags(n){
-  const s = n.toLowerCase(), f = [];
-  if(/gn/.test(s)) f.push("«gn»: in inglese si legge g + n separati.");
-  if(/gli/.test(s)) f.push("«gli»: in inglese si legge «g-li».");
-  if(/c[ei]/.test(s)) f.push("«ce/ci»: in inglese si legge «se/si».");
-  if(/sc[ei]/.test(s)) f.push("«sce/sci»: in inglese si legge «ske/ski» o «se/si».");
-  if(/ch/.test(s)) f.push("«ch»: in italiano è «k», in inglese «ci».");
-  if(/g[ei]/.test(s)) f.push("«ge/gi»: in inglese a volte si legge «ghe/ghi».");
-  if(/z/.test(s)) f.push("«z»: in inglese si legge sorda, quasi «s».");
-  if(/th|w|y/.test(s)) f.push("«th», «w», «y»: in italiano si leggono incerti.");
-  if(/[àèéìòù]/.test(s)) f.push("Accenti: spariscono negli indirizzi internet e sulle tastiere straniere.");
-  if(/^h/.test(s)) f.push("H iniziale: in italiano è muta, in inglese si sente.");
-  return f;
-}
-function exLingue(){
-  const n = previewName(), l = pick("lingue");
-  if(!l) return `<div class="cap">Esempio</div><small>Scegli un'opzione per vedere come si controlla la pronuncia di «${esc(n)}».</small>`;
-  if(l==="it") return `<div class="cap">Controllo di «${esc(n)}» · ${sampleTag()}</div><div class="flag ok"><span>✓</span><span>Basta che suoni bene in italiano e non abbia doppi sensi.</span></div>`;
-  const f = pronFlags(n);
-  const rows = f.length ? f.map(x=>`<div class="flag warn"><span>!</span><span>${esc(x)}</span></div>`).join("")
-    : `<div class="flag ok"><span>✓</span><span>Si legge allo stesso modo in italiano e in inglese.</span></div>`;
-  const more = l==="molte" ? `<small>In più si controlla il significato in tedesco, francese e spagnolo, prima di proportelo.</small>` : "";
-  return `<div class="cap">Pronuncia di «${esc(n)}» · ${sampleTag()}</div>${rows}${more}<small>È un controllo semplice sulle lettere, non sostituisce la prova a voce.</small>`;
-}
-const WORDS = {vedere:["occhio","lente","sguardo","faro","lince","radar"], giusto:["incastro","coppia","turno","abbinare","destino","fila"],
-  ordine:["griglia","filo","righello","squadra","casella"], veloce:["lampo","freccia","volo","scatto","rondine"],
-  magazzino:["scaffale","collo","bancale","banchina","molo","stiva"], fiducia:["àncora","chiave","bussola","sentinella","faro"]};
-function exEvoca(){
-  const sel = [].concat(pick("evoca")||[]);
-  if(!sel.length) return `<div class="cap">Esempio</div><small>Scegli una o due idee: qui compaiono le parole da cui partirei per cercare i nomi.</small>`;
-  const ch = sel.map(k=>`<div class="cap">${esc(Q[2].o.find(o=>o.id===k).l)}</div><div class="chips">${WORDS[k].map(w=>`<span class="chip">${w}</span>`).join("")}</div>`).join("");
-  return `${ch}<small>Sono parole di partenza, non nomi: da qui nascono i nomi del secondo giro, cambiati o uniti secondo il tipo di parola che scegli.</small>`;
-}
-function exTipo(){
-  const rows = [["descr","Si capisce subito",95,"Facile da registrare",10],["figur","Si capisce subito",55,"Facile da registrare",40],
-    ["modif","Si capisce subito",45,"Facile da registrare",70],["invent","Si capisce subito",10,"Facile da registrare",95]];
-  const t = pick("tipo");
-  if(!t) return `<div class="cap">Esempio</div><small>Scegli un tipo per vedere un nome d'esempio e dove sta tra «si capisce» e «si registra».</small>`;
-  const r = rows.find(x=>x[0]===t);
-  return `<div class="cap">Esempio di forma · non è una proposta</div><div class="topbar" style="color:var(--phone-fg)"><b>${TYPE_EXAMPLE[t]}</b><span>Ricevimento</span></div>
-   <div class="scale"><div class="row"><span>${r[1]}</span><span class="track"><i style="width:${r[2]}%"></i></span></div>
-   <div class="row"><span>${r[3]}</span><span class="track"><i style="width:${r[4]}%"></i></span></div></div>
-   <small>Le barre sono indicative: la verifica vera sui registri dei marchi si fa nel ticket «Unicità dei nomi scelti».</small>`;
-}
-function exLunghezza(){
-  const L = {corto:"Faro", medio:"Scaffino", lungo:"Magazzino Veloce"};
-  const sel = pick("lunghezza"), mine = (S.tryname||"").trim();
-  const items = Object.entries(L).map(([k,n])=>`<div class="app"><div class="ico" style="background:${k===sel?"#1f4e8c":"#3a4757"}">${esc(n[0])}</div><div class="lbl">${esc(n)}</div></div>`).join("");
-  const own = mine ? `<div class="app"><div class="ico" style="background:#e46b2e">${esc(mine[0].toUpperCase())}</div><div class="lbl">${esc(mine)}</div></div>` : "";
-  return `<div class="cap">Sotto l'icona · corto, medio, lungo${mine?", il tuo":""}</div><div class="phone"><div class="home">${items}${own}</div></div>
-   <small>${mine?`«${esc(mine)}» ha ${[...mine].length} caratteri. `:""}Sotto l'icona dell'iPhone entrano circa 10–11 lettere; il resto diventa «…».</small>`;
-}
-function exDominio(){
-  const n = slug(previewName()), d = pick("dominio");
-  if(!d) return `<div class="cap">Esempio</div><small>Scegli un'opzione per vedere quali indirizzi andrebbero bene.</small>`;
-  if(d==="no") return `<div class="cap">Esempio</div><small>Nessun indirizzo da cercare ora. Il programma resta raggiungibile solo dalla rete interna.</small>`;
-  const list = d==="com" ? [n+".com"] : [n+".com", n+".it", n+"app.com", "usa"+n+".it"];
-  return `<div class="cap">Indirizzi che andrebbero bene · ${sampleTag()}</div>${list.map(u=>`<div class="url">${esc(u)}</div>`).join("")}
-   <small>${d==="com"?"Se il .com è preso, il nome si scarta.":"Basta uno libero tra questi."} Se sono liberi davvero si controlla dopo.</small>`;
-}
-function exEvitare(){
-  const n = previewName(), s = n.toLowerCase(), sel = [].concat(pick("evitare")||[]), out = [];
-  if(!sel.length) return `<div class="cap">Esempio</div><small>Scegli cosa evitare: qui vedi se «${esc(n)}» passerebbe il filtro.</small>`;
-  if(sel.includes("startup")) out.push([/(ify|ly|hub|smart|ai$|pro$)/.test(s), "Parole da startup"]);
-  if(sel.includes("generiche")) out.push([/(magazzin|stock|warehouse|ware)/.test(s), "Parole del settore"]);
-  if(sel.includes("lettere")) out.push([/[kjwxy]/.test(s), "Lettere K, J, W, X, Y"]);
-  if(sel.includes("doppi")) out.push([null, "Doppi sensi: si controllano a mano, non da qui"]);
-  return `<div class="cap">Filtro su «${esc(n)}» · ${sampleTag()}</div>${out.map(([bad,l])=>bad===null?`<div class="flag"><span>·</span><span>${l}</span></div>`:
-    `<div class="flag ${bad?"warn":"ok"}"><span>${bad?"✗":"✓"}</span><span>${l}: ${bad?"scartato":"passa"}</span></div>`).join("")}`;
-}
-function exKiln(){
-  const k = pick("kiln");
-  if(k==="si") return `<div class="cap">Forma come Kiln</div><div class="topbar" style="color:var(--phone-fg)"><b>Kiln</b><span>1 sillaba, parola vera</span></div>
-    <small>La rosa del secondo giro avrà soprattutto parole vere e brevi, con un'immagine concreta.</small>`;
-  if(k==="stile") return `<div class="cap">Kiln resta per il logo</div><small>Il nome segue le risposte qui sopra. Nel ticket del brand kit si guarda Kiln come esempio di stile.</small>`;
-  if(k==="nessuno") return `<div class="cap">Nessun riferimento</div><small>Né il nome né il logo partono da Kiln.</small>`;
-  return `<div class="cap">Cos'è Kiln</div><div class="topbar" style="color:var(--phone-fg)"><b>Kiln</b><span>torrefazione di caffè</span></div>
-    <small>«Kiln» vuol dire «fornace» in inglese: una parola, una sillaba, un'immagine concreta. Gli altri esempi della skill sono quasi tutti parole composte, come Tallybook o Relaydesk.</small>`;
-}
+const col = i => COLORS[i%COLORS.length];
 
 function render(){
-  const box = document.getElementById("questions");
-  box.innerHTML = Q.map((q,i)=>{
-    const type = q.multi ? "checkbox" : "radio";
-    const opts = q.o.map(o=>`<label class="opt"><input type="${type}" name="${q.id}" value="${o.id}" ${has(q.id,o.id)?"checked":""}>
-      <span><b>${esc(o.l)}</b>${o.rec?'<span class="rec">Consigliata</span>':""}<span class="d">${esc(o.d)}</span></span></label>`).join("");
-    return `<section class="q" aria-labelledby="h-${q.id}"><div class="main">
-      <span class="eyebrow">Domanda ${i+1} di ${Q.length}</span><h2 id="h-${q.id}">${esc(q.t)}</h2>
-      <p class="why">${esc(q.why)}</p><fieldset style="border:0;padding:0;margin:0"><legend class="notelabel" style="margin-bottom:8px">${q.multi?"Puoi sceglierne più di una":"Scegline una"}</legend><div class="opts">${opts}</div></fieldset>
-      <label class="notelabel" for="n-${q.id}">Note (facoltative)</label><textarea id="n-${q.id}" data-note="${q.id}">${esc(S.note[q.id]||"")}</textarea>
-    </div><div class="ex" id="ex-${q.id}" aria-live="polite">${q.ex()}</div></section>`;
-  }).join("");
+  document.getElementById("cards").innerHTML = N.map((x,i)=>{
+    const v = S.v[x.n]||"", recl = V.find(a=>a[0]===x.rec)[1];
+    return `<article class="card v-${v}" id="c-${i}" aria-labelledby="t-${i}">
+      <div class="nm"><div class="ico" style="background:${col(i)}" aria-hidden="true">${esc(x.n[0])}</div><b id="t-${i}">${esc(x.n)}</b></div>
+      <div class="topbar" style="color:var(--phone-fg)" aria-hidden="true"><b>${esc(x.n)}</b><span>Ricevimento · DDT 418</span></div>
+      <dl><dt>Da dove</dt><dd>${esc(x.da)}</dd><dt>Si legge</dt><dd>${esc(x.leggi)}</dd><dt>Attenzione</dt><dd>${esc(x.att)}</dd>
+        <dt>Lettere</dt><dd>${[...x.n].length}</dd></dl>
+      <div class="recline">Il mio consiglio: <span class="rec">${recl}</span></div>
+      <fieldset style="border:0;padding:0;margin:0"><legend class="notelabel" style="margin-bottom:6px">Il tuo giudizio su ${esc(x.n)}</legend>
+      <div class="verdict">${V.map(([k,l])=>`<label><input type="radio" name="v-${i}" value="${k}" data-name="${esc(x.n)}" ${v===k?"checked":""}>${l}</label>`).join("")}</div></fieldset>
+      <label class="notelabel" for="n-${i}">Nota (facoltativa)</label><textarea id="n-${i}" data-note="${esc(x.n)}" style="min-height:40px">${esc(S.note[x.n]||"")}</textarea>
+    </article>`;}).join("");
+  document.getElementById("altri-opts").innerHTML = ALTRI.map(o=>`<label class="opt"><input type="radio" name="altri" value="${o.id}" ${S.altri===o.id?"checked":""}>
+    <span><b>${esc(o.l)}</b>${o.rec?'<span class="rec">Consigliata</span>':""}<span class="d">${esc(o.d)}</span></span></label>`).join("");
+  document.getElementById("n-altri").value = S.note.altri||"";
   refresh();
 }
-function refreshExamples(){ Q.forEach(q=>{ const el=document.getElementById("ex-"+q.id); if(el) el.innerHTML=q.ex(); }); }
-function label(q,v){ const o=q.o.find(o=>o.id===v); return o?o.l+(o.rec?" (consigliata)":""):v; }
-function asText(){
-  const lines = ["Giro 1 – criteri del nome"];
-  Q.forEach((q,i)=>{ const v=[].concat(S.ans[q.id]||[]); lines.push(`${i+1}. ${q.t} → ${v.length?v.map(x=>label(q,x)).join("; "):"(senza risposta)"}${S.note[q.id]?" — nota: "+S.note[q.id]:""}`); });
-  if(S.mynames) lines.push("Nomi già in mente: "+S.mynames);
-  if(S.tryname) lines.push("Nome di prova: "+S.tryname);
-  return lines.join("\n");
-}
+function kept(k){ return N.filter(x=>S.v[x.n]===k).map(x=>x.n); }
 function refresh(){
-  refreshExamples();
-  document.getElementById("sumlist").innerHTML = Q.map(q=>{ const v=[].concat(S.ans[q.id]||[]);
-    return `<li><b>${esc(q.t)}</b> ${v.length?esc(v.map(x=>label(q,x)).join("; ")):'<span class="status warn">senza risposta</span>'}${S.note[q.id]?`<br><span class="why">Nota: ${esc(S.note[q.id])}</span>`:""}</li>`;}).join("")
-    + (S.mynames?`<li><b>Nomi già in mente:</b> ${esc(S.mynames)}</li>`:"");
+  N.forEach((x,i)=>{ const c=document.getElementById("c-"+i); if(c) c.className="card v-"+(S.v[x.n]||""); });
+  const t = kept("tengo");
+  document.getElementById("shelf").innerHTML = t.length ? t.map(n=>{const i=N.findIndex(x=>x.n===n); return `<div class="app"><div class="ico" style="background:${col(i)}">${esc(n[0])}</div><div class="lbl">${esc(n)}</div></div>`;}).join("")
+    : `<div class="lbl" style="grid-column:1/-1;max-width:none;white-space:normal;text-align:left">Ancora nessuno: segna «Tengo» su un nome.</div>`;
+  document.getElementById("shelf-cap").textContent = t.length ? `Tieni ${t.length} ${t.length===1?"nome":"nomi"} · forse ${kept("forse").length} · scartati ${kept("scarto").length} · senza giudizio ${N.length-t.length-kept("forse").length-kept("scarto").length}` : "I nomi che tieni compaiono qui, come icone sul telefono";
+  const a = S.altri;
+  document.getElementById("ex-altri").innerHTML = `<div class="cap">Cosa succede nel terzo giro</div><small>${
+    !a ? "Scegli un'opzione." : a==="no" ? `Metti in ordine ${t.length?("i "+t.length+" nomi che tieni"):"i nomi che tieni"} e scegli da tre a cinque preferiti da verificare.`
+    : a==="vicini" ? `Aggiungo 6–10 nomi vicini a ${t.length?esc(t.join(", ")):"quelli che tieni"}; poi scegli e metti in ordine da tre a cinque preferiti.`
+    : "Preparo una piccola rosa nella direzione che scrivi nelle note; poi scegli e metti in ordine i preferiti."}</small>`;
+  document.getElementById("sumlist").innerHTML =
+    `<li><b>Tengo:</b> ${esc(t.join(", ")||"nessuno")}</li><li><b>Forse:</b> ${esc(kept("forse").join(", ")||"nessuno")}</li><li><b>Scarto:</b> ${esc(kept("scarto").join(", ")||"nessuno")}</li>`
+    + `<li><b>Altri nomi:</b> ${esc((ALTRI.find(o=>o.id===a)||{l:"senza risposta"}).l)}${S.note.altri?" — nota: "+esc(S.note.altri):""}</li>`
+    + N.filter(x=>S.note[x.n]).map(x=>`<li><b>Nota su ${esc(x.n)}:</b> ${esc(S.note[x.n])}</li>`).join("");
   document.getElementById("copybox").textContent = asText();
 }
+function asText(){
+  const L=["Giro 2 – rosa dei nomi","Tengo: "+(kept("tengo").join(", ")||"nessuno"),"Forse: "+(kept("forse").join(", ")||"nessuno"),"Scarto: "+(kept("scarto").join(", ")||"nessuno"),
+    "Altri nomi: "+((ALTRI.find(o=>o.id===S.altri)||{l:"senza risposta"}).l)+(S.note.altri?" — nota: "+S.note.altri:"")];
+  N.forEach(x=>{ if(S.note[x.n]) L.push("Nota su "+x.n+": "+S.note[x.n]); });
+  return L.join("\n");
+}
 
-/* salvataggio */
-let db = null, timer = null, saving = false, pending = false;
+let db=null,timer=null,saving=false,pending=false;
 function setStatus(t,cls){ ["status","status2"].forEach(id=>{const el=document.getElementById(id); el.textContent=t; el.className="status "+(cls||"");}); }
 function local(){ try{ localStorage.setItem("nome-"+GIRO, JSON.stringify(S)); }catch(e){} }
 function changed(){ local(); refresh(); clearTimeout(timer); timer=setTimeout(save,900); setStatus(db?"Modifiche da salvare…":"Salvate solo su questo dispositivo", db?"":"warn"); }
@@ -343,51 +243,33 @@ async function save(){
   if(!db){ setStatus("Salvataggio non disponibile qui: usa «Copia le risposte» e incollale in chat","warn"); document.getElementById("fallback").hidden=false; document.getElementById("copybox").hidden=false; return; }
   if(saving){ pending=true; return; }
   saving=true;
-  try{ await db.doc("giri/"+GIRO).set({ans:S.ans, note:S.note, tryname:S.tryname, mynames:S.mynames, testo:asText(), aggiornato:new Date().toISOString()});
+  try{ await db.doc("giri/"+GIRO).set({v:S.v, note:S.note, altri:S.altri, testo:asText(), aggiornato:new Date().toISOString()});
     setStatus("Salvate alle "+new Date().toLocaleTimeString("it-IT",{hour:"2-digit",minute:"2-digit"}),"ok");
   }catch(e){ setStatus("Non salvate ("+(e&&e.code||"errore")+"). Riprova con «Salva adesso» o copia le risposte.","warn"); document.getElementById("copybox").hidden=false; }
   saving=false; if(pending){ pending=false; save(); }
 }
-
 document.addEventListener("change", e=>{
-  const t=e.target; if(!t.name) return; const q=Q.find(q=>q.id===t.name); if(!q) return;
-  if(q.multi){ let v=[].concat(S.ans[q.id]||[]); if(t.checked){ v.push(t.value); if(v.length>q.multi){ const drop=v.shift(); const el=document.querySelector(`input[name="${q.id}"][value="${drop}"]`); if(el) el.checked=false; } } else v=v.filter(x=>x!==t.value); S.ans[q.id]=v; }
-  else S.ans[q.id]=t.value;
-  changed();
-});
-document.addEventListener("input", e=>{
   const t=e.target;
-  if(t.dataset && t.dataset.note){ S.note[t.dataset.note]=t.value; changed(); }
-  else if(t.id==="tryname"){ S.tryname=t.value; changed(); }
-  else if(t.id==="mynames"){ S.mynames=t.value; changed(); }
+  if(t.dataset && t.dataset.name){ S.v[t.dataset.name]=t.value; changed(); }
+  else if(t.name==="altri"){ S.altri=t.value; changed(); }
 });
-document.getElementById("accept-all").addEventListener("click",()=>{
-  Q.forEach(q=>{ const r=q.o.filter(o=>o.rec).map(o=>o.id); S.ans[q.id]= q.multi ? r : r[0]; });
-  render(); changed();
-});
+document.addEventListener("input", e=>{ const t=e.target; if(t.dataset && t.dataset.note){ S.note[t.dataset.note]=t.value; changed(); } });
+document.getElementById("accept-all").addEventListener("click",()=>{ N.forEach(x=>S.v[x.n]=x.rec); S.altri="vicini"; render(); changed(); });
 document.getElementById("save").addEventListener("click", save);
 document.getElementById("copy").addEventListener("click", async()=>{
   const box=document.getElementById("copybox"); box.hidden=false;
   try{ await navigator.clipboard.writeText(asText()); setStatus("Testo copiato","ok"); }
   catch(e){ const r=document.createRange(); r.selectNodeContents(box); const s=getSelection(); s.removeAllRanges(); s.addRange(r); setStatus("Testo selezionato: copialo con Copia","warn"); }
 });
-
-document.getElementById("tryname").value = S.tryname||"";
-document.getElementById("mynames").value = S.mynames||"";
 render();
-
 (async()=>{
-  const use = window.claude && window.claude.use;
-  let got = null;
-  try{ got = use ? await window.claude.use("db") : null; }catch(e){ got=null; }
-  db = got;
+  let got=null;
+  try{ got = (window.claude && window.claude.use) ? await window.claude.use("db") : null; }catch(e){ got=null; }
+  db=got;
   if(!db){ setStatus("Salvataggio non disponibile qui: le risposte restano su questo dispositivo. Usa «Copia le risposte».","warn"); return; }
-  const to = setTimeout(()=>setStatus("Le risposte salvate non arrivano: puoi continuare, si salvano alla prossima modifica.","warn"),10000);
-  try{
-    const snap = await db.doc("giri/"+GIRO).get(); clearTimeout(to);
-    if(snap.exists){ const d=snap.data(); S.ans=d.ans||{}; S.note=d.note||{}; S.tryname=d.tryname||""; S.mynames=d.mynames||"";
-      document.getElementById("tryname").value=S.tryname; document.getElementById("mynames").value=S.mynames; render();
-      setStatus("Risposte salvate caricate","ok"); }
+  const to=setTimeout(()=>setStatus("Le risposte salvate non arrivano: puoi continuare, si salvano alla prossima modifica.","warn"),10000);
+  try{ const snap=await db.doc("giri/"+GIRO).get(); clearTimeout(to);
+    if(snap.exists){ const d=snap.data(); S.v=d.v||{}; S.note=d.note||{}; S.altri=d.altri||""; render(); setStatus("Risposte salvate caricate","ok"); }
     else setStatus("Nessuna risposta salvata finora: le tue si salvano da sole","");
   }catch(e){ clearTimeout(to); setStatus("Non riesco a leggere le risposte salvate: le tue si salvano comunque alla prossima modifica.","warn"); }
 })();

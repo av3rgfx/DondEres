@@ -1789,3 +1789,21 @@ di posta collegato restano «Copia testo» e «Scarica PDF» (215). La mail rest
   26, 27 e 28.
 - Etichette e distinta del corriere: nebbia della mappa; se serviranno, diventano un collegamento in più.
 - Come si scrivono i moduli (linguaggio, forma delle regole dei punti d'aggancio): ticket «Stack».
+
+## Nome del prodotto
+
+Ticket «Nome del prodotto» (decisione 20). Il prodotto non si chiamerà DondEres. Qui stanno i criteri e la rosa; la
+verifica di marchi e domini è nel ticket «Unicità dei nomi scelti», il logo nel ticket del brand kit.
+
+### Criteri (decisioni 344–351)
+
+- Marchio vero, offerto anche ad altri magazzini: unico e registrabile (344).
+- Si legge allo stesso modo in italiano e in inglese (345). Si evitano quindi le lettere che le due lingue leggono in
+  modo diverso: «ce/ci», «ge/gi», «gn», «gli», «sc», «ch», «z», «h» iniziale, la «e» finale muta dell'inglese, gli
+  accenti (deduzione).
+- Fa venire in mente velocità e ordine (346).
+- Parola vera modificata o composta (347), corta: una o due sillabe, fino a 5 lettere (348).
+- Il dominio non decide il nome; nella verifica si controlla comunque che non sia già preso (349).
+- Niente parole da startup né doppi sensi in italiano o nei dialetti; K, J, W, X, Y ammesse (350).
+- «Kiln» resta un riferimento di stile per il brand kit, non per il nome (351).
+
