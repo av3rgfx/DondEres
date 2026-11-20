@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 439 256" width="439" height="256" role="img" aria-labelledby="t">
+  <title id="t">Ripo, nome, concetto lungo</title>
+  <path fill="#111111" fill-rule="evenodd" d="M20 56 L46 56 L46 200 L20 200 Z"/>
+  <path fill="#111111" fill-rule="evenodd" d="M20 56 L57.16 56 A44.64 44.64 0 0 1 57.16 145.28 L20 145.28 Z M46 82 L57.16 82 A18.64 18.64 0 0 1 57.16 119.28 L46 119.28 Z"/>
+  <path fill="#111111" fill-rule="evenodd" d="M35.6 132.28 A132.48 67.72 0 0 1 168.08 200 L139.48 200 A103.88 41.72 0 0 0 35.6 158.28 Z"/>
+  <path fill="#111111" fill-rule="evenodd" d="M174.08 104 L196.08 104 L196.08 200 L174.08 200 Z"/>
+  <path fill="#111111" fill-rule="evenodd" d="M171.33 76.25 A13.75 13.75 0 1 1 198.83 76.25 A13.75 13.75 0 1 1 171.33 76.25 Z"/>
+  <path fill="#111111" fill-rule="evenodd" d="M210.08 104 L232.08 104 L232.08 244 L210.08 244 Z"/>
+  <path fill="#111111" fill-rule="evenodd" d="M210.08 152 A49 49 0 1 1 308.08 152 A49 49 0 1 1 210.08 152 Z M232.08 152 A27 27 0 1 0 286.08 152 A27 27 0 1 0 232.08 152 Z"/>
+  <path fill="#111111" fill-rule="evenodd" d="M320.08 152 A49 49 0 1 1 418.08 152 A49 49 0 1 1 320.08 152 Z M342.08 152 A27 27 0 1 0 396.08 152 A27 27 0 1 0 342.08 152 Z"/>
+</svg>

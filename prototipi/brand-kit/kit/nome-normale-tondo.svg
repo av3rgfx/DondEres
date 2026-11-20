@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 426 256" width="426" height="256" role="img" aria-labelledby="t">
+  <title id="t">Ripo, R normale, puntino tondo</title>
+  <path fill="#111111" fill-rule="evenodd" d="M20 56 L45.96 56 L45.96 200 L20 200 Z"/>
+  <path fill="#111111" fill-rule="evenodd" d="M20 56 L83.2 56 A47.52 47.52 0 0 1 83.2 151.04 L20 151.04 Z M45.96 81.96 L83.2 81.96 A21.56 21.56 0 0 1 83.2 125.08 L45.96 125.08 Z"/>
+  <path fill="#111111" fill-rule="evenodd" d="M58.37 143.91 L95.08 143.91 L151.17 200 L114.46 200 Z"/>
+  <path fill="#111111" fill-rule="evenodd" d="M161.17 104 L183.17 104 L183.17 200 L161.17 200 Z"/>
+  <path fill="#111111" fill-rule="evenodd" d="M158.42 76.25 A13.75 13.75 0 1 1 185.92 76.25 A13.75 13.75 0 1 1 158.42 76.25 Z"/>
+  <path fill="#111111" fill-rule="evenodd" d="M197.17 104 L219.17 104 L219.17 244 L197.17 244 Z"/>
+  <path fill="#111111" fill-rule="evenodd" d="M197.17 152 A49 49 0 1 1 295.17 152 A49 49 0 1 1 197.17 152 Z M219.17 152 A27 27 0 1 0 273.17 152 A27 27 0 1 0 219.17 152 Z"/>
+  <path fill="#111111" fill-rule="evenodd" d="M307.17 152 A49 49 0 1 1 405.17 152 A49 49 0 1 1 307.17 152 Z M329.17 152 A27 27 0 1 0 383.17 152 A27 27 0 1 0 329.17 152 Z"/>
+</svg>

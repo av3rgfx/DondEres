@@ -1,0 +1,262 @@
+<title>Brand kit Varko</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@112,600;112,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: i tre concetti affiancati (punto di controllo), poi due domande con l'esempio che cambia.
+   Tono: segnaletica di magazzino, come le altre pagine dei ticket. Il blu elettrico (388) sta solo su icona e testata. */
+:root{
+  --bg:#f3f5f7; --surface:#ffffff; --fg:#17202b; --muted:#5a6675; --line:#d5dbe2;
+  --accent:#1f4e8c; --accent-soft:#e3ebf6; --tag:#f2b705; --tag-fg:#2a2100;
+  --ok:#1d7a46; --warn:#9a5200; --warn-soft:#fbeedd;
+  --ink:#141414; --paper:#ffffff; --brand:#1F5BFF; --phone:#0f1720;
+  --f-display:"Archivo","Arial Narrow",system-ui,sans-serif;
+  --f-body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f141a; --surface:#18202a; --fg:#e6ebf1; --muted:#9aa7b6; --line:#2c3846;
+  --accent:#7fb0ef; --accent-soft:#1d2d42; --tag:#f2b705; --tag-fg:#2a2100;
+  --ok:#5fcf8e; --warn:#f0a447; --warn-soft:#3a2a14;
+  --ink:#141414; --paper:#f4f4f2; --phone:#05080c; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f141a; --surface:#18202a; --fg:#e6ebf1; --muted:#9aa7b6; --line:#2c3846;
+  --accent:#7fb0ef; --accent-soft:#1d2d42; --tag:#f2b705; --tag-fg:#2a2100;
+  --ok:#5fcf8e; --warn:#f0a447; --warn-soft:#3a2a14;
+  --ink:#141414; --paper:#f4f4f2; --phone:#05080c; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:15px/1.55 var(--f-body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 96px}
+.wrap{max-width:1100px;margin:0 auto;display:grid;gap:28px}
+h1,h3{font-family:var(--f-display);font-stretch:112%;text-wrap:balance;margin:0;line-height:1.15}
+h1{font-size:clamp(28px,5vw,40px);font-weight:800}
+h3{font-size:18px;font-weight:600}
+p{margin:0;max-width:68ch}
+.eyebrow{font:600 12px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.intro{display:grid;gap:12px}
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+button{font:600 14px/1 var(--f-body);border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--fg);padding:11px 14px;cursor:pointer}
+button.primary{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+button:focus-visible,input:focus-visible,textarea:focus-visible,label.opt:focus-within{outline:3px solid var(--tag);outline-offset:2px}
+.status{font-size:13px;color:var(--muted)}
+.status.ok{color:var(--ok)} .status.warn{color:var(--warn)}
+.rec{display:inline-block;margin-left:8px;font:600 11px/1 var(--f-mono);letter-spacing:.05em;text-transform:uppercase;background:var(--tag);color:var(--tag-fg);padding:4px 6px;border-radius:4px;vertical-align:2px}
+.ref{display:flex;gap:16px;align-items:center;flex-wrap:wrap;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px}
+.ref img{width:120px;height:auto;border-radius:8px}
+.ref p{font-size:14px}
+
+.concepts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:1000px){.concepts{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.concepts{grid-template-columns:minmax(0,1fr)}}
+.cc{background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:12px;display:grid;gap:10px;align-content:start;min-width:0}
+.cc.sel{border-color:var(--accent)}
+.cc .art{background:var(--paper);color:var(--ink);border-radius:10px;padding:14px;display:grid;gap:12px;justify-items:center}
+.cc .art .big{width:70%;max-width:150px;height:auto}
+.cc .art .wm{width:92%;height:auto}
+.mini{display:flex;align-items:flex-end;gap:10px}
+.mini span{display:grid;justify-items:center;gap:2px;font:10px var(--f-mono);color:#6b7280}
+.mini svg{color:var(--ink)}
+.tile{width:40px;height:40px;border-radius:10px;background:var(--brand);color:#fff;display:grid;place-items:center}
+.tile svg{width:66%;height:66%;color:#fff}
+.cc .hd b{font:800 18px/1.15 var(--f-display);font-stretch:112%}
+.cc p{font-size:13.5px}
+.cc .risk{font-size:12.5px;color:var(--warn);background:var(--warn-soft);border-radius:8px;padding:7px 9px}
+
+.q{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:18px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px}
+@media (max-width:760px){.q{grid-template-columns:minmax(0,1fr)}}
+.q .ask{display:grid;gap:10px;align-content:start;min-width:0}
+.q .num{font:600 12px/1 var(--f-mono);letter-spacing:.08em;color:var(--muted)}
+.q .why{color:var(--muted);font-size:14px}
+.opts{display:grid;gap:8px}
+label.opt{display:grid;grid-template-columns:22px minmax(0,1fr);gap:8px;align-items:start;border:1px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer;background:var(--bg)}
+label.opt:has(input:checked){border-color:var(--accent);background:var(--accent-soft)}
+label.opt input{margin:3px 0 0;accent-color:var(--accent);width:16px;height:16px}
+label.opt b{font-weight:600}
+label.opt .d{display:block;color:var(--muted);font-size:13.5px;margin-top:2px}
+textarea{width:100%;min-height:56px;font:14px/1.4 var(--f-body);border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:var(--bg);color:var(--fg);resize:vertical}
+.notelbl{font-size:13px;color:var(--muted)}
+.ex{background:var(--bg);border:1px dashed var(--line);border-radius:12px;padding:14px;display:grid;gap:12px;align-content:start;min-width:0}
+.ex .cap{font:600 11px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.ex small{color:var(--muted);font-size:13px;display:block}
+.ctx{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.c{background:var(--paper);color:var(--ink);border-radius:10px;padding:10px;display:grid;gap:8px;align-content:space-between;min-height:96px;min-width:0}
+.c .lbl{color:#4b5563;font:600 10.5px/1.2 var(--f-mono);letter-spacing:.04em;text-transform:uppercase}
+.home{display:flex;gap:8px;background:var(--phone);border-radius:10px;padding:8px}
+.app{width:38px;height:38px;border-radius:9px;display:grid;place-items:center;background:#334155;color:#fff}
+.app.me{background:var(--brand)}
+.app svg{width:64%;height:64%}
+.tab{display:flex;align-items:center;gap:6px;background:#e5e7eb;border-radius:6px 6px 0 0;padding:5px 8px;font-size:11px;color:#111}
+.tab svg{width:16px;height:16px;flex:none}
+.hdr{display:flex;align-items:center;gap:10px;background:var(--brand);color:#fff;border-radius:8px;padding:8px 10px;font-size:11.5px;min-width:0}
+.hdr svg{height:24px;width:auto;flex:none}
+.hdr .sp{margin-left:auto;opacity:.85;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.label{border:1px dashed #9ca3af;padding:6px 8px;font:10px/1.4 var(--f-mono);display:grid;gap:4px}
+.label svg{height:20px;width:auto}
+ol.steps{margin:0;padding-left:22px;display:grid;gap:6px;font-size:14px}
+ol.steps li.hl{font-weight:600}
+
+.save{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--line);padding-block:12px calc(12px + env(safe-area-inset-bottom,0px));display:grid;gap:8px}
+#copybox{font:12.5px/1.5 var(--f-mono);white-space:pre-wrap;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px}
+</style>
+
+<div class="wrap">
+  <header class="intro">
+    <div class="eyebrow">Ticket «Brand kit con la skill logo-design» · giro 12 · 20/11/2026</div>
+    <h1>La R costruita</h1>
+    <p>Prima di questo giro ho fatto le due ricerche che hai chiesto (395): un'analisi dei 261 loghi a lettera singola
+      della raccolta della skill e una ricerca sulle fonti dei progettisti. Ecco cosa ne ho tratto, senza abbellimenti.</p>
+    <div class="ref" id="ricerca" style="display:grid;gap:6px;align-items:start">
+      <b>Cosa dicono le ricerche</b>
+      <ul style="margin:0;padding-left:20px;display:grid;gap:4px;font-size:14px">
+        <li><b>Un dettaglio solo, e deve nascere dalla lettera.</b> Nei casi documentati (la H di Clinton, la P di
+          Pinterest, il taglio della T di MIT Technology Review) la lettera è neutra e un elemento fa tutto. Per noi: la
+          gamba, con lo stesso spessore dell'asta.</li>
+        <li><b>Spessore uniforme e fine netta.</b> Una gamba che si assottiglia sembra uno svolazzo: spiega perché la
+          B · Affusolato non funzionava.</li>
+        <li><b>I loghi migliori sono due o tre forme elementari</b> e riempiono il quadrato; le nostre R sembravano lettere
+          di un carattere tipografico.</li>
+        <li><b>Il riquadro non distingue.</b> «Lettera dentro una forma» è la tecnica più comune (108 su 261) e il blu il
+          colore più comune. Le R vanno provate senza fondo.</li>
+        <li><b>R e blu è un territorio già occupato:</b> Revolut usa una R geometrica blu (#1326FD) come icona e nel nome.
+          La nostra gamba deve separarci nettamente.</li>
+        <li><b>Serve una versione per i 16 punti</b>, con vuoti più larghi, e una misura minima di stampa da provare su una
+          termica vera.</li>
+      </ul>
+      <small class="status">File: <code>docs/research/2026-11-20-analisi-libreria-lettera-r.md</code> e
+        <code>docs/research/2026-11-20-loghi-lettera-singola-fonti.md</code>.</small>
+    </div>
+    <div class="bar"><button class="primary" id="accept-all" type="button">Accetta tutte le consigliate</button>
+      <span class="status" id="status">Caricamento delle risposte salvate…</span></div>
+  </header>
+
+  <section aria-label="I tre concetti" class="concepts" id="concepts"></section>
+
+  <section class="q" aria-labelledby="h-q1">
+    <div class="ask">
+      <div class="num">DOMANDA 1 · LA R</div>
+      <h3 id="h-q1">Quale R diventa il logo di Ripo?</h3>
+      <p class="why">È la scelta che chiude il disegno: dopo si rifinisce solo quella e si preparano i file del kit.</p>
+      <div class="opts" id="q1-opts"></div>
+      <label class="notelbl" for="n-q1">Nota facoltativa (anche «la A, ma con…»)</label>
+      <textarea id="n-q1" data-note="q1"></textarea>
+    </div>
+    <div class="ex" id="ex-q1" aria-live="polite"></div>
+  </section>
+
+  <section class="q" aria-labelledby="h-q2">
+    <div class="ask">
+      <div class="num">DOMANDA 2 · IL KIT</div>
+      <h3 id="h-q2">Preparo i file finali sulla R scelta?</h3>
+      <p class="why">Il kit è la parte lunga: versioni, icone, tavola d'uso, guida, più il confronto con Revolut e la R per i 16 punti. Le scelte già fatte valgono: blu
+        elettrico (388), puntino tondo (390), simbolo e nome separati (391).</p>
+      <div class="opts" id="q2-opts"></div>
+      <label class="notelbl" for="n-q2">Nota facoltativa (cosa cambiare, se scegli di rivedere)</label>
+      <textarea id="n-q2" data-note="q2"></textarea>
+    </div>
+    <div class="ex" id="ex-q2" aria-live="polite"></div>
+  </section>
+
+  <div class="save">
+    <div class="bar"><button class="primary" id="save" type="button">Salva adesso</button>
+      <button id="copy" type="button">Copia le risposte</button>
+      <span class="status" id="status2"></span></div>
+    <small class="status">Quando hai finito, scrivi «fatto» in chat: leggo le risposte salvate.</small>
+    <div id="copybox" hidden></div>
+  </div>
+</div>
+
+<script>
+const GIRO = "12";
+const D = /*DATI*/{"sym":{"pulito":{"g":"<g transform=\"translate(36 28) scale(1)\">","d":["M0 0 L40 0 L40 200 L0 200 Z","M0 0 L52.8 0 A64 64 0 0 1 52.8 128 L0 128 Z M40 40 L52.8 40 A24 24 0 0 1 52.8 88 L40 88 Z","M22 128  C26.24 128.27 39.43 128.6 47.46 129.62 C55.49 130.65 63.08 132.24 70.18 134.14 C77.28 136.04 83.93 138.43 90.06 141.03 C96.18 143.63 101.84 146.64 106.95 149.76 C112.07 152.89 116.69 156.33 120.75 159.78 C124.81 163.23 128.35 166.91 131.33 170.48 C134.31 174.05 136.73 177.75 138.63 181.21 C140.53 184.67 141.85 188.11 142.74 191.25 C143.64 194.38 143.79 198.54 144 200 L184 200 C183.55 196.77 183.01 186.94 181.31 180.64 C179.62 174.33 177.01 168.12 173.82 162.18 C170.63 156.24 166.68 150.47 162.17 145.01 C157.67 139.55 152.49 134.3 146.79 129.42 C141.08 124.53 134.76 119.9 127.94 115.71 C121.11 111.52 113.71 107.63 105.83 104.27 C97.95 100.91 89.53 97.92 80.67 95.54 C71.81 93.15 62.43 91.22 52.65 89.96 C42.88 88.7 27.11 88.33 22 88 Z"]},"slitta":{"g":"<g transform=\"translate(24 28) scale(1)\">","d":["M0 0 L44 0 L44 200 L0 200 Z","M0 0 L56.8 0 A64 64 0 0 1 56.8 128 L0 128 Z M44 44 L56.8 44 A20 20 0 0 1 56.8 84 L44 84 Z","M24.2 128  C25.81 128.29 30.69 128.56 33.87 129.72 C37.04 130.88 39.96 132.56 43.25 134.97 C46.54 137.38 49.99 140.59 53.59 144.18 C57.18 147.77 60.86 152.14 64.82 156.51 C68.78 160.88 72.76 165.8 77.35 170.41 C81.94 175.02 86.63 180.01 92.36 184.17 C98.09 188.33 104.43 192.73 111.7 195.37 C118.98 198.01 129.63 199.37 136 200 C142.37 200.63 145.52 199.71 149.9 199.17 C154.28 198.63 158.42 197.79 162.3 196.78 C166.18 195.76 169.81 194.46 173.16 193.09 C176.52 191.72 179.6 190.12 182.43 188.57 C185.25 187.03 187.79 185.35 190.12 183.82 C192.46 182.3 194.52 180.75 196.43 179.41 C198.33 178.07 200.01 176.81 201.57 175.75 C203.14 174.69 205.1 173.5 205.8 173.05 L183.8 134.95 C182.61 135.7 178.85 138.02 176.67 139.48 C174.5 140.93 172.58 142.38 170.74 143.68 C168.9 144.98 167.26 146.19 165.62 147.27 C163.99 148.36 162.5 149.31 160.94 150.18 C159.37 151.04 157.91 151.79 156.25 152.47 C154.59 153.15 152.95 153.75 150.98 154.26 C149.01 154.76 146.94 155.22 144.44 155.51 C141.95 155.8 138.77 156.18 136 156 C133.23 155.82 130.65 155.55 127.85 154.44 C125.06 153.33 122.35 151.73 119.23 149.33 C116.12 146.93 112.72 143.66 109.17 140.02 C105.61 136.39 101.92 131.93 97.9 127.49 C93.87 123.05 89.78 118.04 85.02 113.38 C80.26 108.72 75.3 103.68 69.33 99.53 C63.36 95.38 56.7 91.06 49.18 88.47 C41.66 85.88 28.36 84.74 24.2 84 Z"]},"collo":{"g":"<g transform=\"translate(53.52 28) scale(1)\">","d":["M28 0 L120.96 0 A28 28 0 0 1 148.96 28 L148.96 172 A28 28 0 0 1 120.96 200 L28 200 A28 28 0 0 1 0 172 L0 28 A28 28 0 0 1 28 0 Z M32 32 L76.7 32 A43.52 43.52 0 0 1 76.7 119.04 L68 119.04 A48.96 48.96 0 0 1 116.96 168 L80.96 168 A12.96 12.96 0 0 0 68 155.04 L68 168 L32 168 Z M68 68 L76.7 68 A7.52 7.52 0 0 1 76.7 83.04 L68 83.04 Z"]}},"nome":{"pulito":{"vb":"0 0 425 256","d":["M20 56 L46 56 L46 200 L20 200 Z","M20 56 L55.22 56 A46.08 46.08 0 0 1 55.22 148.16 L20 148.16 Z M46 82 L55.22 82 A20.08 20.08 0 0 1 55.22 122.16 L46 122.16 Z","M34.3 148.16  C37.5 148.35 47.42 148.59 53.47 149.32 C59.53 150.06 65.26 151.2 70.62 152.57 C75.98 153.93 81 155.65 85.64 157.52 C90.27 159.39 94.55 161.56 98.42 163.81 C102.29 166.06 105.79 168.54 108.87 171.03 C111.95 173.52 114.63 176.17 116.88 178.74 C119.14 181.32 120.98 183.98 122.42 186.47 C123.86 188.97 124.85 191.45 125.53 193.7 C126.21 195.96 126.32 198.95 126.48 200 L152.48 200 C152.15 197.75 151.75 190.88 150.51 186.48 C149.27 182.09 147.35 177.76 145.02 173.63 C142.69 169.5 139.81 165.49 136.52 161.7 C133.23 157.91 129.46 154.27 125.31 150.88 C121.15 147.49 116.55 144.28 111.57 141.38 C106.6 138.47 101.21 135.78 95.47 133.45 C89.73 131.12 83.59 129.05 77.13 127.39 C70.66 125.74 63.83 124.4 56.69 123.52 C49.55 122.65 38.03 122.39 34.3 122.16 Z","M160.48 104 L182.48 104 L182.48 200 L160.48 200 Z","M157.73 76.25 A13.75 13.75 0 1 1 185.23 76.25 A13.75 13.75 0 1 1 157.73 76.25 Z","M196.48 104 L218.48 104 L218.48 244 L196.48 244 Z","M196.48 152 A49 49 0 1 1 294.48 152 A49 49 0 1 1 196.48 152 Z M218.48 152 A27 27 0 1 0 272.48 152 A27 27 0 1 0 218.48 152 Z","M306.48 152 A49 49 0 1 1 404.48 152 A49 49 0 1 1 306.48 152 Z M328.48 152 A27 27 0 1 0 382.48 152 A27 27 0 1 0 328.48 152 Z"]},"slitta":{"vb":"0 0 442 256","d":["M20 56 L46 56 L46 200 L20 200 Z","M20 56 L55.22 56 A46.08 46.08 0 0 1 55.22 148.16 L20 148.16 Z M46 82 L55.22 82 A20.08 20.08 0 0 1 55.22 122.16 L46 122.16 Z","M34.3 148.16  C35.73 148.4 40.13 148.68 42.88 149.63 C45.63 150.58 48.11 152 50.79 153.87 C53.46 155.74 56.15 158.17 58.92 160.84 C61.7 163.5 64.48 166.68 67.44 169.84 C70.41 172.99 73.36 176.5 76.72 179.75 C80.08 183 83.51 186.48 87.58 189.34 C91.66 192.2 96.11 195.15 101.17 196.93 C106.23 198.7 113.47 199.58 117.92 200 C122.37 200.42 124.73 199.8 127.85 199.43 C130.97 199.07 133.89 198.5 136.64 197.81 C139.39 197.13 141.95 196.25 144.33 195.33 C146.71 194.4 148.9 193.32 150.93 192.26 C152.96 191.2 154.8 190.05 156.51 188.97 C158.21 187.9 159.74 186.8 161.18 185.82 C162.61 184.84 163.9 183.91 165.11 183.1 C166.32 182.29 167.9 181.33 168.46 180.98 L155.46 158.46 C154.64 158.98 152.09 160.54 150.57 161.55 C149.04 162.55 147.67 163.56 146.32 164.49 C144.97 165.41 143.72 166.29 142.45 167.1 C141.18 167.9 139.98 168.64 138.7 169.32 C137.41 170 136.16 170.61 134.75 171.16 C133.34 171.7 131.91 172.2 130.24 172.61 C128.58 173.02 126.82 173.38 124.76 173.62 C122.71 173.85 120.31 174.17 117.92 174 C115.53 173.83 112.88 173.54 110.4 172.62 C107.93 171.7 105.62 170.33 103.08 168.46 C100.54 166.6 97.92 164.13 95.18 161.44 C92.44 158.75 89.66 155.52 86.66 152.32 C83.65 149.13 80.62 145.57 77.14 142.29 C73.67 139.01 70.07 135.51 65.82 132.65 C61.56 129.8 56.88 126.89 51.63 125.15 C46.38 123.4 37.19 122.66 34.3 122.16 Z","M177.76 104 L199.76 104 L199.76 200 L177.76 200 Z","M175.01 76.25 A13.75 13.75 0 1 1 202.51 76.25 A13.75 13.75 0 1 1 175.01 76.25 Z","M213.76 104 L235.76 104 L235.76 244 L213.76 244 Z","M213.76 152 A49 49 0 1 1 311.76 152 A49 49 0 1 1 213.76 152 Z M235.76 152 A27 27 0 1 0 289.76 152 A27 27 0 1 0 235.76 152 Z","M323.76 152 A49 49 0 1 1 421.76 152 A49 49 0 1 1 323.76 152 Z M345.76 152 A27 27 0 1 0 399.76 152 A27 27 0 1 0 345.76 152 Z"]},"collo":{"vb":"0 0 397 256","d":["M40.16 56 L104.57 56 A20.16 20.16 0 0 1 124.73 76.16 L124.73 179.84 A20.16 20.16 0 0 1 104.57 200 L40.16 200 A20.16 20.16 0 0 1 20 179.84 L20 76.16 A20.16 20.16 0 0 1 40.16 56 Z M43.04 79.04 L72.71 79.04 A31.33 31.33 0 0 1 72.71 141.71 L66.44 141.71 A35.25 35.25 0 0 1 101.69 176.96 L78.29 176.96 A11.85 11.85 0 0 0 66.44 165.11 L66.44 176.96 L43.04 176.96 Z M66.44 102.44 L72.71 102.44 A7.93 7.93 0 0 1 72.71 118.31 L66.44 118.31 Z","M132.73 104 L154.73 104 L154.73 200 L132.73 200 Z","M129.98 76.25 A13.75 13.75 0 1 1 157.48 76.25 A13.75 13.75 0 1 1 129.98 76.25 Z","M168.73 104 L190.73 104 L190.73 244 L168.73 244 Z","M168.73 152 A49 49 0 1 1 266.73 152 A49 49 0 1 1 168.73 152 Z M190.73 152 A27 27 0 1 0 244.73 152 A27 27 0 1 0 190.73 152 Z","M278.73 152 A49 49 0 1 1 376.73 152 A49 49 0 1 1 278.73 152 Z M300.73 152 A27 27 0 1 0 354.73 152 A27 27 0 1 0 300.73 152 Z"]}}}/*FINE*/;
+const C = {
+ pulito:{L:"A",nome:"Pulito costruito",idea:"Asta e occhiello semplici, vuoto più grande; la gamba lunga ha lo spessore dell'asta, nasce dove l'asta finisce e si posa diritta sulla base.",
+   rischio:"Resta vicina a una R «da carattere»: la distingue solo la gamba. Da confrontare con Revolut."},
+ slitta:{L:"B",nome:"Slitta costruita",idea:"La gamba della Slitta che ti piaceva, ma con lo spessore dell'asta dall'inizio alla fine: corre bassa e la punta risale.",
+   rischio:"La punta che risale è un secondo gesto: a 16 punti va semplificata. Più lontana da Revolut."},
+ collo:{L:"C",nome:"Collo ritagliato",idea:"Strada radicale: il simbolo è un collo pieno, una scatola vista di fronte, e la R è lo spazio vuoto dentro.",
+   rischio:"È una lettera dentro una forma, la mossa più comune; la differenza è che la R è ritagliata. In piccolo il vuoto dell'occhiello si chiude."}
+};
+const ORD = ["pulito","slitta","collo"];
+const Q = {
+ q1:[{id:"pulito",l:"A · Pulito costruito",d:"Gamba lunga, piede diritto.",rec:true},
+     {id:"slitta",l:"B · Slitta costruita",d:"Gamba che corre bassa e risale."},
+     {id:"collo",l:"C · Collo ritagliato",d:"La R vuota dentro una scatola."},
+     {id:"rifare",l:"Nessuna delle tre",d:"Scrivi nella nota cosa non va: riparto da lì."}],
+ q2:[{id:"si",l:"Sì, prepara i file finali",d:"Con il confronto affiancato con Revolut e la versione per i 16 punti.",rec:true},
+     {id:"rivedi",l:"Prima rivedi ancora la R",d:"Scrivi nella nota cosa cambiare."}]
+};
+let S = {q1:"",q2:"",note:{}};
+try{ const d = JSON.parse(localStorage.getItem("brand-kit-g12")||"null"); if(d) S = Object.assign(S,d); }catch(e){}
+const esc = s => String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const sym = (k,cls,label,px) => { const o=D.sym[k]; return `<svg class="${cls||""}" viewBox="0 0 256 256"${px?` width="${px}" height="${px}"`:""} role="img" aria-label="${esc(label)}">${o.g}${o.d.map(d=>`<path fill="currentColor" fill-rule="evenodd" d="${d}"/>`).join("")}</g></svg>`; };
+const word = (k,cls,label) => { const o=D.nome[k]; return `<svg class="${cls||""}" viewBox="${o.vb}" role="img" aria-label="${esc(label||"Ripo")}">${o.d.map(d=>`<path fill="currentColor" fill-rule="evenodd" d="${d}"/>`).join("")}</svg>`; };
+const opts = (name,list,cur) => list.map(o=>`<label class="opt"><input type="radio" name="${name}" value="${o.id}" ${cur===o.id?"checked":""}>
+  <span><b>${esc(o.l)}</b>${o.rec?'<span class="rec">Consigliata</span>':""}<span class="d">${esc(o.d)}</span></span></label>`).join("");
+const lab = (list,id) => (list.find(o=>o.id===id)||{l:"da scegliere"}).l;
+
+function concepts(){
+  document.getElementById("concepts").innerHTML = ORD.map(k=>{ const c=C[k]; return `
+   <article class="cc ${S.q1===k?"sel":""}" aria-labelledby="cc-${k}">
+     <div class="art">${sym(k,"big","Simbolo "+c.L)}${word(k,"wm","Ripo, concetto "+c.L)}
+       <div class="mini"><span class="tile">${sym(k,"","Icona blu")}</span>${[32,16].map(px=>`<span>${sym(k,"",px+" punti",px)}${px}px</span>`).join("")}</div></div>
+     <div class="hd"><b id="cc-${k}">${c.L} · ${esc(c.nome)}</b>${k==="pulito"?'<span class="rec">Consigliata</span>':""}</div>
+     <p>${esc(c.idea)}</p>
+     <div class="risk"><b>Rischio:</b> ${esc(c.rischio)}</div>
+   </article>`; }).join("");
+}
+function refresh(){
+  concepts();
+  const k = ORD.includes(S.q1) ? S.q1 : null;
+  document.getElementById("ex-q1").innerHTML = !k ? `<div class="cap">Dove si vedrà</div><small>${S.q1==="rifare"?"Riparto dalla tua nota.":"Scegli una R per vederla al lavoro."}</small>`
+   : `<div class="cap">${esc(C[k].L+" · "+C[k].nome)} al lavoro</div>
+   <div class="ctx">
+     <div class="c"><div class="home"><div class="app me">${sym(k,"","Icona")}</div><div class="app"></div><div class="app"></div><div class="app"></div></div><span class="lbl">Icona sul telefono</span></div>
+     <div class="c"><div class="tab">${sym(k,"","Icona")}Ripo · Ricevimento</div><span class="lbl">Scheda del browser, 16 punti</span></div>
+     <div class="c"><div class="hdr">${word(k,"","Ripo")}<span class="sp">Prelievo · Ordine 2291</span></div><span class="lbl">Testata</span></div>
+     <div class="c"><div class="label">${word(k,"","Ripo")}<span>UBIC. A-03-2 · DDT 418</span></div><span class="lbl">Etichetta termica</span></div>
+   </div>`;
+  const st = S.q2==="rivedi" ? [["La R scelta rifatta con la tua nota",1],["Di nuovo questa pagina",0],["Poi i file del kit",0]]
+    : [["Rifinitura della R scelta: correzioni ottiche e versione per le misure piccole",S.q2==="si"?1:0],["Variante chiara del blu per il tema scuro",0],["File: nero, bianco, blu; icone del telefono e della scheda del browser",0],["Tavola d'uso e guida di una pagina",0],["Riepilogo da confermare",0]];
+  document.getElementById("ex-q2").innerHTML = `<div class="cap">I prossimi passi</div><ol class="steps">${st.map(([t,h])=>`<li class="${h?"hl":""}">${esc(t)}</li>`).join("")}</ol>`;
+  document.getElementById("copybox").textContent = asText();
+}
+function render(){ for(const k of ["q1","q2"]){ document.getElementById(k+"-opts").innerHTML = opts(k,Q[k],S[k]); document.getElementById("n-"+k).value = S.note[k]||""; } refresh(); }
+function asText(){ const n = k => S.note[k] ? " — nota: "+S.note[k] : "";
+  return ["Brand kit Ripo – giro 12","1. La R: "+lab(Q.q1,S.q1)+n("q1"),"2. Kit: "+lab(Q.q2,S.q2)+n("q2")].join("\n"); }
+
+let db=null,timer=null,saving=false,pending=false;
+function setStatus(t,cls){ ["status","status2"].forEach(id=>{const el=document.getElementById(id); el.textContent=t; el.className="status "+(cls||"");}); }
+function local(){ try{ localStorage.setItem("brand-kit-g12", JSON.stringify(S)); }catch(e){} }
+function changed(){ local(); refresh(); clearTimeout(timer); timer=setTimeout(save,900); setStatus(db?"Modifiche da salvare…":"Salvate solo su questo dispositivo", db?"":"warn"); }
+async function save(){
+  clearTimeout(timer);
+  if(!db){ setStatus("Salvataggio non disponibile qui: usa «Copia le risposte» e incollale in chat","warn"); document.getElementById("copybox").hidden=false; return; }
+  if(saving){ pending=true; return; }
+  saving=true;
+  try{ await db.doc("giri/"+GIRO).set({q1:S.q1,q2:S.q2,note:S.note,testo:asText(),aggiornato:new Date().toISOString()});
+    setStatus("Salvate alle "+new Date().toLocaleTimeString("it-IT",{hour:"2-digit",minute:"2-digit"}),"ok");
+  }catch(e){ setStatus("Non salvate ("+(e&&e.code||"errore")+"). Riprova con «Salva adesso» o copia le risposte.","warn"); document.getElementById("copybox").hidden=false; }
+  saving=false; if(pending){ pending=false; save(); }
+}
+document.addEventListener("change", e=>{ const t=e.target; if(["q1","q2"].includes(t.name)){ S[t.name]=t.value; changed(); } });
+document.addEventListener("input", e=>{ const t=e.target; if(t.dataset && t.dataset.note){ S.note[t.dataset.note]=t.value; changed(); } });
+document.getElementById("accept-all").addEventListener("click",()=>{ for(const k of ["q1","q2"]) S[k]=Q[k].find(o=>o.rec).id; render(); changed(); });
+document.getElementById("save").addEventListener("click", save);
+document.getElementById("copy").addEventListener("click", async()=>{
+  const box=document.getElementById("copybox"); box.hidden=false;
+  try{ await navigator.clipboard.writeText(asText()); setStatus("Testo copiato","ok"); }
+  catch(e){ const r=document.createRange(); r.selectNodeContents(box); const s=getSelection(); s.removeAllRanges(); s.addRange(r); setStatus("Testo selezionato: copialo","warn"); }
+});
+render();
+(async()=>{
+  let got=null;
+  try{ got = (window.claude && window.claude.use) ? await window.claude.use("db") : null; }catch(e){ got=null; }
+  db=got;
+  if(!db){ setStatus("Salvataggio non disponibile qui: le risposte restano su questo dispositivo. Usa «Copia le risposte».","warn"); return; }
+  const to=setTimeout(()=>setStatus("Le risposte salvate non arrivano: puoi continuare, si salvano alla prossima modifica.","warn"),10000);
+  try{ const snap=await db.doc("giri/"+GIRO).get(); clearTimeout(to);
+    if(snap.exists){ const d=snap.data(); S.q1=d.q1||""; S.q2=d.q2||""; S.note=d.note||{}; render(); setStatus("Risposte salvate caricate","ok"); }
+    else setStatus("Nessuna risposta salvata finora: le tue si salvano da sole","");
+  }catch(e){ clearTimeout(to); setStatus("Non riesco a leggere le risposte salvate: le tue si salvano comunque alla prossima modifica.","warn"); }
+})();
+</script>

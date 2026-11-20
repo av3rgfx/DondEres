@@ -120,12 +120,16 @@ percorso delle schermate e aspetto grafico, compresi nome e brand kit (decisioni
   verificare; se nessuno è libero si riprende dai nomi in dubbio (decisioni 344–357).
 - [Unicità dei nomi scelti](issues/13-unicita-dei-nomi.md): Kurso bloccato da un marchio tedesco per software, Velko
   vicino a Velco; nome scelto **Varko** (omofoni «Varco» da valutare); consulente in marchi prima del deposito e
-  dell'offerta ad altri; domini tutti presi, nessuna azione (decisioni 358–361).
+  dell'offerta ad altri; domini tutti presi, nessuna azione (decisioni 358–361). Varko poi accantonato e in riserva: il
+  nome nasce dalla lettera del logo (375, 376).
 
 Prese prima della mappa, nel secondo giro di domande del 15/11/2026: decisioni 15–28 in
 [`docs/decisioni.md`](../../docs/decisioni.md) (assegnazione parziale, codice stampato come tipo di articolo,
 35.000 articoli, base principale o affiancata, prelievo e spedizione, Android e iPhone, niente lavoro senza rete,
 tre livelli di conferma, quantità letta dalla scatola, ubicazioni facoltative, due ruoli, testi separati).
+
+- [Verifica dei nomi in R nei registri dei marchi](issues/29-verifica-nomi-in-r.md): risultati UIBM riportati
+  dall'utente; nome per ora **Ripo**, che può cambiare senza toccare il logo R; ricerca europea al consulente (386–387).
 
 ## Not yet specified
 
@@ -151,8 +155,8 @@ tre livelli di conferma, quantità letta dalla scatola, ubicazioni facoltative, 
   banco e ha più casi particolari da controllare.
 - **Descrizione proposta da un modello che legge immagini e scrive testo** per l'articolo nuovo: se tenerla, e quale
   modello, dipende dalla prova e dal server. Oggi la scrive l'operatore con le parole lette sull'etichetta (108).
-- **Cambio del nome provvisorio DondEres:** dove compare (repository, documenti, pagine) e quando sostituirlo con Varko
-  (358); da decidere con il brand kit o con lo stack.
+- **Cambio del nome provvisorio DondEres:** dove compare (repository, documenti, pagine) e quando sostituirlo con il
+  nome definitivo (in R, 379–383, dopo la verifica dei marchi); da decidere con il brand kit o con lo stack.
 
 ## Out of scope
 

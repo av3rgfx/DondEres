@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 429 256" width="429" height="256" role="img" aria-labelledby="t">
+  <title id="t">Ripo, nome, concetto gancio</title>
+  <path fill="#111111" fill-rule="evenodd" d="M20 56 L46 56 L46 200 L20 200 Z"/>
+  <path fill="#111111" fill-rule="evenodd" d="M20 56 L87.68 56 A47.52 47.52 0 0 1 87.68 151.04 L20 151.04 Z M46 82 L92 82 L92 125.04 L46 125.04 Z"/>
+  <path fill="#111111" fill-rule="evenodd" d="M63.2 143.84 L63.2 155.36 A44.64 44.64 0 0 0 152.48 155.36 L152.48 161.12 L126.48 161.12 L126.48 155.36 A18.64 18.64 0 0 1 89.2 155.36 L89.2 143.84 Z"/>
+  <path fill="#111111" fill-rule="evenodd" d="M164.48 104 L186.48 104 L186.48 200 L164.48 200 Z"/>
+  <path fill="#111111" fill-rule="evenodd" d="M161.73 76.25 A13.75 13.75 0 1 1 189.23 76.25 A13.75 13.75 0 1 1 161.73 76.25 Z"/>
+  <path fill="#111111" fill-rule="evenodd" d="M200.48 104 L222.48 104 L222.48 244 L200.48 244 Z"/>
+  <path fill="#111111" fill-rule="evenodd" d="M200.48 152 A49 49 0 1 1 298.48 152 A49 49 0 1 1 200.48 152 Z M222.48 152 A27 27 0 1 0 276.48 152 A27 27 0 1 0 222.48 152 Z"/>
+  <path fill="#111111" fill-rule="evenodd" d="M310.48 152 A49 49 0 1 1 408.48 152 A49 49 0 1 1 310.48 152 Z M332.48 152 A27 27 0 1 0 386.48 152 A27 27 0 1 0 332.48 152 Z"/>
+</svg>

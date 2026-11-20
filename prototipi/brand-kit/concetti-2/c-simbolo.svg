@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-labelledby="t">
+  <title id="t">Varko, concetto C: porta di carico</title>
+  <path fill="#111111" fill-rule="evenodd" d="M32 36 L224 36 L224 70 L32 70 Z"/>
+  <path fill="#111111" fill-rule="evenodd" d="M32 70 L66 70 L66 220 L32 220 Z"/>
+  <path fill="#111111" fill-rule="evenodd" d="M190 70 L224 70 L224 220 L190 220 Z"/>
+  <path fill="#111111" fill-rule="evenodd" d="M80 84 L176 84 L176 104 L80 104 Z"/>
+  <path fill="#111111" fill-rule="evenodd" d="M80 114 L176 114 L176 134 L80 134 Z"/>
+  <path fill="#111111" fill-rule="evenodd" d="M80 144 L176 144 L176 164 L80 164 Z"/>
+</svg>

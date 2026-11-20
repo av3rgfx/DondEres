@@ -1,12 +1,54 @@
 # Prompt per la prossima sessione (Wayfinder sull'architettura)
 
 Da incollare all'avvio di una nuova sessione sul ramo principale aggiornato. La mappa esiste già: si lavora un ticket
-per sessione, più le ricerche. Chiusi il 20/11/2026: «Nome del prodotto» (decisioni 344–357) e «Unicità dei nomi
-scelti» (358–361): il prodotto si chiama **Varko**. I prompt A, D ed E restano come esempi di forma. Consigliato ora:
-«Brand kit con la skill logo-design» (prompt F). Lo stack aspetta ancora la divisione tra le macchine, che aspetta la
-prova visiva; «Aspetto grafico» aspetta brand kit e stack (deve contare anche la vista da computer per responsabili e
-admin, decisione 292). Quando nei repository privati ci sono foto o bolle da aprire, sessioni a parte lavorano la prova
-visiva (prompt B) e la prova di lettura delle bolle (prompt C).
+per sessione, più le ricerche. 20/11/2026: il ticket «Brand kit con la skill logo-design» è quasi finito (decisioni
+362–397). Nome per ora **Ripo** (386), Varko in riserva (376); logo **R · Pulito costruito** (396); blu elettrico
+(388). Manca il kit finale (397): prompt H. La ricerca europea dei marchi resta al consulente (387). Lo stack aspetta
+ancora la divisione tra le macchine, che aspetta la prova visiva; «Aspetto grafico» aspetta brand kit e stack (vale
+anche la vista da computer, decisione 292). Quando nei repository privati ci sono foto o bolle da aprire, sessioni a
+parte lavorano la prova visiva (prompt B) e la prova delle bolle (prompt C). I prompt A, D, E, F e G restano come
+esempi di forma.
+
+**Prompt H: kit finale di Ripo**
+
+```text
+/wayfinder .scratch/architettura/map.md
+
+Leggi prima AGENTS.md, poi la mappa (solo map.md, non tutti i ticket). Lavora il ticket «Brand kit con la skill
+logo-design», già in corso con me: leggi i suoi commenti, le decisioni 362–397 e la sezione «Brand kit» di
+docs/architettura.md (in fondo, «Stato a fine sessione»). Usa la skill logo-design (fase 7, il kit) sulla R scelta,
+prototipi/brand-kit/concetti-7/pulito-simbolo.svg (generata da concetti-7/genera.py), con il nome «Ripo» a peso medio,
+il blu elettrico #1F5BFF e le indicazioni delle ricerche docs/research/2026-11-20-analisi-libreria-lettera-r.md e
+docs/research/2026-11-20-loghi-lettera-singola-fonti.md. Il kit: rifinitura ottica, R per i 16 punti, blu chiaro per
+il tema scuro, versioni nera, bianca e blu, icone (favicon, icone dell'app, manifest), tavola d'uso, guida di una
+pagina, confronto affiancato con Revolut e con le R della raccolta. Le scelte di gusto sono mie: mostrami il kit e
+fammelo confermare; poi chiudi il ticket e aggiorna la mappa.
+Registra ogni mia decisione in docs/decisioni.md, con data e motivo; scrivi la tua parte in docs/architettura.md.
+Parlami in italiano, con domande semplici: cosa chiedi, perché conta, cosa comporta ogni opzione.
+Per le domande usa la pagina https://claude.ai/artifact/JQ2vwNwRMfT2qi4BDWNnX5 (copia in prototipi/brand-kit/index.html),
+con esempi visivi che cambiano con la risposta, opzione consigliata, «Accetta tutte le consigliate», note facoltative
+e risposte salvate che leggi tu quando scrivo «fatto». Lavora a giri: registra le risposte di ogni giro prima del
+successivo e chiudi con un riepilogo da confermare.
+```
+
+**Prompt G: nome in R e kit (dopo la verifica nei registri)**
+
+```text
+/wayfinder .scratch/architettura/map.md
+
+Leggi prima AGENTS.md, poi la mappa (solo map.md, non tutti i ticket). Lavora il ticket «Brand kit con la skill
+logo-design», già in corso con me (leggi i suoi commenti e le decisioni 362–385, e la sezione «Brand kit» di
+docs/architettura.md). Prima chiudi il ticket «Verifica dei nomi in R nei registri dei marchi»: ti incollo i risultati
+di TMview che ho cercato a mano (o il parere del consulente); scrivili in docs/research/2026-11-20-unicita-nomi-in-r.md
+e fammi scegliere il nome. Poi prepara il kit sulla R · Rampa (prototipi/brand-kit/concetti-3/) con la skill
+logo-design: lettere del nome, colore lontano da rosso, verde e giallo (367), versioni, icone, guida.
+Registra ogni mia decisione in docs/decisioni.md, con data e motivo; scrivi la tua parte in docs/architettura.md.
+Parlami in italiano, con domande semplici: cosa chiedi, perché conta, cosa comporta ogni opzione.
+Per le domande usa la pagina https://claude.ai/artifact/JQ2vwNwRMfT2qi4BDWNnX5 (o una nuova), con esempi visivi che
+cambiano con la risposta, opzione consigliata, «Accetta tutte le consigliate», note facoltative e risposte salvate che
+leggi tu quando scrivo «fatto». Lavora a giri: registra le risposte di ogni giro prima del successivo e chiudi con un
+riepilogo da confermare.
+```
 
 **Prompt F: brand kit**
 
@@ -153,16 +195,16 @@ rivenditore. Prima, lo stesso giorno: «Elenco del prelievo e correzione della q
 
 ## Ultima sessione
 
-19/11/2026: «Punti di estensione per la specializzazione». Una base sola, adattata con «Configurazione» e moduli che
-scriviamo noi; quattro punti d'aggancio (collegamento, lettore di etichette, precedenza dell'assegnazione, partita); un
-documento che il collegamento non sa mandare va in «Da registrare nel gestionale»; l'aggiornamento non parte se un
-modulo non va. Dai punti lasciati ad Ad Hoc: la merce di una vendita assistita è prelevata alla conferma ed esce quando
-sceglie l'admin (in UFP candidato il passaggio da OP a bolla, domanda 29); ordini degli agenti con un filtro; confronto
-con la fattura facoltativo; ordini fornitore con «Invia al fornitore» e un testo di serie; ogni documento ha un solo
-autore (in UFP Ad Hoc fa bolle e fatture). «Collegamento» al posto di «connettore» (316). L'utente ha chiesto che le
-scelte che dipendono dal modo di lavorare del magazzino stiano in Configurazione (308, 310).
+20/11/2026: «Brand kit con la skill logo-design», dodici giri (decisioni 362–397), pagina privata
+https://claude.ai/artifact/JQ2vwNwRMfT2qi4BDWNnX5. Skill installata nel progetto senza la raccolta di loghi altrui
+(362). Concetti sulla V scartati (369, 374); ordine invertito, prima la lettera e poi il nome (375). Varko in riserva
+(376); nome per ora **Ripo** dopo una verifica UIBM riportata dall'utente (386, 387). Blu elettrico (388). Dopo due
+ricerche sui loghi a lettera singola, R scelta: **Pulito costruito** (396). Il kit finale è il prossimo passo (397).
 
 ## Cose dell'utente, senza sessione
+
+- Quando si parla con il consulente in marchi: ricerca europea per somiglianza su Ripo (il RIPPO di AISLUX in classe
+  35 da guardare) e sulla R come marchio figurativo (387, 359).
 
 - Scegliere a caso gli articoli della prova visiva, scattare il primo giro (10–20 articoli) e caricare gli ZIP.
 - Raccogliere il primo giro di 20 bolle per la prova di lettura, coprire i dati dei clienti e caricarle in `bolle/` nel

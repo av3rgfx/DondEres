@@ -1860,3 +1860,197 @@ Nessun `.com` è libero per nessun nome.
 
 Pagina delle domande, privata: https://claude.ai/artifact/QWapLTTybQqGXbrajL7ErH; copia nel repository in
 `prototipi/unicita-nomi/index.html`.
+
+## Brand kit
+
+Ticket «Brand kit con la skill logo-design» (decisioni 20, 351, 358, 359). Il logo si fa con la skill logo-design di
+kaankiziltug, nel suo percorso: brief, tre concetti, punto di controllo con l'utente, kit sulla strada scelta. Se il
+consulente in marchi dà parere negativo su Varko, nome e logo si rifanno (359).
+
+### Skill nel progetto (decisione 362)
+
+- In `.claude/skills/logo-design` e `.agents/skills/logo-design`, uguali; versione del 13/11/2026 (commit `e9eaddc`),
+  licenza MIT. Mai a livello globale.
+- Senza `assets/library/svg/` (1.432 loghi di altre aziende, marchi dei loro proprietari, circa 12 MB). Restano le
+  schede `catalog.json`, quindi la ricerca per categoria funziona; per vedere i loghi o fare il confronto «a scaffale»
+  si scarica la stessa versione in una cartella temporanea della sessione:
+  `git clone https://github.com/kaankiziltug/logo-design-skill` e `git checkout e9eaddc`, poi si passano i file a
+  `preview_sheet.py --refs`.
+- Gli script sono Python senza dipendenze e non usano la rete; per le immagini usano il Chromium già presente.
+
+### Brief (decisioni 363–368)
+
+| Voce | Scelta |
+|---|---|
+| Nome | **Varko**, iniziale maiuscola (365); il «varco» da cui passa la merce (358) |
+| Carattere | veloce e ordinato (346), solido e preciso (363) |
+| Lettere | geometriche e piene, come Kiln: cerchi e rette, una lettera con un dettaglio proprio (364) |
+| Concetti | tre, di tre tipi: lettera V, nome scritto, simbolo con il nome (366) |
+| Colore | bianco e nero fino al kit; poi lontano da rosso, verde e giallo, che nel programma dicono errore, fatto e attenzione (367) |
+| Deve reggere | icona sul telefono e sui palmari, scheda del browser a 16 punti, testata delle schermate su telefono e computer, stampe in bianco e nero anche termiche (368) |
+| Chi decide | l'utente |
+
+Ricerca sulla categoria (deduzione, dalla raccolta della skill e dal settore): nei programmi di logistica e magazzino
+ricorrono cubi e scatole in prospettiva, frecce, camion, codici a barre, spunte e i colori blu e arancione; si
+evitano. La raccolta della skill non ha una categoria «logistica»: le più vicine sono commercio e trasporti.
+
+### Concetti del giro 2
+
+File in `prototipi/brand-kit/concetti/`: SVG fatti solo di forme piene (niente testo vivo), generati da `genera.py`
+(lettere costruite a mano: linea di base 200, altezza della x 96, maiuscola 144, asta 30 su un'altezza di 256);
+`concetti.png` è il foglio del punto di controllo. Tutti e sei i file passano `svg_audit.py` senza avvisi (100/100,
+punteggio della skill); provati con `preview_sheet.py` a 16–256 punti, a un colore, in negativo, sfocati, specchiati e
+accanto a Tidal, Vue, Dropbox, Kotlin e Vercel.
+
+| | Concetto | Idea | Rischio visto nelle prove |
+|---|---|---|---|
+| A | Varco (consigliato) | la V non si chiude: in fondo resta il varco; la stessa V apre il nome | a 16 punti il varco sparisce; il vuoto può sembrare una Y |
+| B | Mirino | il nome scritto, con la o fatta a mirino della telecamera | la o da sola sembra un salvagente, una croce o un bersaglio |
+| C | Colli | due colli lasciano un varco largo un collo, il terzo ci passa sotto: insieme fanno la V | in grande sembra una faccina; struttura vicina a Tidal |
+
+Pagina delle domande, privata: https://claude.ai/artifact/JQ2vwNwRMfT2qi4BDWNnX5; copia in
+`prototipi/brand-kit/index.html` (mostra l'ultimo giro). Il primo giro è nella cronologia del repository.
+
+### Esito del giro 2 (decisioni 369 e 370)
+
+Nessuno dei tre concetti va al kit: si rivedono (369), motivo non indicato. Nel nome la «o» resta tonda (370). Prima di
+disegnare tre concetti nuovi si chiede all'utente cosa non andava (idee, peso, lettere, semplicità, somiglianze, bisogno
+del simbolo) e gli si fanno giudicare nove idee abbozzate: corsia, cartello di corsia, porta di carico, ripiani a V,
+ingresso, spunta, monogramma Vk, V a filo, solo il nome. I tre concetti nuovi si scelgono dai «sì», poi dai «forse».
+
+Risposte (decisioni 371–373): non andavano le idee e le lettere del nome; sì al cartello di corsia; forse a corsia,
+porta di carico, ingresso e solo il nome; no a ripiani a V, monogramma Vk e V a filo; all'utente piace molto la K di
+Kiln (deduzione: piace il modo, una lettera che porta l'idea e torna nel nome, non l'arco in sé, che resta di Kiln).
+
+### Concetti del giro 3
+
+File in `prototipi/brand-kit/concetti-2/`, generati da `genera.py` (lettere a spessore variabile: medio 22, leggero
+16, sull'altezza della x di 96; V a 75 gradi; k con braccio e gamba a 45 gradi; «o» tonda, 370); `concetti.png` è il
+foglio del punto di controllo; `dati_pagina.py` mette i tracciati nella pagina. Tutti i file passano `svg_audit.py`
+senza avvisi. Scelte mie, da far confermare: ingresso escluso perché è anch'esso una V in un quadrato, come il cartello;
+«solo il nome» è dentro tutti e tre.
+
+| | Concetto | Idea | Rischio |
+|---|---|---|---|
+| A | Cartello di corsia (consigliato: l'unico «sì») | targa quadrata arrotondata con la V ritagliata e due fori per appenderla | lettera in un quadrato è comune tra le icone delle app; i fori spariscono a 16 punti |
+| B | Corsia | la V a ripiani, uguale nel simbolo e nel nome | nel nome può sembrare stencil; a 16 punti resta una V piena |
+| C | Porta di carico | il portone con la serranda alzata a metà | il più letterale: garage, o il carattere cinese per «porta» |
+
+Un primo foro al centro della targa, sopra la V, sembrava un puntino sulla lettera, cioè il concetto «İ puntata» di
+Kiln: l'ho spostato in due fori agli angoli.
+
+### Giro 4: prima la lettera (decisioni 374 e 375)
+
+Nessuno dei tre concetti del giro 3 va al kit; per le lettere del nome è preferito il peso medio (374). L'utente non
+ama la V come logo e chiede di invertire l'ordine: prima una lettera bella da modificare, poi il logo, poi il nome a
+partire dalla lettera (375). Nel giro 4 si chiede cosa succede a Varko (accantonato o tenuto, con le stesse regole del
+nome o con regole riviste), si giudicano otto lettere abbozzate (K, R, S, M, A, Q, G, X, in `prototipi/brand-kit/lettere/`),
+e si sceglie maiuscola o minuscola e se il nome comincia con la lettera. Conseguenza da tenere sulla mappa
+(deduzione): con un nome nuovo serve una nuova verifica dei marchi, come per Varko (ticket «Unicità dei nomi scelti»), e
+il consulente della 359 vale per il nome nuovo.
+
+### Giro 5: concetti su R e Q (decisioni 376–379)
+
+Varko si accantona e resta in riserva; il nome nuovo nasce dalla lettera, comincia con lei e segue le regole 344–350,
+con una nuova verifica dei marchi e il consulente della 359 (376, 379). Lettere: sì a R e Q (377); maiuscole, perché
+r e q minuscole hanno poco da modificare (378, scelta mia da confermare). File in `prototipi/brand-kit/concetti-3/`
+(asta 44 su 256), tutti 100/100 in `svg_audit.py`; confronto a scaffale con Riot, Remix, Heroku Redis, Rollup, Qlik e
+Quobyte: nessuna somiglianza forte.
+
+| | Concetto | Idea | Rischio |
+|---|---|---|---|
+| A | R · Rampa (consigliato) | la gamba è un cuneo a 45 gradi, la rampa della baia di carico | gamba grande, la R pesa a destra; altre R a cuneo esistono |
+| B | Q · Collo | la coda è un collo quadrato appoggiato all'anello | nomi quasi solo in «Qu» |
+| C | Q · Nastro | rotolo di nastro da imballo, la coda si srotola con il taglio a dentini | a 16 punti i dentini spariscono; stesso limite sui nomi |
+
+Ordine dei passi dopo la scelta: rosa di nomi che cominciano con la lettera, verifica dei marchi del nome scelto, kit.
+
+### Giro 6: il nome in R (decisioni 380 e 381)
+
+Logo: R · Rampa (380). Nome: dieci proposte che cominciano con la R, con le regole 344–350 (381): Rampo, Ramko (da
+«rampa», legate al logo), Reko, Rulo, Rasto, Ripo, Rodo, Ranko, Roto, Rapo. Escluse prima di proporle (deduzioni da
+fatti noti, non da una ricerca): Rako (marchio di piastrelle), Rolo (caramelle), Rekto (doppio senso di «retto»); Rivo
+e Rigo hanno un marchio identico (361). Dopo i preferiti in ordine si fa la verifica dei marchi, come per Varko.
+
+### Giro 7: verifica dei preferiti (decisioni 382 e 383)
+
+Preferiti in ordine: 1. Reko, 2. Ripo, 3. Rodo (383); l'unico «sì» è Ripo (382). Ricerca in
+`docs/research/2026-11-20-unicita-nomi-in-r.md`, **incompleta**: domini, App Store, GitHub e ricerca web sì; registri dei
+marchi no (TMview blocca i programmi automatici e in questa sessione non è stato usato il browser automatico; EUIPO
+eSearch non risponde). Giudizio provvisorio (deduzione): Reko ostacoli da valutare (REKO internazionale in classe 42,
+app di trasporti), Ripo nessun ostacolo trovato finora, Rodo ostacoli da valutare (casa di moda italiana; «RODO» è il
+GDPR in Polonia). Tutti i domini sono presi. Nel giro 7 l'utente sceglie come completare i registri e se il kit aspetta.
+
+### Nome e kit (decisioni 384–387)
+
+TMview non si carica dal browser automatico (384) e il blocco non si aggira (385). L'utente riporta i risultati UIBM
+(sezione «Aggiornamento» della ricerca sui nomi in R, non controllati da noi) e sceglie per ora **Ripo** (386): se
+cambia, il logo resta, perché l'iniziale è la R. La ricerca europea per somiglianza va al consulente (387).
+
+Kit, giro 8: file in `prototipi/brand-kit/kit/`, generati da `genera.py`. La R del simbolo e quella del nome escono
+dalla stessa funzione (occhiello alto due terzi, tratto dritto 1,33 raggi, gamba a cuneo a 45 gradi); il nome «Ripo» ha
+le minuscole a peso medio (asta 22, 374) e la R un po' più spessa. Domande del giro: colore (indaco, prugna, petrolio,
+blu elettrico, tutti con contrasto almeno 5,2 a 1 sul bianco), R a rampa o normale nel nome, puntino della i tondo o
+quadrato, simbolo e nome separati o anche affiancati. Dopo le risposte: file finali (nero, bianco, a colori, icone,
+favicon, manifest), tavola d'uso e guida di una pagina.
+
+### Giro 9: la R più curva (decisioni 388–392)
+
+Scelte del giro 8: blu elettrico #1F5BFF (388, contrasto 5,25 con il bianco; serve una variante chiara per il tema
+scuro), puntino tondo (390), simbolo e nome separati (391). La R va ridisegnata più curva, dallo schizzo dell'utente
+(389, `prototipi/brand-kit/concetti-4/schizzo-utente.jpg`, salvato senza i dati della foto); l'utente chiede anche idee
+più ardite (392). File in `prototipi/brand-kit/concetti-4/`, generati da `genera.py` (ogni R è una funzione di altezza
+e asta, usata per il simbolo e per il nome; le minuscole sono quelle del kit a peso medio). Tutti tra 99 e 100 in
+`svg_audit.py`.
+
+| | Concetto | Idea | Rischio |
+|---|---|---|---|
+| A | Il tuo schizzo · Gancio | la gamba scende e risale a U, staccata dall'asta | nel nome può leggersi «Ru»; a 16 punti la U si chiude |
+| B | Ri (consigliato) | la U risale e diventa la i del nome, con il puntino: il simbolo dice «Ri» | lettura «Rj»; il più delicato in piccolo |
+| C | Stencil | la R di A in tre pezzi, come le scritte a mascherina sulle casse | stencil comune nei marchi industriali |
+| D | Scivolo | la rampa del giro 5 diventa curva, come lo scivolo a rulli | il più sobrio; coda sottile da ingrossare per le stampe termiche |
+
+Un concetto «Muletto» (gamba con le forche) è stato scartato prima di mostrarlo: si leggeva «PL».
+
+### Giro 10: vuoto tondo e gamba lunga (decisione 393)
+
+Nessuna R del giro 9; lo schizzo non è più il riferimento; restano la gamba allungata e curva e il vuoto non
+rettangolare (393). File in `prototipi/brand-kit/concetti-5/`: occhiello con un tratto dritto corto e un semicerchio
+(il vuoto è quasi un semicerchio); tre gambe: **A · Arco** (arco pieno fino alla base), **B · Arco lungo** (lo stesso
+arco steso in avanti, consigliato per la velocità della 346), **C · Scivolo** (concava, si assottiglia). Scartato prima di
+mostrarlo un «Nastro» (gamba che corre lungo la base): si leggeva «RL». Rischio comune: la gamba ad arco è lo stesso
+gesto della K di Kiln, va tenuta diversa nei dettagli.
+
+### Giro 11: Arco lungo, tre versioni (decisione 394)
+
+Scelta la R · Arco lungo (394); prima del kit tre versioni migliorate, in `prototipi/brand-kit/concetti-6/`
+(`genera.py`). La gamba ora è un tratto lungo una curva di Bézier, con il contorno spostato lungo la normale e
+ridisegnato con curve morbide: nel giro 10 era la differenza tra due ellissi e ingrossava a metà. Versioni: **A ·
+Pulito** (spessore uguale, piede diritto; consigliata), **B · Affusolato** (si assottiglia fino a meno della metà e si
+posa scivolando in avanti), **C · Slitta** (corre basso e la punta risale a 30 gradi). Tra 99 e 100 in `svg_audit.py`.
+
+### Giro 12: la R costruita, dopo le ricerche (decisione 395)
+
+Piacciono A · Pulito e C · Slitta del giro 11, non B (395). Ricerche dello stesso giorno:
+`docs/research/2026-11-20-analisi-libreria-lettera-r.md` (261 loghi a lettera singola della raccolta della skill, prova a
+scaffale) e `docs/research/2026-11-20-loghi-lettera-singola-fonti.md` (fonti dei progettisti). Indicazioni prese:
+un dettaglio solo che nasce dalla lettera, spessore uniforme e fine netta, forme elementari e sagoma piena, il riquadro
+non distingue, R e blu è il territorio di Revolut (#1326FD, R geometrica come icona e nel nome), una versione per i 16
+punti e una misura minima di stampa da provare.
+
+File in `prototipi/brand-kit/concetti-7/` (`genera.py`): **A · Pulito costruito** (occhiello più grande, gamba lunga
+dello spessore dell'asta che nasce dove l'asta finisce; consigliata), **B · Slitta costruita** (la Slitta con spessore
+costante), **C · Collo ritagliato** (radicale: la R è il vuoto dentro un collo pieno; costruita come contorno unico con
+archi, così il ritaglio non lascia fili). Scartata prima di mostrarla una «Tre forme» (barra, anello, quarto d'anello
+separati): si leggeva «IQ».
+
+### Stato a fine sessione (decisioni 396 e 397)
+
+- **Nome:** Ripo, per ora (386); Varko in riserva (376); ricerca europea dei marchi al consulente (387).
+- **Logo:** R · Pulito costruito (396), `prototipi/brand-kit/concetti-7/pulito-simbolo.svg` e `pulito-nome.svg`.
+- **Colore:** blu elettrico #1F5BFF (388). **Puntino della i:** tondo (390). **Simbolo e nome:** separati (391).
+- **Da fare nel kit (397):** rifinitura ottica; R per i 16 punti; blu chiaro per il tema scuro; versioni nera, bianca,
+  blu; icone (favicon, icone dell'app, manifest, con `export_variants.py` della skill); tavola d'uso
+  (`presentation_board.py`); guida di una pagina (`templates/brand-guidelines-template.md`); confronto affiancato con
+  Revolut e con le R della raccolta; misura minima di stampa da provare su una termica vera.
+

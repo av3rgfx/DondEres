@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-labelledby="t">
+  <title id="t">Concetto q-nastro</title>
+  <path fill="#111111" fill-rule="evenodd" d="M14 128 A92 92 0 1 1 198 128 A92 92 0 1 1 14 128 Z M58 128 A48 48 0 1 0 154 128 A48 48 0 1 0 58 128 Z"/>
+  <path fill="#111111" fill-rule="evenodd" d="M106 198 L234 198 L242 203.5 L234 209 L242 214.5 L234 220 L106 220 Z"/>
+</svg>
