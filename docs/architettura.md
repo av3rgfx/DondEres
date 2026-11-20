@@ -2021,3 +2021,11 @@ arco steso in avanti, consigliato per la velocità della 346), **C · Scivolo** 
 mostrarlo un «Nastro» (gamba che corre lungo la base): si leggeva «RL». Rischio comune: la gamba ad arco è lo stesso
 gesto della K di Kiln, va tenuta diversa nei dettagli.
 
+### Giro 11: Arco lungo, tre versioni (decisione 394)
+
+Scelta la R · Arco lungo (394); prima del kit tre versioni migliorate, in `prototipi/brand-kit/concetti-6/`
+(`genera.py`). La gamba ora è un tratto lungo una curva di Bézier, con il contorno spostato lungo la normale e
+ridisegnato con curve morbide: nel giro 10 era la differenza tra due ellissi e ingrossava a metà. Versioni: **A ·
+Pulito** (spessore uguale, piede diritto; consigliata), **B · Affusolato** (si assottiglia fino a meno della metà e si
+posa scivolando in avanti), **C · Slitta** (corre basso e la punta risale a 30 gradi). Tra 99 e 100 in `svg_audit.py`.
+
