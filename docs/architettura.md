@@ -2012,3 +2012,12 @@ e asta, usata per il simbolo e per il nome; le minuscole sono quelle del kit a p
 
 Un concetto «Muletto» (gamba con le forche) è stato scartato prima di mostrarlo: si leggeva «PL».
 
+### Giro 10: vuoto tondo e gamba lunga (decisione 393)
+
+Nessuna R del giro 9; lo schizzo non è più il riferimento; restano la gamba allungata e curva e il vuoto non
+rettangolare (393). File in `prototipi/brand-kit/concetti-5/`: occhiello con un tratto dritto corto e un semicerchio
+(il vuoto è quasi un semicerchio); tre gambe: **A · Arco** (arco pieno fino alla base), **B · Arco lungo** (lo stesso
+arco steso in avanti, consigliato per la velocità della 346), **C · Scivolo** (concava, si assottiglia). Scartato prima di
+mostrarlo un «Nastro» (gamba che corre lungo la base): si leggeva «RL». Rischio comune: la gamba ad arco è lo stesso
+gesto della K di Kiln, va tenuta diversa nei dettagli.
+

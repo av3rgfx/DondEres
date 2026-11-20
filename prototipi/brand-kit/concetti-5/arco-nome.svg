@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 399 256" width="399" height="256" role="img" aria-labelledby="t">
+  <title id="t">Ripo, nome, concetto arco</title>
+  <path fill="#111111" fill-rule="evenodd" d="M20 56 L46 56 L46 200 L20 200 Z"/>
+  <path fill="#111111" fill-rule="evenodd" d="M20 56 L57.16 56 A44.64 44.64 0 0 1 57.16 145.28 L20 145.28 Z M46 82 L57.16 82 A18.64 18.64 0 0 1 57.16 119.28 L46 119.28 Z"/>
+  <path fill="#111111" fill-rule="evenodd" d="M35.6 132.28 A89.28 67.72 0 0 1 124.88 200 L96.28 200 A60.68 41.72 0 0 0 35.6 158.28 Z"/>
+  <path fill="#111111" fill-rule="evenodd" d="M134.88 104 L156.88 104 L156.88 200 L134.88 200 Z"/>
+  <path fill="#111111" fill-rule="evenodd" d="M132.13 76.25 A13.75 13.75 0 1 1 159.63 76.25 A13.75 13.75 0 1 1 132.13 76.25 Z"/>
+  <path fill="#111111" fill-rule="evenodd" d="M170.88 104 L192.88 104 L192.88 244 L170.88 244 Z"/>
+  <path fill="#111111" fill-rule="evenodd" d="M170.88 152 A49 49 0 1 1 268.88 152 A49 49 0 1 1 170.88 152 Z M192.88 152 A27 27 0 1 0 246.88 152 A27 27 0 1 0 192.88 152 Z"/>
+  <path fill="#111111" fill-rule="evenodd" d="M280.88 152 A49 49 0 1 1 378.88 152 A49 49 0 1 1 280.88 152 Z M302.88 152 A27 27 0 1 0 356.88 152 A27 27 0 1 0 302.88 152 Z"/>
+</svg>
