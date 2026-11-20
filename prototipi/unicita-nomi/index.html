@@ -1,0 +1,363 @@
+<title>Verifica dei nomi</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@112,600;112,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: prima i risultati della verifica (cartellini per nome), poi tre domande con l'esempio accanto, poi il riepilogo.
+   Tono: segnaletica di magazzino, come le pagine del ticket «Nome del prodotto». */
+:root{
+  --bg:#f3f5f7; --surface:#ffffff; --fg:#17202b; --muted:#5a6675; --line:#d5dbe2;
+  --accent:#1f4e8c; --accent-soft:#e3ebf6; --tag:#f2b705; --tag-fg:#2a2100;
+  --ok:#1d7a46; --ok-soft:#e2f3e9; --warn:#9a5200; --warn-soft:#fbeedd; --bad:#b0302b; --bad-soft:#f8e3e2;
+  --phone:#0f1720; --phone-fg:#e9eef4; --phone-bar:#1b2633;
+  --f-display:"Archivo","Arial Narrow",system-ui,sans-serif;
+  --f-body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f141a; --surface:#18202a; --fg:#e6ebf1; --muted:#9aa7b6; --line:#2c3846;
+  --accent:#7fb0ef; --accent-soft:#1d2d42; --tag:#f2b705; --tag-fg:#2a2100;
+  --ok:#5fcf8e; --ok-soft:#163324; --warn:#f0a447; --warn-soft:#3a2a14; --bad:#f08a84; --bad-soft:#3d1c1b;
+  --phone:#05080c; --phone-fg:#e9eef4; --phone-bar:#1b2633; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f141a; --surface:#18202a; --fg:#e6ebf1; --muted:#9aa7b6; --line:#2c3846;
+  --accent:#7fb0ef; --accent-soft:#1d2d42; --tag:#f2b705; --tag-fg:#2a2100;
+  --ok:#5fcf8e; --ok-soft:#163324; --warn:#f0a447; --warn-soft:#3a2a14; --bad:#f08a84; --bad-soft:#3d1c1b;
+  --phone:#05080c; --phone-fg:#e9eef4; --phone-bar:#1b2633; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:15px/1.55 var(--f-body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 96px}
+.wrap{max-width:1040px;margin:0 auto;display:grid;gap:28px}
+h1,h2,h3{font-family:var(--f-display);font-stretch:112%;text-wrap:balance;margin:0;line-height:1.15}
+h1{font-size:clamp(28px,5vw,40px);font-weight:800}
+h2{font-size:22px;font-weight:800}
+h3{font-size:18px;font-weight:600}
+p{margin:0;max-width:68ch}
+a{color:var(--accent)}
+.eyebrow{font:600 12px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.intro{display:grid;gap:12px}
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+button{font:600 14px/1 var(--f-body);border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--fg);padding:11px 14px;cursor:pointer}
+button.primary{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+button:focus-visible,input:focus-visible,textarea:focus-visible,label.opt:focus-within,a:focus-visible{outline:3px solid var(--tag);outline-offset:2px}
+.status{font-size:13px;color:var(--muted)}
+.status.ok{color:var(--ok)} .status.warn{color:var(--warn)}
+.why{color:var(--muted)}
+.note-legal{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:var(--surface);font-size:14px;display:grid;gap:6px}
+
+/* risultati */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;gap:10px;align-content:start;min-width:0}
+.card .nm{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.card .nm b{font:800 26px/1 var(--f-display);font-stretch:112%}
+.card .pos{font:600 11px/1 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.pill{display:inline-block;font:600 12.5px/1.3 var(--f-body);padding:4px 9px;border-radius:999px;border:1px solid}
+.pill.forte{color:var(--bad);background:var(--bad-soft);border-color:var(--bad)}
+.pill.valutare{color:var(--warn);background:var(--warn-soft);border-color:var(--warn)}
+.pill.libero{color:var(--ok);background:var(--ok-soft);border-color:var(--ok)}
+dl.kv{margin:0;display:grid;grid-template-columns:84px minmax(0,1fr);gap:6px 10px;font-size:13.5px}
+dl.kv dt{color:var(--muted)} dl.kv dd{margin:0;min-width:0;overflow-wrap:anywhere}
+.doms{display:flex;flex-wrap:wrap;gap:5px}
+.dom{font:12.5px/1.3 var(--f-mono);padding:3px 7px;border-radius:5px;border:1px solid var(--line)}
+.dom.preso{color:var(--muted);text-decoration:line-through}
+.dom.forse{color:var(--ok);border-color:var(--ok)}
+.tablewrap{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:620px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:600 11.5px/1.2 var(--f-mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+tr:last-child td{border-bottom:0}
+td b{font-family:var(--f-display);font-stretch:112%;font-size:16px}
+
+/* domande */
+.q{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:20px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px}
+@media (max-width:760px){.q{grid-template-columns:minmax(0,1fr)}}
+.q .main{display:grid;gap:12px;min-width:0}
+.opts{display:grid;gap:8px}
+label.opt{display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;align-items:start;border:1px solid var(--line);border-radius:10px;padding:12px;cursor:pointer}
+label.opt:has(input:checked){border-color:var(--accent);background:var(--accent-soft)}
+label.opt input{margin:3px 0 0;width:18px;height:18px;accent-color:var(--accent)}
+.opt b{font-weight:600}
+.opt .d{display:block;color:var(--muted);font-size:14px;margin-top:2px}
+.rec{display:inline-block;margin-left:6px;font:600 11px/1 var(--f-mono);letter-spacing:.04em;text-transform:uppercase;background:var(--tag);color:var(--tag-fg);padding:4px 6px;border-radius:4px;vertical-align:2px}
+textarea{width:100%;min-height:56px;font:14px/1.45 var(--f-body);padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg);resize:vertical}
+.notelabel{font-size:13px;color:var(--muted)}
+fieldset{border:0;padding:0;margin:0;min-width:0}
+.ex{align-self:start;display:grid;gap:10px;border-left:1px dashed var(--line);padding-left:20px;min-width:0}
+@media (max-width:760px){.ex{border-left:0;padding-left:0;border-top:1px dashed var(--line);padding-top:14px}}
+.ex .cap{font:600 11px/1.2 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.ex small{color:var(--muted);font-size:12.5px;line-height:1.45}
+.phone{background:var(--phone);color:var(--phone-fg);border-radius:22px;padding:14px 12px 16px;display:grid;gap:12px;max-width:260px}
+.home{display:grid;grid-template-columns:repeat(4,1fr);gap:10px 6px}
+.app{display:grid;justify-items:center;gap:4px;min-width:0}
+.ico{width:44px;height:44px;border-radius:11px;display:grid;place-items:center;font:800 20px/1 var(--f-display);color:#fff}
+.ico.ghost{background:#2a3644}
+.lbl{font-size:10.5px;max-width:58px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center}
+.topbar{background:var(--phone-bar);color:var(--phone-fg);border-radius:10px;padding:10px 12px;display:flex;justify-content:space-between;gap:8px;font-size:13px;min-width:0}
+.topbar b{font-family:var(--f-display);font-stretch:112%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.steps{margin:0;padding:0;list-style:none;display:grid;gap:6px;counter-reset:s}
+.steps li{counter-increment:s;display:grid;grid-template-columns:24px minmax(0,1fr);gap:8px;font-size:13.5px;align-items:start}
+.steps li::before{content:counter(s);font:800 13px/22px var(--f-display);text-align:center;border-radius:6px;background:var(--accent-soft);color:var(--accent)}
+.steps li.hl::before{background:var(--tag);color:var(--tag-fg)}
+.steps li.off{color:var(--muted);text-decoration:line-through}
+.url{font:13px/1.3 var(--f-mono);background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:7px 12px;overflow-wrap:anywhere;display:flex;justify-content:space-between;gap:8px}
+.url span:last-child{font-family:var(--f-body);font-size:12px;color:var(--muted);white-space:nowrap}
+.url.forse span:last-child{color:var(--ok)}
+.sum{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px;display:grid;gap:12px}
+.sum ol{margin:0;padding-left:20px;display:grid;gap:6px}
+.confirm{display:flex;gap:10px;align-items:flex-start;border:2px solid var(--accent);border-radius:10px;padding:12px;font-weight:600}
+.confirm input{width:20px;height:20px;margin-top:2px;accent-color:var(--accent)}
+.copybox{font:12.5px/1.45 var(--f-mono);white-space:pre-wrap;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px;max-height:220px;overflow:auto}
+.dock{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);
+  padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));z-index:5}
+.dock .bar{max-width:1040px;margin:0 auto;justify-content:space-between}
+@media (prefers-reduced-motion:no-preference){label.opt{transition:background .15s,border-color .15s}}
+</style>
+
+<div class="wrap">
+  <header class="intro">
+    <span class="eyebrow">Ticket «Unicità dei nomi scelti» · un giro</span>
+    <h1>Kurso, Varko, Velko: sono liberi?</h1>
+    <p>Ho cercato i tre preferiti e la riserva nei registri dei marchi (TMview, che raccoglie EUIPO, UIBM e
+      i marchi internazionali WIPO; WIPO Global Brand Database; il registro tedesco), nei domini e tra i prodotti con
+      lo stesso nome. Prima i risultati, così come sono; poi tre domande e il riepilogo.</p>
+    <div class="note-legal"><b>È una ricerca, non un parere legale.</b>
+      <span class="why">I siti di EUIPO e UIBM non rispondevano: i loro dati vengono da TMview, che li copia (EUIPO aggiornato al 19/11/2026).
+        Non coperti: nomi usati senza registrarli, ragioni sociali, loghi, ricerca fonetica completa. Il «.it libero» l'ho visto solo dal DNS:
+        va confermato su nic.it. Dettagli e link: <code>docs/research/2026-11-20-unicita-nomi-prodotto.md</code>.</span></div>
+    <div class="bar"><button class="primary" id="accept-all" type="button">Accetta tutte le consigliate</button>
+      <span class="status" id="status" role="status" aria-live="polite">Caricamento delle risposte salvate…</span></div>
+  </header>
+
+  <section style="display:grid;gap:12px" aria-labelledby="h-ris">
+    <span class="eyebrow">Risultati</span><h2 id="h-ris">I tre preferiti</h2>
+    <p class="why">Marchi «vivi» (registrati o in domanda) validi in Italia o nell'Unione Europea, nelle classi del
+      software (9 e 42), della gestione (35) e del magazzinaggio (39). Il giudizio a tre livelli è mio, non un parere.</p>
+    <div class="cards" id="cards"></div>
+  </section>
+
+  <section style="display:grid;gap:12px" aria-labelledby="h-ris2">
+    <h2 id="h-ris2">La riserva, verifica rapida</h2>
+    <p class="why">Nell'ordine della decisione 354, più i quattro nomi tenuti nel secondo giro e rimasti fuori dai preferiti.
+      Nessun <code>.com</code> è libero, per nessun nome.</p>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Nome</th><th>Giudizio</th><th>Cosa pesa di più</th><th>.it</th></tr></thead>
+      <tbody id="ris"></tbody></table></div>
+  </section>
+
+  <section class="q" aria-labelledby="h-q1"><div class="main">
+    <span class="eyebrow">Domanda 1 di 3</span><h2 id="h-q1">Quale nome scegli?</h2>
+    <p class="why">È il nome che vedranno gli operatori ogni giorno e che si offrirà agli altri magazzini. Con il nome
+      scelto parte il brand kit. Per la 356 vale l'ordine: Kurso non è libero (stesso nome per software in Germania),
+      quindi tocca a Varko. Volko è l'unico che sembra libero: per la 354 te lo propongo, decidi tu.</p>
+    <fieldset><legend class="notelabel" style="margin-bottom:8px">Scegline uno</legend><div class="opts" id="q1-opts"></div></fieldset>
+    <label class="notelabel" for="n-q1">Note (facoltative)</label><textarea id="n-q1" data-note="q1"></textarea>
+  </div><div class="ex" id="ex-q1" aria-live="polite"></div></section>
+
+  <section class="q" aria-labelledby="h-q2"><div class="main">
+    <span class="eyebrow">Domanda 2 di 3</span><h2 id="h-q2">Quando far controllare il nome a un consulente in marchi?</h2>
+    <p class="why">La 344 chiede una verifica dei marchi completa. Questa ricerca è preliminare: solo un consulente valuta se
+      due marchi si confondono (per esempio Varko e Varco) e fa la ricerca sui registri che qui mancano. È a pagamento;
+      il costo non l'ho cercato. Conta soprattutto quando si deposita il marchio e prima di offrirlo ad altri.</p>
+    <fieldset><legend class="notelabel" style="margin-bottom:8px">Scegline una</legend><div class="opts" id="q2-opts"></div></fieldset>
+    <label class="notelabel" for="n-q2">Note (facoltative)</label><textarea id="n-q2" data-note="q2"></textarea>
+  </div><div class="ex" id="ex-q2" aria-live="polite"></div></section>
+
+  <section class="q" aria-labelledby="h-q3"><div class="main">
+    <span class="eyebrow">Domanda 3 di 3</span><h2 id="h-q3">E i domini?</h2>
+    <p class="why">Per la 349 il dominio non decide il nome e per ora un sito non serve. Qui sotto vedi quali sono presi per
+      il nome che scegli. Registrare un dominio lo fai tu: io non compro nulla.</p>
+    <fieldset><legend class="notelabel" style="margin-bottom:8px">Scegline una</legend><div class="opts" id="q3-opts"></div></fieldset>
+    <label class="notelabel" for="n-q3">Note (facoltative)</label><textarea id="n-q3" data-note="q3"></textarea>
+  </div><div class="ex" id="ex-q3" aria-live="polite"></div></section>
+
+  <section class="sum" aria-labelledby="sum-h">
+    <span class="eyebrow">Riepilogo del ticket da confermare</span>
+    <h2 id="sum-h">Il nome, dopo la verifica</h2>
+    <ol id="sumlist"></ol>
+    <label class="confirm" for="conferma"><input type="checkbox" id="conferma"><span>Confermo il riepilogo. Le note qui sotto lo correggono dove serve.</span></label>
+    <label class="notelabel" for="n-riep">Correzioni al riepilogo (facoltative)</label><textarea id="n-riep" data-note="riep"></textarea>
+    <p class="why" id="fallback" hidden>Il salvataggio non è disponibile in questa vista. Copia il testo qui sotto e incollalo in chat.</p>
+    <div class="copybox" id="copybox" hidden></div>
+    <div class="bar"><button id="copy" type="button">Copia le risposte come testo</button></div>
+  </section>
+</div>
+
+<div class="dock"><div class="bar">
+  <span class="status" id="status2" aria-hidden="true"></span>
+  <button class="primary" id="save" type="button">Salva adesso</button>
+</div></div>
+
+<script>
+const GIRO = "verifica";
+const LV = {forte:"Ostacolo forte", valutare:"Ostacoli da valutare", libero:"Sembra libero"};
+const NOMI = {
+ Kurso:{pos:"1° preferito", lv:"forte", lvx:"Ostacolo forte",
+   ident:"KURSO in Germania (Henke Informatik): software e SaaS, in uso su kurso.de per gestire corsi online. Registrato dal 2017.",
+   simili:"Kurso in Francia (classe 35). Letto all'inglese si avvicina a CURSOR (software, Anysphere). Poi kruso, KURO.",
+   dom:{com:"preso",it:"forse",eu:"preso",io:"preso",app:"preso"},
+   prod:"kurso.de (gestione corsi), kurso.app (siti per centri di formazione). Niente nella logistica.",
+   att:"Anche la lettura inglese «kèr-so» resta da provare (356)."},
+ Varko:{pos:"2° preferito", lv:"valutare", lvx:"Ostacoli da valutare, i più bassi dei tre",
+   ident:"Nessuno per software, gestione o magazzino. L'unico VARKO nell'UE è francese, per paradenti da boxe.",
+   simili:"«Varco» si pronuncia uguale: VARCO (UE, strumenti per pozzi di petrolio), LOG. VARCO (Italia, concessionaria d'auto, 35/39), due domande VARCO italiane del 2026 in classe 42 di cui non ho letto i prodotti. «Varco» è anche una parola italiana comune.",
+   dom:{com:"preso",it:"preso",eu:"preso",io:"preso",app:"preso"},
+   prod:"App di allenamento (varko.app), strumento SEO (varko.io). Niente nella logistica.",
+   att:"Le due domande VARCO del 2026 in classe 42 vanno lette dal consulente."},
+ Velko:{pos:"3° preferito", lv:"valutare", lvx:"Ostacoli da valutare, vicini a ostacolo forte",
+   ident:"Velko (UE, nome con grafica, classe 9): batterie e caricabatterie.",
+   simili:"«Velco» si pronuncia uguale: in Francia Velco SAS, software per localizzare e gestire flotte di bici (classi 9, 39, 42), in attività; VELCO SPA in Italia (35/42).",
+   dom:{com:"preso",it:"preso",eu:"preso",io:"preso",app:"preso"},
+   prod:"velko.io (assistenti IA per i clienti, Paesi Bassi), un'app IPTV. Niente nel magazzino.",
+   att:"Velco è nel software e nel trasporto: il rischio più alto dopo Kurso."},
+ Volko:{pos:"riserva (in dubbio, 355)", lv:"libero", lvx:"Sembra libero nei registri consultati",
+   ident:"Nessuno nell'UE o in Italia.",
+   simili:"WOLCO (UE, classe 42: controllo qualità di utensili da taglio); in tedesco la W si legge V.",
+   dom:{com:"preso",it:"forse",eu:"preso",app:"preso"},
+   prod:"Nessuno nel settore.",
+   att:"Era «in dubbio». Nelle lingue slave «volk» vuol dire lupo. Richiama «volo»: velocità più che ordine."}
+};
+const RIS = [
+ ["Trako","valutare","TRAKO nell'UE e in Polonia, ma per fiere e pubblicità (35); TRACO in Italia (39).","forse"],
+ ["Sorto","valutare","Nessun identico nell'UE; Forto, logistica digitale con software (9/39/42), a una lettera.","preso"],
+ ["Rigo","forte","Cinque marchi identici (UE, Italia, internazionali), anche in 35 e 42.","preso"],
+ ["Movo","forte","Dieci identici, tra cui una domanda UE del 18/11/2026 per software dei parcheggi (9/35/39/42).","preso"],
+ ["Venko","forte","VENKO nell'UE in 9/35/42 e altri quattro identici.","preso"],
+ ["Arvo","forte","Tre identici nell'UE e internazionali, altri nazionali (Germania, classe 9).","preso"],
+ ["Vekto","forte","Domanda Benelux del 16/10/2026 per servizi informatici (9/35/42).","preso"],
+ ["Kardo","forte","Kardo nell'UE: gestione scorte, ERP, supply chain. Stesso settore.","preso"],
+ ["Rivo","forte","Sei identici, tra cui RIVO (UE, 42, software per la finanza del commercio).","preso"],
+ ["Dokra","forte","Domanda ceca del 06/10/2026 per software (9/42); vicino a DEKRA.","forse"]
+];
+const Q1 = [
+ {id:"Varko", l:"Varko", d:"Secondo nell'ordine, primo senza un marchio identico nel settore. Da far valutare: i marchi «Varco», che si pronunciano uguale. Domini tutti presi.", rec:true},
+ {id:"Volko", l:"Volko (dalla riserva)", d:"L'unico che sembra libero nei registri; volko.it forse libero. Era «in dubbio» e richiama il volo più dell'ordine."},
+ {id:"Kurso", l:"Kurso, nonostante il marchio tedesco", d:"Il primo preferito. Il titolare di KURSO in Germania potrebbe opporsi a un marchio UE e all'uso in Germania."},
+ {id:"Velko", l:"Velko, nonostante Velco", d:"Il terzo preferito. Velco, che si pronuncia uguale, fa software per flotte in Francia."},
+ {id:"giro", l:"Nessuno: un nuovo giro di nomi", d:"Nomi nuovi con gli stessi criteri (344–350), verificati subito. Il brand kit aspetta."}
+];
+const Q2 = [
+ {id:"prima-deposito", l:"Prima di depositare il marchio e di offrirlo ad altri magazzini", d:"Intanto il nome si usa nel progetto e parte il brand kit. Se il consulente dice no, logo e nome si rifanno.", rec:true},
+ {id:"subito", l:"Subito, prima del brand kit", d:"Si spende adesso, ma nessun lavoro va perso. Il brand kit aspetta il parere."},
+ {id:"mai", l:"Nessun consulente: basta questa ricerca", d:"Non soddisfa la 344, che chiede una verifica completa: andrebbe cambiata. Il rischio di un'opposizione resta tutto."}
+];
+const Q3 = [
+ {id:"niente", l:"Niente per ora", d:"Come dice la 349. Quando servirà un sito si cerca una forma libera del dominio e la si verifica.", rec:true},
+ {id:"registro", l:"Registro io subito un dominio con il nome", d:"Se c'è un .it libero lo confermi su nic.it e lo registri tu. Se sono tutti presi, ti preparo alcune varianti da controllare."}
+];
+const COLORS = ["#1f4e8c","#2a9d8f","#e46b2e","#7a4fb3","#b0413e","#3b82f6","#5b7f2a"];
+
+let S = {q1:"", q2:"", q3:"", note:{}, conferma:false};
+try{ const d = JSON.parse(localStorage.getItem("verifica-nomi")||"null"); if(d) S = Object.assign(S,d); }catch(e){}
+const esc = s => String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const col = n => COLORS[[...n].reduce((a,c)=>a+c.charCodeAt(0),0)%COLORS.length];
+const pill = (lv,txt) => `<span class="pill ${lv}">${esc(txt||LV[lv])}</span>`;
+const domTxt = v => v==="forse" ? "forse libero" : "preso";
+function doms(d){ return `<div class="doms">${Object.entries(d).map(([k,v])=>`<span class="dom ${v}" title="${domTxt(v)}">.${k}<span class="sr" style="position:absolute;left:-9999px"> ${domTxt(v)}</span></span>`).join("")}</div>`; }
+const opts = (name,list,cur) => list.map(o=>`<label class="opt"><input type="radio" name="${name}" value="${o.id}" ${cur===o.id?"checked":""}>
+  <span><b>${esc(o.l)}</b>${o.rec?'<span class="rec">Consigliata</span>':""}<span class="d">${esc(o.d)}</span></span></label>`).join("");
+
+function render(){
+  document.getElementById("cards").innerHTML = ["Kurso","Varko","Velko"].map(n=>{ const x=NOMI[n]; return `
+    <article class="card" aria-labelledby="t-${n}">
+      <div class="nm"><div class="ico" style="background:${col(n)}" aria-hidden="true">${n[0]}</div><b id="t-${n}">${n}</b><span class="pos">${esc(x.pos)}</span></div>
+      <div>${pill(x.lv,x.lvx)}</div>
+      <dl class="kv"><dt>Identici</dt><dd>${esc(x.ident)}</dd><dt>Simili</dt><dd>${esc(x.simili)}</dd>
+        <dt>Domini</dt><dd>${doms(x.dom)}</dd><dt>Prodotti</dt><dd>${esc(x.prod)}</dd></dl>
+    </article>`; }).join("");
+  document.getElementById("ris").innerHTML = RIS.map(([n,lv,t,it])=>`<tr><td><b>${n}</b></td><td>${pill(lv)}</td><td>${esc(t)}</td><td>${it==="forse"?'<span style="color:var(--ok)">forse libero</span>':"preso"}</td></tr>`).join("");
+  document.getElementById("q1-opts").innerHTML = opts("q1",Q1,S.q1);
+  document.getElementById("q2-opts").innerHTML = opts("q2",Q2,S.q2);
+  document.getElementById("q3-opts").innerHTML = opts("q3",Q3,S.q3);
+  ["q1","q2","q3","riep"].forEach(k=>document.getElementById("n-"+k).value=S.note[k]||"");
+  document.getElementById("conferma").checked=!!S.conferma;
+  refresh();
+}
+function chosen(){ return NOMI[S.q1] ? S.q1 : null; }
+function refresh(){
+  const n = chosen(), x = n && NOMI[n];
+  // esempio 1
+  const others = ["Foto","Mappe","Posta"].map(t=>`<div class="app"><div class="ico ghost" aria-hidden="true"></div><div class="lbl">${t}</div></div>`).join("");
+  document.getElementById("ex-q1").innerHTML = `<div class="cap">Sul telefono dell'operatore</div>
+    <div class="phone"><div class="home">${n?`<div class="app"><div class="ico" style="background:${col(n)}">${n[0]}</div><div class="lbl">${n}</div></div>`:`<div class="app"><div class="ico ghost">?</div><div class="lbl">—</div></div>`}${others}</div>
+    <div class="topbar"><b>${esc(n|| (S.q1==="giro"?"Nome nuovo":"—"))}</b><span>Ricevimento · DDT 418</span></div></div>
+    ${x?`<div>${pill(x.lv,x.lvx)}</div><small><b>Da tenere presente:</b> ${esc(x.att)}</small>`
+       : S.q1==="giro" ? `<small>Si apre un nuovo giro di nomi: li guardi, scegli i preferiti, poi una nuova verifica.</small>` : `<small>Scegli un nome per vederlo qui.</small>`}`;
+  // esempio 2
+  const nm = n||"il nome";
+  const st = S.q2==="subito" ? [["Consulente: ricerca e parere su "+nm,1],["Brand kit",0],["Deposito del marchio (UIBM o EUIPO)",0],["Offerta ad altri magazzini",0]]
+    : S.q2==="mai" ? [["Brand kit",0],["Deposito del marchio, senza parere",1],["Offerta ad altri magazzini",0]]
+    : S.q2==="prima-deposito" ? [["Brand kit e uso nel progetto",0],["Consulente: ricerca e parere su "+nm,1],["Deposito del marchio (UIBM o EUIPO)",0],["Offerta ad altri magazzini",0]] : null;
+  document.getElementById("ex-q2").innerHTML = `<div class="cap">L'ordine dei passi</div>${st?`<ol class="steps">${st.map(([t,h])=>`<li class="${h?"hl":""}">${esc(t)}</li>`).join("")}</ol>
+    <small>${S.q2==="mai"?"Senza parere, un titolare di un marchio simile può opporsi al deposito o all'uso anche dopo il lancio.":S.q2==="subito"?"Il passo evidenziato ferma gli altri finché non arriva il parere.":"Il passo evidenziato è l'ultimo controllo prima che il nome esca dal progetto."}</small>`:"<small>Scegli un'opzione.</small>"}`;
+  // esempio 3
+  let ex3 = `<div class="cap">Domini per ${esc(n||"il nome scelto")}</div>`;
+  if(x){
+    ex3 += Object.entries(x.dom).map(([k,v])=>`<div class="url ${v}"><span>${n.toLowerCase()}.${k}</span><span>${v==="forse"?"forse libero":"preso"}</span></div>`).join("");
+    const free = Object.entries(x.dom).filter(([k,v])=>v==="forse").map(([k])=>n.toLowerCase()+"."+k);
+    ex3 += `<small>${S.q3==="registro" ? (free.length?`Confermi ${esc(free.join(", "))} su nic.it e lo registri tu.`:"Sono tutti presi: ti preparo alcune varianti con il nome da controllare.") : S.q3==="niente" ? "Nessuna azione: se ne riparla quando serve un sito." : "Scegli un'opzione."}</small>`;
+  } else ex3 += `<small>${S.q1==="giro"?"I domini si controllano nel nuovo giro.":"Scegli prima un nome nella domanda 1."}</small>`;
+  document.getElementById("ex-q3").innerHTML = ex3;
+  document.getElementById("sumlist").innerHTML = summary().map(t=>`<li>${t}</li>`).join("");
+  document.getElementById("copybox").textContent = asText();
+}
+const lab = (list,id) => (list.find(o=>o.id===id)||{l:"da scegliere"}).l;
+function summary(){
+  return [
+    "Ricerca del 20/11/2026 nei registri (TMview per EUIPO, UIBM e WIPO; WIPO Global Brand Database; registro tedesco), nei domini e tra i prodotti: in <code>docs/research/</code>. Non è un parere legale.",
+    "Kurso: ostacolo forte (KURSO per software in Germania). Varko: ostacoli da valutare, i più bassi dei tre (marchi «Varco»). Velko: ostacoli da valutare, vicini a forte (Velco, software per flotte). Nessun .com libero.",
+    "Riserva: Volko sembra libero; Trako e Sorto ostacoli da valutare; Rigo, Movo, Venko, Arvo ostacolo forte. Vekto, Kardo, Rivo e Dokra hanno anche loro un ostacolo forte: il punto aperto sulla 354 non serve più.",
+    `<b>Nome scelto:</b> ${esc(lab(Q1,S.q1))}.`,
+    `Consulente in marchi: ${esc(lab(Q2,S.q2).toLowerCase())}.`,
+    `Domini: ${esc(lab(Q3,S.q3).toLowerCase())}.`,
+    S.q1==="giro" ? "Poi: un nuovo giro di nomi e una nuova verifica; il brand kit aspetta." : "Poi: il brand kit parte con il nome scelto, con Kiln come riferimento di stile (351)."
+  ];
+}
+function asText(){
+  const L=["Verifica dei nomi – risposte"];
+  L.push("1. Nome: "+lab(Q1,S.q1)+(S.note.q1?" — nota: "+S.note.q1:""));
+  L.push("2. Consulente: "+lab(Q2,S.q2)+(S.note.q2?" — nota: "+S.note.q2:""));
+  L.push("3. Domini: "+lab(Q3,S.q3)+(S.note.q3?" — nota: "+S.note.q3:""));
+  L.push("Riepilogo: "+(S.conferma?"confermato":"non confermato")+(S.note.riep?" — correzioni: "+S.note.riep:""));
+  return L.join("\n");
+}
+
+let db=null,timer=null,saving=false,pending=false;
+function setStatus(t,cls){ ["status","status2"].forEach(id=>{const el=document.getElementById(id); el.textContent=t; el.className="status "+(cls||"");}); }
+function local(){ try{ localStorage.setItem("verifica-nomi", JSON.stringify(S)); }catch(e){} }
+function changed(){ local(); refresh(); clearTimeout(timer); timer=setTimeout(save,900); setStatus(db?"Modifiche da salvare…":"Salvate solo su questo dispositivo", db?"":"warn"); }
+async function save(){
+  clearTimeout(timer);
+  if(!db){ setStatus("Salvataggio non disponibile qui: usa «Copia le risposte» e incollale in chat","warn"); document.getElementById("fallback").hidden=false; document.getElementById("copybox").hidden=false; return; }
+  if(saving){ pending=true; return; }
+  saving=true;
+  try{ await db.doc("giri/"+GIRO).set({q1:S.q1, q2:S.q2, q3:S.q3, note:S.note, conferma:S.conferma, testo:asText(), aggiornato:new Date().toISOString()});
+    setStatus("Salvate alle "+new Date().toLocaleTimeString("it-IT",{hour:"2-digit",minute:"2-digit"}),"ok");
+  }catch(e){ setStatus("Non salvate ("+(e&&e.code||"errore")+"). Riprova con «Salva adesso» o copia le risposte.","warn"); document.getElementById("copybox").hidden=false; }
+  saving=false; if(pending){ pending=false; save(); }
+}
+document.addEventListener("change", e=>{
+  const t=e.target;
+  if(["q1","q2","q3"].includes(t.name)){ S[t.name]=t.value; changed(); }
+  else if(t.id==="conferma"){ S.conferma=t.checked; changed(); }
+});
+document.addEventListener("input", e=>{ const t=e.target; if(t.dataset && t.dataset.note){ S.note[t.dataset.note]=t.value; changed(); } });
+document.getElementById("accept-all").addEventListener("click",()=>{ S.q1="Varko"; S.q2="prima-deposito"; S.q3="niente"; render(); changed(); });
+document.getElementById("save").addEventListener("click", save);
+document.getElementById("copy").addEventListener("click", async()=>{
+  const box=document.getElementById("copybox"); box.hidden=false;
+  try{ await navigator.clipboard.writeText(asText()); setStatus("Testo copiato","ok"); }
+  catch(e){ const r=document.createRange(); r.selectNodeContents(box); const s=getSelection(); s.removeAllRanges(); s.addRange(r); setStatus("Testo selezionato: copialo","warn"); }
+});
+render();
+(async()=>{
+  let got=null;
+  try{ got = (window.claude && window.claude.use) ? await window.claude.use("db") : null; }catch(e){ got=null; }
+  db=got;
+  if(!db){ setStatus("Salvataggio non disponibile qui: le risposte restano su questo dispositivo. Usa «Copia le risposte».","warn"); return; }
+  const to=setTimeout(()=>setStatus("Le risposte salvate non arrivano: puoi continuare, si salvano alla prossima modifica.","warn"),10000);
+  try{ const snap=await db.doc("giri/"+GIRO).get(); clearTimeout(to);
+    if(snap.exists){ const d=snap.data(); S.q1=d.q1||""; S.q2=d.q2||""; S.q3=d.q3||""; S.note=d.note||{}; S.conferma=!!d.conferma; render(); setStatus("Risposte salvate caricate","ok"); }
+    else setStatus("Nessuna risposta salvata finora: le tue si salvano da sole","");
+  }catch(e){ clearTimeout(to); setStatus("Non riesco a leggere le risposte salvate: le tue si salvano comunque alla prossima modifica.","warn"); }
+})();
+</script>
