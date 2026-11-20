@@ -1,7 +1,7 @@
 # Gestionale di magazzino (base generica)
 
 Lingua comune della base generica: il gestionale che riceve la merce, la identifica e assegna le scorte agli ordini
-cliente. Il nome del prodotto è ancora da scegliere: i preferiti da verificare sono nella decisione 356 di `docs/decisioni.md`.
+cliente. Il prodotto si chiama Varko (decisione 358 di `docs/decisioni.md`); DondEres era il nome provvisorio.
 
 ## Catalogo
 
