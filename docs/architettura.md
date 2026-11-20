@@ -706,7 +706,7 @@ Prima di scegliere lo stack (127):
 
 ## Divisione tra telefono, computer e server in sede
 
-Dal ticket «Divisione tra telefono, computer e server in sede», in corso dal 20/11/2026 (giro 1: decisioni 406–415).
+Dal ticket «Divisione tra telefono, computer e server in sede», in corso dal 20/11/2026 (giro 1: decisioni 406–415; giro 2: 416–420).
 Restano fuori, perché dipendono dai numeri della prova visiva, dove si calcolano le impronte e che macchina serve in
 sede: ticket «Impronte e server in sede, dopo la prova» (405). Pagina delle domande:
 https://claude.ai/artifact/YbyLuy2kMFmVgEH5xdBPXu (privata; copia in `prototipi/divisione/index.html`).
@@ -767,6 +767,9 @@ Le foto originali si conservano accanto alle impronte, per ricalcolarle se cambi
 identificazione»). Nessuna foto esce dalla rete interna (121, 412). Stima dello spazio: circa 0,4 GB ogni 1.000
 inquadrature per le foto tenute 30 giorni (deduzione dalla stima della foto, da misurare).
 
+Le copie di sicurezza tengono dati e registro, foto di riferimento e foto delle bolle, non le foto dei 30 giorni (419).
+Dove vanno le copie e come si ripristinano resta all'installazione (nebbia della mappa).
+
 ### Rete assente
 
 - Sul dispositivo restano solo le operazioni in attesa: codice letto, foto, quantità scritta, chi e quando, con la
@@ -775,6 +778,13 @@ inquadrature per le foto tenute 30 giorni (deduzione dalla stima della foto, da 
   spenti. Quando la rete torna l'operazione parte da sola e la fascia dice «Inviata» (413).
 - Su un telefono condiviso l'operazione parte a nome di chi l'ha fatta anche se nel frattempo è entrato un altro; se
   all'arrivo serve una scelta, la trova chi l'ha fatta tra le sue cose in sospeso (414).
+- La fascia compare dopo 3 secondi senza risposta, oppure subito se il dispositivo sa di non avere rete; fino ad allora
+  la lettura dice «in attesa», e la fascia sparisce alla prima richiesta riuscita (417).
+- Due messaggi, stesso comportamento: «Senza rete: il telefono non è collegato al Wi-Fi del magazzino» e «Il server non
+  risponde: avvisa il responsabile» (418).
+- Un'operazione che arriva quando non si può più applicare (DDT chiuso, pezzo già preso, ordine annullato) non si
+  registra da sola: esito «non riuscita» con il motivo, e torna con la foto tra le cose in sospeso di chi l'ha fatta; se
+  il DDT è chiuso va anche al responsabile in «Da controllare», che decide se farne un carico in più (82) (416).
 
 ### Stampe
 
@@ -1600,6 +1610,9 @@ account.
   coprirla; se basti l'accesso con il codice mandato per mail è discusso.
 - Ritiro gratuito solo per chi sceglie il credito: il costo diretto del ritorno si può lasciare al cliente se lo sa
   prima; il credito al posto del rimborso vale solo con il suo accordo espresso, che il modulo conserva (330).
+- Registro e foto delle inquadrature (420): cosa dire ai dipendenti sul registro (chi, cosa, quando, da quale
+  dispositivo) e sulle foto, dove possono comparire persone o etichette con nomi di clienti, e per quanto tenerli. Il
+  programma intanto non cambia: i 30 giorni restano modificabili (412).
 
 ### Danni al trasporto
 

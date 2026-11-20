@@ -115,38 +115,53 @@ table.mini td.n{font-variant-numeric:tabular-nums;white-space:nowrap}
 
 <div class="wrap">
   <header class="intro">
-    <div class="eyebrow">Ticket «Divisione tra telefono, computer e server in sede» · giro 2 · 20/11/2026</div>
+    <div class="eyebrow">Ticket «Divisione tra telefono, computer e server in sede» · riepilogo · 20/11/2026</div>
     <h1>Cosa gira dove</h1>
-    <p>Ho registrato le tue risposte del giro 1: hai accettato tutte le consigliate (decisioni 406–415). Lo schema qui
-      sotto è quello che ne viene. Restano cinque domande, nate da quelle risposte: cosa succede a un'operazione in
-      attesa che arriva tardi, quando compare la fascia «Senza rete», come si distingue la rete dal server fermo, cosa
-      va nelle copie di sicurezza e un punto per chi segue la parte legale.</p>
-    <p>Dopo questo giro ti mostro il riepilogo da confermare.</p>
+    <p>Ho registrato le tue risposte del giro 2: anche qui hai accettato tutte le consigliate (decisioni 416–420).
+      Qui sotto c'è il riepilogo del ticket, con le deduzioni che ne ho tratto senza farti domande. Se lo confermi,
+      chiudo il ticket, aggiorno la mappa e preparo il prompt per lo stack.</p>
     <div class="bar"><button class="primary" id="accept-all" type="button">Accetta tutte le consigliate</button>
       <span class="status" id="status">Caricamento delle risposte salvate…</span></div>
   </header>
 
   <section class="map" aria-labelledby="h-map">
-    <h2 id="h-map">Lo schema con le tue risposte</h2>
-    <p>In blu il server in sede. I riquadri bordati di blu scuro cambiano con le risposte; quelli tratteggiati sono decisi
-      in un altro ticket.</p>
+    <h2 id="h-map">Lo schema deciso</h2>
+    <p>In blu il server in sede. Sotto ogni riquadro il numero della decisione; quelli tratteggiati si decidono in un altro ticket.</p>
     <div class="lanes" id="lanes"></div>
   </section>
 
   <section class="given" aria-labelledby="h-given">
-    <h2 id="h-given">Registrate nel giro 1</h2>
+    <h2 id="h-given">Le decisioni del ticket</h2>
+    <div class="tw"><table class="mini"><thead><tr><th>N.</th><th>Decisione</th></tr></thead><tbody>
+      <tr><td class="n">406</td><td>I dati stanno solo sul server; il dispositivo legge il barcode, il server dice cosa vuol dire.</td></tr>
+      <tr><td class="n">407</td><td>Il confronto dell'aspetto si fa sul server, con un elenco solo di impronte per tutto il magazzino.</td></tr>
+      <tr><td class="n">408</td><td>A ogni inquadratura passano il codice letto e una foto ferma; dalla foto il server legge quantità e codice stampato.</td></tr>
+      <tr><td class="n">409</td><td>La foto parte da sola (barcode letto o immagine ferma circa mezzo secondo); «Scatta» come ripiego.</td></tr>
+      <tr><td class="n">410</td><td>Sul palmare il grilletto legge solo il barcode; «Inquadra» apre la fotocamera.</td></tr>
+      <tr><td class="n">411</td><td>Le schermate di lavoro condiviso si aggiornano da sole entro pochi secondi.</td></tr>
+      <tr><td class="n">412</td><td>Le altre foto delle inquadrature si tengono 30 giorni (modificabili); nessuna foto esce dalla rete interna.</td></tr>
+      <tr><td class="n">413</td><td>Senza rete la schermata resta, con la fascia «Senza rete» e l'ora dei dati.</td></tr>
+      <tr><td class="n">414</td><td>Sul telefono condiviso l'operazione in attesa parte a nome di chi l'ha fatta.</td></tr>
+      <tr><td class="n">415</td><td>Si stampa il PDF dal browser del dispositivo; nessuna stampante sul server.</td></tr>
+      <tr><td class="n">416</td><td>Un'operazione che arriva tardi non si registra da sola: torna a chi l'ha fatta, e al responsabile se il DDT è chiuso.</td></tr>
+      <tr><td class="n">417</td><td>La fascia compare dopo 3 secondi senza risposta, o subito se il telefono sa di non avere rete.</td></tr>
+      <tr><td class="n">418</td><td>Due messaggi: Wi-Fi assente oppure server che non risponde.</td></tr>
+      <tr><td class="n">419</td><td>Le copie di sicurezza non tengono le foto dei 30 giorni.</td></tr>
+      <tr><td class="n">420</td><td>Un punto in più per la parte legale: registro e foto, cosa dire ai dipendenti.</td></tr>
+    </tbody></table></div>
+    <h3 style="margin-top:10px">Deduzioni, da confermare con il riepilogo</h3>
     <ul>
-      <li>406: i dati stanno solo sul server; il telefono legge il barcode, il server dice cosa vuol dire.</li>
-      <li>407: il confronto dell'aspetto si fa sul server, con un elenco solo di impronte.</li>
-      <li>408: a ogni inquadratura passano il codice letto e una foto ferma.</li>
-      <li>409: la foto parte da sola (barcode letto o immagine ferma); «Scatta» come ripiego.</li>
-      <li>410: sul palmare il grilletto legge solo il barcode; «Inquadra» apre la fotocamera.</li>
-      <li>411: le schermate di lavoro condiviso si aggiornano da sole entro pochi secondi.</li>
-      <li>412: le altre foto delle inquadrature si tengono 30 giorni.</li>
-      <li>413: senza rete la schermata resta, con la fascia «Senza rete».</li>
-      <li>414: sul telefono condiviso l'operazione in attesa parte a nome di chi l'ha fatta.</li>
-      <li>415: si stampa il PDF dal browser del dispositivo.</li>
+      <li>L'assegnazione dal più vecchio, con VEND che vince, si calcola sul server in un posto solo e si rifà a ogni movimento; due conferme dell'ultimo pezzo insieme: il server accetta la prima, alla seconda dice «già preso» (16, 305, 77).</li>
+      <li>Scambio con il gestionale e Shopify, lettura di bolle e mail dei resi e aggiornamenti notturni girano sul server, anche a computer spenti.</li>
+      <li>Più codici nell'inquadratura (102): il dispositivo manda tutti quelli letti, il server decide se sono lo stesso articolo o se l'operatore sceglie.</li>
+      <li>Lo stesso utente può essere aperto su più dispositivi insieme (per esempio il responsabile al computer e al telefono); ogni dispositivo tiene le sue operazioni in attesa.</li>
+      <li>Quando compare la fascia lo scatto da solo si ferma: restano in attesa solo le operazioni fatte prima, di solito una.</li>
+      <li>Qualunque cosa decida il ticket «Impronte e server in sede, dopo la prova», la foto viaggia comunque (408): serve a quantità, codice stampato e foto di riferimento. Se l'impronta si calcolerà nel browser, passerà in più l'impronta.</li>
+      <li>Si aggiungono alle prove su dispositivi veri (127): peso della foto, il mezzo secondo di immagine ferma, i 3 secondi della fascia, il canale aperto con più telefoni insieme.</li>
     </ul>
+    <p class="note">Restano al ticket «Impronte e server in sede, dopo la prova»: dove si calcolano le impronte, con quale
+      programma gira il modello, che macchina serve in sede (405). Dove vanno le copie di sicurezza e come si
+      ripristinano resta all'installazione, nella nebbia della mappa.</p>
   </section>
 
   <div id="questions" style="display:grid;gap:28px"></div>
@@ -161,32 +176,15 @@ table.mini td.n{font-variant-numeric:tabular-nums;white-space:nowrap}
 </div>
 
 <script>
-const GIRO = "2", LS = "divisione-g2";
-const R1 = {dati:"server",ricerca:"server",rete:"foto",scatto:"auto",palmare:"no",aggiorna:"vivo",foto:"30",senzarete:"fascia",condiviso:"parte",stampa:"browser"};
+const GIRO = "3", LS = "divisione-g3";
+const R1 = {tardi:"sospeso",quando:"3",messaggio:"due",copie:"no",legale:"si",dati:"server",ricerca:"server",rete:"foto",scatto:"auto",palmare:"no",aggiorna:"vivo",foto:"30",senzarete:"fascia",condiviso:"parte",stampa:"browser"};
 const esc = s => String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 
 const Q = [
- {k:"tardi", t:"Un'operazione in attesa arriva quando non si può più applicare: cosa succede?",
-  why:"Mentre Mario era senza rete, un collega può aver chiuso il DDT, preso l'ultimo pezzo o visto annullare l'ordine. Dopo la chiusura solo il responsabile corregge un DDT (81).",
-  o:[{id:"sospeso",l:"Non si registra da sola: torna a chi l'ha fatta, con il motivo",d:"Esito «non riuscita» e la lettura, con la foto, tra le cose in sospeso di Mario. Se riguarda un DDT già chiuso va anche al responsabile di magazzino in «Da controllare», che decide se farne un carico in più (82) o lasciarla.",rec:true},
-     {id:"registra",l:"Si registra lo stesso",d:"Sul DDT chiuso diventa da sola un carico in più verso il gestionale; al prelievo vale la regola dei pezzi oltre il richiesto (198). Nessuno la controlla prima."}]},
- {k:"quando", t:"Dopo quanto tempo senza risposta compare la fascia «Senza rete»?",
-  why:"Il tempo massimo per l'esito di una lettura è 1 secondo (195). Con un Wi-Fi debole una risposta può tardare senza che la rete sia davvero caduta.",
-  o:[{id:"3",l:"Dopo 3 secondi senza risposta, oppure subito se il telefono sa di non avere rete",d:"Fino a 3 secondi la lettura dice «in attesa». La fascia sparisce alla prima richiesta che va a buon fine.",rec:true},
-     {id:"1",l:"Dopo 1 secondo",d:"Si accorge subito, ma con il Wi-Fi debole la fascia compare e sparisce spesso."},
-     {id:"10",l:"Dopo 10 secondi",d:"La fascia compare di rado, ma l'operatore aspetta a lungo senza sapere cosa succede."}]},
- {k:"messaggio", t:"Il telefono distingue «senza Wi-Fi» da «server fermo»?",
-  why:"Per l'operatore le due cose hanno lo stesso effetto (il lavoro si ferma, 23), ma il rimedio è diverso: spostarsi dove c'è Wi-Fi, oppure chiamare chi si occupa del server.",
-  o:[{id:"due",l:"Sì, due messaggi nella stessa fascia",d:"«Senza rete: il telefono non è collegato al Wi-Fi del magazzino» oppure «Il server non risponde: avvisa il responsabile». Stesso comportamento, rimedio diverso.",rec:true},
-     {id:"uno",l:"No, un messaggio solo: «Senza rete»",d:"Più semplice da leggere, ma l'operatore non sa se spostarsi o chiamare qualcuno."}]},
- {k:"copie", t:"Le copie di sicurezza tengono anche le foto dei 30 giorni?",
-  why:"Prima di ogni aggiornamento si fa una copia di sicurezza (125). Le foto dei 30 giorni servono solo a rivedere un errore recente (412), e sono la parte che pesa di più.",
-  o:[{id:"no",l:"No: dati, foto di riferimento e foto delle bolle sì, le foto dei 30 giorni no",d:"Copie più piccole e veloci. Se il server si rompe si perdono solo le foto per rivedere gli errori; tutto il resto si ripristina.",rec:true},
-     {id:"si",l:"Sì, tutte le foto",d:"Si può rivedere un errore anche dopo un guasto, ma le copie diventano molto più grandi e lente."}]},
- {k:"legale", t:"Aggiungo un punto per chi segue la parte legale sul registro e sulle foto?",
-  why:"Il registro dice chi ha fatto cosa, quando e da quale dispositivo (27, 189), e nelle foto delle inquadrature possono comparire persone o etichette con nomi di clienti. Non so dire io cosa chiede la legge sul lavoro e sulla privacy: è da far verificare.",
-  o:[{id:"si",l:"Sì, nella lista dei punti aperti per la parte legale",d:"Il punto: cosa dire ai dipendenti su registro e foto (informativa, eventuali accordi), e per quanto tenerli. Il programma intanto non cambia: 30 giorni restano modificabili (412).",rec:true},
-     {id:"no",l:"No, non serve",d:"La specifica non porta il punto; se ne occupa l'azienda per conto suo."}]}
+ {k:"conferma", t:"Confermi il riepilogo, con le deduzioni?",
+  why:"Se confermi, chiudo il ticket, aggiorno la mappa e scrivo il prompt per la sessione dello stack. Se qualcosa non torna, scrivilo nella nota: lo correggo prima di chiudere.",
+  o:[{id:"si",l:"Sì, confermo",d:"Chiudi il ticket e prepara il prompt per lo stack.",rec:true},
+     {id:"cambia",l:"No, cambia qualcosa",d:"Scrivi nella nota cosa: lo correggo e ti rimostro il riepilogo."}]}
 ];
 const KEYS = Q.map(q=>q.k);
 let S = {note:{}}; KEYS.forEach(k=>S[k]="");
@@ -199,7 +197,7 @@ function chip(t,small,cls){ return `<span class="chip ${cls||""}">${esc(t)}${sma
 function lanes(){
   const tel=[chip("Fotocamera e inquadratura","127, 162"), chip("Lettura del barcode","127: Chrome, libreria, grilletto")];
   tel.push(chip("Scatto da solo (barcode letto o immagine ferma)","409"));
-  tel.push(chip("Operazione in attesa senza rete", "fascia dopo "+v("quando")+" s"+(v("messaggio")==="due"?", Wi-Fi o server fermo":""),"new"));
+  tel.push(chip("Operazione in attesa senza rete", "fascia dopo "+v("quando")+" s"+(v("messaggio")==="due"?", Wi-Fi o server fermo":"")+" (417, 418)"));
   if(v("dati")==="copia") tel.push(chip("Copia del catalogo","domanda 1: da tenere aggiornata","warn"));
   if(v("ricerca")==="telefono") tel.push(chip("Copia delle impronte e confronto","domanda 2: 27–134 MB","warn"));
   tel.push(chip("Calcolo delle impronte?","ticket «Impronte e server in sede, dopo la prova»","out"));
@@ -213,7 +211,7 @@ function lanes(){
     chip("Archivio delle foto", ({"30":"altre foto: 30 giorni (412)","subito":"altre foto: cancellate all'esito","sempre":"altre foto: finché si archiviano"})[v("foto")]),
     chip(v("aggiorna")==="vivo"?"Avvisa i dispositivi aperti a ogni movimento":"I dispositivi chiedono i dati all'apertura","411"),
     chip("Scambio con gestionale e Shopify, bolle, mail dei resi, aggiornamenti","girano anche a computer spenti"),
-    chip("Copie di sicurezza", v("copie")==="no"?"senza le foto dei 30 giorni":"con tutte le foto","new")];
+    chip("Copie di sicurezza", (v("copie")==="no"?"senza le foto dei 30 giorni":"con tutte le foto")+" (419)")];
   if(v("stampa")==="diretta") srv.push(chip("Stampa diretta sulle stampanti di rete","domanda 10","new"));
   srv.push(chip("Calcolo delle impronte?","ticket «Impronte e server in sede, dopo la prova»","out"));
   const r=v("rete"), net = r==="foto"?["codice letto + foto 0,3–0,6 MB","articolo, quantità, proposte"]
@@ -228,39 +226,9 @@ function lanes(){
 }
 
 const EX = {
- tardi:()=> v("tardi")==="sospeso"
-  ? `<div class="cap">Esempio: DDT 418 chiuso mentre Mario era senza rete</div><ul class="flow">
-      <li><span class="who">10:42</span><span>Mario legge B200450, la rete cade</span></li>
-      <li><span class="who">10:50</span><span>Anna chiude il DDT 418: carico al gestionale</span></li>
-      <li><span class="who">11:05</span><span>Torna la rete; la lettura arriva</span></li>
-      <li><span class="who s">Server</span><span>«Non riuscita: DDT 418 già chiuso». Tra le cose in sospeso di Mario e in «Da controllare» del responsabile</span></li></ul>`
-  : `<div class="cap">Esempio: DDT 418 chiuso mentre Mario era senza rete</div><ul class="flow">
-      <li><span class="who">10:42</span><span>Mario legge B200450, la rete cade</span></li>
-      <li><span class="who">10:50</span><span>Anna chiude il DDT 418: carico al gestionale</span></li>
-      <li><span class="who">11:05</span><span>Torna la rete; la lettura arriva</span></li>
-      <li><span class="who s">Server</span><span>Secondo carico del DDT 418 al gestionale, da solo</span></li></ul>`,
- quando:()=>{ const q=v("quando");
-  return `<div class="cap">Esempio: Wi-Fi debole in fondo al corridoio C</div><ul class="flow">
-      <li><span class="who">0 s</span><span>Lettura partita: «in attesa»</span></li>
-      <li><span class="who">${q==="1"?"1 s":q==="3"?"3 s":"10 s"}</span><span>${q==="10"?"Ancora «in attesa»: solo ora compare la fascia":"Compare la fascia «Senza rete»"}</span></li>
-      <li><span class="who">${q==="1"?"1,5 s":q==="3"?"3,5 s":"10,5 s"}</span><span>La risposta arriva: la fascia sparisce, «salvata»</span></li></ul>
-      <small>${q==="1"?"Con risposte che tardano poco più di un secondo, la fascia lampeggia a ogni lettura.":q==="3"?"Una risposta lenta ma arrivata entro 3 secondi non mostra nessuna fascia.":"Per 10 secondi l'operatore non sa se la lettura è salva."}</small>`; },
- messaggio:()=> v("messaggio")==="due"
-  ? `<div class="cap">Le due fasce</div><div class="phones">
-      <div><div class="ph"><div class="scr"><span class="band w">Senza rete: il telefono non è collegato al Wi-Fi del magazzino</span><span class="top">DDT 418 · dati delle 10:41</span><div class="row"><span>A100011</span><b>24 / 36</b></div></div></div><div class="lbl">Wi-Fi assente</div></div>
-      <div><div class="ph"><div class="scr"><span class="band w">Il server non risponde: avvisa il responsabile</span><span class="top">DDT 418 · dati delle 10:41</span><div class="row"><span>A100011</span><b>24 / 36</b></div></div></div><div class="lbl">Server fermo</div></div></div>`
-  : `<div class="cap">Una fascia sola</div><div class="phones">
-      <div><div class="ph"><div class="scr"><span class="band w">Senza rete</span><span class="top">DDT 418 · dati delle 10:41</span><div class="row"><span>A100011</span><b>24 / 36</b></div></div></div><div class="lbl">In tutti e due i casi</div></div></div>`,
- copie:()=>{ const all=v("copie")==="si";
-  const rows=[["Dati e registro","Sì"],["Foto di riferimento","Sì"],["Foto delle bolle","Sì"],["Foto dei 30 giorni",all?"Sì":"No"]];
-  return `<div class="cap">Cosa entra nella copia di sicurezza</div><div class="tw"><table class="mini"><thead><tr><th>Cosa</th><th>Nella copia</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td></tr>`).join("")}</tbody></table></div>
-   <small>${all?"Con circa 0,4 GB ogni 1.000 inquadrature, le foto dei 30 giorni sono la parte più grande della copia (stima).":"Se il server si rompe, si perdono solo le foto per rivedere gli errori recenti."}</small>`; },
- legale:()=> v("legale")==="si"
-  ? `<div class="cap">Lista dei punti aperti per la parte legale</div><ul class="flow">
-      <li><span class="who">Già c'è</span><span>Garanzia legale di 2 anni; funzione di recesso online; ritiro gratuito e credito (342)</span></li>
-      <li><span class="who s">Nuovo</span><span>Registro e foto delle inquadrature: cosa dire ai dipendenti e per quanto tenerli</span></li></ul>`
-  : `<div class="cap">Lista dei punti aperti per la parte legale</div><ul class="flow">
-      <li><span class="who">Già c'è</span><span>Garanzia legale di 2 anni; funzione di recesso online; ritiro gratuito e credito (342)</span></li></ul>`
+ conferma:()=>{ const st = v("conferma")==="cambia" ? ["Correggo la parte indicata nella nota","Ti rimostro il riepilogo","Poi chiudo il ticket"]
+   : ["Chiudo il ticket «Divisione tra telefono, computer e server in sede»","Aggiorno la mappa: il ticket «Stack» resta l'ultimo prima dell'aspetto grafico","Scrivo il prompt della sessione dello stack in docs/prossima-sessione.md"];
+  return `<div class="cap">Cosa succede dopo</div><ol class="flow" style="list-style:decimal;padding-left:20px">${st.map(t=>`<li style="display:list-item">${esc(t)}</li>`).join("")}</ol>`; }
 };
 
 function build(){
@@ -281,7 +249,7 @@ const opts=(q,cur)=>q.o.map(o=>`<label class="opt"><input type="radio" name="${q
   <span><b>${esc(o.l)}</b>${o.rec?'<span class="rec">Consigliata</span>':""}<span class="d">${esc(o.d)}</span></span></label>`).join("");
 function refresh(){ lanes(); for(const q of Q) document.getElementById("ex-"+q.k).innerHTML=EX[q.k](); document.getElementById("copybox").textContent=asText(); }
 function render(){ for(const q of Q){ document.getElementById(q.k+"-opts").innerHTML=opts(q,S[q.k]); document.getElementById("n-"+q.k).value=S.note[q.k]||""; } refresh(); }
-function asText(){ const n=k=>S.note[k]?" — nota: "+S.note[k]:""; return ["Divisione telefono, computer e server – giro 2"].concat(Q.map((q,i)=>`${i+1}. ${q.t} ${lab(q.k)}${n(q.k)}`)).join("\n"); }
+function asText(){ const n=k=>S.note[k]?" — nota: "+S.note[k]:""; return ["Divisione telefono, computer e server – riepilogo"].concat(Q.map((q,i)=>`${i+1}. ${q.t} ${lab(q.k)}${n(q.k)}`)).join("\n"); }
 
 let db=null,timer=null,saving=false,pending=false;
 function setStatus(t,cls){ ["status","status2"].forEach(id=>{const el=document.getElementById(id); el.textContent=t; el.className="status "+(cls||"");}); }
