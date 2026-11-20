@@ -1,0 +1,387 @@
+<title>Divisione telefono e server</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@112,600;112,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: schema di cosa gira dove in cima (cambia con le risposte), poi una domanda per riga con l'esempio accanto.
+   Tono: segnaletica di magazzino, come le altre pagine dei ticket. Il blu elettrico di Ripo solo per il server. */
+:root{
+  --bg:#f3f5f7; --surface:#ffffff; --fg:#17202b; --muted:#5a6675; --line:#d5dbe2;
+  --accent:#1f4e8c; --accent-soft:#e3ebf6; --tag:#f2b705; --tag-fg:#2a2100;
+  --ok:#1d7a46; --ok-soft:#e1f2e8; --warn:#9a5200; --warn-soft:#fbeedd;
+  --brand:#1F5BFF; --brand-soft:#e6edff; --phone:#0f1720; --screen:#ffffff; --screen-fg:#141a22;
+  --f-display:"Archivo","Arial Narrow",system-ui,sans-serif;
+  --f-body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f141a; --surface:#18202a; --fg:#e6ebf1; --muted:#9aa7b6; --line:#2c3846;
+  --accent:#7fb0ef; --accent-soft:#1d2d42; --tag:#f2b705; --tag-fg:#2a2100;
+  --ok:#5fcf8e; --ok-soft:#173326; --warn:#f0a447; --warn-soft:#3a2a14;
+  --brand:#668FFF; --brand-soft:#1b2747; --phone:#05080c; --screen:#1c1c1e; --screen-fg:#e6ebf1; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f141a; --surface:#18202a; --fg:#e6ebf1; --muted:#9aa7b6; --line:#2c3846;
+  --accent:#7fb0ef; --accent-soft:#1d2d42; --tag:#f2b705; --tag-fg:#2a2100;
+  --ok:#5fcf8e; --ok-soft:#173326; --warn:#f0a447; --warn-soft:#3a2a14;
+  --brand:#668FFF; --brand-soft:#1b2747; --phone:#05080c; --screen:#1c1c1e; --screen-fg:#e6ebf1; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:15px/1.55 var(--f-body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 96px}
+.wrap{max-width:1100px;margin:0 auto;display:grid;gap:28px}
+h1,h2,h3{font-family:var(--f-display);font-stretch:112%;text-wrap:balance;margin:0;line-height:1.15}
+h1{font-size:clamp(28px,5vw,40px);font-weight:800}
+h2{font-size:22px;font-weight:800}
+h3{font-size:18px;font-weight:600}
+p{margin:0;max-width:68ch}
+code{font:13px var(--f-mono)}
+.eyebrow{font:600 12px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.intro{display:grid;gap:12px}
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+button{font:600 14px/1 var(--f-body);border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--fg);padding:11px 14px;cursor:pointer}
+button.primary{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+button:focus-visible,input:focus-visible,textarea:focus-visible,label.opt:focus-within{outline:3px solid var(--tag);outline-offset:2px}
+.status{font-size:13px;color:var(--muted)}
+.status.ok{color:var(--ok)} .status.warn{color:var(--warn)}
+.rec{display:inline-block;margin-left:8px;font:600 11px/1 var(--f-mono);letter-spacing:.05em;text-transform:uppercase;background:var(--tag);color:var(--tag-fg);padding:4px 6px;border-radius:4px;vertical-align:2px}
+
+/* Schema */
+.map{display:grid;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px}
+.map > p{color:var(--muted);font-size:14px}
+.lanes{display:grid;grid-template-columns:minmax(0,1fr) 120px minmax(0,1.25fr);gap:10px;align-items:stretch}
+@media (max-width:760px){.lanes{grid-template-columns:minmax(0,1fr)}}
+.lane{border:1px solid var(--line);border-radius:12px;padding:12px;display:grid;gap:8px;align-content:start;min-width:0;background:var(--bg)}
+.lane.srv{border-color:var(--brand);background:var(--brand-soft)}
+.lane h3{font-size:15px}
+.lane .sub{font-size:12.5px;color:var(--muted)}
+.chip{display:block;border-radius:8px;padding:7px 9px;font-size:13.5px;line-height:1.35;background:var(--surface);border:1px solid var(--line)}
+.chip small{display:block;font:500 11px/1.3 var(--f-mono);color:var(--muted);margin-top:2px}
+.chip.new{border-color:var(--accent);box-shadow:inset 3px 0 0 var(--accent)}
+.chip.warn{border-color:var(--warn);background:var(--warn-soft)}
+.chip.out{border-style:dashed;color:var(--muted);background:transparent}
+.wire{display:grid;gap:8px;align-content:center;justify-items:center;text-align:center;min-width:0}
+.wire .arrow{font:600 11px/1.35 var(--f-mono);color:var(--muted);border-top:2px dashed var(--muted);padding-top:6px;width:100%}
+.wire .arrow b{display:block;color:var(--fg);font-weight:600}
+@media (max-width:760px){.wire{grid-auto-flow:column;grid-auto-columns:minmax(0,1fr)}}
+
+/* Domande */
+.q{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:18px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px}
+@media (max-width:760px){.q{grid-template-columns:minmax(0,1fr)}}
+.q .ask{display:grid;gap:10px;align-content:start;min-width:0}
+.q .num{font:600 12px/1 var(--f-mono);letter-spacing:.08em;color:var(--muted)}
+.q .why{color:var(--muted);font-size:14px}
+.opts{display:grid;gap:8px}
+label.opt{display:grid;grid-template-columns:22px minmax(0,1fr);gap:8px;align-items:start;border:1px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer;background:var(--bg)}
+label.opt:has(input:checked){border-color:var(--accent);background:var(--accent-soft)}
+label.opt input{margin:3px 0 0;accent-color:var(--accent);width:16px;height:16px}
+label.opt b{font-weight:600}
+label.opt .d{display:block;color:var(--muted);font-size:13.5px;margin-top:2px}
+textarea{width:100%;min-height:56px;font:14px/1.4 var(--f-body);border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:var(--bg);color:var(--fg);resize:vertical}
+.notelbl{font-size:13px;color:var(--muted)}
+.ex{background:var(--bg);border:1px dashed var(--line);border-radius:12px;padding:14px;display:grid;gap:12px;align-content:start;min-width:0}
+.ex .cap{font:600 11px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.ex small,.note{color:var(--muted);font-size:13px;display:block}
+.flow{display:grid;gap:6px;margin:0;padding:0;list-style:none}
+.flow li{display:grid;grid-template-columns:86px minmax(0,1fr);gap:8px;font-size:13.5px;align-items:start}
+.flow .who{font:600 11px/1.6 var(--f-mono);letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.flow .who.s{color:var(--brand)}
+.flow .net{font:12.5px/1.4 var(--f-mono);background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:4px 7px;overflow-wrap:anywhere}
+.phones{display:flex;gap:10px;flex-wrap:wrap}
+.ph{background:var(--phone);border-radius:16px;padding:7px;width:170px;max-width:100%}
+.ph .scr{background:var(--screen);color:var(--screen-fg);border-radius:10px;padding:8px;display:grid;gap:6px;font-size:11.5px;min-height:170px;align-content:start}
+.ph .top{font:600 10px/1.2 var(--f-mono);letter-spacing:.04em;text-transform:uppercase;opacity:.7}
+.ph .row{display:flex;justify-content:space-between;gap:6px;border-top:1px solid var(--line);padding-top:5px}
+.ph .row b{font-weight:600}
+.ph .band{border-radius:6px;padding:5px 6px;font-size:10.5px;line-height:1.3}
+.ph .band.w{background:var(--warn-soft);color:var(--warn)}
+.ph .band.o{background:var(--ok-soft);color:var(--ok)}
+.ph .cam{height:54px;border-radius:6px;background:repeating-linear-gradient(135deg,#2b3644 0 6px,#334155 6px 12px);display:grid;place-items:center;color:#cbd5e1;font:600 10px var(--f-mono)}
+.ph .cam.off{opacity:.35}
+.ph .btn{border-radius:6px;padding:5px;text-align:center;font-weight:600;background:var(--accent);color:var(--surface)}
+.ph .btn.off{opacity:.35}
+.ph .stale{opacity:.55}
+.lbl{font:600 10.5px/1.2 var(--f-mono);letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+table.mini{border-collapse:collapse;width:100%;font-size:13px}
+table.mini td,table.mini th{padding:5px 6px;border-top:1px solid var(--line);text-align:left;vertical-align:top}
+table.mini th{font:600 10.5px/1.2 var(--f-mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+table.mini td.n{font-variant-numeric:tabular-nums;white-space:nowrap}
+.tw{overflow-x:auto}
+.given{display:grid;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px}
+.given ul{margin:0;padding-left:20px;display:grid;gap:4px;font-size:14px}
+
+.save{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--line);padding-block:12px calc(12px + env(safe-area-inset-bottom,0px));display:grid;gap:8px}
+#copybox{font:12.5px/1.5 var(--f-mono);white-space:pre-wrap;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px}
+@media (prefers-reduced-motion:no-preference){.chip.new{transition:box-shadow .2s}}
+</style>
+
+<div class="wrap">
+  <header class="intro">
+    <div class="eyebrow">Ticket «Divisione tra telefono, computer e server in sede» · giro 1 · 20/11/2026</div>
+    <h1>Cosa gira dove</h1>
+    <p>Qui si decide cosa fa il telefono (o il palmare), cosa il computer e cosa il server in sede, e cosa passa in rete
+      ogni volta che si inquadra una scatola. Resta fuori, perché dipende dai numeri della prova visiva, dove si calcolano
+      le impronte delle foto e che macchina serve in sede (405): se ne occupa il ticket «Impronte e server in sede, dopo
+      la prova».</p>
+    <p>Lo schema qui sotto cambia con le tue risposte. Ogni domanda ha la risposta consigliata e una nota facoltativa.</p>
+    <div class="bar"><button class="primary" id="accept-all" type="button">Accetta tutte le consigliate</button>
+      <span class="status" id="status">Caricamento delle risposte salvate…</span></div>
+  </header>
+
+  <section class="map" aria-labelledby="h-map">
+    <h2 id="h-map">Lo schema con le tue risposte</h2>
+    <p>In blu il server in sede. I riquadri bordati di blu scuro cambiano con le risposte; quelli tratteggiati sono decisi
+      in un altro ticket.</p>
+    <div class="lanes" id="lanes"></div>
+  </section>
+
+  <section class="given" aria-labelledby="h-given">
+    <h2 id="h-given">Già deciso, non si rimette in discussione</h2>
+    <ul>
+      <li>Web app dal browser su telefoni, palmari e computer, servita dal server in sede, raggiungibile solo dalla rete interna (121, 122, 126).</li>
+      <li>Il barcode si legge sul dispositivo: lettore di Chrome su Android, una libreria nella pagina su iPhone e computer, il grilletto sul palmare (127).</li>
+      <li>Il codice stampato si legge sul server, con la foto che viaggia sulla rete interna (121, 127).</li>
+      <li>Senza rete il lavoro si ferma con un messaggio chiaro; l'operazione in corso resta nel browser, legata a chi l'ha fatta, e parte quando torna la rete (23, 127).</li>
+      <li>Ogni scansione si salva sul server appena fatta, con il suo esito; ripetere un invio non crea doppioni; esito di una lettura entro 1 secondo (modello dei dati, 195).</li>
+      <li>Nella schermata del DDT l'inquadratura sta in alto ed è sempre accesa (162).</li>
+    </ul>
+    <p class="note">Ne deduco, senza domanda: l'assegnazione «dal più vecchio» (con VEND che vince) si calcola sul server,
+      in un posto solo (16, 305), e si rifà a ogni movimento; due telefoni che confermano l'ultimo pezzo insieme non lo
+      prendono due volte: il server accetta il primo e al secondo dice «già preso». Anche lo scambio con il gestionale,
+      Shopify, la lettura delle bolle e delle mail dei resi e gli aggiornamenti notturni girano sul server, anche a
+      computer spenti.</p>
+  </section>
+
+  <div id="questions" style="display:grid;gap:28px"></div>
+
+  <div class="save">
+    <div class="bar"><button class="primary" id="save" type="button">Salva adesso</button>
+      <button id="copy" type="button">Copia le risposte</button>
+      <span class="status" id="status2"></span></div>
+    <small class="status">Quando hai finito, scrivi «fatto» in chat: leggo le risposte salvate.</small>
+    <div id="copybox" hidden></div>
+  </div>
+</div>
+
+<script>
+const GIRO = "1", LS = "divisione-g1";
+const esc = s => String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+const Q = [
+ {k:"dati", t:"Dove stanno i dati: catalogo, giacenze, ordini, movimenti?",
+  why:"Conta per la velocità, per cosa resta su un telefono personale e per cosa va tenuto allineato. Il lavoro senza rete è già escluso (23), quindi una copia sul telefono non serve a lavorare offline.",
+  o:[{id:"server",l:"Solo sul server in sede",d:"Ogni schermata chiede i dati al server. Sul dispositivo resta solo l'operazione in corso. Un telefono personale non porta via dati (127). Il telefono legge il barcode; cosa vuol dire (quale articolo, quantità GS1, lettore di etichette del fornitore, 304) lo decide il server.",rec:true},
+     {id:"copia",l:"Sul server, più una copia del catalogo su ogni telefono",d:"La scheda dopo un barcode compare senza aspettare il server. Ma la copia va tenuta aggiornata su ogni dispositivo, finisce anche sui telefoni personali, e il registro resta comunque sul server."}]},
+ {k:"ricerca", t:"Dove si confronta l'aspetto con le foto di riferimento?",
+  why:"È la «ricerca tra le impronte»: l'impronta della foto appena fatta si confronta con quelle di tutte le foto di riferimento. Qui si decide solo dove sta l'elenco delle impronte e dove si fa il confronto, non dove si calcola l'impronta (ticket dopo la prova).",
+  o:[{id:"server",l:"Sul server, con un elenco solo per tutto il magazzino",d:"Un articolo nuovo si riconosce subito da tutti i dispositivi (107). Con 35.000 articoli e 5–10 foto ciascuno sono 175.000–350.000 impronte: un confronto esatto costa poco rispetto al calcolo dell'impronta (ricerca del 15/11, §E).",rec:true},
+     {id:"telefono",l:"Sul telefono, con una copia delle impronte su ogni dispositivo",d:"Da circa 27 a 134 MB per telefono (ricerca §E), da scaricare e tenere aggiornati. Un articolo nuovo arriva agli altri solo dopo l'aggiornamento; i telefoni vecchi rallentano."}]},
+ {k:"rete", t:"Cosa passa in rete ogni volta che si inquadra una scatola?",
+  why:"Il barcode si legge sul telefono, ma la quantità scritta sulla scatola (QTÀ, PZ, «× 12», 93) e il codice stampato si leggono sul server, dalla foto. E le foto di riferimento nascono anche dalle identificazioni fatte con il barcode (96).",
+  o:[{id:"foto",l:"Il codice letto più una foto ferma, ogni volta",d:"Il barcode registra subito (99); dalla stessa foto il server legge quantità e codice stampato, prova l'aspetto se serve, e la tiene come possibile foto di riferimento. Stima da misurare: 0,3–0,6 MB per foto sulla rete interna.",rec:true},
+     {id:"solo",l:"La foto solo quando il barcode manca o non si trova",d:"Se c'è il barcode passano pochi caratteri. Ma con il barcode la quantità si legge solo se è nel GS1, e quelle identificazioni non danno foto di riferimento: cambierebbe le decisioni 93 e 96."},
+     {id:"video",l:"Il video della fotocamera, di continuo, al server",d:"Il server sceglie il fotogramma migliore. Molto traffico con più telefoni insieme, Wi-Fi sotto carico, batteria che cala in fretta."}]},
+ {k:"scatto", t:"Quando parte la foto dall'inquadratura sempre accesa?",
+  why:"L'inquadratura del DDT è sempre accesa (162) e l'operatore inquadra una volta (87). Serve una regola per non mandare foto a vuoto né la stessa scatola due volte.",
+  o:[{id:"auto",l:"Da sola, quando legge un barcode o l'immagine resta ferma su una scatola",d:"Circa mezzo secondo fermo basta (da tarare nelle prove sui dispositivi). La stessa scatola non riparte finché non esce dall'inquadratura; per più colli vale la 94. Un tasto «Scatta» resta come ripiego.",rec:true},
+     {id:"tocco",l:"Sempre con un tocco su «Scatta»",d:"Nessuna foto a vuoto, ma un tocco in più per ogni scatola anche quando il barcode è già letto."}]},
+ {k:"palmare", t:"Sul palmare, il grilletto fa anche una foto?",
+  why:"Il palmare legge il barcode con il grilletto (119) e sull'elenco del prelievo legge sempre col grilletto (276). La fotocamera del palmare serve per codice stampato e aspetto.",
+  o:[{id:"no",l:"No: il grilletto legge solo il barcode",d:"La fotocamera si apre con «Inquadra» quando il barcode manca o non si trova. Sul palmare la quantità viene dal GS1 o da «come l'ultima volta» (100), e le letture col grilletto non danno foto di riferimento. Resta veloce come oggi.",rec:true},
+     {id:"si",l:"Sì: al grilletto parte anche una foto",d:"Quantità scritte e foto di riferimento anche dal palmare, ma la fotocamera deve restare accesa e puntata come il lettore: più batteria, e su alcuni palmari fotocamera e lettore guardano in punti diversi (da verificare sul palmare di UFP)."}]},
+ {k:"aggiorna", t:"Quando un collega preleva o carica, il tuo schermo si aggiorna da solo?",
+  why:"I preparatori devono vedere subito cosa è già preso (36) e più operatori lavorano sullo stesso DDT (68).",
+  o:[{id:"vivo",l:"Sì, entro pochi secondi, nelle schermate di lavoro condiviso",d:"Elenco del prelievo, coda «Prossimo ordine», DDT aperto, cose in sospeso, giacenze dell'articolo aperto. Le altre schermate si aggiornano quando si aprono. Il server tiene un canale aperto con ogni dispositivo.",rec:true},
+     {id:"apertura",l:"No, solo quando si apre o si ricarica la schermata",d:"Più semplice, ma un preparatore può vedere una giacenza vecchia e andare a cercare un pezzo già preso; se ne accorge solo alla conferma («già preso»)."}]},
+ {k:"foto", t:"Le foto delle inquadrature che non diventano foto di riferimento: quanto si tengono?",
+  why:"Ogni inquadratura manda una foto, ma poche diventano foto di riferimento (filtri della 96). Le altre servono solo a capire un errore o un «non lo so». Le foto di riferimento restano finché il responsabile non le toglie (96); la foto della bolla resta con il DDT nei Documenti (184, 199). Nessuna foto esce dalla rete interna.",
+  o:[{id:"30",l:"30 giorni, poi si cancellano da sole",d:"Resta sempre il dato dell'identificazione: come, con quali proposte, chi (104). L'admin può cambiare i giorni in Configurazione. È un'eccezione alla 199, che vale per documenti e registro, non per queste foto.",rec:true},
+     {id:"subito",l:"Si cancellano appena c'è l'esito",d:"Spazio minimo, ma un errore di riconoscimento non si può più rivedere sulla foto vera."},
+     {id:"sempre",l:"Si tengono finché il responsabile non le archivia, come la 199",d:"Si rivede tutto, ma lo spazio cresce senza fine e tocca al responsabile ricordarsi di archiviare."}]},
+ {k:"senzarete", t:"Senza rete, cosa vede l'operatore?",
+  why:"Il lavoro si ferma (23), ma l'operatore deve capire subito cosa è salvo e cosa no. Nel browser restano le operazioni fatte e non ancora arrivate al server (di solito una sola): codice letto, foto, quantità scritta, chi e quando.",
+  o:[{id:"fascia",l:"La schermata resta, con una fascia «Senza rete» in alto",d:"Si vede ancora il DDT o l'ordine com'era all'ultimo aggiornamento, con l'ora; fotocamera e tasti che cambiano dati sono spenti. Quando la rete torna l'operazione parte da sola e la fascia dice «Inviata».",rec:true},
+     {id:"blocco",l:"Una schermata intera «Rete assente» copre il lavoro",d:"Messaggio impossibile da non vedere, ma l'operatore non vede più cosa stava facendo finché la rete non torna."}]},
+ {k:"condiviso", t:"Telefono condiviso: se Mario ha un'operazione in attesa ed entra Anna, cosa succede?",
+  why:"Sui telefoni condivisi si entra con nome e PIN e dopo 30 minuti si esce da soli (80). L'operazione in attesa è legata a chi l'ha fatta (127).",
+  o:[{id:"parte",l:"Parte lo stesso, a nome di Mario, appena torna la rete",d:"Anna vede «1 operazione di Mario in attesa». Se all'arrivo serve una scelta (proposte dall'aspetto, due quantità diverse), Mario la trova tra le sue cose in sospeso e il DDT segna la lettura da completare.",rec:true},
+     {id:"aspetta",l:"Aspetta che Mario rientri su quel telefono",d:"Nessuna operazione parte senza di lui, ma se non rientra resta lì e il DDT resta incompleto."}]},
+ {k:"stampa", t:"Da dove si stampano documenti ed etichette (posti VEND, ubicazioni)?",
+  why:"Il programma stampa i suoi documenti (319) e servono etichette per i posti VEND (47) e le ubicazioni. Le etichette del corriere restano nella nebbia della mappa.",
+  o:[{id:"browser",l:"Il server prepara il PDF, si stampa dal browser del dispositivo",d:"Con la stampante che il computer o il telefono già conosce. Sul server non si configura nessuna stampante. La stampa diretta su una termica diventa un collegamento in più, quando servirà (303).",rec:true},
+     {id:"diretta",l:"Il server manda direttamente alle stampanti di rete",d:"Si stampa anche dal palmare senza passare dal computer, ma le stampanti vanno configurate sul server in ogni magazzino, con i loro driver."}]}
+];
+const KEYS = Q.map(q=>q.k);
+let S = {note:{}}; KEYS.forEach(k=>S[k]="");
+try{ const d = JSON.parse(localStorage.getItem(LS)||"null"); if(d) S = Object.assign(S,d); }catch(e){}
+const rec = k => Q.find(q=>q.k===k).o.find(o=>o.rec).id;
+const v = k => S[k] || rec(k);          // per gli esempi: senza risposta vale la consigliata
+const lab = k => { const q=Q.find(q=>q.k===k); return (q.o.find(o=>o.id===S[k])||{l:"da scegliere"}).l; };
+
+function chip(t,small,cls){ return `<span class="chip ${cls||""}">${esc(t)}${small?`<small>${esc(small)}</small>`:""}</span>`; }
+function lanes(){
+  const tel=[chip("Fotocamera e inquadratura","127, 162"), chip("Lettura del barcode","127: Chrome, libreria, grilletto")];
+  tel.push(chip(v("scatto")==="auto"?"Scatto da solo (barcode letto o immagine ferma)":"Scatto con il tocco «Scatta»","domanda 4","new"));
+  tel.push(chip("Operazione in corso senza rete", v("senzarete")==="fascia"?"con la fascia «Senza rete»":"con la schermata «Rete assente»","new"));
+  if(v("dati")==="copia") tel.push(chip("Copia del catalogo","domanda 1: da tenere aggiornata","warn"));
+  if(v("ricerca")==="telefono") tel.push(chip("Copia delle impronte e confronto","domanda 2: 27–134 MB","warn"));
+  tel.push(chip("Calcolo delle impronte?","ticket «Impronte e server in sede, dopo la prova»","out"));
+  const pc=[chip("Computer: stesso browser, stesse schermate","122")];
+  if(v("stampa")==="browser") pc.push(chip("Stampa dei PDF dal browser","domanda 10","new"));
+  const srv=[chip(v("dati")==="copia"?"Database (originale; copia sui telefoni)":"Database: catalogo, giacenze, ordini, movimenti","domanda 1","new"),
+    chip("Assegnazione dal più vecchio, VEND","16, 305: in un posto solo"),
+    chip("Codice stampato e quantità scritta","121, 93"),
+    chip("Significato del barcode: articolo, GS1, lettori di etichette", "304"),
+    v("ricerca")==="server"?chip("Elenco delle impronte e confronto","domanda 2","new"):chip("Elenco originale delle impronte","domanda 2: copiato sui telefoni","warn"),
+    chip("Archivio delle foto", ({"30":"altre foto: 30 giorni","subito":"altre foto: cancellate all'esito","sempre":"altre foto: finché si archiviano"})[v("foto")],"new"),
+    chip(v("aggiorna")==="vivo"?"Avvisa i dispositivi aperti a ogni movimento":"I dispositivi chiedono i dati all'apertura","domanda 6","new"),
+    chip("Scambio con gestionale e Shopify, bolle, mail dei resi, aggiornamenti","girano anche a computer spenti")];
+  if(v("stampa")==="diretta") srv.push(chip("Stampa diretta sulle stampanti di rete","domanda 10","new"));
+  srv.push(chip("Calcolo delle impronte?","ticket «Impronte e server in sede, dopo la prova»","out"));
+  const r=v("rete"), net = r==="foto"?["codice letto + foto 0,3–0,6 MB","articolo, quantità, proposte"]
+          : r==="solo"?["solo il codice (foto se manca)","articolo, quantità GS1"]:["video continuo","articolo, quantità, proposte"];
+  document.getElementById("lanes").innerHTML=
+   `<div class="lane"><h3>Telefono o palmare</h3><span class="sub">Nel browser, senza installare nulla</span>${tel.join("")}
+      <h3 style="margin-top:6px">Computer</h3>${pc.join("")}</div>
+    <div class="wire" aria-label="Cosa passa in rete per ogni inquadratura">
+      <div class="arrow">verso il server<b>${esc(net[0])}</b></div>
+      <div class="arrow">di ritorno<b>${esc(net[1])}</b></div></div>
+    <div class="lane srv"><h3>Server in sede</h3><span class="sub">Solo rete interna (121)</span>${srv.join("")}</div>`;
+}
+
+const EX = {
+ dati:()=> v("dati")==="server"
+  ? `<div class="cap">Esempio: barcode di una scatola</div><ul class="flow">
+      <li><span class="who">Telefono</span><span>Legge 8001234567890</span></li>
+      <li><span class="who">Rete</span><span class="net">→ 8001234567890 · DDT 418 · Mario</span></li>
+      <li><span class="who s">Server</span><span>Cerca il codice nel catalogo, registra la scansione</span></li>
+      <li><span class="who">Rete</span><span class="net">← A100011 · Viti M6 · 12 pz · salvata</span></li></ul>
+     <small>Sul telefono non resta nulla dopo l'esito. Telefono personale perso: nessun dato a bordo.</small>`
+  : `<div class="cap">Esempio: barcode di una scatola</div><ul class="flow">
+      <li><span class="who">Telefono</span><span>Legge 8001234567890 e trova A100011 nella sua copia</span></li>
+      <li><span class="who">Rete</span><span class="net">→ 8001234567890 · DDT 418 · Mario</span></li>
+      <li><span class="who s">Server</span><span>Registra la scansione</span></li></ul>
+     <small>La copia va aggiornata a ogni articolo nuovo o codice cambiato; un telefono con la copia vecchia mostra un articolo sbagliato finché non si aggiorna.</small>`,
+ ricerca:()=> v("ricerca")==="server"
+  ? `<div class="cap">Esempio: articolo nuovo alle 9:00</div><ul class="flow">
+      <li><span class="who">9:00</span><span>Anna crea «Staffa zincata 40» con tre foto (106)</span></li>
+      <li><span class="who s">Server</span><span>Aggiunge le sue impronte all'elenco unico</span></li>
+      <li><span class="who">9:01</span><span>Mario inquadra la stessa staffa su un altro telefono: compare tra le proposte</span></li></ul>`
+  : `<div class="cap">Esempio: articolo nuovo alle 9:00</div><ul class="flow">
+      <li><span class="who">9:00</span><span>Anna crea «Staffa zincata 40» con tre foto (106)</span></li>
+      <li><span class="who s">Server</span><span>Aggiunge le impronte; i telefoni le scaricano al prossimo aggiornamento</span></li>
+      <li><span class="who">9:01</span><span>Il telefono di Mario non le ha ancora: «non lo so»</span></li></ul>`,
+ rete:()=>{ const r=v("rete");
+  const rows = r==="foto" ? [["Telefono","Legge il barcode e ferma una foto"],["Rete","→ 8001234567890 + foto 0,4 MB","net"],["Server","Registra con il barcode; dalla foto legge «QTÀ 12»; tiene la foto se passa i filtri (96)"],["Rete","← A100011 · 12 pz · salvata","net"]]
+   : r==="solo" ? [["Telefono","Legge il barcode"],["Rete","→ 8001234567890","net"],["Server","Registra con il barcode"],["Rete","← A100011 · 1 pz (nessun GS1) · salvata","net"]]
+   : [["Telefono","Manda il video, 10–30 fotogrammi al secondo"],["Rete","→ flusso continuo, decine di MB al minuto per telefono","net"],["Server","Sceglie il fotogramma, legge tutto"],["Rete","← A100011 · 12 pz · salvata","net"]];
+  return `<div class="cap">Esempio: scatola con barcode e scritta «QTÀ 12»</div><ul class="flow">${rows.map(([w,t,c])=>`<li><span class="who ${w==="Server"?"s":""}">${w}</span><span class="${c||""}">${esc(t)}</span></li>`).join("")}</ul>
+   ${r==="solo"?"<small>La quantità 12 scritta sulla scatola non si legge: parte da 1 o da «come l'ultima volta» (95, 100).</small>":r==="video"?"<small>Le cifre del video sono una stima, non una misura.</small>":"<small>0,4 MB è una stima per una foto da 1920 × 1080; si misura nelle prove sui dispositivi veri.</small>"}`; },
+ scatto:()=> v("scatto")==="auto"
+  ? `<div class="cap">Esempio: tre scatole di fila</div><ul class="flow">
+      <li><span class="who">Scatola 1</span><span>Barcode letto: foto partita subito</span></li>
+      <li><span class="who">Scatola 2</span><span>Senza barcode, ferma mezzo secondo: foto partita</span></li>
+      <li><span class="who">Scatola 2</span><span>Resta inquadrata: nessuna foto nuova</span></li>
+      <li><span class="who">Scatola 3</span><span>Passa veloce, mossa: niente; se serve, «Scatta»</span></li></ul>`
+  : `<div class="cap">Esempio: tre scatole di fila</div><ul class="flow">
+      <li><span class="who">Scatola 1</span><span>Barcode letto, poi tocco «Scatta»</span></li>
+      <li><span class="who">Scatola 2</span><span>Tocco «Scatta»</span></li>
+      <li><span class="who">Scatola 3</span><span>Tocco «Scatta»</span></li></ul><small>Tre tocchi in più per tre scatole.</small>`,
+ palmare:()=> v("palmare")==="no"
+  ? `<div class="cap">Esempio: palmare al ricevimento</div><ul class="flow">
+      <li><span class="who">Grilletto</span><span>8001234567890 → A100011, 1 collo da 12 «come l'ultima volta»</span></li>
+      <li><span class="who">Senza barcode</span><span>Tocco «Inquadra»: la fotocamera si apre, foto al server</span></li></ul>`
+  : `<div class="cap">Esempio: palmare al ricevimento</div><ul class="flow">
+      <li><span class="who">Grilletto</span><span>8001234567890 + foto: legge anche «QTÀ 12»</span></li>
+      <li><span class="who">Batteria</span><span>Fotocamera accesa per tutto il turno</span></li></ul>`,
+ aggiorna:()=>{ const live=v("aggiorna")==="vivo";
+  return `<div class="cap">Esempio: ultimo pezzo di A100011, ore 10:15</div><div class="phones">
+   <div><div class="ph"><div class="scr"><span class="top">Luca · ordine 2291</span><div class="row"><span>A100011</span><b>1 preso</b></div><span class="band o">Prelevato 10:15</span></div></div><div class="lbl">Telefono di Luca</div></div>
+   <div><div class="ph"><div class="scr"><span class="top">Sara · ordine 2304</span>
+     ${live?`<div class="row"><span>A100011</span><b>0 disponibili</b></div><span class="band w">Aggiornato 10:15: preso da Luca</span>`
+           :`<div class="row stale"><span>A100011</span><b>1 disponibile</b></div><span class="band w">Dati delle 10:02</span>`}</div></div><div class="lbl">Telefono di Sara</div></div></div>
+   ${live?"":"<small>Sara va allo scaffale e scopre alla conferma che il pezzo non c'è più.</small>"}`; },
+ foto:()=>{ const f=v("foto");
+  const rows=[["Foto di riferimento","Finché il responsabile non la toglie (96)"],["Foto della bolla","Con il DDT, nei Documenti (184, 199)"],
+   ["Altre foto delle inquadrature", f==="30"?"30 giorni, poi cancellate":f==="subito"?"Cancellate all'esito":"Finché il responsabile non archivia"],
+   ["Dato dell'identificazione","Sempre, nel registro (104)"]];
+  const sp = f==="30"?"Spazio: circa 0,4 GB ogni 1.000 inquadrature, tenuto solo per 30 giorni (stima).":f==="subito"?"Spazio: quasi nulla oltre alle foto di riferimento.":"Spazio: circa 0,4 GB ogni 1.000 inquadrature, che si sommano per sempre (stima).";
+  return `<div class="cap">Cosa resta sul server</div><div class="tw"><table class="mini"><thead><tr><th>Foto</th><th>Quanto resta</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td></tr>`).join("")}</tbody></table></div><small>${esc(sp)}</small>`; },
+ senzarete:()=> v("senzarete")==="fascia"
+  ? `<div class="cap">Esempio: Wi-Fi perso alle 10:42 nel DDT 418</div><div class="phones">
+     <div><div class="ph"><div class="scr"><span class="band w">Senza rete dalle 10:42 · 1 lettura conservata, parte quando torna la rete</span><div class="cam off">fotocamera spenta</div><span class="top">DDT 418 · dati delle 10:41</span><div class="row"><span>A100011</span><b>24 / 36</b></div><div class="row"><span>B200450</span><b>0 / 10</b></div><div class="btn off">Chiudi DDT</div></div></div><div class="lbl">Senza rete</div></div>
+     <div><div class="ph"><div class="scr"><span class="band o">Rete tornata · lettura inviata</span><div class="cam">inquadratura</div><span class="top">DDT 418</span><div class="row"><span>A100011</span><b>36 / 36</b></div><div class="row"><span>B200450</span><b>0 / 10</b></div><div class="btn">Chiudi DDT</div></div></div><div class="lbl">Rete tornata</div></div></div>`
+  : `<div class="cap">Esempio: Wi-Fi perso alle 10:42 nel DDT 418</div><div class="phones">
+     <div><div class="ph"><div class="scr" style="align-content:center;text-align:center"><b style="font-size:14px">Rete assente</b><span>1 lettura conservata: parte quando torna la rete.</span><span class="top">dalle 10:42</span></div></div><div class="lbl">Senza rete</div></div></div>
+     <small>Il DDT torna visibile solo con la rete.</small>`,
+ condiviso:()=> v("condiviso")==="parte"
+  ? `<div class="cap">Esempio: telefono condiviso del ricevimento</div><ul class="flow">
+      <li><span class="who">10:42</span><span>Mario legge una scatola senza barcode, la rete cade</span></li>
+      <li><span class="who">11:15</span><span>Mario è uscito da solo (80); entra Anna: «1 operazione di Mario in attesa»</span></li>
+      <li><span class="who">11:20</span><span>La rete torna: la lettura parte a nome di Mario</span></li>
+      <li><span class="who s">Server</span><span>Servono le proposte dall'aspetto: «Lettura da completare» tra le cose in sospeso di Mario</span></li></ul>`
+  : `<div class="cap">Esempio: telefono condiviso del ricevimento</div><ul class="flow">
+      <li><span class="who">10:42</span><span>Mario legge una scatola, la rete cade</span></li>
+      <li><span class="who">11:15</span><span>Entra Anna; la lettura di Mario resta ferma</span></li>
+      <li><span class="who">Fine turno</span><span>Mario non rientra su quel telefono: la lettura non è mai arrivata</span></li></ul>`,
+ stampa:()=> v("stampa")==="browser"
+  ? `<div class="cap">Esempio: etichetta del posto VEND3</div><ul class="flow">
+      <li><span class="who s">Server</span><span>Prepara il PDF dell'etichetta</span></li>
+      <li><span class="who">Computer</span><span>Si apre la finestra di stampa del browser, si sceglie la termica</span></li></ul>`
+  : `<div class="cap">Esempio: etichetta del posto VEND3</div><ul class="flow">
+      <li><span class="who">Palmare</span><span>Tocco «Stampa etichetta»</span></li>
+      <li><span class="who s">Server</span><span>La manda alla termica configurata in Configurazione</span></li></ul>`
+};
+
+function build(){
+  document.getElementById("questions").innerHTML = Q.map((q,i)=>`
+  <section class="q" aria-labelledby="h-${q.k}">
+    <div class="ask">
+      <div class="num">DOMANDA ${i+1}</div>
+      <h3 id="h-${q.k}">${esc(q.t)}</h3>
+      <p class="why">${esc(q.why)}</p>
+      <div class="opts" id="${q.k}-opts"></div>
+      <label class="notelbl" for="n-${q.k}">Nota facoltativa</label>
+      <textarea id="n-${q.k}" data-note="${q.k}"></textarea>
+    </div>
+    <div class="ex" id="ex-${q.k}" aria-live="polite"></div>
+  </section>`).join("");
+}
+const opts=(q,cur)=>q.o.map(o=>`<label class="opt"><input type="radio" name="${q.k}" id="${q.k}-${o.id}" value="${o.id}" ${cur===o.id?"checked":""}>
+  <span><b>${esc(o.l)}</b>${o.rec?'<span class="rec">Consigliata</span>':""}<span class="d">${esc(o.d)}</span></span></label>`).join("");
+function refresh(){ lanes(); for(const q of Q) document.getElementById("ex-"+q.k).innerHTML=EX[q.k](); document.getElementById("copybox").textContent=asText(); }
+function render(){ for(const q of Q){ document.getElementById(q.k+"-opts").innerHTML=opts(q,S[q.k]); document.getElementById("n-"+q.k).value=S.note[q.k]||""; } refresh(); }
+function asText(){ const n=k=>S.note[k]?" — nota: "+S.note[k]:""; return ["Divisione telefono, computer e server – giro 1"].concat(Q.map((q,i)=>`${i+1}. ${q.t} ${lab(q.k)}${n(q.k)}`)).join("\n"); }
+
+let db=null,timer=null,saving=false,pending=false;
+function setStatus(t,cls){ ["status","status2"].forEach(id=>{const el=document.getElementById(id); el.textContent=t; el.className="status "+(cls||"");}); }
+function local(){ try{ localStorage.setItem(LS, JSON.stringify(S)); }catch(e){} }
+function changed(){ local(); refresh(); clearTimeout(timer); timer=setTimeout(save,900); setStatus(db?"Modifiche da salvare…":"Salvate solo su questo dispositivo", db?"":"warn"); }
+async function save(){
+  clearTimeout(timer);
+  if(!db){ setStatus("Salvataggio non disponibile qui: usa «Copia le risposte» e incollale in chat","warn"); document.getElementById("copybox").hidden=false; return; }
+  if(saving){ pending=true; return; }
+  saving=true;
+  const doc={note:S.note,testo:asText(),aggiornato:new Date().toISOString()}; KEYS.forEach(k=>doc[k]=S[k]);
+  try{ await db.doc("giri/"+GIRO).set(doc); setStatus("Salvate alle "+new Date().toLocaleTimeString("it-IT",{hour:"2-digit",minute:"2-digit"}),"ok"); }
+  catch(e){ setStatus("Non salvate ("+(e&&e.code||"errore")+"). Riprova con «Salva adesso» o copia le risposte.","warn"); document.getElementById("copybox").hidden=false; }
+  saving=false; if(pending){ pending=false; save(); }
+}
+build(); render();
+document.addEventListener("change", e=>{ const t=e.target; if(KEYS.includes(t.name)){ S[t.name]=t.value; changed(); } });
+document.addEventListener("input", e=>{ const t=e.target; if(t.dataset && t.dataset.note){ S.note[t.dataset.note]=t.value; changed(); } });
+document.getElementById("accept-all").addEventListener("click",()=>{ for(const k of KEYS) S[k]=rec(k); render(); changed(); });
+document.getElementById("save").addEventListener("click", save);
+document.getElementById("copy").addEventListener("click", async()=>{ const box=document.getElementById("copybox"); box.hidden=false;
+  try{ await navigator.clipboard.writeText(asText()); setStatus("Testo copiato","ok"); }
+  catch(e){ const r=document.createRange(); r.selectNodeContents(box); const s=getSelection(); s.removeAllRanges(); s.addRange(r); setStatus("Testo selezionato: copialo","warn"); } });
+(async()=>{
+  let got=null;
+  try{ got=(window.claude && window.claude.use) ? await window.claude.use("db") : null; }catch(e){ got=null; }
+  db=got;
+  if(!db){ setStatus("Salvataggio non disponibile qui: le risposte restano su questo dispositivo. Usa «Copia le risposte».","warn"); return; }
+  const to=setTimeout(()=>setStatus("Le risposte salvate non arrivano: puoi continuare, si salvano alla prossima modifica.","warn"),10000);
+  try{ const snap=await db.doc("giri/"+GIRO).get(); clearTimeout(to);
+    if(snap.exists){ const d=snap.data(); KEYS.forEach(k=>S[k]=d[k]||""); S.note=d.note||{}; render(); setStatus("Risposte salvate caricate","ok"); }
+    else setStatus("Nessuna risposta salvata finora: le tue si salvano da sole","");
+  }catch(e){ clearTimeout(to); setStatus("Non riesco a leggere le risposte salvate: le tue si salvano comunque alla prossima modifica.","warn"); }
+})();
+</script>

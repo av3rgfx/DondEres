@@ -2,7 +2,8 @@
 
 Type: grilling
 Label: wayfinder:grilling
-Status: open
+Status: in progress
+Assignee: sessione del 20/11/2026 con l'utente
 Blocked by: 07 (chiuso). Non aspetta più la prova visiva (decisione 405).
 
 ## Question
