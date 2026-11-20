@@ -1807,3 +1807,9 @@ verifica di marchi e domini è nel ticket «Unicità dei nomi scelti», il logo 
 - Niente parole da startup né doppi sensi in italiano o nei dialetti; K, J, W, X, Y ammesse (350).
 - «Kiln» resta un riferimento di stile per il brand kit, non per il nome (351).
 
+### Rosa del secondo giro (decisioni 352 e 353)
+
+Tenuti: Vekto, Kardo, Rivo, Dokra. In dubbio: Trako, Sorto, Rigo, Movo. Scartati: Pista, Ritmo, Dardo, Prelo, Snel,
+Lampa, Vola, Ordo, Brio, Corso, Pronto. Deduzione, non detta dall'utente: sono state scartate tutte le parole vere
+intere; restano nomi di due sillabe che finiscono in «-o» o «-a», spesso con il suono «k».
+

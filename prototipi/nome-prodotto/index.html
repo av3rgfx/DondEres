@@ -104,46 +104,69 @@ textarea{width:100%;min-height:56px;font:14px/1.45 var(--f-body);padding:8px 10p
 details.prev{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
 details.prev summary{cursor:pointer;font-weight:600}
 details.prev ol{margin:10px 0 0;padding-left:20px;display:grid;gap:4px;color:var(--muted)}
+
+.rank{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.rank li{display:grid;grid-template-columns:28px 44px minmax(0,1fr) auto;gap:10px;align-items:center;border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:var(--bg)}
+.rank .pos{font:800 18px/1 var(--f-display);color:var(--accent);text-align:center}
+.rank .nmr{font:800 20px/1 var(--f-display);font-stretch:112%;overflow-wrap:anywhere}
+.rank .mv{display:flex;gap:4px}
+.rank .mv button{padding:8px 10px}
+.pool{display:flex;flex-wrap:wrap;gap:8px}
+.pool label{display:flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:6px 12px;cursor:pointer;font-weight:600}
+.pool label:has(input:checked){background:var(--accent-soft);border-color:var(--accent)}
+.pool .src{font-weight:400;font-size:12px;color:var(--muted)}
+.confirm{display:flex;gap:10px;align-items:flex-start;border:2px solid var(--accent);border-radius:10px;padding:12px;font-weight:600}
+.confirm input{width:20px;height:20px;margin-top:2px;accent-color:var(--accent)}
 </style>
 
 <div class="wrap">
   <header class="intro">
-    <span class="eyebrow">Ticket «Nome del prodotto» · giro 2 di 3</span>
-    <h1>La rosa: tieni, forse, scarta</h1>
-    <p>Sono 19 nomi costruiti sui tuoi criteri: corti, veloci e ordinati, leggibili uguali in italiano e in inglese,
-      senza finali da startup. Per ognuno trovi da dove viene, come si legge e cosa può dare fastidio. Segna
-      <b>Tengo</b>, <b>Forse</b> o <b>Scarto</b>. Nel terzo giro metti in ordine i preferiti, da tre a cinque.</p>
-    <p class="why">I controlli qui sono miei, fatti a memoria su significati e pronuncia: non sono una ricerca nei registri
-      dei marchi. Quella si fa dopo, nel ticket «Unicità dei nomi scelti», insieme ai domini (decisione 349).</p>
+    <span class="eyebrow">Ticket «Nome del prodotto» · giro 3 di 3</span>
+    <h1>I preferiti, in ordine</h1>
+    <p>Tre passi: guarda i 7 nomi nuovi, vicini a quelli che hai tenuto; scegli da tre a cinque preferiti e mettili in
+      ordine; dimmi cosa fare se nessuno risulta libero. In fondo c'è il riepilogo di tutto il ticket da confermare.</p>
+    <p class="why">I nomi nuovi seguono quello che hai tenuto: due sillabe, finale in «-o», spesso il suono «k», nessuna
+      parola vera intera. Anche qui i controlli sono miei, a memoria: la ricerca nei registri viene dopo.</p>
     <div class="bar"><button class="primary" id="accept-all" type="button">Accetta tutte le consigliate</button>
       <span class="status" id="status" role="status" aria-live="polite">Caricamento delle risposte salvate…</span></div>
   </header>
 
-  <details class="prev"><summary>Giro 1, già registrato (decisioni 344–351)</summary><ol>
-    <li>Marchio vero, offerto anche ad altri magazzini.</li><li>Uguale in italiano e in inglese.</li>
-    <li>Fa pensare a velocità e ordine.</li><li>Parola vera modificata o composta.</li>
-    <li>Corto: una o due sillabe, fino a 5 lettere.</li><li>Il dominio non decide; si controlla comunque.</li>
-    <li>Niente parole da startup né doppi sensi.</li><li>Kiln vale solo per lo stile del brand kit.</li></ol></details>
+  <details class="prev"><summary>Giri già registrati (decisioni 344–353)</summary><ol>
+    <li>Criteri: marchio vero; uguale in italiano e in inglese; velocità e ordine; parola modificata o composta; fino a 5 lettere; niente parole da startup né doppi sensi (344–351).</li>
+    <li>Tenuti: Vekto, Kardo, Rivo, Dokra. In dubbio: Trako, Sorto, Rigo, Movo. Scartati gli altri 11 (352).</li>
+    <li>Nel terzo giro nomi vicini, poi i preferiti in ordine (353).</li></ol></details>
 
-  <section class="shelf" aria-label="I nomi che tieni, come icone del telefono">
-    <span class="cap eyebrow" id="shelf-cap">I nomi che tieni compaiono qui, come icone sul telefono</span>
-    <div class="phone"><div class="home" id="shelf"></div></div>
+  <section style="display:grid;gap:12px" aria-labelledby="h-nuovi">
+    <span class="eyebrow">Passo 1 di 3</span><h2 id="h-nuovi">Nomi nuovi, vicini a quelli che tieni</h2>
+    <div class="cards" id="cards"></div>
   </section>
 
-  <div class="cards" id="cards"></div>
+  <section class="q" aria-labelledby="h-pref"><div class="main">
+    <span class="eyebrow">Passo 2 di 3</span><h2 id="h-pref">Scegli da tre a cinque preferiti e mettili in ordine</h2>
+    <p class="why">Questi nomi vanno alla verifica di marchi e domini. Si controllano tutti; l'ordine dice quale prendi
+      se più di uno risulta libero. Qui sotto ci sono i nomi che hai tenuto, quelli in dubbio e i nuovi che segni «Tengo».</p>
+    <div class="pool" id="pool"></div>
+    <div class="recline">Il mio consiglio: <span class="rec">Vekto, Kardo, Rivo, Dokra</span>, in questo ordine, più i nuovi che tieni, fino a cinque.</div>
+    <ol class="rank" id="rank" aria-label="Preferiti in ordine"></ol>
+    <span class="status" id="rank-msg"></span>
+    <label class="notelabel" for="n-pref">Note (facoltative)</label><textarea id="n-pref" data-note="pref"></textarea>
+  </div><div class="ex" aria-live="polite"><div class="cap">Sul telefono, nell'ordine scelto</div><div class="phone"><div class="home" id="prefhome"></div></div>
+    <div class="topbar" style="color:var(--phone-fg)"><b id="prefbar">—</b><span>Ricevimento</span></div>
+    <small>Il primo della lista è quello che vedresti ogni giorno, se è libero.</small></div></section>
 
-  <section class="q" aria-labelledby="h-altri"><div class="main">
-    <span class="eyebrow">Ultima domanda del giro</span><h2 id="h-altri">Vuoi vedere altri nomi?</h2>
-    <p class="why">Se in questa rosa ce ne sono già da tre a cinque che ti convincono, il terzo giro serve solo a metterli
-      in ordine. Se no, nel terzo giro aggiungo altri nomi.</p>
-    <fieldset style="border:0;padding:0;margin:0"><legend class="notelabel" style="margin-bottom:8px">Scegline una</legend><div class="opts" id="altri-opts"></div></fieldset>
-    <label class="notelabel" for="n-altri">Note (facoltative): per esempio una direzione, un suono, una parola di partenza</label>
-    <textarea id="n-altri" data-note="altri"></textarea>
-  </div><div class="ex" id="ex-altri" aria-live="polite"></div></section>
+  <section class="q" aria-labelledby="h-nessuno"><div class="main">
+    <span class="eyebrow">Passo 3 di 3</span><h2 id="h-nessuno">E se nessuno dei preferiti è libero?</h2>
+    <p class="why">Può succedere: i nomi corti sono i più usati. Mi serve saperlo prima, così la verifica non si ferma ad aspettarti.</p>
+    <fieldset style="border:0;padding:0;margin:0"><legend class="notelabel" style="margin-bottom:8px">Scegline una</legend><div class="opts" id="nessuno-opts"></div></fieldset>
+    <label class="notelabel" for="n-nessuno">Note (facoltative)</label><textarea id="n-nessuno" data-note="nessuno"></textarea>
+  </div><div class="ex" id="ex-nessuno" aria-live="polite"></div></section>
 
   <section class="sum" aria-labelledby="sum-h">
-    <h2 id="sum-h">Le tue risposte di questo giro</h2>
+    <span class="eyebrow">Riepilogo del ticket da confermare</span>
+    <h2 id="sum-h">Il nome, fin qui</h2>
     <ol id="sumlist"></ol>
+    <label class="confirm" for="conferma"><input type="checkbox" id="conferma"><span>Confermo il riepilogo. Le note qui sotto lo correggono dove serve.</span></label>
+    <label class="notelabel" for="n-riep">Correzioni al riepilogo (facoltative)</label><textarea id="n-riep" data-note="riep"></textarea>
     <p class="why" id="fallback" hidden>Il salvataggio non è disponibile in questa vista. Copia il testo qui sotto e incollalo in chat.</p>
     <div class="copybox" id="copybox" hidden></div>
     <div class="bar"><button id="copy" type="button">Copia le risposte come testo</button></div>
@@ -156,81 +179,91 @@ details.prev ol{margin:10px 0 0;padding-left:20px;display:grid;gap:4px;color:var
 </div></div>
 
 <script>
-const GIRO = "giro2";
+const GIRO = "giro3";
+const TENUTI = ["Vekto","Kardo","Rivo","Dokra"], DUBBIO = ["Trako","Sorto","Rigo","Movo"];
 const N = [
- {n:"Vekto", da:"«Vettore»: una direzione e una spinta, cioè velocità con una rotta.", leggi:"«vèk-to» in tutte e due le lingue.", att:"Esistono marchi vicini (Vecto, Vector): da verificare.", rec:"tengo"},
- {n:"Trako", da:"«Traccia» e l'inglese «track»: la corsia veloce, il pezzo seguito passo per passo.", leggi:"«trà-ko» in tutte e due le lingue.", att:"Vicino a «Trak», usato da prodotti di tracciamento: da verificare.", rec:"tengo"},
- {n:"Kardo", da:"Il «cardo», la strada principale delle città romane: dritta, tracciata, in ordine.", leggi:"«kàr-do» in tutte e due le lingue.", att:"In italiano «cardo» è anche una pianta spinosa; con la K si distingue.", rec:"tengo"},
- {n:"Pista", da:"Parola vera: dove si corre e la corsia tracciata. «Pista!» si dice per farsi largo.", leggi:"«pì-sta» in tutte e due le lingue.", att:"Parola comune, quasi certamente registrata in altri settori: se è presa, si modifica.", rec:"forse"},
- {n:"Rivo", da:"«Arrivo», dove comincia il lavoro del magazzino.", leggi:"«rì-vo»; in inglese a volte «ràiv-o».", att:"In italiano poetico «rivo» è un ruscello. La lettura inglese può oscillare.", rec:"forse"},
- {n:"Ritmo", da:"Parola vera: velocità regolare, il passo del lavoro fatto bene.", leggi:"«rìt-mo» in tutte e due le lingue.", att:"Ricorda la Fiat Ritmo; parola comune, probabilmente già usata da altri programmi.", rec:"forse"},
- {n:"Dardo", da:"Parola vera: veloce e preciso, arriva dritto al bersaglio.", leggi:"«dàr-do» in tutte e due le lingue.", att:"È anche il nome di un mezzo blindato dell'Esercito italiano.", rec:"forse"},
- {n:"Sorto", da:"L'inglese «sort» (smistare, mettere in ordine) con la «o» italiana.", leggi:"«sòr-to» in tutte e due le lingue.", att:"In italiano è il participio di «sorgere». La velocità si sente poco.", rec:"forse"},
- {n:"Prelo", da:"«Prelievo», il lavoro di chi prepara gli ordini.", leggi:"«prè-lo» in tutte e due le lingue.", att:"Il «prelo» è anche il vecchio torchio da stampa. Velocità poco evidente.", rec:"forse"},
- {n:"Snel", da:"«Veloce» in olandese, vicino all'italiano «snello».", leggi:"«snèl» in tutte e due le lingue.", att:"Una sillaba sola, suona secca. In olandese è una parola comune.", rec:"forse"},
- {n:"Lampa", da:"«Lampo», con la «a» finale.", leggi:"«làm-pa» in tutte e due le lingue.", att:"In rumeno e in polacco vuol dire «lampada». Richiama la velocità più dell'ordine.", rec:"forse"},
- {n:"Dokra", da:"Il tuo nome di prova. In India il «Dhokra» è un'antica tecnica di fusione del metallo.", leggi:"«dò-kra» in tutte e due le lingue.", att:"Non richiama né velocità né ordine: funziona per il suono.", rec:"forse"},
- {n:"Vola", da:"«Volare», all'imperativo: «vola!».", leggi:"«vò-la»; in inglese «vóu-la».", att:"Parola vera usatissima nei marchi; si modifica poco.", rec:"scarto"},
- {n:"Ordo", da:"«Ordine» in latino.", leggi:"«òr-do» in tutte e due le lingue.", att:"Nome già usato da molti prodotti e aziende. Non dice velocità.", rec:"scarto"},
- {n:"Brio", da:"Parola vera in italiano e in inglese («con brio»): energia, vivacità.", leggi:"«brì-o» in tutte e due le lingue.", att:"Usatissima nei marchi, quasi certamente presa.", rec:"scarto"},
- {n:"Corso", da:"Da «corsa» e «corsia».", leggi:"«còr-so» in tutte e due le lingue.", att:"In italiano vuol dire anche lezione e via principale; molto comune.", rec:"scarto"},
- {n:"Rigo", da:"Da «riga»: le righe del DDT, la fila in ordine.", leggi:"«rì-go»; in inglese spesso «ràigo».", att:"La lettura inglese cambia il suono.", rec:"scarto"},
- {n:"Movo", da:"Da «muovo».", leggi:"in inglese oscilla tra «mù-vo» e «mò-vo».", att:"Lettura incerta in inglese (decisione 345).", rec:"scarto"},
- {n:"Pronto", da:"In italiano la merce evasa è pronta; in inglese «pronto» vuol dire «subito».", leggi:"«pròn-to» in tutte e due le lingue.", att:"6 lettere, una più del limite (decisione 348). Parola comunissima.", rec:"scarto"}
+ {n:"Velko", da:"«Veloce» con il suono «k» di Vekto e Kardo.", leggi:"«vèl-ko» in tutte e due le lingue.", att:"Nei paesi slavi è un nome di persona.", rec:"tengo"},
+ {n:"Varko", da:"Il «varco», il passaggio da cui entra ed esce la merce: flusso e ordine.", leggi:"«vàr-ko» in tutte e due le lingue.", att:"Può essere un cognome; nessun doppio senso che io conosca.", rec:"tengo"},
+ {n:"Kurso", da:"«Corsa» e «percorso»; in esperanto vuol dire «corso, rotta».", leggi:"«kùr-so»; in inglese a volte «kèr-so».", att:"La lettura inglese può scivolare sulla «u».", rec:"forse"},
+ {n:"Venko", da:"«Vento», con il suono «k».", leggi:"«vèn-ko» in tutte e due le lingue.", att:"In Bulgaria è un nome di persona. Richiama la velocità più dell'ordine.", rec:"forse"},
+ {n:"Arvo", da:"«Arrivo», come Rivo, con un'altra forma.", leggi:"«àr-vo» in tutte e due le lingue.", att:"In finlandese vuol dire «valore»; in Australia è il gergo per «pomeriggio».", rec:"forse"},
+ {n:"Volko", da:"«Volo», con il suono «k».", leggi:"«vòl-ko» in tutte e due le lingue.", att:"Ricorda «volk», «lupo» nelle lingue slave.", rec:"forse"},
+ {n:"Karto", da:"«Cartone» e «carta»: la scatola e il documento, il magazzino in ordine.", leggi:"«kàr-to» in tutte e due le lingue.", att:"Vicino a marchi come Kartell; la velocità non si sente.", rec:"scarto"}
 ];
 const V = [["tengo","Tengo"],["forse","Forse"],["scarto","Scarto"]];
-const ALTRI = [
- {id:"no", l:"No, scelgo tra questi", d:"Il terzo giro mette in ordine i nomi che tieni."},
- {id:"vicini", l:"Sì, altri vicini a quelli che tengo", d:"Nel terzo giro aggiungo qualche nome con lo stesso suono o la stessa origine, poi li metti in ordine.", rec:true},
- {id:"diversi", l:"Sì, in un'altra direzione", d:"Scrivi nelle note quale: un suono, una parola di partenza, un esempio."}
+const NESSUNO = [
+ {id:"dubbio", l:"Si riprende dai nomi in dubbio e dai nuovi segnati «Forse»", d:"Si verificano quelli, nell'ordine in cui compaiono; se va bene uno, te lo propongo prima di sceglierlo.", rec:true},
+ {id:"giro", l:"Si fa un nuovo giro di nomi con me", d:"Con gli stessi criteri e i nomi scartati come guida in negativo."},
+ {id:"modifica", l:"Si modifica il primo preferito", d:"Una lettera cambiata o aggiunta (per esempio Vekto → Vekta) e si rifà la verifica."}
 ];
 const COLORS = ["#1f4e8c","#2a9d8f","#e46b2e","#7a4fb3","#b0413e","#3b82f6","#5b7f2a"];
 
-let S = {v:{}, note:{}, altri:""};
+let S = {v:{}, note:{}, pref:[], nessuno:"", conferma:false};
 try{ const d = JSON.parse(localStorage.getItem("nome-"+GIRO)||"null"); if(d) S = Object.assign(S,d); }catch(e){}
 const esc = s => String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const col = i => COLORS[i%COLORS.length];
-
+const col = n => COLORS[[...n].reduce((a,c)=>a+c.charCodeAt(0),0)%COLORS.length];
+const ico = n => `<div class="app"><div class="ico" style="background:${col(n)}">${esc(n[0])}</div><div class="lbl">${esc(n)}</div></div>`;
+function pool(){
+  const nuoviT = N.filter(x=>S.v[x.n]==="tengo").map(x=>[x.n,"nuovo"]), nuoviF = N.filter(x=>S.v[x.n]==="forse").map(x=>[x.n,"nuovo, forse"]);
+  return [...TENUTI.map(n=>[n,"tenuto"]), ...nuoviT, ...DUBBIO.map(n=>[n,"in dubbio"]), ...nuoviF];
+}
 function render(){
   document.getElementById("cards").innerHTML = N.map((x,i)=>{
-    const v = S.v[x.n]||"", recl = V.find(a=>a[0]===x.rec)[1];
+    const v=S.v[x.n]||"", recl=V.find(a=>a[0]===x.rec)[1];
     return `<article class="card v-${v}" id="c-${i}" aria-labelledby="t-${i}">
-      <div class="nm"><div class="ico" style="background:${col(i)}" aria-hidden="true">${esc(x.n[0])}</div><b id="t-${i}">${esc(x.n)}</b></div>
+      <div class="nm"><div class="ico" style="background:${col(x.n)}" aria-hidden="true">${esc(x.n[0])}</div><b id="t-${i}">${esc(x.n)}</b></div>
       <div class="topbar" style="color:var(--phone-fg)" aria-hidden="true"><b>${esc(x.n)}</b><span>Ricevimento · DDT 418</span></div>
-      <dl><dt>Da dove</dt><dd>${esc(x.da)}</dd><dt>Si legge</dt><dd>${esc(x.leggi)}</dd><dt>Attenzione</dt><dd>${esc(x.att)}</dd>
-        <dt>Lettere</dt><dd>${[...x.n].length}</dd></dl>
+      <dl><dt>Da dove</dt><dd>${esc(x.da)}</dd><dt>Si legge</dt><dd>${esc(x.leggi)}</dd><dt>Attenzione</dt><dd>${esc(x.att)}</dd><dt>Lettere</dt><dd>${[...x.n].length}</dd></dl>
       <div class="recline">Il mio consiglio: <span class="rec">${recl}</span></div>
       <fieldset style="border:0;padding:0;margin:0"><legend class="notelabel" style="margin-bottom:6px">Il tuo giudizio su ${esc(x.n)}</legend>
       <div class="verdict">${V.map(([k,l])=>`<label><input type="radio" name="v-${i}" value="${k}" data-name="${esc(x.n)}" ${v===k?"checked":""}>${l}</label>`).join("")}</div></fieldset>
       <label class="notelabel" for="n-${i}">Nota (facoltativa)</label><textarea id="n-${i}" data-note="${esc(x.n)}" style="min-height:40px">${esc(S.note[x.n]||"")}</textarea>
     </article>`;}).join("");
-  document.getElementById("altri-opts").innerHTML = ALTRI.map(o=>`<label class="opt"><input type="radio" name="altri" value="${o.id}" ${S.altri===o.id?"checked":""}>
+  document.getElementById("nessuno-opts").innerHTML = NESSUNO.map(o=>`<label class="opt"><input type="radio" name="nessuno" value="${o.id}" ${S.nessuno===o.id?"checked":""}>
     <span><b>${esc(o.l)}</b>${o.rec?'<span class="rec">Consigliata</span>':""}<span class="d">${esc(o.d)}</span></span></label>`).join("");
-  document.getElementById("n-altri").value = S.note.altri||"";
+  ["pref","nessuno","riep"].forEach(k=>document.getElementById("n-"+k).value=S.note[k]||"");
+  document.getElementById("conferma").checked=!!S.conferma;
   refresh();
 }
-function kept(k){ return N.filter(x=>S.v[x.n]===k).map(x=>x.n); }
 function refresh(){
   N.forEach((x,i)=>{ const c=document.getElementById("c-"+i); if(c) c.className="card v-"+(S.v[x.n]||""); });
-  const t = kept("tengo");
-  document.getElementById("shelf").innerHTML = t.length ? t.map(n=>{const i=N.findIndex(x=>x.n===n); return `<div class="app"><div class="ico" style="background:${col(i)}">${esc(n[0])}</div><div class="lbl">${esc(n)}</div></div>`;}).join("")
-    : `<div class="lbl" style="grid-column:1/-1;max-width:none;white-space:normal;text-align:left">Ancora nessuno: segna «Tengo» su un nome.</div>`;
-  document.getElementById("shelf-cap").textContent = t.length ? `Tieni ${t.length} ${t.length===1?"nome":"nomi"} · forse ${kept("forse").length} · scartati ${kept("scarto").length} · senza giudizio ${N.length-t.length-kept("forse").length-kept("scarto").length}` : "I nomi che tieni compaiono qui, come icone sul telefono";
-  const a = S.altri;
-  document.getElementById("ex-altri").innerHTML = `<div class="cap">Cosa succede nel terzo giro</div><small>${
-    !a ? "Scegli un'opzione." : a==="no" ? `Metti in ordine ${t.length?("i "+t.length+" nomi che tieni"):"i nomi che tieni"} e scegli da tre a cinque preferiti da verificare.`
-    : a==="vicini" ? `Aggiungo 6–10 nomi vicini a ${t.length?esc(t.join(", ")):"quelli che tieni"}; poi scegli e metti in ordine da tre a cinque preferiti.`
-    : "Preparo una piccola rosa nella direzione che scrivi nelle note; poi scegli e metti in ordine i preferiti."}</small>`;
-  document.getElementById("sumlist").innerHTML =
-    `<li><b>Tengo:</b> ${esc(t.join(", ")||"nessuno")}</li><li><b>Forse:</b> ${esc(kept("forse").join(", ")||"nessuno")}</li><li><b>Scarto:</b> ${esc(kept("scarto").join(", ")||"nessuno")}</li>`
-    + `<li><b>Altri nomi:</b> ${esc((ALTRI.find(o=>o.id===a)||{l:"senza risposta"}).l)}${S.note.altri?" — nota: "+esc(S.note.altri):""}</li>`
-    + N.filter(x=>S.note[x.n]).map(x=>`<li><b>Nota su ${esc(x.n)}:</b> ${esc(S.note[x.n])}</li>`).join("");
+  const P = pool(), names = P.map(p=>p[0]);
+  S.pref = S.pref.filter(n=>names.includes(n));
+  document.getElementById("pool").innerHTML = P.map(([n,src])=>`<label><input type="checkbox" data-pref="${esc(n)}" ${S.pref.includes(n)?"checked":""}>${esc(n)} <span class="src">${src}</span></label>`).join("");
+  document.getElementById("rank").innerHTML = S.pref.map((n,i)=>`<li><span class="pos">${i+1}</span><div class="ico" style="background:${col(n)};width:40px;height:40px">${esc(n[0])}</div><span class="nmr">${esc(n)}</span>
+    <span class="mv"><button type="button" data-up="${i}" aria-label="Sposta ${esc(n)} più in alto" ${i===0?"disabled":""}>↑</button><button type="button" data-down="${i}" aria-label="Sposta ${esc(n)} più in basso" ${i===S.pref.length-1?"disabled":""}>↓</button></span></li>`).join("");
+  const k=S.pref.length, m=document.getElementById("rank-msg");
+  m.textContent = k===0 ? "Spunta i nomi qui sopra: compaiono nella lista in ordine." : k<3 ? `Ne hai scelti ${k}: ne servono almeno tre.` : k>5 ? `Ne hai scelti ${k}: al massimo cinque.` : `${k} preferiti: va bene.`;
+  m.className = "status "+(k>=3&&k<=5?"ok":(k?"warn":""));
+  document.getElementById("prefhome").innerHTML = k ? S.pref.map(ico).join("") : `<div class="lbl" style="grid-column:1/-1;max-width:none;white-space:normal;text-align:left">Ancora nessun preferito.</div>`;
+  document.getElementById("prefbar").textContent = S.pref[0]||"—";
+  const a=S.nessuno, rest=P.filter(p=>p[1]!=="tenuto"&&p[1]!=="nuovo"&&!S.pref.includes(p[0])).map(p=>p[0]);
+  document.getElementById("ex-nessuno").innerHTML = `<div class="cap">Cosa succede</div><small>${
+    !a ? "Scegli un'opzione." : a==="dubbio" ? `Si verificano ${rest.length?esc(rest.join(", ")):"i nomi rimasti in dubbio"}, in quest'ordine, e te ne propongo uno.`
+    : a==="giro" ? "Si apre un nuovo giro di questa pagina con nomi nuovi." : `Per esempio ${esc(S.pref[0]||"Vekto")} → ${esc(variant(S.pref[0]||"Vekto"))}: poi si rifà la verifica.`}</small>`;
+  document.getElementById("sumlist").innerHTML = summary().map(x=>`<li>${x}</li>`).join("");
   document.getElementById("copybox").textContent = asText();
 }
+function variant(n){ return /o$/.test(n) ? n.slice(0,-1)+"a" : n+"o"; }
+function summary(){
+  const nt=N.filter(x=>S.v[x.n]==="tengo").map(x=>x.n), nf=N.filter(x=>S.v[x.n]==="forse").map(x=>x.n), ns=N.filter(x=>S.v[x.n]==="scarto").map(x=>x.n);
+  return [
+    "Il prodotto non si chiama DondEres (20). Il nome è un marchio vero, offerto anche ad altri magazzini (344).",
+    "Si legge uguale in italiano e in inglese; fa pensare a velocità e ordine; è una parola modificata o composta, di una o due sillabe e fino a 5 lettere; niente parole da startup né doppi sensi (345–348, 350).",
+    "Il dominio non decide il nome, ma nella verifica si controlla (349). Kiln resta solo per lo stile del brand kit (351).",
+    "Secondo giro: tenuti Vekto, Kardo, Rivo, Dokra; in dubbio Trako, Sorto, Rigo, Movo (352).",
+    `Nomi nuovi del terzo giro: tenuti ${esc(nt.join(", ")||"nessuno")}; forse ${esc(nf.join(", ")||"nessuno")}; scartati ${esc(ns.join(", ")||"nessuno")}.`,
+    `<b>Preferiti in ordine:</b> ${S.pref.length?esc(S.pref.map((n,i)=>(i+1)+". "+n).join("  ")):"ancora da scegliere"}.`,
+    `Se nessuno è libero: ${esc((NESSUNO.find(o=>o.id===S.nessuno)||{l:"da scegliere"}).l.toLowerCase())}.`,
+    "Poi: il ticket «Unicità dei nomi scelti» verifica marchi (EUIPO, UIBM, WIPO), domini e prodotti simili; tu scegli il nome; il brand kit parte da lì."
+  ];
+}
 function asText(){
-  const L=["Giro 2 – rosa dei nomi","Tengo: "+(kept("tengo").join(", ")||"nessuno"),"Forse: "+(kept("forse").join(", ")||"nessuno"),"Scarto: "+(kept("scarto").join(", ")||"nessuno"),
-    "Altri nomi: "+((ALTRI.find(o=>o.id===S.altri)||{l:"senza risposta"}).l)+(S.note.altri?" — nota: "+S.note.altri:"")];
-  N.forEach(x=>{ if(S.note[x.n]) L.push("Nota su "+x.n+": "+S.note[x.n]); });
+  const L=["Giro 3 – preferiti e riepilogo"];
+  N.forEach(x=>L.push(`${x.n}: ${S.v[x.n]||"senza giudizio"}${S.note[x.n]?" — nota: "+S.note[x.n]:""}`));
+  L.push("Preferiti in ordine: "+(S.pref.join(", ")||"nessuno")+(S.note.pref?" — nota: "+S.note.pref:""));
+  L.push("Se nessuno è libero: "+((NESSUNO.find(o=>o.id===S.nessuno)||{l:"senza risposta"}).l)+(S.note.nessuno?" — nota: "+S.note.nessuno:""));
+  L.push("Riepilogo: "+(S.conferma?"confermato":"non confermato")+(S.note.riep?" — correzioni: "+S.note.riep:""));
   return L.join("\n");
 }
 
@@ -243,7 +276,7 @@ async function save(){
   if(!db){ setStatus("Salvataggio non disponibile qui: usa «Copia le risposte» e incollale in chat","warn"); document.getElementById("fallback").hidden=false; document.getElementById("copybox").hidden=false; return; }
   if(saving){ pending=true; return; }
   saving=true;
-  try{ await db.doc("giri/"+GIRO).set({v:S.v, note:S.note, altri:S.altri, testo:asText(), aggiornato:new Date().toISOString()});
+  try{ await db.doc("giri/"+GIRO).set({v:S.v, note:S.note, pref:S.pref, nessuno:S.nessuno, conferma:S.conferma, testo:asText(), aggiornato:new Date().toISOString()});
     setStatus("Salvate alle "+new Date().toLocaleTimeString("it-IT",{hour:"2-digit",minute:"2-digit"}),"ok");
   }catch(e){ setStatus("Non salvate ("+(e&&e.code||"errore")+"). Riprova con «Salva adesso» o copia le risposte.","warn"); document.getElementById("copybox").hidden=false; }
   saving=false; if(pending){ pending=false; save(); }
@@ -251,10 +284,21 @@ async function save(){
 document.addEventListener("change", e=>{
   const t=e.target;
   if(t.dataset && t.dataset.name){ S.v[t.dataset.name]=t.value; changed(); }
-  else if(t.name==="altri"){ S.altri=t.value; changed(); }
+  else if(t.dataset && t.dataset.pref){ const n=t.dataset.pref; S.pref = t.checked ? [...S.pref.filter(x=>x!==n), n] : S.pref.filter(x=>x!==n); changed(); }
+  else if(t.name==="nessuno"){ S.nessuno=t.value; changed(); }
+  else if(t.id==="conferma"){ S.conferma=t.checked; changed(); }
+});
+document.addEventListener("click", e=>{
+  const t=e.target.closest("button"); if(!t) return;
+  if(t.dataset.up!==undefined){ const i=+t.dataset.up; [S.pref[i-1],S.pref[i]]=[S.pref[i],S.pref[i-1]]; changed(); }
+  else if(t.dataset.down!==undefined){ const i=+t.dataset.down; [S.pref[i+1],S.pref[i]]=[S.pref[i],S.pref[i+1]]; changed(); }
 });
 document.addEventListener("input", e=>{ const t=e.target; if(t.dataset && t.dataset.note){ S.note[t.dataset.note]=t.value; changed(); } });
-document.getElementById("accept-all").addEventListener("click",()=>{ N.forEach(x=>S.v[x.n]=x.rec); S.altri="vicini"; render(); changed(); });
+document.getElementById("accept-all").addEventListener("click",()=>{
+  N.forEach(x=>S.v[x.n]=x.rec);
+  S.pref = [...TENUTI, ...N.filter(x=>x.rec==="tengo").map(x=>x.n)].slice(0,5);
+  S.nessuno="dubbio"; render(); changed();
+});
 document.getElementById("save").addEventListener("click", save);
 document.getElementById("copy").addEventListener("click", async()=>{
   const box=document.getElementById("copybox"); box.hidden=false;
@@ -269,7 +313,7 @@ render();
   if(!db){ setStatus("Salvataggio non disponibile qui: le risposte restano su questo dispositivo. Usa «Copia le risposte».","warn"); return; }
   const to=setTimeout(()=>setStatus("Le risposte salvate non arrivano: puoi continuare, si salvano alla prossima modifica.","warn"),10000);
   try{ const snap=await db.doc("giri/"+GIRO).get(); clearTimeout(to);
-    if(snap.exists){ const d=snap.data(); S.v=d.v||{}; S.note=d.note||{}; S.altri=d.altri||""; render(); setStatus("Risposte salvate caricate","ok"); }
+    if(snap.exists){ const d=snap.data(); S.v=d.v||{}; S.note=d.note||{}; S.pref=d.pref||[]; S.nessuno=d.nessuno||""; S.conferma=!!d.conferma; render(); setStatus("Risposte salvate caricate","ok"); }
     else setStatus("Nessuna risposta salvata finora: le tue si salvano da sole","");
   }catch(e){ clearTimeout(to); setStatus("Non riesco a leggere le risposte salvate: le tue si salvano comunque alla prossima modifica.","warn"); }
 })();
