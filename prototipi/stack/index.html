@@ -131,115 +131,76 @@ table.mini td.n{font-variant-numeric:tabular-nums;white-space:nowrap}
 .barrow .b.w{background:var(--warn)}
 .barrow .n{font:12px var(--f-mono);text-align:right;font-variant-numeric:tabular-nums}
 </style>
-
 <div class="wrap">
   <header class="intro">
-    <div class="eyebrow">Ticket «Stack» · giro 2 · 20/11/2026</div>
-    <h1>Schermate, canale aperto e posta</h1>
-    <p>Ho registrato le risposte del giro 1 (decisioni 422–432). Qui ci sono i confronti che hai chiesto, con le
-      spiegazioni di htmx, di Redis e dei contenitori, e le domande che restano. Le fonti sono nella ricerca
-      <code>docs/research/2026-11-20-confronti-stack.md</code>; dove l'unica fonte è chi fa lo strumento, lo dico.</p>
+    <div class="eyebrow">Ticket «Stack» · riepilogo · 20/11/2026</div>
+    <h1>Lo stack di Ripo</h1>
+    <p>Ho registrato le risposte del giro 2: hai accettato tutte le consigliate (decisioni 433–436). Qui sotto c'è il
+      riepilogo del ticket, con le deduzioni che ne ho tratto senza farti domande. Se lo confermi, chiudo il ticket,
+      aggiorno la mappa e preparo il prompt della prossima sessione.</p>
     <div class="bar"><button class="primary" id="accept-all" type="button">Accetta tutte le consigliate</button>
       <span class="status" id="status">Caricamento delle risposte salvate…</span></div>
   </header>
 
   <section class="map" aria-labelledby="h-map">
-    <h2 id="h-map">I pezzi del programma</h2>
-    <p>Quello che hai già scelto, più le scelte di questo giro (bordo blu a sinistra). I riquadri tratteggiati restano al
-      ticket «Impronte e server in sede, dopo la prova».</p>
-    <div class="lanes" id="lanes"></div>
+    <h2 id="h-map">I pezzi del programma, come deciso</h2>
+    <p>In blu il server in sede; sotto ogni riquadro il numero della decisione. I riquadri tratteggiati restano al ticket
+      «Impronte e server in sede, dopo la prova».</p>
+    <div class="lanes">
+      <div class="lane"><h3>Telefono, palmare, computer</h3><span class="sub">Nel browser, senza installare nulla</span>
+        <span class="chip">Pagine dal server, aggiornate a pezzi (htmx 4)<small>433</small></span>
+        <span class="chip">Piccoli componenti: fotocamera, scatto da solo, attese, pezzi ricchi da computer<small>433</small></span>
+        <span class="chip">Barcode: lettore del browser, o zxing-cpp servito dal server<small>425</small></span>
+        <span class="chip">Operazioni in attesa con la foto (IndexedDB)<small>127</small></span>
+        <span class="chip out">Calcolo delle impronte?<small>dopo la prova (405)</small></span></div>
+      <div class="wire" aria-label="Cosa passa in rete">
+        <div class="arrow">verso il server<b>codice + foto, in HTTPS</b></div>
+        <div class="arrow">di ritorno<b>avvisi dal server (SSE), 434</b></div></div>
+      <div class="lane srv"><h3>Server in sede · contenitori (426)</h3><span class="sub">Solo rete interna (121); in uscita solo certificato e aggiornamenti (427)</span>
+        <span class="chip">Caddy: certificato, HTTPS, HTTP/2<small>123</small></span>
+        <span class="chip">Programma: Python 3.14, Django 6.1<small>422</small></span>
+        <span class="chip">Riconoscimento: codice stampato e quantità<small>422, processo a parte</small></span>
+        <span class="chip">Lavori a intervalli, coda nel database<small>422, 423</small></span>
+        <span class="chip out">Modello visivo, dimensione delle impronte, macchina<small>dopo la prova (405)</small></span>
+        <span class="chip">PostgreSQL 18 + pgvector: dati, registro, impronte, campanello degli avvisi<small>423, 434</small></span>
+        <span class="chip">Cartelle delle foto: riferimento · bolle · inquadrature (30 gg)<small>424</small></span>
+        <span class="chip">Posta: permesso dell'amministratore, o indirizzo e password<small>435</small></span>
+        <span class="chip">Aggiornatore e moduli nella cartella «moduli»<small>427, 428</small></span></div>
+    </div>
   </section>
 
-  <section class="explain" aria-labelledby="h-htmx">
-    <h2 id="h-htmx">Cos'è htmx, e cosa cambia rispetto a un framework</h2>
-    <div class="cols">
-      <div class="col">
-        <h3>Pagine dal server, con htmx</h3>
-        <p>htmx è una piccola libreria (13 KB) che si aggiunge alle pagine. Quando tocchi un pulsante, chiede al server
-          solo il pezzo di pagina che cambia, già pronto, e lo sostituisce, senza ricaricare la pagina. Le regole e le
-          schermate stanno tutte sul server, in un posto solo.</p>
-        <ul>
-          <li>Pochissimo codice da scaricare: le pagine si aprono in fretta anche sui telefoni economici.</li>
-          <li>Un progetto solo; nessun passaggio di «costruzione» a ogni versione.</li>
-          <li>Secondo i suoi autori non va bene per il lavoro senza rete, per schermate dove tante parti dipendono l'una
-            dall'altra mentre scrivi, e per le librerie di componenti fatte per React. Da noi il lavoro senza rete è
-            escluso (23) e le schermate sono soprattutto elenchi e moduli.</li>
-        </ul>
-      </div>
-      <div class="col">
-        <h3>App nel browser, con un framework</h3>
-        <p>React, Svelte o Vue costruiscono la schermata nel browser del telefono: il server manda solo i dati. È il modo
-          delle app web più note.</p>
-        <ul>
-          <li>Gesti e animazioni ricche facili da fare, molte librerie di componenti pronte (con React).</li>
-          <li>Più codice da scaricare ed eseguire: su un telefono economico lo stesso JavaScript costa più di 6 volte
-            che su uno di fascia alta (misura di V8, 2019).</li>
-          <li>Il vantaggio grande dei framework è usare i dati già nel telefono. Da noi i dati stanno solo sul server
-            (406): ogni tocco che conta passa comunque dal server.</li>
-        </ul>
-      </div>
-    </div>
-    <div class="cap eyebrow">JavaScript da scaricare, compresso (misura della ricerca sui pacchetti di oggi)</div>
-    <div class="bars" aria-label="Peso del JavaScript">
-      <div class="barrow"><span>htmx 4 + avvisi</span><span class="b" style="width:14%"></span><span class="n">15,8 KB</span></div>
-      <div class="barrow"><span>Lit (componenti)</span><span class="b" style="width:6%"></span><span class="n">6,2 KB</span></div>
-      <div class="barrow"><span>Vue 3.5</span><span class="b w" style="width:39%"></span><span class="n">43 KB</span></div>
-      <div class="barrow"><span>React DOM 19.3</span><span class="b w" style="width:100%"></span><span class="n">≤ 110 KB</span></div>
-    </div>
-    <p class="src">React misurato sul file non ridotto: con la riduzione sarà meno, non misurato. Il caso di un'azienda passata
-      da React a htmx (Contexte: −67% di codice, caricamento da 2–6 s a 1–2 s) è pubblicato sul sito di htmx, quindi fonte
-      di parte, e dice da sé che non tutte le app vedranno quei numeri.</p>
-    <p><b>Sulla versione da computer ricca e ben studiata:</b> l'aspetto e la comodità vengono dal progetto grafico (ticket
-      «Aspetto grafico») e dal CSS, uguali nelle due strade. Le transizioni animate fra schermate ci sono in tutti i
-      browser principali (Chrome 111, Safari 18, Firefox 144) e htmx le usa. Per i pochi pezzi davvero ricchi (per esempio
-      trascinare gli ordini nei piani di spedizione, una tabella che si ordina e si filtra) si scrive un piccolo componente
-      a parte, che vive nella pagina accanto a htmx: la stessa cosa che serve comunque per fotocamera e operazioni in
-      attesa.</p>
-  </section>
-
-  <section class="explain" aria-labelledby="h-redis">
-    <h2 id="h-redis">Cos'è Redis, e perché qui non serve</h2>
-    <p>Redis è un programma separato che tiene i dati nella memoria del server invece che sul disco: per questo è
-      velocissimo. Si usa per tre cose: ricordare risposte già calcolate (cache), mettere in fila i lavori (coda) e
-      passare messaggi tra programmi (avvisi). È molto diffuso e molto apprezzato.</p>
+  <section class="given" aria-labelledby="h-given">
+    <h2 id="h-given">Le decisioni del ticket</h2>
+    <div class="tw"><table class="mini"><thead><tr><th>N.</th><th>Decisione</th></tr></thead><tbody>
+      <tr><td class="n">422</td><td>Programma sul server in Python, con Django; codice stampato e modello in un processo a parte. Rust considerato e non scelto.</td></tr>
+      <tr><td class="n">423</td><td>PostgreSQL con pgvector; «mai sotto zero» e «stessa operazione una volta sola» come regole del database.</td></tr>
+      <tr><td class="n">424</td><td>Foto in cartelle sul disco, una per tipo; le copie saltano le inquadrature dei 30 giorni.</td></tr>
+      <tr><td class="n">425</td><td>Barcode con il lettore del browser dove c'è, altrimenti zxing-cpp servito dal server.</td></tr>
+      <tr><td class="n">426</td><td>Installazione in contenitori con Docker Compose; macchina e sistema al ticket 405.</td></tr>
+      <tr><td class="n">427</td><td>Aggiornamenti scaricati da internet, solo in uscita; precisa la 123.</td></tr>
+      <tr><td class="n">428</td><td>Moduli nella cartella «moduli» dello stesso repository; dati e impostazioni dei clienti mai nel repository.</td></tr>
+      <tr><td class="n">429</td><td>Prove in due tornate: subito una pagina di prova sui telefoni, poi con la prima versione sul tuo computer di casa.</td></tr>
+      <tr><td class="n">430</td><td>Sul palmare di UFP la pagina di prova si apre solo come link pubblico, senza installare nulla.</td></tr>
+      <tr><td class="n">431</td><td>Ripo da ora nel codice e nei testi; il repository si rinomina a prova visiva finita.</td></tr>
+      <tr><td class="n">432</td><td>Schermate e canale aperto scelti dopo un confronto completo (fatto nel giro 2).</td></tr>
+      <tr><td class="n">433</td><td>Schermate dal server con htmx 4, più piccoli componenti dove serve.</td></tr>
+      <tr><td class="n">434</td><td>Canale aperto con avvisi dal server e campanello di PostgreSQL; niente Redis; si chiude a pagina nascosta.</td></tr>
+      <tr><td class="n">435</td><td>Posta con un permesso dell'amministratore limitato alle caselle dei responsabili; altrimenti indirizzo e password.</td></tr>
+      <tr><td class="n">436</td><td>La posta di UFP e del magazzino Shopify si chiede all'installazione.</td></tr>
+    </tbody></table></div>
+    <h3 style="margin-top:10px">Deduzioni, da confermare con il riepilogo</h3>
     <ul>
-      <li>Da noi la coda dei lavori e gli avvisi li fa già PostgreSQL (decisione 423), e il server in sede serve poche
-        decine di dispositivi: Redis sarebbe un pezzo in più da installare, aggiornare e copiare.</li>
-      <li>Servirebbe solo con i WebSocket di Django (Django Channels), che lo usano per passare i messaggi.</li>
-      <li>Dalla versione 7.4 Redis non ha più una licenza libera come prima; dalla 8 si può usare con la licenza AGPL.
-        Esiste una copia libera, Valkey (licenza BSD), se un giorno servisse.</li>
-    </ul>
-  </section>
-
-  <section class="explain" aria-labelledby="h-box">
-    <h2 id="h-box">Contenitori e macchine virtuali</h2>
-    <div class="cols">
-      <div class="col"><h3>Macchina virtuale</h3><p>Un computer finto, con il suo sistema operativo completo, dentro il
-        computer vero. Isola tutto, ma costa: nelle misure di IBM (2014) il disco va a metà velocità e un database perde
-        oltre il 40%.</p></div>
-      <div class="col"><h3>Contenitore</h3><p>Un programma chiuso in una scatola, con le sue librerie, che usa il sistema
-        del computer vero. Nelle stesse misure va come il programma installato direttamente. È la scelta fatta (426).</p></div>
-    </div>
-    <ul>
-      <li><b>Docker Machine</b> era un vecchio strumento per creare macchine virtuali con Docker dentro: è archiviato dal
-        luglio 2025 e qui non c'entra.</li>
-      <li><b>Una macchina virtuale serve solo se il server in sede sarà Windows</b>: i contenitori girano in una macchina
-        virtuale Linux. Lì conta come la si fa (con WSL2 il server di base non si raggiunge dalla rete del magazzino): si
-        decide con la macchina, nel ticket «Impronte e server in sede, dopo la prova».</li>
-      <li><b>Per far rendere al massimo i contenitori</b> valgono le regole documentate, che adotto senza domanda (elenco
-        in fondo): database su un disco dedicato, contenitori piccoli, riavvio da soli se si fermano, registri che non
-        riempiono il disco, numero giusto di processi.</li>
+      <li>Versioni di partenza: Python 3.14, Django 6.1 con il passaggio alla 6.2 a lunga durata ad aprile 2027, PostgreSQL 18 (la 19 quando pgvector la dichiara), htmx 4. PDF dalle stesse pagine HTML con WeasyPrint.</li>
+      <li>Il ticket «Stack» decide, non costruisce. La pagina di prova dei dispositivi (429) diventa un ticket nuovo di tipo «lavoro» nella mappa, da fare in una sessione a parte: la scrivo io, la pubblico nel ramo <code>gh-pages</code> e tu la apri su iPhone, Android e palmare.</li>
+      <li>Al ticket «Impronte e server in sede, dopo la prova» passano: con quale programma gira il modello nel processo «riconoscimento», la dimensione delle impronte (in pgvector a mezza precisione), la macchina, e, se sarà Windows, come si fa la macchina virtuale Linux raggiungibile dalla rete.</li>
+      <li>La libreria della coda dei lavori (Procrastinate o django-tasks-db) si sceglie quando si scrive il primo lavoro: oggi non cambia nulla.</li>
+      <li>Certificato del dominio: con Aruba o Register.it si delega a un gestore DNS con collegamento automatico (per esempio Cloudflare) solo la voce della sfida, non tutto il dominio. Si fa all'installazione.</li>
+      <li>La voce «Cambio del nome provvisorio DondEres» esce dalla nebbia della mappa (decisa con la 431); la rinomina del repository resta tra le tue cose da fare, a prova visiva finita.</li>
+      <li>La nebbia «Installazione e configurazione iniziale» si arricchisce dei fatti di questo ticket: contenitori, aggiornatore da scrivere (Watchtower è archiviato), copie con pg_dump più le cartelle «riferimento» e «bolle», permesso della posta, delega del certificato.</li>
     </ul>
   </section>
 
   <div id="questions" style="display:grid;gap:28px"></div>
-
-  <section class="given" aria-labelledby="h-ded">
-    <h2 id="h-ded">Deduzioni, senza domanda</h2>
-    <p>Seguono dalle scelte consigliate e dalle ricerche; cambiano se cambi le risposte sopra. Se una non ti torna,
-      scrivilo in una nota qualsiasi.</p>
-    <ul id="deduzioni"></ul>
-  </section>
 
   <div class="save">
     <div class="bar"><button class="primary" id="save" type="button">Salva adesso</button>
@@ -251,31 +212,18 @@ table.mini td.n{font-variant-numeric:tabular-nums;white-space:nowrap}
 </div>
 
 <script>
-const GIRO = "2", LS = "stack-g2";
+const GIRO = "3", LS = "stack-g3";
 const esc = s => String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-
 const Q = [
- {k:"pagine", t:"Come si costruiscono le schermate?",
-  why:"Conta per la velocità sui telefoni economici, per quanto codice resta da mantenere e per la versione da computer più ricca che vuoi. Il confronto è qui sopra.",
-  o:[{id:"htmx",l:"Pagine dal server con htmx, più piccoli componenti dove serve",d:"Quasi tutte le schermate dal server, aggiornate a pezzi da htmx. Piccoli componenti JavaScript (Web Components) per fotocamera, operazioni in attesa e i pochi pezzi ricchi della versione da computer. Un progetto solo, pagine leggere.",rec:true},
-     {id:"isole",l:"Come la prima, con Svelte per le schermate da computer più ricche",d:"Le schermate dei responsabili più complesse (piani di spedizione, Configurazione) si scrivono con Svelte, il resto con htmx. Più libertà su quelle schermate; due modi di scrivere le pagine e un passaggio di costruzione per quella parte."},
-     {id:"spa",l:"Tutta l'app nel browser, con React",d:"Ogni schermata con React; il server manda solo i dati. Animazioni e componenti pronti (Animate UI, shadcn/ui); più codice da scaricare e mantenere, due progetti, e i telefoni economici lavorano di più."}]},
- {k:"canale", t:"Come si tiene il canale aperto con ogni dispositivo?",
-  why:"Aggiorna da sole le schermate di lavoro condiviso entro pochi secondi (411). Su iPhone c'è un difetto aperto di Safari: dopo che il telefono torna dallo standby, un WebSocket nuovo verso un server della rete interna resta bloccato finché non si ricarica la pagina.",
-  o:[{id:"sse",l:"Avvisi dal server (Server-Sent Events)",d:"Il server manda «è cambiato l'ordine 123», la pagina ricarica quel pezzo. Già nel browser e in Django; il campanello lo suona PostgreSQL; niente Redis. Quando lo schermo si spegne il canale si chiude, e alla riaccensione la pagina si rimette in pari.",rec:true},
-     {id:"ws",l:"WebSocket, con Django Channels e Redis",d:"Canale nei due sensi. Richiede Redis (o Valkey) e Django Channels, che è fermo da un anno e dichiara di funzionare solo fino a Django 6.0. Il difetto di Safari lo tocca."},
-     {id:"poll",l:"Domanda ogni pochi secondi",d:"La pagina chiede «novità?» ogni 3 secondi. Il più semplice; ritardo fino a 3 secondi e molte richieste inutili."}]},
- {k:"posta", t:"Come manda il programma le mail dalla casella del responsabile?",
-  why:"Richieste di reso, segnalazioni e ordini fornitore partono dalla mail aziendale del responsabile, con copia a lui (223, 311). Microsoft 365 spegne l'accesso con la sola password a fine dicembre 2026 e Google l'ha già spento: serve un permesso apposta.",
-  o:[{id:"admin",l:"Un permesso dato una volta dall'amministratore della posta",d:"Con Microsoft 365 o Google Workspace, chi amministra la posta dà al programma il permesso di mandare solo dalle caselle dei responsabili. Le mail finiscono nella loro Posta inviata. Con Aruba, Register.it o altri gestori: la casella con la sua password, salvata sul server.",rec:true},
-     {id:"utente",l:"Ogni responsabile accede una volta con il suo account",d:"Il responsabile tocca «Collega la mia posta» e accede con Microsoft o Google. Nessun lavoro per l'amministratore se l'azienda lo permette (spesso chiede comunque il suo consenso); da rifare se l'accesso scade."},
-     {id:"casella",l:"Una casella del magazzino, con il responsabile in copia",d:"Per esempio magazzino@azienda.it, con la risposta che torna al responsabile. Un permesso solo e semplice; ma la mail non parte dalla casella del responsabile: cambia le decisioni 223 e 311."}]},
- {k:"ufp", t:"Che posta usa UFP?",
-  why:"Il primo collegamento di posta da scrivere è quello dei magazzini di prova. È un fatto che sai tu; se non lo sai, va bene «Non lo so».",
-  o:[{id:"ms",l:"Microsoft 365 (Outlook)",d:""},{id:"google",l:"Google Workspace (Gmail aziendale)",d:""},{id:"altro",l:"Aruba, Register.it o un altro gestore",d:"Scrivi nella nota quale, se lo sai."},{id:"boh",l:"Non lo so",d:"Si chiede quando si installa.",rec:true}]},
- {k:"shopify", t:"Che posta usa il magazzino Shopify?",
-  why:"Stesso motivo della domanda precedente.",
-  o:[{id:"ms",l:"Microsoft 365 (Outlook)",d:""},{id:"google",l:"Google Workspace (Gmail aziendale)",d:""},{id:"altro",l:"Aruba, Register.it o un altro gestore",d:"Scrivi nella nota quale, se lo sai."},{id:"boh",l:"Non lo so",d:"Si chiede quando si installa.",rec:true}]}
+ {k:"conferma", t:"Confermi il riepilogo, con le deduzioni?",
+  why:"Se confermi, chiudo il ticket «Stack», aggiungo alla mappa il ticket della pagina di prova e scrivo il prompt della prossima sessione. Se qualcosa non torna, scrivilo nella nota: lo correggo prima di chiudere.",
+  o:[{id:"si",l:"Sì, confermo",d:"Chiudi il ticket e prepara la prossima sessione.",rec:true},
+     {id:"cambia",l:"No, cambia qualcosa",d:"Scrivi nella nota cosa: lo correggo e ti rimostro il riepilogo."}]},
+ {k:"prossima", t:"Con cosa si continua nella prossima sessione?",
+  why:"Restano aperti nella mappa: la pagina di prova dei dispositivi (nuova), l'aspetto grafico (non aspetta più nulla), la prova visiva e la prova delle bolle (aspettano le tue foto e bolle) e, dopo la prova visiva, «Impronte e server in sede, dopo la prova».",
+  o:[{id:"prova",l:"La pagina di prova dei dispositivi",d:"Non aspetta niente: la scrivo e la pubblico, tu la apri sui telefoni e sul palmare e mi incolli i risultati.",rec:true},
+     {id:"grafica",l:"L'aspetto grafico",d:"Le scelte di gusto con i prototipi da guardare. Con la chiusura dello stack non aspetta più nessun ticket."},
+     {id:"foto",l:"La prova visiva",d:"Solo se nel repository privato ci sono già gli ZIP delle foto."}]}
 ];
 const KEYS = Q.map(q=>q.k);
 let S = {note:{}}; KEYS.forEach(k=>S[k]="");
@@ -283,71 +231,12 @@ try{ const d = JSON.parse(localStorage.getItem(LS)||"null"); if(d) S = Object.as
 const rec = k => Q.find(q=>q.k===k).o.find(o=>o.rec).id;
 const v = k => S[k] || rec(k);
 const lab = k => { const q=Q.find(q=>q.k===k); return (q.o.find(o=>o.id===S[k])||{l:"da scegliere"}).l; };
-
-function chip(t,small,cls){ return `<span class="chip ${cls||""}">${esc(t)}${small?`<small>${esc(small)}</small>`:""}</span>`; }
-function lanes(){
-  const p=v("pagine"), c=v("canale");
-  const tel=[
-    chip(({htmx:"Pagine dal server, aggiornate a pezzi (htmx 4)",isole:"Pagine dal server con htmx; Svelte per le schermate da computer più ricche",spa:"App nel browser con React"})[p], ({htmx:"più piccoli componenti",isole:"due modi di scrivere le pagine",spa:"costruita a ogni versione"})[p], "new"),
-    chip("Fotocamera e scatto da solo","componente, 409"),
-    chip("Barcode: lettore del browser, o zxing-cpp","425; grilletto sul palmare"),
-    chip("Operazioni in attesa, con la foto","IndexedDB, componente, 127"),
-    chip("Calcolo delle impronte?","dopo la prova (405)","out")];
-  const net=({sse:"avvisi dal server (SSE)",ws:"WebSocket",poll:"domanda ogni 3 s"})[c];
-  const srv=[
-    chip("Caddy: certificato, HTTPS, HTTP/2","123"),
-    chip("Programma: Python, Django"+(p==="spa"?" (solo dati)":""),"422"),
-    chip("Lavori a intervalli","coda nel database"),
-    chip("Riconoscimento: codice stampato e quantità","Python, processo a parte"),
-    chip("Modello visivo e macchina","dopo la prova (405)","out"),
-    chip("PostgreSQL 18 + pgvector", c==="sse"?"dati, impronte e campanello degli avvisi":"dati e impronte"),
-    chip("Cartelle delle foto","424"),
-    chip("Posta", ({admin:"permesso dell'amministratore, solo caselle dei responsabili",utente:"accesso di ogni responsabile",casella:"casella del magazzino"})[v("posta")], "new"),
-    chip("Aggiornatore e moduli","427, 428")];
-  if(c==="ws") srv.splice(3,0,chip("Redis (o Valkey) e Django Channels","pezzi in più","warn"));
-  document.getElementById("lanes").innerHTML=
-   `<div class="lane"><h3>Telefono, palmare, computer</h3><span class="sub">Nel browser, senza installare nulla</span>${tel.join("")}</div>
-    <div class="wire" aria-label="Cosa passa in rete">
-      <div class="arrow">verso il server<b>codice + foto, in HTTPS</b></div>
-      <div class="arrow">di ritorno<b>${esc(net)}</b></div></div>
-    <div class="lane srv"><h3>Server in sede · contenitori</h3><span class="sub">Solo rete interna (121)</span>${srv.join("")}</div>`;
-}
-const tbl = (h,rows)=>`<div class="tw"><table class="mini"><thead><tr>${h.map(x=>`<th>${esc(x)}</th>`).join("")}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
 const EX = {
- pagine:()=>{ const p=v("pagine");
-   const rows={htmx:[["Elenco del prelievo, DDT, inventario","htmx"],["Piani di spedizione (trascinare)","componente piccolo"],["Configurazione","htmx"],["Fotocamera, attese","componente"]],
-     isole:[["Elenco del prelievo, DDT, inventario","htmx"],["Piani di spedizione (trascinare)","Svelte"],["Configurazione","Svelte"],["Fotocamera, attese","componente"]],
-     spa:[["Elenco del prelievo, DDT, inventario","React"],["Piani di spedizione (trascinare)","React"],["Configurazione","React"],["Fotocamera, attese","React"]]}[p];
-   return `<div class="cap">Con cosa si scrive ogni schermata</div>${tbl(["Schermata","Con"],rows)}<small>${({htmx:"Se una schermata si rivela troppo ricca per htmx, la si riscrive da sola come componente: la scelta si può correggere pezzo per pezzo.",isole:"Due modi di scrivere le pagine da tenere coerenti nell'aspetto grafico.",spa:"Le regole di validazione stanno sul server e vanno ripetute nell'app perché l'operatore le veda subito."})[p]}</small>`; },
- canale:()=>{ const c=v("canale");
-   const t=({sse:["chiude il canale","riapre il canale e chiede «cosa è cambiato?»","ordine 123 aggiornato"],ws:["il WebSocket resta aperto o cade","apre un WebSocket nuovo: su iPhone può restare bloccato (difetto di Safari)","serve ricaricare la pagina"],poll:["smette di chiedere","riprende a chiedere ogni 3 s","ordine 123 aggiornato entro 3 s"]})[c];
-   return `<div class="cap">Mario spegne lo schermo e lo riaccende</div><ol class="flow"><li><span class="who">Schermo spento</span><span>${esc(t[0])}</span></li><li><span class="who">Riacceso</span><span>${esc(t[1])}</span></li><li><span class="who">Mario vede</span><span>${esc(t[2])}</span></li></ol>`; },
- posta:()=>{ const p=v("posta");
-   const rows={admin:[["Microsoft 365","l'amministratore dà il permesso «manda come» solo per il gruppo dei responsabili (da 30 minuti a 2 ore per l'effetto)"],["Google Workspace","il super amministratore attiva la delega per l'invio (fino a 24 ore)"],["Aruba, Register.it, altri","indirizzo e password della casella; la mail non compare nella Posta inviata"]],
-     utente:[["Microsoft 365","il responsabile accede; l'azienda può chiedere il consenso dell'amministratore"],["Google Workspace","il responsabile accede; l'app va registrata come «interna»"],["Aruba, Register.it, altri","indirizzo e password della casella"]],
-     casella:[["Qualsiasi gestore","una casella del magazzino con la sua password o il suo permesso; risposta al responsabile"],["Posta inviata del responsabile","la mail non c'è: c'è la copia"],["Decisioni 223 e 311","da cambiare"]]}[p];
-   return `<div class="cap">Cosa si fa all'installazione</div>${tbl(["Gestore","Cosa serve"],rows)}<small>Senza posta collegata restano «Copia testo» e «Scarica PDF» (215).</small>`; },
- ufp:()=>`<div class="cap">Cosa cambia</div><p class="note">${({ms:"Il primo collegamento da scrivere è quello di Microsoft 365.",google:"Il primo collegamento da scrivere è quello di Google Workspace.",altro:"Il primo collegamento da scrivere è quello con indirizzo e password (SMTP).",boh:"L'ordine dei collegamenti si decide all'installazione."})[v("ufp")]}</p>`,
- shopify:()=>`<div class="cap">Cosa cambia</div><p class="note">${({ms:"Serve il collegamento di Microsoft 365.",google:"Serve il collegamento di Google Workspace.",altro:"Serve il collegamento con indirizzo e password (SMTP).",boh:"Si chiede all'installazione."})[v("shopify")]}</p>`
+ conferma:()=>{ const st = v("conferma")==="cambia" ? ["Correggo la parte indicata nella nota","Ti rimostro il riepilogo","Poi chiudo il ticket"]
+   : ["Chiudo il ticket «Stack» con la sintesi delle decisioni 422–436","Aggiungo il ticket «Pagina di prova dei dispositivi» e aggiorno la mappa e la sua nebbia","Scrivo il prompt della prossima sessione in docs/prossima-sessione.md"];
+  return `<div class="cap">Cosa succede dopo</div><ol class="steps">${st.map(t=>`<li>${esc(t)}</li>`).join("")}</ol>`; },
+ prossima:()=>`<div class="cap">Prompt della prossima sessione</div><p class="note">${({prova:"Prompt K: pagina di prova dei dispositivi (iPhone, Android, palmare di UFP), con le prove della decisione 429.",grafica:"Prompt K: aspetto grafico, con le scelte di gusto e i prototipi.",foto:"Prompt B: prova visiva, se gli ZIP ci sono."})[v("prossima")]}</p>`
 };
-
-function deduzioni(){
-  const p=v("pagine"), c=v("canale");
-  const L=[
-    p!=="spa" ? "htmx nella versione 4 (uscita ad agosto 2026, con gli avvisi dal server nello stesso pacchetto, licenza 0BSD), invece della 2: si evita un passaggio di versione nel 2027." : "React 19 con un passaggio di costruzione; Django manda i dati con un'interfaccia (API).",
-    "Fotocamera, scatto da solo e operazioni in attesa sono piccoli componenti JavaScript che htmx non tocca, così un aggiornamento di pagina non spegne la fotocamera né perde un'attesa.",
-    "Accessibilità (WCAG 2.2 AA): dopo ogni aggiornamento di un pezzo di pagina si sposta il punto attivo dove serve e i messaggi come «Salvata» o «Senza rete» si leggono ad alta voce con aria-live.",
-    c==="sse" ? "Il canale: Django risponde in streaming sotto ASGI; un ascoltatore per processo riceve il campanello di PostgreSQL (LISTEN/NOTIFY, che porta solo «cosa è cambiato», mai i dati) e lo gira alle pagine aperte. Per questo l'ascoltatore usa una connessione diretta al database." : "Il canale: Django Channels con Redis (o Valkey) come passaggio dei messaggi.",
-    "Quando la pagina è nascosta (schermo spento, altra app) il canale si chiude; quando torna visibile la pagina chiede cosa è cambiato. Da provare su un iPhone vero con la pagina di prova.",
-    "Connessioni al database: il gruppo di connessioni di psycopg dentro ogni processo; niente PgBouncer, che non regge l'ascolto del campanello.",
-    "Contenitori: PostgreSQL su un disco (volume) dedicato, con il percorso nuovo della versione 18; immagini piccole costruite in due passaggi; riavvio da solo e controllo di salute per ogni pezzo; registri con il driver «local», che li fa ruotare; nessun file di lavoro dentro il contenitore; porte aperte solo da Caddy.",
-    "Processi del programma: un server ASGI (uvicorn) con un processo per ogni nucleo del processore, da regolare con la prova di carico.",
-    "Se la macchina in sede sarà Windows: contenitori in una macchina virtuale Linux raggiungibile dalla rete del magazzino; il modo si sceglie nel ticket «Impronte e server in sede, dopo la prova».",
-    v("posta")!=="casella" ? "Posta: tre collegamenti possibili (Microsoft 365, Google Workspace, indirizzo e password); si scrivono prima quelli dei magazzini di prova. Le password e i permessi stanno solo sul server in sede, mai nel repository." : "Posta: una casella del magazzino; decisioni 223 e 311 da aggiornare."
-  ];
-  document.getElementById("deduzioni").innerHTML=L.map(t=>`<li>${esc(t)}</li>`).join("");
-}
-
 function build(){
   document.getElementById("questions").innerHTML = Q.map((q,i)=>`
   <section class="q" aria-labelledby="h-${q.k}">
@@ -363,11 +252,10 @@ function build(){
   </section>`).join("");
 }
 const opts=(q,cur)=>q.o.map(o=>`<label class="opt"><input type="radio" name="${q.k}" id="${q.k}-${o.id}" value="${o.id}" ${cur===o.id?"checked":""}>
-  <span><b>${esc(o.l)}</b>${o.rec?'<span class="rec">Consigliata</span>':""}${o.d?`<span class="d">${esc(o.d)}</span>`:""}</span></label>`).join("");
-function refresh(){ lanes(); deduzioni(); for(const q of Q) document.getElementById("ex-"+q.k).innerHTML=EX[q.k](); document.getElementById("copybox").textContent=asText(); }
+  <span><b>${esc(o.l)}</b>${o.rec?'<span class="rec">Consigliata</span>':""}<span class="d">${esc(o.d)}</span></span></label>`).join("");
+function refresh(){ for(const q of Q) document.getElementById("ex-"+q.k).innerHTML=EX[q.k](); document.getElementById("copybox").textContent=asText(); }
 function render(){ for(const q of Q){ document.getElementById(q.k+"-opts").innerHTML=opts(q,S[q.k]); document.getElementById("n-"+q.k).value=S.note[q.k]||""; } refresh(); }
-function asText(){ const n=k=>S.note[k]?" — nota: "+S.note[k]:""; return ["Stack – giro "+GIRO].concat(Q.map((q,i)=>`${i+1}. ${q.t} ${lab(q.k)}${n(q.k)}`)).join("\n"); }
-
+function asText(){ const n=k=>S.note[k]?" — nota: "+S.note[k]:""; return ["Stack – riepilogo"].concat(Q.map((q,i)=>`${i+1}. ${q.t} ${lab(q.k)}${n(q.k)}`)).join("\n"); }
 let db=null,timer=null,saving=false,pending=false;
 function setStatus(t,cls){ ["status","status2"].forEach(id=>{const el=document.getElementById(id); el.textContent=t; el.className="status "+(cls||"");}); }
 function local(){ try{ localStorage.setItem(LS, JSON.stringify(S)); }catch(e){} }
