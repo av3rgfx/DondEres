@@ -398,6 +398,7 @@ Le decisioni tecniche ancora aperte non stanno qui: stanno in `docs/analisi-prog
 | 390 | 20/11/2026 | Il puntino della i è **tondo**. | Proposta accettata (giro 8 del ticket «Brand kit con la skill logo-design», pagina https://claude.ai/artifact/JQ2vwNwRMfT2qi4BDWNnX5, privata). |
 | 391 | 20/11/2026 | Simbolo e nome restano **separati**: il simbolo per le icone, il nome per testate e documenti; nessuna versione affiancata. | Proposta accettata (giro 8 del ticket «Brand kit con la skill logo-design», pagina https://claude.ai/artifact/JQ2vwNwRMfT2qi4BDWNnX5, privata). |
 | 392 | 20/11/2026 | Oltre allo schizzo dell'utente si propongono altre idee per la R, più ardite. | L'utente in chat: «Oltre a quello che ho proposto io proponi altre idee per il logo. Stupiscimi e dimostra le tue doti da designer». |
+| 393 | 20/11/2026 | Nessuna delle quattro R del giro 9. Lo schizzo dell'utente non è più un riferimento. Restano: **gamba allungata e curva**, da migliorare; **il vuoto al centro della R non è rettangolare**. Corregge la 389. | Nota dell'utente: «lasciamo perdere il riferimento che ti ho mandato perché ci porta nella strada sbagliata. Il concetto della gamba allungata e curva ci può stare ma va migliorata. Invece il centro della R l'hai fatto rettangolare, ma no non lo deve essere» (giro 9 del ticket «Brand kit con la skill logo-design», pagina https://claude.ai/artifact/JQ2vwNwRMfT2qi4BDWNnX5, privata). |
 
 ## Note di lettura
 
@@ -502,3 +503,4 @@ Le decisioni tecniche ancora aperte non stanno qui: stanno in `docs/analisi-prog
 - Decisione 358: modificata dalla 376 (Varko accantonato, in riserva). Decisioni 359 e 361: valgono per il nome nuovo (376).
 - Decisione 383: l'ordine è superato dalla 386 (nome Ripo). Decisione 385: precisata dalla 387 (si prosegue con il kit).
 - Decisione 380: precisata dalla 389 (la R si ridisegna più curva, dallo schizzo dell'utente). Decisione 367: applicata dalla 388.
+- Decisione 389: corretta dalla 393 (lo schizzo non è più il riferimento; restano gamba lunga e curva e vuoto non rettangolare).
