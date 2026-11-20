@@ -21,3 +21,5 @@ Risultato atteso: il brand kit nel repository, il link qui e la direzione scelta
 - 20/11/2026, primo giro (pagina https://claude.ai/artifact/JQ2vwNwRMfT2qi4BDWNnX5, privata): skill installata nel
   progetto senza la raccolta di loghi altrui (362); brief nelle decisioni 363–368. Secondo giro: tre concetti
   (Varco, Mirino, Colli) in `prototipi/brand-kit/concetti/`, sezione «Brand kit» di `docs/architettura.md`.
+- 20/11/2026, esito del secondo giro: nessuno dei tre concetti (369), «o» tonda (370). Seconda parte del giro: cosa non
+  va e nove idee abbozzate da giudicare, nella stessa pagina.

@@ -1910,3 +1910,11 @@ accanto a Tidal, Vue, Dropbox, Kotlin e Vercel.
 
 Pagina delle domande, privata: https://claude.ai/artifact/JQ2vwNwRMfT2qi4BDWNnX5; copia in
 `prototipi/brand-kit/index.html` (mostra l'ultimo giro). Il primo giro è nella cronologia del repository.
+
+### Esito del giro 2 (decisioni 369 e 370)
+
+Nessuno dei tre concetti va al kit: si rivedono (369), motivo non indicato. Nel nome la «o» resta tonda (370). Prima di
+disegnare tre concetti nuovi si chiede all'utente cosa non andava (idee, peso, lettere, semplicità, somiglianze, bisogno
+del simbolo) e gli si fanno giudicare nove idee abbozzate: corsia, cartello di corsia, porta di carico, ripiani a V,
+ingresso, spunta, monogramma Vk, V a filo, solo il nome. I tre concetti nuovi si scelgono dai «sì», poi dai «forse».
+
