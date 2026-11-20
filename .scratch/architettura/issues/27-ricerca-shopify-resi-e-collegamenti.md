@@ -2,7 +2,8 @@
 
 Type: research
 Label: wayfinder:research
-Status: open
+Status: resolved
+Assignee: sessione del 19/11/2026
 Blocked by: —
 
 ## Question
@@ -31,3 +32,14 @@ primarie, fatti distinti da deduzioni e ipotesi; le conseguenze per il ticket «
 - 19/11/2026: nasce dalla richiesta dell'utente (321). Ricerca già fatta: `docs/research/2026-11-15-shopify-ordini-
   evasione-giacenze.md` (non ripeterla, aggiornarla dove serve). Specifica attuale: «Resi» → «Reso del cliente» in
   `docs/architettura.md` (210–212: esiti sul reso del sito, rimborso e credito restano sul sito).
+- 19/11/2026, risoluzione: `docs/research/2026-11-19-shopify-resi-rimborsi-collegamenti.md`. In automatico dal server
+  in sede: leggere i resi aperti (dagli ordini con `return_status`), creare, approvare o rifiutare un reso, caricare
+  un'etichetta propria, scrivere l'esito per pezzo, eseguire il rimborso sul metodo originale o in credito del negozio
+  (`returnProcess`), con le notifiche di Shopify al cliente. No: etichette di reso Shopify Shipping in Italia (solo
+  USA e Canada), stato del pacco di reso, ricerca per tracking (serve un indice nostro), scelta del rimborso da parte
+  del cliente con i soli resi di Shopify (serve un'estensione dell'account cliente), email libere al cliente tramite
+  Shopify, messaggi WhatsApp in arrivo senza indirizzo pubblico, rimborso di contrassegno e bonifico. Per legge
+  (Codice del consumo 52–57, 54-bis): rimborso entro 14 giorni dalla richiesta di recesso, stesso mezzo salvo accordo
+  espresso del cliente; recesso valido anche per email. Durante la ricerca l'utente ha proposto due idee (scelta del
+  rimborso sul sito; casella dei resi letta da un'automazione con un LLM e conferma di una persona), confrontate nella
+  sezione 6 e nelle conseguenze.

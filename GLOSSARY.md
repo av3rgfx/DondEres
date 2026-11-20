@@ -315,6 +315,27 @@ _Evitare_: RESIF (è il nome di UFP), zona resi
 Il messaggio al fornitore che chiede di accettare un reso, con le righe, il motivo e le prove.
 _Evitare_: segnalazione, mail di reso
 
+**Richiesta del cliente**:
+La domanda di reso che un cliente fa dal sito o per mail, prima che il responsabile la approvi o la rifiuti.
+_Evitare_: richiesta di reso (è il messaggio al fornitore), pratica
+
+**Credito del negozio**:
+L'importo che il cliente riceve da spendere nel negozio al posto del rimborso sul metodo di pagamento; vale solo se il
+cliente lo sceglie.
+_Evitare_: buono, voucher, carta regalo (è un'altra cosa)
+
+**Recesso**:
+Il diritto del cliente di rendere la merce comprata a distanza entro 14 giorni, senza dire perché.
+_Evitare_: reso (da solo), garanzia (riguarda i difetti)
+
+**Ritiro del reso**:
+Il passaggio del corriere dal cliente per prendere il pacco di un reso, prenotato dal negozio.
+_Evitare_: pickup, ritiro (da solo, si confonde con il ritiro del corriere in partenza)
+
+**Indirizzo dei resi**:
+L'indirizzo di posta dedicato ai resi del cliente, l'unico che il programma legge.
+_Evitare_: casella principale, sottodominio
+
 **Riserva**:
 La dicitura scritta sul documento del corriere quando un collo arriva rovinato, che conserva il diritto di contestare.
 _Evitare_: accettato con riserva (è il timbro), contestazione

@@ -107,6 +107,14 @@ percorso delle schermate e aspetto grafico, compresi nome e brand kit (decisioni
   moduli solo nostri; punti d'aggancio collegamento, lettore di etichette, precedenza, partita; «Da registrare nel
   gestionale»; aggiornamento fermo se un modulo non va; vendita assistita, agenti, fattura, ordini fornitore e
   inventario verso Ad Hoc; «collegamento» al posto di «connettore» (decisioni 301–320).
+- [Shopify: resi, rimborsi e cosa si può collegare](issues/27-ricerca-shopify-resi-e-collegamenti.md): resi, esiti,
+  etichetta propria e rimborso (anche in credito) si fanno da API a intervalli; no etichette di reso Shopify in Italia,
+  scelta del rimborso del cliente solo con un'estensione, niente WhatsApp in arrivo senza indirizzo pubblico; rimborso
+  entro 14 giorni dalla richiesta, credito solo con accordo espresso (ricerca del 19/11/2026).
+- [Resi del cliente nel magazzino Shopify](issues/28-resi-cliente-magazzino-shopify.md): resi di Shopify nel
+  collegamento, senza app; modulo nostro nella pagina dell'ordine con la scelta del rimborso e l'indirizzo del ritiro;
+  mail dei resi lette dal programma, modello solo dopo una prova; il responsabile approva, prenota il ritiro GLS o
+  carica l'etichetta FedEx e conferma il rimborso; 14 giorni contati; tre punti per la parte legale (decisioni 322–343).
 
 Prese prima della mappa, nel secondo giro di domande del 15/11/2026: decisioni 15–28 in
 [`docs/decisioni.md`](../../docs/decisioni.md) (assegnazione parziale, codice stampato come tipo di articolo,
@@ -129,6 +137,10 @@ tre livelli di conferma, quantità letta dalla scatola, ubicazioni facoltative, 
   schermate.
 - **Etichette e distinta del corriere:** chi le stampa in UFP (domande 21 e 22 al rivenditore) e nel magazzino Shopify;
   la ricerca del 18/11/2026 le trova in quasi tutti i gestionali. Se serviranno, diventano un collegamento in più (decisione 303).
+  Nel magazzino Shopify vale anche per i resi: oggi ritiri GLS prenotati a mano e etichette FedEx caricate (326, 331).
+- **Prova della lettura delle mail dei resi:** dove conservare le mail vere con i dati coperti, quante, come si misura
+  la bozza del modello, in cloud o in sede (333). La domanda è stata saltata (340): finché non si decide, il modello
+  resta spento.
 - **Ottimizzazione del venduto (VEND):** l'utente vuole un'analisi a parte, soprattutto per UFP, che vende anche al
   banco e ha più casi particolari da controllare.
 - **Descrizione proposta da un modello che legge immagini e scrive testo** per l'articolo nuovo: se tenerla, e quale

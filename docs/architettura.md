@@ -220,6 +220,8 @@ sezione «Punti di estensione».
   spedita. «Evaso» non si manda (52). Va provato su un negozio di sviluppo come non scalare due volte la stessa uscita
   (ricerca, §3).
 - **Il riferimento cliente** delle proposte d'ordine lo prende dall'ordine del sito (46).
+- **Resi del cliente**: richieste, esiti, rimborsi, credito del negozio e il modulo della scelta del rimborso nella
+  pagina dell'ordine stanno in «Resi» → «Reso del cliente nel magazzino Shopify» (322–343).
 
 ### Scambio e guasti
 
@@ -1349,7 +1351,7 @@ automatizza ha una procedura guidata, senza passaggi ripetuti.
 
 ## Resi
 
-Dal ticket «Resi», chiuso il 18/11/2026. Decisioni 207–226 (la 214 precisa la 208, la 223 precisa la 215). Fonti: ricerca
+Dal ticket «Resi», chiuso il 18/11/2026, e dal ticket «Resi del cliente nel magazzino Shopify», chiuso il 19/11/2026 (decisioni 321–343, sotto). Decisioni 207–226 (la 214 precisa la 208, la 223 precisa la 215). Fonti: ricerca
 `docs/research/2026-11-18-gestionali-magazzino-esistenti.md` (§ 1.8), documentazione Shopify sui resi (link nel ticket),
 due mail di reso e due di segnalazione mostrate dall'utente in chat (fatti annotati sotto, senza nomi). Domande nella
 pagina privata https://claude.ai/artifact/KQtNpyrXjbywxnz1iGKnGY; schermate nel prototipo
@@ -1412,18 +1414,115 @@ pronto (domanda 24).
 
 ### Reso del cliente
 
+Base di ogni magazzino (decisioni 210–212, 220):
+
 - **Ricevi reso** (210): si parte dall'ordine spedito, cercato per numero, cliente o inquadrando un articolo; nel
   magazzino Shopify in cima ci sono i resi aperti sul sito. Il documento del cliente, se c'è, si fotografa. Un pacco
   senza ordine trovato, o un articolo non spedito con quell'ordine, va al responsabile come merce non prevista (45).
 - **Per ogni pezzo** (211): «Integro» (torna libero, va in «Metti a posto», si assegna dal più vecchio), «Da
   controllare» (al responsabile: rivendibile, da rendere al fornitore o da scartare), «Danneggiato» (191). Più pezzi di
   quelli spediti: si accettano e il di più va al responsabile (deduzione, come la 198).
-- **Shopify** (212): alla chiusura il programma scrive sul reso del sito l'esito di ogni pezzo (rimesso a magazzino,
-  non rimesso, mancante; da controllare aspetta il responsabile) e non manda in più una variazione di giacenza. Rimborso,
-  credito e cambio restano sul sito. L'app di Shopify chiede in più i permessi `read_returns` e `write_returns` (53,
-  documentazione Shopify). Da provare su un negozio di sviluppo.
 - **Accanto a un gestionale** (220): alla chiusura va al gestionale un «reso da cliente» con il riferimento all'ordine e
   alla vendita; nota di credito e rimborso li fa il gestionale (domanda 27 al rivenditore).
+
+### Reso del cliente nel magazzino Shopify
+
+Dal ticket «Resi del cliente nel magazzino Shopify», chiuso il 19/11/2026. Decisioni 321–343; ricerca
+`docs/research/2026-11-19-shopify-resi-rimborsi-collegamenti.md`; domande nella pagina privata
+https://claude.ai/artifact/AR5aJVmctJ7FbEzbwyjCQd.
+
+**Oggi** (321, 326, 331, fatti riferiti): le scatole arrivano, si controllano le etichette, una persona si accorda con
+il cliente per WhatsApp o per mail tra credito del negozio e rimborso sul metodo di pagamento. Con il credito il negozio
+fa ritirare il pacco: in Italia, Austria e Germania una persona prenota il ritiro GLS scrivendo al referente; nel resto
+del mondo un'etichetta FedEx. Con il rimborso il cliente spedisce a sue spese. Molti clienti chiedono il reso solo per
+mail. Niente è registrato in digitale.
+
+**Su cosa si costruisce** (322). Sui resi di Shopify, letti e scritti dal programma: è una parte del collegamento
+Shopify, senza app di resi in più. Tutto il traffico parte dal server in sede, a intervalli (54).
+
+**Cosa Shopify permette e cosa no** (ricerca del 19/11/2026, sintesi):
+
+| Si fa dal programma | Non si fa |
+|---|---|
+| Leggere i resi aperti (dagli ordini con `return_status`), con pezzi, motivo, nota e tracking | Etichette di reso Shopify in Italia (solo Stati Uniti e Canada) |
+| Creare, approvare, rifiutare un reso; caricare un'etichetta propria | Sapere se il pacco del reso è in viaggio; cercare un ordine per tracking |
+| Scrivere l'esito per pezzo (212) | Far scegliere il rimborso con il solo modulo di Shopify |
+| Eseguire il rimborso sul metodo originale, in credito del negozio o diviso, con la notifica di Shopify | Mandare mail libere al cliente «tramite Shopify» |
+| Leggere una casella di posta e mandare mail | Ricevere le risposte WhatsApp sul server in sede; rimborsare contrassegno e bonifico |
+
+**Da dove arriva un reso**
+
+- **Dal sito** (323, 330, 338). È la strada principale: resi self-service di Shopify con i nuovi account cliente (già
+  accesi: il negozio usa il credito del negozio; i resi self-service si verificano nel pannello). Un modulo nostro nella
+  pagina dell'ordine, parte del collegamento Shopify, chiede pezzi, motivo e «Come vuoi il rimborso?»: credito del
+  negozio (con il ritiro o l'etichetta del negozio) o metodo di pagamento originale (spedisce il cliente). Nessuna delle
+  due è già scelta. Con il credito in Italia, Austria e Germania chiede anche l'indirizzo del ritiro, proposto da quello
+  di spedizione, con un campo di note; le disponibilità no. Il modulo manda la richiesta a Shopify e salva la scelta
+  sull'ordine con data e ora: è la prova dell'accordo espresso sul credito. Finché il modulo non è provato su un negozio
+  di sviluppo, il cliente scrive la scelta nella nota della richiesta; se usa il pulsante normale di Shopify, la chiede
+  la persona.
+- **Dalle mail** (324, 325, 333, 334, 340). Un indirizzo dedicato sul dominio dell'azienda (resi@ o assistenza@, nome
+  da scegliere), con una regola nella casella principale che vi inoltra le mail dei clienti che parlano di reso; il
+  programma legge solo quello. Ogni conversazione va in «Da controllare» con tutte le mail. Un modello linguistico, che
+  si accende in «Configurazione», prepara la bozza (ordine, pezzi, motivo, scelta del rimborso, indirizzo); finché non
+  si decide dove lavora (dopo una prova su mail vere, ancora da definire), resta spento e il programma riconosce ordine e
+  cliente con regole semplici (numero d'ordine, mittente). Una persona conferma, corregge o respinge; solo alla conferma
+  il programma crea il reso su Shopify. Alle mail risponde sempre una persona. Per legge la mail è già una richiesta di
+  recesso valida: la data di arrivo conta per i 14 giorni.
+
+**Richieste da approvare** (331, 339). Il responsabile vede ogni richiesta con giorni, pezzi, motivo e scelta del
+rimborso, e tocca «Approva» o «Rifiuta» (con il motivo, che parte con la notifica di Shopify). Dopo «Approva»:
+
+| Scelta del cliente | Paese | Cosa succede |
+|---|---|---|
+| Credito del negozio | Italia, Austria, Germania | Il programma mostra il riepilogo per il ritiro (reso, pezzi, credito, indirizzo, note); chi prenota scrive al referente GLS e segna «Ritiro prenotato per il …» |
+| Credito del negozio | Resto del mondo | Una persona crea l'etichetta FedEx sul sito del corriere e la carica (PDF e tracking); il programma la mette sul reso e Shopify la manda al cliente (326) |
+| Metodo di pagamento originale | Ovunque | Shopify manda al cliente l'approvazione; il cliente spedisce a sue spese |
+
+Il cliente si avvisa con le notifiche di Shopify e con le mail del programma, dall'indirizzo dei resi; per WhatsApp il
+programma prepara il testo da copiare (329). Niente WhatsApp automatico.
+
+**All'arrivo.** «Ricevi reso» come nella base (210, 211). La scatola si riconosce dal tracking dell'etichetta quando
+c'è: il programma tiene un elenco dei tracking dei resi aperti, riletto a ogni giro, perché Shopify non cerca per
+tracking (343, deduzione). Senza tracking (ritiro GLS, spedizione del cliente) si cerca l'ordine. Alla chiusura il
+programma scrive su Shopify l'esito di ogni pezzo (212); l'esito «Da controllare» si scrive una volta sola, alla
+decisione del responsabile (343). Tutti i resi si trattano come recesso; un pezzo difettoso si segna «Da controllare»
+o «Danneggiato» e il responsabile può renderlo al fornitore (332, 207).
+
+**Rimborso** (327, 335, 341). Il programma propone il metodo scelto dal cliente; l'importo lo scrive il responsabile,
+in un campo vuoto, e tocca «Conferma rimborso»: il programma lo esegue su Shopify (sul metodo originale, in credito del
+negozio o diviso) e lo registra nel reso. Contrassegno e bonifico si restituiscono fuori da Shopify e nel programma si
+segnano soltanto. Shopify Payments rimborsa di solito fino a 120 giorni, PayPal fino a 180 (ricerca).
+
+**I 14 giorni** (328). Su ogni reso «giorno N di 14», contati dalla richiesta (sito o mail); dal 10° giorno avviso al
+responsabile. Per legge il rimborso del recesso va fatto entro 14 giorni da quando il negozio ne è informato; si può
+aspettare la merce o la prova che è partita.
+
+**Niente cambi** per ora (336): il cliente prende il credito e fa un nuovo ordine.
+
+**Documenti** (337). Una scheda per reso in «Documenti» → «Resi»: la richiesta (dal sito, o tutta la conversazione delle
+mail), la scelta del rimborso con data e ora, ritiro o spedizione con il tracking, le foto e il documento del cliente,
+l'esito di ogni pezzo, il rimborso eseguito, chi ha approvato e chi ha confermato.
+
+**Permessi dell'app Shopify** in più (226, 343, ricerca § 1.7 e § 4): `read_returns` e `write_returns`; `write_orders`
+per i rimborsi; `read_store_credit_accounts` e `write_store_credit_account_transactions` per il credito del negozio;
+metafield dell'ordine per la scelta del rimborso; estensione dell'account cliente per il modulo.
+
+**Da provare su un negozio di sviluppo** prima di accendere resi e rimborsi (212, 343; elenco completo nella ricerca):
+l'esito `RESTOCKED` alza il disponibile una volta sola e «Elabora reso» nel pannello non lo ripete; un pezzo «Da
+controllare» accetta poi l'esito finale; creare o chiudere un reso aggiorna l'ordine per il giro a intervalli;
+`returnProcess` con credito e con rimborso, e quali mail partono e in che lingua; il token dell'app basta per rimborsi
+ed etichette; il modulo nell'account cliente si installa con la nostra app e salva la scelta; reso di un ordine senza
+account.
+
+**Punti aperti per la parte legale** (342). Il programma non cambia per questi punti:
+
+- Garanzia legale di 2 anni: per il Codice del consumo la deve chi vende al consumatore, anche se rivenditore, che poi
+  può rivalersi sul fornitore (ricerca § 2.3; la rivalsa è una deduzione). Oggi i difetti si mandano al fornitore (332).
+- Funzione di recesso online, obbligatoria dal 19/6/2026 (art. 54-bis): i resi self-service di Shopify dovrebbero
+  coprirla; se basti l'accesso con il codice mandato per mail è discusso.
+- Ritiro gratuito solo per chi sceglie il credito: il costo diretto del ritorno si può lasciare al cliente se lo sa
+  prima; il credito al posto del rimborso vale solo con il suo accordo espresso, che il modulo conserva (330).
 
 ### Danni al trasporto
 
@@ -1434,7 +1533,8 @@ rendere non si contano (218).
 ### Schermate
 
 Lavoro «Resi» della mansione magazziniere, con il numero sulla prima schermata (213): scheda «Dai clienti» (cose in
-sospeso, resi aperti sul sito, «Ricevi reso») e scheda «Al fornitore» (Da chiedere, Chiesto, Autorizzato, Pronto,
+sospeso, resi aperti sul sito, «Ricevi reso»); nel magazzino Shopify il responsabile ha in più «Richieste da approvare» (331) e in «Da controllare» i resi
+arrivati per mail (324) e scheda «Al fornitore» (Da chiedere, Chiesto, Autorizzato, Pronto,
 Partito). Per il responsabile: «Rendi al fornitore» in «Da controllare» e nella scheda dell'articolo, richiesta di reso
 in anteprima, risposta del fornitore. In «Documenti» la categoria «Resi». In «Metti a posto» il compito «Porta
 nell'area resi». Nel nuovo DDT «Collo rovinato all'arrivo».
@@ -1452,6 +1552,12 @@ ricevimento, non solo per i resi. Primo passo: la scheda «Dalla bolla» e «Man
 |---|---|---|---|
 | Nome dell'area resi | testo | «RESI» | 217 |
 | Invio delle mail ai fornitori | dalla mail aziendale del responsabile, solo testo da copiare | solo testo da copiare finché non si collega il server di posta | 215, 223 |
+| Resi del cliente dal collegamento Shopify (resi, esiti, rimborsi) | acceso, spento | spento finché non si prova su un negozio di sviluppo | 322, 343 |
+| Modulo della scelta del rimborso nella pagina dell'ordine | acceso, spento (la scelta va nella nota) | spento finché non è provato | 330 |
+| Spedizione del reso per scelta e paese | per ogni coppia: ritiro prenotato a mano, etichetta caricata, spedisce il cliente | magazzino Shopify: credito → ritiro GLS (Italia, Austria, Germania), etichetta FedEx (resto del mondo); rimborso → spedisce il cliente | 326, 331 |
+| Indirizzo dei resi letto dal programma | indirizzo e accesso autorizzato alla casella | nessuno | 324, 334 |
+| Modello che prepara le bozze dalle mail | acceso (servizio scelto dall'admin), spento | spento finché non si decide dove lavora | 324, 333, 340 |
+| Avviso sui 14 giorni | giorno dell'avviso | 10° giorno | 328 |
 
 ## Inventario periodico
 
