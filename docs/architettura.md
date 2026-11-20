@@ -1949,3 +1949,19 @@ e si sceglie maiuscola o minuscola e se il nome comincia con la lettera. Consegu
 (deduzione): con un nome nuovo serve una nuova verifica dei marchi, come per Varko (ticket «Unicità dei nomi scelti»), e
 il consulente della 359 vale per il nome nuovo.
 
+### Giro 5: concetti su R e Q (decisioni 376–379)
+
+Varko si accantona e resta in riserva; il nome nuovo nasce dalla lettera, comincia con lei e segue le regole 344–350,
+con una nuova verifica dei marchi e il consulente della 359 (376, 379). Lettere: sì a R e Q (377); maiuscole, perché
+r e q minuscole hanno poco da modificare (378, scelta mia da confermare). File in `prototipi/brand-kit/concetti-3/`
+(asta 44 su 256), tutti 100/100 in `svg_audit.py`; confronto a scaffale con Riot, Remix, Heroku Redis, Rollup, Qlik e
+Quobyte: nessuna somiglianza forte.
+
+| | Concetto | Idea | Rischio |
+|---|---|---|---|
+| A | R · Rampa (consigliato) | la gamba è un cuneo a 45 gradi, la rampa della baia di carico | gamba grande, la R pesa a destra; altre R a cuneo esistono |
+| B | Q · Collo | la coda è un collo quadrato appoggiato all'anello | nomi quasi solo in «Qu» |
+| C | Q · Nastro | rotolo di nastro da imballo, la coda si srotola con il taglio a dentini | a 16 punti i dentini spariscono; stesso limite sui nomi |
+
+Ordine dei passi dopo la scelta: rosa di nomi che cominciano con la lettera, verifica dei marchi del nome scelto, kit.
+

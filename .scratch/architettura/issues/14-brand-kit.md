@@ -27,3 +27,5 @@ Risultato atteso: il brand kit nel repository, il link qui e la direzione scelta
   con lettere ridisegnate, in `prototipi/brand-kit/concetti-2/`.
 - 20/11/2026, giro 4: giro 3 scartato (374); si inverte l'ordine, prima la lettera e il logo, poi il nome (375). Se il
   nome cambia, serve una nuova verifica dei marchi prima di sceglierlo: da aggiungere come ticket alla chiusura.
+- 20/11/2026, giro 5: Varko in riserva, lettere R e Q, nome con l'iniziale del logo (376–379); tre concetti su R e Q
+  in `prototipi/brand-kit/concetti-3/`. Dopo la scelta: nomi, verifica dei marchi, kit.

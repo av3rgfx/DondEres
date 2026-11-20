@@ -3,13 +3,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@112,600;112,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
 <style>
-/* Layout: prima la nuova strada (lettera, poi logo, poi nome) da confermare, poi otto lettere abbozzate da giudicare,
-   poi due domande brevi. Tono: segnaletica di magazzino, come le altre pagine dei ticket. Disegni neri su carta. */
+/* Layout: in alto i tre concetti sulle lettere R e Q (punto di controllo della skill), poi due domande con l'esempio che cambia.
+   Tono: segnaletica di magazzino, come le altre pagine dei ticket. Loghi neri su carta: il colore arriva con il kit. */
 :root{
   --bg:#f3f5f7; --surface:#ffffff; --fg:#17202b; --muted:#5a6675; --line:#d5dbe2;
   --accent:#1f4e8c; --accent-soft:#e3ebf6; --tag:#f2b705; --tag-fg:#2a2100;
-  --ok:#1d7a46; --ok-soft:#e2f3e9; --warn:#9a5200; --warn-soft:#fbeedd;
+  --ok:#1d7a46; --warn:#9a5200; --warn-soft:#fbeedd;
   --ink:#141414; --paper:#ffffff; --tile:#1b2633;
+  --phone:#0f1720; --phone-bar:#1b2633;
   --f-display:"Archivo","Arial Narrow",system-ui,sans-serif;
   --f-body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
   --f-mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
@@ -17,13 +18,15 @@
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --bg:#0f141a; --surface:#18202a; --fg:#e6ebf1; --muted:#9aa7b6; --line:#2c3846;
   --accent:#7fb0ef; --accent-soft:#1d2d42; --tag:#f2b705; --tag-fg:#2a2100;
-  --ok:#5fcf8e; --ok-soft:#163324; --warn:#f0a447; --warn-soft:#3a2a14;
-  --ink:#141414; --paper:#f4f4f2; --tile:#26323f; color-scheme:dark}}
+  --ok:#5fcf8e; --warn:#f0a447; --warn-soft:#3a2a14;
+  --ink:#141414; --paper:#f4f4f2; --tile:#26323f;
+  --phone:#05080c; --phone-bar:#1b2633; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#0f141a; --surface:#18202a; --fg:#e6ebf1; --muted:#9aa7b6; --line:#2c3846;
   --accent:#7fb0ef; --accent-soft:#1d2d42; --tag:#f2b705; --tag-fg:#2a2100;
-  --ok:#5fcf8e; --ok-soft:#163324; --warn:#f0a447; --warn-soft:#3a2a14;
-  --ink:#141414; --paper:#f4f4f2; --tile:#26323f; color-scheme:dark}
+  --ok:#5fcf8e; --warn:#f0a447; --warn-soft:#3a2a14;
+  --ink:#141414; --paper:#f4f4f2; --tile:#26323f;
+  --phone:#05080c; --phone-bar:#1b2633; color-scheme:dark}
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--fg);font:15px/1.55 var(--f-body);
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 96px}
@@ -37,14 +40,32 @@ p{margin:0;max-width:68ch}
 .bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
 button{font:600 14px/1 var(--f-body);border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--fg);padding:11px 14px;cursor:pointer}
 button.primary{background:var(--accent);border-color:var(--accent);color:var(--surface)}
-button:focus-visible,input:focus-visible,textarea:focus-visible,label.opt:focus-within,label.pill:focus-within{outline:3px solid var(--tag);outline-offset:2px}
+button:focus-visible,input:focus-visible,textarea:focus-visible,label.opt:focus-within{outline:3px solid var(--tag);outline-offset:2px}
 .status{font-size:13px;color:var(--muted)}
 .status.ok{color:var(--ok)} .status.warn{color:var(--warn)}
+details.box{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:var(--surface);font-size:14px}
+details.box summary{cursor:pointer;font-weight:600}
+details.box ul{margin:8px 0 0;padding-left:20px;display:grid;gap:4px}
 .rec{display:inline-block;margin-left:8px;font:600 11px/1 var(--f-mono);letter-spacing:.05em;text-transform:uppercase;background:var(--tag);color:var(--tag-fg);padding:4px 6px;border-radius:4px;vertical-align:2px}
+
+.concepts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+@media (max-width:820px){.concepts{grid-template-columns:minmax(0,1fr)}}
+.cc{background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:14px;display:grid;gap:12px;align-content:start;min-width:0}
+.cc.sel{border-color:var(--accent)}
+.cc .art{background:var(--paper);color:var(--ink);border-radius:10px;padding:18px;display:grid;gap:16px;justify-items:center}
+.cc .art .big{width:62%;max-width:170px;height:auto}
+.ladder{display:flex;align-items:flex-end;gap:12px}
+.ladder span{display:grid;justify-items:center;gap:2px;font:10px var(--f-mono);color:#6b7280}
+.ladder svg{color:var(--ink)}
+.ladder .rev{background:var(--ink);color:var(--paper);border-radius:8px;padding:6px;display:grid;place-items:center}
+.ladder .rev svg{color:var(--paper)}
+.cc .hd{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.cc .hd b{font:800 20px/1 var(--f-display);font-stretch:112%}
+.cc p{font-size:14px}
+.cc .risk{font-size:13px;color:var(--warn);background:var(--warn-soft);border-radius:8px;padding:8px 10px}
 
 .q{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:18px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px}
 @media (max-width:760px){.q{grid-template-columns:minmax(0,1fr)}}
-.q.full{grid-template-columns:minmax(0,1fr)}
 .q .ask{display:grid;gap:10px;align-content:start;min-width:0}
 .q .num{font:600 12px/1 var(--f-mono);letter-spacing:.08em;color:var(--muted)}
 .q .why{color:var(--muted);font-size:14px}
@@ -59,37 +80,24 @@ textarea{width:100%;min-height:56px;font:14px/1.4 var(--f-body);border:1px solid
 .ex{background:var(--bg);border:1px dashed var(--line);border-radius:12px;padding:14px;display:grid;gap:12px;align-content:start;min-width:0}
 .ex .cap{font:600 11px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .ex small{color:var(--muted);font-size:13px;display:block}
+.ctx{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.c{background:var(--paper);color:var(--ink);border-radius:10px;padding:10px;display:grid;gap:8px;align-content:space-between;min-height:96px;min-width:0}
+.c .lbl{color:#4b5563;font:600 10.5px/1.2 var(--f-mono);letter-spacing:.04em;text-transform:uppercase}
+.home{display:flex;gap:8px;background:var(--phone);border-radius:10px;padding:8px}
+.app{width:38px;height:38px;border-radius:9px;display:grid;place-items:center;background:#334155;color:#fff}
+.app.me{background:var(--tile)}
+.app svg{width:64%;height:64%}
+.tab{display:flex;align-items:center;gap:6px;background:#e5e7eb;border-radius:6px 6px 0 0;padding:5px 8px;font-size:11px;color:#111}
+.tab svg{width:16px;height:16px;flex:none}
+.hdr{display:flex;align-items:center;gap:8px;background:var(--phone-bar);color:#fff;border-radius:8px;padding:8px 10px;font-size:11.5px;min-width:0}
+.hdr svg{height:22px;width:22px;flex:none}
+.hdr .nm{font:800 15px/1 var(--f-display);letter-spacing:.02em}
+.hdr .sp{margin-left:auto;opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.label{border:1px dashed #9ca3af;padding:6px 8px;font:10px/1.4 var(--f-mono);display:grid;gap:4px}
+.label .l{display:flex;gap:6px;align-items:center;font:800 13px var(--f-display)}
+.label svg{height:18px;width:18px}
 ol.steps{margin:0;padding-left:22px;display:grid;gap:6px;font-size:14px}
 ol.steps li.hl{font-weight:600}
-ol.steps li.off{opacity:.45;text-decoration:line-through}
-
-.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
-@media (max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:440px){.grid{grid-template-columns:minmax(0,1fr)}}
-.let{border:2px solid var(--line);border-radius:12px;padding:12px;display:grid;gap:8px;align-content:start;background:var(--bg);min-width:0}
-.let.si{border-color:var(--ok);background:var(--ok-soft)} .let.no{opacity:.5}
-.let .art{background:var(--paper);color:var(--ink);border-radius:8px;display:grid;place-items:center;padding:12px;gap:8px}
-.let .art svg.big{width:92px;height:92px}
-.let .mini{display:flex;gap:10px;align-items:flex-end}
-.let .mini svg{color:var(--ink)}
-.let .tile{display:grid;place-items:center;background:var(--tile);color:#fff;border-radius:9px;width:36px;height:36px}
-.let .tile svg{width:62%;height:62%}
-.let b.L{font:800 22px/1 var(--f-display);font-stretch:112%}
-.let .tw{font-weight:600;font-size:13.5px}
-.let p{font-size:13px;color:var(--muted)}
-.let .nm{font-size:12.5px;color:var(--fg)}
-.pills{display:flex;gap:6px;flex-wrap:wrap}
-label.pill{display:flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:6px 10px;font-size:13px;cursor:pointer;background:var(--surface)}
-label.pill:has(input:checked){border-color:var(--accent);background:var(--accent-soft);font-weight:600}
-label.pill input{accent-color:var(--accent);margin:0}
-.pill .r{font:600 10px var(--f-mono);color:var(--tag-fg);background:var(--tag);border-radius:3px;padding:2px 4px}
-.tally{font-size:14px}
-.casepair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-.casepair div{background:var(--paper);color:var(--ink);border-radius:8px;padding:12px;display:grid;justify-items:center;gap:6px;font:600 10.5px var(--f-mono);color:#4b5563}
-.casepair div.on{outline:3px solid var(--accent)}
-.casepair span.g{font:800 54px/1 var(--f-display);color:var(--ink)}
-.namepre{background:var(--paper);color:var(--ink);border-radius:8px;padding:12px;font:800 30px/1 var(--f-display);font-stretch:112%;letter-spacing:.01em}
-.namepre i{font-style:normal;color:#9ca3af}
 
 .save{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--line);padding-block:12px calc(12px + env(safe-area-inset-bottom,0px));display:grid;gap:8px}
 #copybox{font:12.5px/1.5 var(--f-mono);white-space:pre-wrap;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px}
@@ -97,66 +105,49 @@ label.pill input{accent-color:var(--accent);margin:0}
 
 <div class="wrap">
   <header class="intro">
-    <div class="eyebrow">Ticket «Brand kit con la skill logo-design» · giro 4 · 20/11/2026</div>
-    <h1>Prima la lettera, poi il nome</h1>
-    <p>Come hai chiesto (decisione 375): scegliamo lettere belle da modificare, disegniamo il logo sulla lettera, e solo
-      dopo cerchiamo un nome che parta da lì. Qui sotto ti chiedo di confermare cosa cambia per Varko, poi ti mostro
-      otto lettere, ciascuna con una modifica d'esempio. Sono schizzi: servono a scegliere la lettera, non il logo.</p>
+    <div class="eyebrow">Ticket «Brand kit con la skill logo-design» · giro 5 · 20/11/2026</div>
+    <h1>Tre concetti sulle lettere R e Q</h1>
+    <p>Le lettere a cui hai detto sì (377), maiuscole perché la r e la q minuscole hanno poco da modificare (378).
+      Ognuna ha un dettaglio solo, come la K di Kiln, ma con forme sue: niente arco. Il nome ancora non c'è: nasce dalla
+      lettera che scegli, e comincerà con lei (379). Al posto del nome qui sotto c'è «R····» o «Q····».</p>
+    <details class="box">
+      <summary>Giro 4 registrato (decisioni 376–379)</summary>
+      <ul>
+        <li>Varko si accantona e resta in riserva; il nome nuovo segue le stesse regole e ripassa dalla verifica dei marchi (376).</li>
+        <li>Sì a R e Q; forse ad A e S; no a K, M, G e X (377).</li>
+        <li>Maiuscola o minuscola lettera per lettera (378); il nome comincia con la lettera del logo (379).</li>
+      </ul>
+    </details>
     <div class="bar"><button class="primary" id="accept-all" type="button">Accetta tutte le consigliate</button>
       <span class="status" id="status">Caricamento delle risposte salvate…</span></div>
   </header>
 
+  <section aria-label="I tre concetti" class="concepts" id="concepts"></section>
+
   <section class="q" aria-labelledby="h-q1">
     <div class="ask">
-      <div class="num">DOMANDA 1 · IL NOME VARKO</div>
-      <h3 id="h-q1">Cosa succede a Varko?</h3>
-      <p class="why">Varko è stato scelto dopo una verifica dei marchi (358). Se il nome nasce dalla lettera, Varko si
-        accantona e il nome nuovo va verificato di nuovo. Le regole del nome già decise (344–350) erano: marchio vero,
-        uguale in italiano e in inglese, veloce e ordinato, parola modificata fino a 5 lettere, niente parole da startup.</p>
+      <div class="num">DOMANDA 1 · DIREZIONE</div>
+      <h3 id="h-q1">Quale lettera e quale concetto?</h3>
+      <p class="why">La scelta decide anche il nome: con la R ci sono molti nomi possibili, con la Q quasi solo quelli che
+        cominciano con «Qu», e con le regole del nome (fino a 5 lettere) restano pochi.</p>
       <div class="opts" id="q1-opts"></div>
-      <label class="notelbl" for="n-q1">Nota facoltativa (per esempio quale regola del nome cambiare)</label>
+      <label class="notelbl" for="n-q1">Nota facoltativa (cosa ti piace o non ti piace in ciascuno)</label>
       <textarea id="n-q1" data-note="q1"></textarea>
     </div>
     <div class="ex" id="ex-q1" aria-live="polite"></div>
   </section>
 
-  <section class="q full" aria-labelledby="h-q2">
+  <section class="q" aria-labelledby="h-q2">
     <div class="ask">
-      <div class="num">DOMANDA 2 · OTTO LETTERE</div>
-      <h3 id="h-q2">Su quali lettere vale la pena giocare?</h3>
-      <p class="why">Giudica la lettera e quanto ti sembra bella da modificare, non lo schizzo in sé: ogni lettera si può
-        cambiare in molti modi. Dai «sì» scelgo una o due lettere e ci disegno tre concetti veri. La V è esclusa (374).</p>
-      <div class="grid" id="letters"></div>
-      <p class="tally" id="tally" aria-live="polite"></p>
-      <label class="notelbl" for="n-q2">Nota facoltativa (anche una lettera che qui non c'è)</label>
+      <div class="num">DOMANDA 2 · IL PROSSIMO PASSO</div>
+      <h3 id="h-q2">Con la lettera scelta, cerco il nome?</h3>
+      <p class="why">Il kit completo ha bisogno del nome (le versioni con il nome scritto, le icone, la guida): per questo
+        prima viene il nome, poi la sua verifica, poi il kit.</p>
+      <div class="opts" id="q2-opts"></div>
+      <label class="notelbl" for="n-q2">Nota facoltativa (cosa cambiare, se scegli di rivedere)</label>
       <textarea id="n-q2" data-note="q2"></textarea>
     </div>
-  </section>
-
-  <section class="q" aria-labelledby="h-q3">
-    <div class="ask">
-      <div class="num">DOMANDA 3 · MAIUSCOLA O MINUSCOLA</div>
-      <h3 id="h-q3">La lettera del logo è maiuscola o minuscola?</h3>
-      <p class="why">La K di Kiln è maiuscola. Alcune lettere minuscole (a, g, k, r) hanno forme più ricche da modificare;
-        le maiuscole sono più solide e si leggono meglio a 16 punti.</p>
-      <div class="opts" id="q3-opts"></div>
-      <label class="notelbl" for="n-q3">Nota facoltativa</label>
-      <textarea id="n-q3" data-note="q3"></textarea>
-    </div>
-    <div class="ex" id="ex-q3" aria-live="polite"></div>
-  </section>
-
-  <section class="q" aria-labelledby="h-q4">
-    <div class="ask">
-      <div class="num">DOMANDA 4 · DOVE STA LA LETTERA NEL NOME</div>
-      <h3 id="h-q4">Il nome nuovo deve cominciare con la lettera del logo?</h3>
-      <p class="why">Se comincia con quella lettera, il simbolo è anche l'iniziale, come per Kiln, e l'icona del telefono
-        si legge da sola. Se può stare anche in mezzo, ci sono più nomi possibili.</p>
-      <div class="opts" id="q4-opts"></div>
-      <label class="notelbl" for="n-q4">Nota facoltativa</label>
-      <textarea id="n-q4" data-note="q4"></textarea>
-    </div>
-    <div class="ex" id="ex-q4" aria-live="polite"></div>
+    <div class="ex" id="ex-q2" aria-live="polite"></div>
   </section>
 
   <div class="save">
@@ -169,103 +160,87 @@ label.pill input{accent-color:var(--accent);margin:0}
 </div>
 
 <script>
-const GIRO = "4";
-const D = /*DATI*/{"K":["M14 10 L36 10 L36 90 L14 90 Z","M67.09 10 L92.49 10 L69.4 50 L92.49 90 L67.09 90 L48 56.93 L48 43.07 Z"],"R":["M14 10 L32 10 L32 90 L14 90 Z","M14 10 L56 10 A25 25 0 0 1 56 60 L14 60 Z M32 28 L56 28 A7 7 0 0 1 56 42 L32 42 Z","M62 60 L82 60 L82 90 L62 90 Z"],"S":["M38 10 L84 10 L84 28 L38 28 L38 41 L20 41 L20 28 A18 18 0 0 1 38 10 Z","M20 41 L84 41 L84 59 L20 59 Z","M66 59 L84 59 L84 72 A18 18 0 0 1 66 90 L16 90 L16 72 L66 72 Z"],"M":["M10 10 L90 10 L90 28 L10 28 Z","M10 28 L28 28 L28 90 L10 90 Z","M41 28 L59 28 L59 62 L41 62 Z","M72 28 L90 28 L90 90 L72 90 Z"],"A":["M50 8 L94 90 L60 90 L60 62 L40 62 L40 90 L6 90 Z"],"Q":["M10 48 A38 38 0 1 1 86 48 A38 38 0 1 1 10 48 Z M28 48 A20 20 0 1 0 68 48 A20 20 0 1 0 28 48 Z","M64 64 L92 64 L92 92 L64 92 Z"],"G":["M90 50 A40 40 0 1 1 70 15.36 L61 30.95 A22 22 0 1 0 72 50 Z","M52 50 L90 50 L90 66 L52 66 Z"],"X":["M14 8 L86 8 L50 42 Z","M14 92 L86 92 L50 58 Z","M8 14 L8 86 L42 50 Z","M92 14 L92 86 L58 50 Z"]}/*FINE*/;
-const L = [
- {id:"K", tw:"K a scatto", d:"Asta e una «<» staccata, con una fessura tra le due.", gioco:"Braccio e gamba si possono staccare, piegare, tagliare. Va tenuta lontana dalla K di Kiln (gamba ad arco).", nm:"Nomi in K: suono duro, veloce; K ammessa (350).", rec:"forse"},
- {id:"R", tw:"R con il piede", d:"Occhiello tondo e una gamba diritta, come un piede d'appoggio.", gioco:"Occhiello, gamba e attacco tra i due: tre parti da giocare.", nm:"Molte parole italiane e inglesi in R.", rec:"si"},
- {id:"S", tw:"S a squadra", d:"Due curve a gomito tagliate a squadra, due angoli tondi.", gioco:"Si può fare con due archi, due blocchi, un nastro, un percorso.", nm:"Molte parole in S; attenzione a «sc» (345).", rec:"forse"},
- {id:"M", tw:"M a scaffale", d:"Tre montanti appesi a una trave.", gioco:"Montanti, punte e vuoti: si presta alle scaffalature, ma è larga.", nm:"Molte parole in M.", rec:"forse"},
- {id:"A", tw:"A a tenda", d:"Un triangolo pieno con una porta al posto della barra.", gioco:"Barra, punta e gambe: molto usata nei loghi, difficile da rendere propria.", nm:"Molte parole in A.", rec:"forse"},
- {id:"Q", tw:"Q a blocco", d:"Un anello e una coda quadrata che esce in basso.", gioco:"La coda è il dettaglio perfetto da inventare; il resto è un cerchio pulito.", nm:"Pochi nomi: quasi sempre «Qu».", rec:"si"},
- {id:"G", tw:"G tagliata", d:"Un anello aperto e una barra che rientra.", gioco:"Apertura, barra e sperone: tante varianti.", nm:"Solo «Ga», «Go», «Gu»: «ge» e «gi» si leggono diverse in inglese (345).", rec:"forse"},
- {id:"X", tw:"X di smistamento", d:"Quattro triangoli che puntano al centro: la X è il vuoto, come un incrocio.", gioco:"Incroci, frecce, vuoti: racconta lo smistamento della merce.", nm:"Pochissimi nomi cominciano con X; spesso «Ks» o «Z» in inglese.", rec:"si"}
-];
-const Q = {
- q1:[{id:"accantona",l:"Varko si accantona; il nome nuovo segue le stesse regole",d:"Regole 344–350 invariate; il nome nuovo ripassa dalla verifica dei marchi prima di essere scelto. Varko resta in riserva.",rec:true},
-     {id:"regole",l:"Varko si accantona e le regole del nome si rivedono",d:"Per esempio più di 5 lettere, o una parola intera. Scrivi nella nota quale regola."},
-     {id:"tieni",l:"Teniamo Varko, cambio solo il logo",d:"Il logo sulla lettera scelta va accanto a «Varko» anche se non è la sua iniziale."}],
- q3:[{id:"maiuscola",l:"Maiuscola",d:"Come la K di Kiln: più solida, si legge meglio piccola.",rec:true},
-     {id:"minuscola",l:"Minuscola",d:"Forme più ricche e morbide; meno solida in piccolo."},
-     {id:"vediamo",l:"Decidiamo lettera per lettera",d:"Nei concetti provo la forma che rende di più."}],
- q4:[{id:"iniziale",l:"Sì, il nome comincia con quella lettera",d:"Il simbolo è anche l'iniziale del nome.",rec:true},
-     {id:"dentro",l:"Basta che ci sia",d:"La lettera può stare anche in mezzo al nome; il simbolo la mette in evidenza."}]
+const GIRO = "5";
+const D = /*DATI*/{"r-rampa":["M37 28 L81 28 L81 228 L37 228 Z","M37 28 L125 28 A66 66 0 0 1 125 160 L37 160 Z M81 72 L125 72 A22 22 0 0 1 125 116 L81 116 Z","M113 150 L141 150 L219 228 L113 228 Z"],"q-collo":["M30 122 A92 92 0 1 1 214 122 A92 92 0 1 1 30 122 Z M74 122 A48 48 0 1 0 170 122 A48 48 0 1 0 74 122 Z","M162 162 L226 162 L226 226 L162 226 Z"],"q-nastro":["M14 128 A92 92 0 1 1 198 128 A92 92 0 1 1 14 128 Z M58 128 A48 48 0 1 0 154 128 A48 48 0 1 0 58 128 Z","M106 198 L234 198 L242 203.5 L234 209 L242 214.5 L234 220 L106 220 Z"]}/*FINE*/;
+const C = {
+ A:{k:"r-rampa", L:"R", nome:"R · Rampa", idea:"La gamba della R è un cuneo a 45 gradi: la rampa della baia di carico, da cui la merce sale e scende.",
+    perche:"Pieno e solido come la K di Kiln, con un dettaglio solo; con la R il nome si trova più facilmente.",
+    rischio:"La gamba è grande: in piccolo la R pesa più a destra. Ci sono altre R a cuneo nei marchi: va controllata con la verifica."},
+ B:{k:"q-collo", L:"Q", nome:"Q · Collo", idea:"La coda della Q è un collo quadrato appoggiato all'anello: il pacco che esce.",
+    perche:"È la Q a blocco a cui hai detto sì, rifinita; si legge bene a 16 punti.",
+    rischio:"Nomi in Q quasi solo con «Qu»: con fino a 5 lettere ne restano pochi."},
+ C:{k:"q-nastro", L:"Q", nome:"Q · Nastro", idea:"La Q è un rotolo di nastro da imballo: la coda è il nastro che si srotola, con il taglio a dentini.",
+    perche:"Racconta l'imballo in modo semplice; il più originale dei tre.",
+    rischio:"A 16 punti i dentini spariscono e resta una Q con la coda piatta. Stesso limite sui nomi della B."}
 };
-let S = {q1:"",q3:"",q4:"",lettere:{},note:{}};
-try{ const d = JSON.parse(localStorage.getItem("brand-kit-g4")||"null"); if(d) S = Object.assign(S,d); }catch(e){}
+const Q = {
+ q1:[{id:"A",l:"A · R · Rampa",d:"Lettera R; il nome comincerà con la R.",rec:true},
+     {id:"B",l:"B · Q · Collo",d:"Lettera Q; il nome comincerà con «Qu»."},
+     {id:"C",l:"C · Q · Nastro",d:"Lettera Q; il nome comincerà con «Qu»."},
+     {id:"rifare",l:"Nessuno dei tre",d:"Scrivi nella nota cosa non va: riparto da lì."}],
+ q2:[{id:"nome",l:"Sì: cerco i nomi che cominciano con la lettera",d:"Nel prossimo giro una rosa di nomi da giudicare, con le regole del nome (344–350).",rec:true},
+     {id:"rivedi",l:"Prima rivedi il concetto scelto",d:"Scrivi nella nota cosa cambiare: ti mostro il concetto rifatto."}]
+};
+let S = {q1:"",q2:"",note:{}};
+try{ const d = JSON.parse(localStorage.getItem("brand-kit-g5")||"null"); if(d) S = Object.assign(S,d); }catch(e){}
 const esc = s => String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const svg = (paths,cls,label,size) => `<svg class="${cls||""}" viewBox="0 0 100 100"${size?` width="${size}" height="${size}"`:""} role="img" aria-label="${esc(label)}">${paths.map(d=>`<path fill="currentColor" fill-rule="evenodd" d="${d}"/>`).join("")}</svg>`;
+const svg = (paths,cls,label,size) => `<svg class="${cls||""}" viewBox="0 0 256 256"${size?` width="${size}" height="${size}"`:""} role="img" aria-label="${esc(label)}">${paths.map(d=>`<path fill="currentColor" fill-rule="evenodd" d="${d}"/>`).join("")}</svg>`;
 const opts = (name,list,cur) => list.map(o=>`<label class="opt"><input type="radio" name="${name}" value="${o.id}" ${cur===o.id?"checked":""}>
   <span><b>${esc(o.l)}</b>${o.rec?'<span class="rec">Consigliata</span>':""}<span class="d">${esc(o.d)}</span></span></label>`).join("");
 const lab = (list,id) => (list.find(o=>o.id===id)||{l:"da scegliere"}).l;
-const first = () => (L.find(x=>S.lettere[x.id]==="si") || L.find(x=>S.lettere[x.id]==="forse") || {id:"R"}).id;
 
-function render(){
-  for(const k of ["q1","q3","q4"]) document.getElementById(k+"-opts").innerHTML = opts(k,Q[k],S[k]);
-  document.getElementById("letters").innerHTML = L.map(x=>{ const v=S.lettere[x.id]||""; return `
-   <article class="let ${v}" aria-labelledby="t-${x.id}">
-     <div class="art">${svg(D[x.id],"big","Lettera "+x.id+", schizzo")}
-       <div class="mini"><span class="tile">${svg(D[x.id],"","Icona")}</span>${svg(D[x.id],"","16 punti",16)}</div></div>
-     <div><b class="L" id="t-${x.id}">${x.id}</b> <span class="tw">${esc(x.tw)}</span></div>
-     <p>${esc(x.d)}</p><p><b>Su cosa si gioca:</b> ${esc(x.gioco)}</p><p class="nm"><b>Nomi:</b> ${esc(x.nm)}</p>
-     <div class="pills" role="radiogroup" aria-labelledby="t-${x.id}">${[["si","Sì"],["forse","Forse"],["no","No"]].map(([val,l])=>`<label class="pill"><input type="radio" name="l-${x.id}" value="${val}" ${v===val?"checked":""}>${l}${x.rec===val?'<span class="r">consigliata</span>':""}</label>`).join("")}</div>
+function concepts(){
+  document.getElementById("concepts").innerHTML = ["A","B","C"].map(k=>{ const c=C[k], p=D[c.k]; return `
+   <article class="cc ${S.q1===k?"sel":""}" aria-labelledby="cc-${k}">
+     <div class="art">${svg(p,"big","Concetto "+k)}
+       <div class="ladder">${[64,32,16].map(px=>`<span>${svg(p,"",k+" a "+px+" punti",px)}${px}px</span>`).join("")}<span><span class="rev">${svg(p,"","In negativo",32)}</span>negativo</span></div></div>
+     <div class="hd"><b id="cc-${k}">${k} · ${esc(c.nome)}</b>${k==="A"?'<span class="rec">Consigliata</span>':""}</div>
+     <p><b>Idea:</b> ${esc(c.idea)}</p>
+     <p><b>Perché:</b> ${esc(c.perche)}</p>
+     <div class="risk"><b>Rischio:</b> ${esc(c.rischio)}</div>
    </article>`; }).join("");
-  for(const k of ["q1","q2","q3","q4"]) document.getElementById("n-"+k).value = S.note[k]||"";
-  refresh();
 }
-function refresh(){
-  document.querySelectorAll(".let").forEach((el,i)=>{ el.classList.remove("si","forse","no"); const v=S.lettere[L[i].id]; if(v) el.classList.add(v); });
-  const si = L.filter(x=>S.lettere[x.id]==="si"), fo = L.filter(x=>S.lettere[x.id]==="forse");
-  document.getElementById("tally").innerHTML = Object.keys(S.lettere).length
-    ? `Sì: <b>${si.length}</b> · Forse: <b>${fo.length}</b> · No: <b>${L.filter(x=>S.lettere[x.id]==="no").length}</b>. ${si.length?"Lavorerei su: "+si.slice(0,2).map(x=>x.id).join(" e ")+(si.length>2?" (sono più di due: scelgo le due più promettenti e te lo dico)":"")+".":fo.length?"Nessun sì: lavorerei sui forse "+fo.slice(0,2).map(x=>x.id).join(" e ")+".":""}`
-    : "Giudica le lettere: qui compare su quali lavorerei.";
-  // esempio 1: il percorso
-  const st = S.q1==="tieni"
-    ? [["Lettera scelta e tre concetti",1],["Kit del logo",0],["Il nome resta Varko",0],["Nuova verifica dei marchi",-1]]
-    : S.q1 ? [["Lettera scelta e tre concetti",1],["Nome nuovo a partire dalla lettera"+(S.q1==="regole"?", con regole riviste":", regole 344–350"),0],["Verifica dei marchi del nome nuovo",0],["Kit completo: logo e nome",0],["Consulente in marchi prima del deposito (359)",0]] : null;
-  document.getElementById("ex-q1").innerHTML = `<div class="cap">I prossimi passi</div>${st?`<ol class="steps">${st.map(([t,h])=>`<li class="${h>0?"hl":h<0?"off":""}">${esc(t)}</li>`).join("")}</ol>`:"<small>Scegli un'opzione.</small>"}
-    <small>${S.q1==="tieni"?"Il logo non sarà l'iniziale del nome: si lega a Varko solo con il disegno.":S.q1?"Varko resta in riserva: se il nome nuovo non è libero, si può tornare a lui.":""}</small>`;
-  // esempio 3: maiuscola o minuscola
-  const l = first();
-  document.getElementById("ex-q3").innerHTML = `<div class="cap">La lettera ${l} (la prima dei tuoi sì)</div>
-    <div class="casepair"><div class="${S.q3==="maiuscola"?"on":""}"><span class="g">${l}</span>maiuscola</div><div class="${S.q3==="minuscola"?"on":""}"><span class="g">${l.toLowerCase()}</span>minuscola</div></div>
-    <small>${S.q3==="vediamo"?"Nei concetti provo tutte e due e tengo quella che rende di più.":S.q3?"Lettere di un carattere già pronto, solo per vedere la forma.":"Scegli un'opzione."}</small>`;
-  // esempio 4: dove sta la lettera
-  const ex = S.q4==="dentro" ? `<i>_</i>${l}<i>___</i>` : `${l}<i>____</i>`;
-  document.getElementById("ex-q4").innerHTML = `<div class="cap">Forma del nome nuovo</div><div class="namepre" aria-label="Schema del nome">${ex}</div>
-    <small>${S.q4==="dentro"?"La lettera può stare dove serve; i trattini sono le altre lettere.":S.q4==="iniziale"?"La lettera apre il nome, fino a 5 lettere in tutto se restano le regole del nome.":"Scegli un'opzione."}</small>`;
-  document.getElementById("copybox").textContent = asText();
+function exQ1(){
+  const k = ["A","B","C"].includes(S.q1) ? S.q1 : null;
+  if(!k) return `<div class="cap">Dove si vedrà</div><small>${S.q1==="rifare"?"Riparto dai concetti, con quello che scrivi nella nota.":"Scegli un concetto per vederlo al lavoro."}</small>`;
+  const p = D[C[k].k], nm = C[k].L==="R" ? "R····" : "Qu···";
+  return `<div class="cap">Il concetto ${k} al lavoro (nome da trovare)</div>
+   <div class="ctx">
+     <div class="c"><div class="home"><div class="app me">${svg(p,"","Icona")}</div><div class="app"></div><div class="app"></div><div class="app"></div></div><span class="lbl">Icona sul telefono</span></div>
+     <div class="c"><div class="tab">${svg(p,"","Icona")}${nm} · Ricevimento</div><span class="lbl">Scheda del browser, 16 punti</span></div>
+     <div class="c"><div class="hdr">${svg(p,"","Simbolo")}<span class="nm">${nm}</span><span class="sp">Prelievo · Ordine 2291</span></div><span class="lbl">Testata delle schermate</span></div>
+     <div class="c"><div class="label"><span class="l">${svg(p,"","Simbolo")}${nm}</span><span>UBIC. A-03-2 · DDT 418</span></div><span class="lbl">Etichetta termica</span></div>
+   </div><small>I puntini sono le lettere del nome da trovare.</small>`;
 }
-function asText(){
-  const n = k => S.note[k] ? " — nota: "+S.note[k] : "";
-  return ["Brand kit – giro 4",
-    "1. Varko: "+lab(Q.q1,S.q1)+n("q1"),
-    "2. Lettere: "+L.map(x=>x.id+" = "+({si:"sì",forse:"forse",no:"no"}[S.lettere[x.id]]||"—")).join("; ")+n("q2"),
-    "3. Maiuscola o minuscola: "+lab(Q.q3,S.q3)+n("q3"),
-    "4. Lettera nel nome: "+lab(Q.q4,S.q4)+n("q4")].join("\n");
+function exQ2(){
+  const L = ["A","B","C"].includes(S.q1) ? C[S.q1].L : "la lettera";
+  const st = S.q2==="rivedi" ? [["Concetto rifatto con la tua nota",1],["Nomi che cominciano con "+L,0],["Verifica dei marchi del nome scelto",0],["Kit completo",0]]
+    : [["Nomi che cominciano con "+L+": rosa da giudicare",S.q2==="nome"?1:0],["Verifica dei marchi del nome scelto (ricerca, come per Varko)",0],["Kit completo: logo, nome, colori, icone, guida",0],["Consulente in marchi prima del deposito (359, 376)",0]];
+  return `<div class="cap">I prossimi passi</div><ol class="steps">${st.map(([t,h])=>`<li class="${h?"hl":""}">${esc(t)}</li>`).join("")}</ol>
+    <small>${S.q2==="nome"?"Se nessun nome è libero, si torna a Varko, in riserva (376).":S.q2==="rivedi"?(S.note.q2?"Cosa cambio: «"+esc(S.note.q2)+"».":"Scrivi nella nota cosa cambiare."):"Scegli un'opzione."}</small>`;
 }
+function render(){ for(const k of ["q1","q2"]){ document.getElementById(k+"-opts").innerHTML = opts(k,Q[k],S[k]); document.getElementById("n-"+k).value = S.note[k]||""; } refresh(); }
+function refresh(){ concepts(); document.getElementById("ex-q1").innerHTML = exQ1(); document.getElementById("ex-q2").innerHTML = exQ2(); document.getElementById("copybox").textContent = asText(); }
+function asText(){ const n = k => S.note[k] ? " — nota: "+S.note[k] : "";
+  return ["Brand kit – giro 5","1. Concetto: "+lab(Q.q1,S.q1)+n("q1"),"2. Prossimo passo: "+lab(Q.q2,S.q2)+n("q2")].join("\n"); }
 
 let db=null,timer=null,saving=false,pending=false;
 function setStatus(t,cls){ ["status","status2"].forEach(id=>{const el=document.getElementById(id); el.textContent=t; el.className="status "+(cls||"");}); }
-function local(){ try{ localStorage.setItem("brand-kit-g4", JSON.stringify(S)); }catch(e){} }
+function local(){ try{ localStorage.setItem("brand-kit-g5", JSON.stringify(S)); }catch(e){} }
 function changed(){ local(); refresh(); clearTimeout(timer); timer=setTimeout(save,900); setStatus(db?"Modifiche da salvare…":"Salvate solo su questo dispositivo", db?"":"warn"); }
 async function save(){
   clearTimeout(timer);
   if(!db){ setStatus("Salvataggio non disponibile qui: usa «Copia le risposte» e incollale in chat","warn"); document.getElementById("copybox").hidden=false; return; }
   if(saving){ pending=true; return; }
   saving=true;
-  try{ await db.doc("giri/"+GIRO).set({q1:S.q1,q3:S.q3,q4:S.q4,lettere:S.lettere,note:S.note,testo:asText(),aggiornato:new Date().toISOString()});
+  try{ await db.doc("giri/"+GIRO).set({q1:S.q1,q2:S.q2,note:S.note,testo:asText(),aggiornato:new Date().toISOString()});
     setStatus("Salvate alle "+new Date().toLocaleTimeString("it-IT",{hour:"2-digit",minute:"2-digit"}),"ok");
   }catch(e){ setStatus("Non salvate ("+(e&&e.code||"errore")+"). Riprova con «Salva adesso» o copia le risposte.","warn"); document.getElementById("copybox").hidden=false; }
   saving=false; if(pending){ pending=false; save(); }
 }
-document.addEventListener("change", e=>{
-  const t=e.target;
-  if(["q1","q3","q4"].includes(t.name)){ S[t.name]=t.value; changed(); }
-  else if(t.name && t.name.startsWith("l-")){ S.lettere[t.name.slice(2)]=t.value; changed(); }
-});
+document.addEventListener("change", e=>{ const t=e.target; if(["q1","q2"].includes(t.name)){ S[t.name]=t.value; changed(); } });
 document.addEventListener("input", e=>{ const t=e.target; if(t.dataset && t.dataset.note){ S.note[t.dataset.note]=t.value; changed(); } });
-document.getElementById("accept-all").addEventListener("click",()=>{ for(const k of ["q1","q3","q4"]) S[k]=Q[k].find(o=>o.rec).id; for(const x of L) S.lettere[x.id]=x.rec; render(); changed(); });
+document.getElementById("accept-all").addEventListener("click",()=>{ for(const k of ["q1","q2"]) S[k]=Q[k].find(o=>o.rec).id; render(); changed(); });
 document.getElementById("save").addEventListener("click", save);
 document.getElementById("copy").addEventListener("click", async()=>{
   const box=document.getElementById("copybox"); box.hidden=false;
@@ -280,7 +255,7 @@ render();
   if(!db){ setStatus("Salvataggio non disponibile qui: le risposte restano su questo dispositivo. Usa «Copia le risposte».","warn"); return; }
   const to=setTimeout(()=>setStatus("Le risposte salvate non arrivano: puoi continuare, si salvano alla prossima modifica.","warn"),10000);
   try{ const snap=await db.doc("giri/"+GIRO).get(); clearTimeout(to);
-    if(snap.exists){ const d=snap.data(); S.q1=d.q1||""; S.q3=d.q3||""; S.q4=d.q4||""; S.lettere=d.lettere||{}; S.note=d.note||{}; render(); setStatus("Risposte salvate caricate","ok"); }
+    if(snap.exists){ const d=snap.data(); S.q1=d.q1||""; S.q2=d.q2||""; S.note=d.note||{}; render(); setStatus("Risposte salvate caricate","ok"); }
     else setStatus("Nessuna risposta salvata finora: le tue si salvano da sole","");
   }catch(e){ clearTimeout(to); setStatus("Non riesco a leggere le risposte salvate: le tue si salvano comunque alla prossima modifica.","warn"); }
 })();

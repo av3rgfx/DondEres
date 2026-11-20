@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-labelledby="t">
+  <title id="t">Concetto r-rampa</title>
+  <path fill="#111111" fill-rule="evenodd" d="M37 28 L81 28 L81 228 L37 228 Z"/>
+  <path fill="#111111" fill-rule="evenodd" d="M37 28 L125 28 A66 66 0 0 1 125 160 L37 160 Z M81 72 L125 72 A22 22 0 0 1 125 116 L81 116 Z"/>
+  <path fill="#111111" fill-rule="evenodd" d="M113 150 L141 150 L219 228 L113 228 Z"/>
+</svg>
