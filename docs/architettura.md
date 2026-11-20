@@ -1910,9 +1910,10 @@ di posta collegato restano «Copia testo» e «Scarica PDF» (215). La mail rest
 
 ## Stack
 
-Dal ticket «Stack», in corso dal 20/11/2026. Decisioni 422–432 (giro 1). Pagina delle domande:
+Dal ticket «Stack», 20/11/2026. Decisioni 422–432 (giro 1) e 433–436 (giro 2). Pagina delle domande:
 https://claude.ai/artifact/CEKPn8iQVsJ1B1dsAnUbwr (copia in `prototipi/stack/index.html`). Ricerche:
-`docs/research/2026-11-20-librerie-stack.md` (versioni, licenze, manutenzione) e
+`docs/research/2026-11-20-librerie-stack.md` (versioni, licenze, manutenzione),
+`docs/research/2026-11-20-confronti-stack.md` (schermate, canale aperto, contenitori, posta) e
 `docs/research/2026-11-15-addestramento-ed-esecuzione-locale.md` (§E–H).
 Restano al ticket «Impronte e server in sede, dopo la prova» (405) il programma che fa girare il modello visivo, la
 dimensione delle impronte e la macchina in sede (scheda grafica, memoria, sistema).
@@ -1931,7 +1932,9 @@ dimensione delle impronte e la macchina in sede (scheda grafica, memoria, sistem
 | Server | Moduli | Cartella `moduli` dello stesso repository | 428 |
 | Browser | Barcode | Lettore del browser dove c'è, altrimenti zxing-cpp in WebAssembly servito dal server | 425 |
 | Browser | Operazioni in attesa | IndexedDB, con la foto e l'identità dell'operazione | 127 |
-| Browser | Schermate e canale aperto | Da scegliere nel giro 2 dopo il confronto | 432 |
+| Browser | Schermate | Pagine dal server con htmx 4, più piccoli componenti (Web Components) | 433 |
+| Browser, server | Canale aperto | Avvisi dal server (Server-Sent Events) con il campanello di PostgreSQL | 434 |
+| Server | Posta | Permesso dell'amministratore (Microsoft 365, Google Workspace) o indirizzo e password | 435 |
 
 ### Scelte e motivi
 
@@ -1986,16 +1989,69 @@ ma non l'indirizzo di GitHub Pages della pagina di scatto (431).
 - Certificato del dominio: nessun collegamento automatico per Aruba e Register.it; si delega la voce `_acme-challenge` a
   un gestore DNS che ce l'ha. Let's Encrypt accorcia i certificati a 64 giorni dal 10/02/2027 e a 45 dal 16/02/2028.
 - Posta: Microsoft 365 spegne l'accesso SMTP con la sola password a fine dicembre 2026; Google l'ha spento il
-  14/03/2025. Si sceglie nel giro 2.
+  14/03/2025. Scelta nel giro 2 (435).
+- Versioni di partenza: Django 6.1 su Python 3.14, poi 6.2 a lunga durata (aprile 2027); PostgreSQL 18; htmx 4; PDF
+  con WeasyPrint (BSD-3, ha bisogno di Pango: un motivo in più per i contenitori).
 - Safari cancella i dati scritti dalle pagine dopo 7 giorni senza uso: non tocca le operazioni in attesa, che partono
   appena torna la rete.
 
-### In sospeso nel ticket
+### Schermate (433)
 
-- Schermate (htmx o framework) e canale aperto (avvisi dal server, WebSocket, domanda a intervalli), con la
-  spiegazione di htmx e Redis: giro 2, dopo il confronto (432).
-- Macchine virtuali, prestazioni dei contenitori: giro 2 (426).
-- Invio delle mail dalla casella del responsabile (223, 311): giro 2.
+- Le pagine le prepara il server (Django) e htmx ne sostituisce solo i pezzi che cambiano. Motivi: da noi i dati
+  stanno solo sul server (406), quindi ogni tocco che conta passa comunque dal server e il vantaggio principale di
+  un'app con framework (dati già nel telefono) sparisce; il lavoro senza rete è escluso (23), che è il caso in cui gli
+  autori di htmx lo sconsigliano; meno JavaScript da scaricare ed eseguire sui telefoni economici (htmx 4 con gli avvisi
+  15,8 KB compressi, contro fino a 110 KB di React DOM, misura della ricerca).
+- Fotocamera, scatto da solo, operazioni in attesa e i pochi pezzi ricchi della versione da computer (per esempio
+  trascinare gli ordini nei piani di spedizione) sono piccoli componenti JavaScript (Web Components) che htmx non
+  tocca: un aggiornamento di pagina non spegne la fotocamera e non perde un'attesa.
+- La versione da computer ricca e studiata che l'utente vuole viene dal ticket «Aspetto grafico» e dal CSS, uguali nelle
+  due strade; le transizioni animate fra schermate (View Transitions) ci sono in Chrome 111, Safari 18 e Firefox 144.
+  Una schermata che si rivela troppo ricca per htmx si riscrive da sola come componente.
+- htmx 4 (agosto 2026, licenza 0BSD, avvisi dal server nello stesso pacchetto) invece della 2, per non dover cambiare
+  versione nel 2027. Animate UI resta fuori: è per React (e la sua licenza è «MIT + Commons Clause»).
+- Accessibilità (WCAG 2.2 AA): dopo ogni aggiornamento di un pezzo di pagina si sposta il punto attivo dove serve; i
+  messaggi come «Salvata» e «Senza rete» si annunciano con `aria-live`.
+
+### Canale aperto (434)
+
+- Avvisi dal server (Server-Sent Events): Django risponde in streaming sotto ASGI; in ogni processo un ascoltatore
+  riceve il campanello di PostgreSQL (LISTEN/NOTIFY, che porta solo «cosa è cambiato», mai i dati, sotto gli 8.000 byte)
+  e lo gira alle pagine aperte; la pagina chiede il pezzo aggiornato. L'ascoltatore usa una connessione diretta al
+  database (PgBouncer in modalità transaction non regge LISTEN); le altre usano il gruppo di connessioni di psycopg.
+- Serve HTTP/2, che Caddy attiva di serie (con HTTP/1.1 il browser tiene al massimo 6 connessioni per indirizzo).
+- Quando la pagina è nascosta (schermo spento, altra app) il canale si chiude; quando torna visibile la pagina chiede
+  cosa è cambiato. Motivo in più contro i WebSocket: su iPhone il difetto WebKit 308073 (aperto, Safari 26.3) blocca un
+  WebSocket nuovo verso la rete interna dopo il ritorno dallo standby. Da provare con la pagina di prova.
+- Niente Redis né Django Channels: coda e avvisi li fa già PostgreSQL; Channels è fermo dal 20/11/2025 e dichiara
+  Django fino alla 6.0; Redis dalla 7.4 non ha più la licenza BSD (dalla 8 anche AGPLv3; Valkey resta BSD).
+
+### Contenitori: regole adottate (426)
+
+- Contenitori e non macchine virtuali: nelle misure di IBM Research (2014) un contenitore va come il programma
+  installato, una macchina virtuale dimezza gli accessi casuali al disco e un database perde oltre il 40%. Docker
+  Machine è archiviato (18/07/2025) e non serve.
+- PostgreSQL su un volume dedicato, con il percorso della versione 18 (`/var/lib/postgresql`); nessun file di lavoro
+  nello strato del contenitore; foto su volumi.
+- Immagini piccole costruite in due passaggi; riavvio da solo e controllo di salute per ogni pezzo; registri con il
+  driver `local`, che li fa ruotare (quello di serie no); porte aperte solo da Caddy.
+- Server ASGI (uvicorn) con un processo per nucleo del processore, da regolare con la prova di carico (195).
+- Se la macchina in sede sarà Windows, i contenitori girano in una macchina virtuale Linux raggiungibile dalla rete del
+  magazzino (WSL2 di serie non lo è: serve la modalità «mirrored» o un rinvio di porte); il modo si sceglie con la
+  macchina, nel ticket «Impronte e server in sede, dopo la prova».
+
+### Posta (435, 436)
+
+| Gestore | Cosa si fa all'installazione | Note |
+|---|---|---|
+| Microsoft 365 | L'amministratore dà al programma il ruolo di invio solo per il gruppo delle caselle dei responsabili (RBAC for Applications di Exchange Online) | Il permesso generale va tolto da Entra ID, altrimenti il limite non vale; effetto da 30 minuti a 2 ore |
+| Google Workspace | Il super amministratore attiva la delega a livello di dominio, solo per l'invio | App «interna»: nessuna verifica di Google; effetto fino a 24 ore |
+| Aruba, Register.it, altri | Indirizzo e password della casella | La mail non finisce nella Posta inviata del responsabile |
+
+Le mail con Microsoft 365 e Google finiscono nella Posta inviata del responsabile. Permessi e password stanno solo sul
+server in sede, mai nel repository. Senza posta collegata restano «Copia testo» e «Scarica PDF» (215). La posta di UFP e
+del magazzino Shopify non è nota: si chiede all'installazione, e decide quale collegamento di posta si scrive per primo
+(436).
 
 ## Nome del prodotto
 
